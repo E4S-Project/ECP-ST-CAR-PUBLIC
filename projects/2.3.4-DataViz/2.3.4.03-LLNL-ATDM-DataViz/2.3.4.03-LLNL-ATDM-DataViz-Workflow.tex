@@ -1,0 +1,131 @@
+\subsubsection{LLNL ATDM Data \& Viz Projects: Workflow}
+
+%%{\itshape
+%%
+%%	\begin{enumerate}
+%%	\item Rename this file to your project WBS-projectname.tex, for example 2.3.3.01-XSDK4ECP.tex.
+%%	\item Complete this template for your project.  Limit your text to two pages, not counting citations.  
+%%	\item Please avoid changing the content of main.tex.  
+%%	\item Put any references in a .bib file with the same root name, for example 2.3.3.01-XSDK4ECP.bib.
+%%	\item Remember to include any image files you reference in your text.
+%%    \item The files 2.3.3.01-XSDK4ECP.tex, 2.3.3.01-XSDK4ECP.bib and xSDK-diagram.jpeg are included as examples for your reference.  You can remove them from what you upload.
+%%	\end{enumerate}
+%%}
+
+\paragraph{Overview} 
+
+The ATDM Workflow project at LLNL has a long term vision to enable reproducible
+and pedigreed computational science and introduce advanced analytics and machine
+learning capabilities to our user community. We are building an
+ecosystem of re-usable components for user workflows that will enhance the
+end-to-end productivity of ASC HPC assets and enable users to introduce modern
+data analytics technologies to their workflows. The Workflow project is focused
+on three areas prioritized by the LLNL user community: problem setup, simulation
+management, and data management and analytics. The project focuses on an
+ecosystem of tools and libraries because there is no single overarching
+workflow system that can meet the needs of users in the wide variety of domains
+at LLNL. The tools produced by this project are focused on reducing extrinsic
+cognitive load, that is, to reduce the bookkeeping and repetitive one-off
+scripting that is required with current file-oriented workflows. The project
+seeks to leverage modern data analytics capabilities, by providing tools that
+users can leverage to inject simulation information into these systems. 
+
+\paragraph{Key Challenges}
+
+The three biggest challenges for implementing improved problem setup,
+simulation management, and data management and analytics for users are: user
+community heterogeneity and complexity, security requirements, and user
+adoption. First, the large number of user domains and the number of largely
+manually driven workflows in use precluded the installation of a single
+encompassing workflow management and product lifecycle management capability.
+Second, the security posture required to install tools at NNSA labs makes it
+difficult to stand up federated infrastructures and servers.  Finally, adoption
+of tools into existing workflows requires that the tools provide a clear value
+proposition to the user community, and any tool that requires large changes in
+existing practice faces an increased chance of being rejected by users. This is
+particularly true for systems that seek to capture full provenance and pedigree
+data: they often require centralized servers and that all workflow activities
+take place in a particular tool or environment.
+
+\paragraph{Solution Strategy}
+
+We established three sub-projects to focus on aspects of the three areas prioritized by users:
+\begin{enumerate}
+\item \textbf{C2C:} the Contours to Codes project focused on building tools for
+interchanging and streamlining the process of going from documents describing
+experiments to the corresponding simulation configurations. C2C has adopted a
+format for 2D geometry defined by Los Alamos National Laboratory, and has built
+Python and C++ parsers for this toolset with features needed for LLNL
+applications.  
+\item \textbf{Siboka:} an ecosystem of scientific workflow components to
+facilitate workflow and data management, increase pedigree/reproducibility, and
+enable the use of modern analytics technologies.  \textbf{Siboka} includes a
+set of Python packages and command line tools for capturing non-bulk data and
+meta-data from simulation runs, importing data to SQL and Cassandra (a column
+store), allow querying of data in those backends, and exporting results for use
+in downstream tools. The core tool being developed is called \textbf{Sina},
+which enables these  operations. In addition, a specification for a JSON
+schema and toolset called \textbf{Mnoda} is being developed to generalize an
+application specific tool created by the project to gather and query non-bulk
+data and meta-data from simulation run directories.
+\item \textbf{Syflux (formerly VV4ALE3D):} a prototype web portal for setting
+up, running, and managing simulations and their results.  The original
+prototype, VV4ALE3D, is integrated with the Lorenz web infrastructure deployed
+in Livermore Computing.  The VV4ALE3D application is still deployed and hosted
+on the Livemore Computing web infrastructure.  Syflux represents an updated
+version based on the Django web infrastructure and hosted on project-managed
+web servers outside the data center authentication realm. The team seeks to
+develop into a problem setup data portal as well as a way to deploy workflow
+management tools.  
+\end{enumerate}
+These projects represent composable tools targeting distinct aspect of user
+pain points.  C2C enables interchange of problem setup information across
+applications, and a format in which to store and curate the results of the time
+consuming process of setting up new simulations.  Siboka presents the users
+with distinct and focused Python packages that they can include in existing
+scripts, so that they can incrementally adopt the technologies they see as
+relevant to their work.  Syflux and associated exploration of Jupyter,
+represents customizable ways to provide access via web-browser to simulation
+data, problem setup and related databases, and documents.  In this way, the
+team mitigates risk by providing the user community with a set of components
+that encompasses best practices, common operations, and next-generation
+capabilities, allowing the user community to leverage them to build custom
+workflows where needed while reducing duplicated work.
+
+\paragraph{Recent Progress}
+
+textbf{C2C} recently released an initial C++ parser to LLNL application codes,
+a key deliverable to enable adoption of a common 2D geometry format across our
+user-base. The team has also defined an assembly file specification to allow
+manipulation and composing of lower level geometric information, and
+implemented a set of python tools for this. These tools are now being tested by
+a few initial users and they have demonstrated that the tools can be used for
+code inter-comparison.
+
+The Siboka team has recently created an importer for \textit{Cassandra}, a
+scalable, open-source column store used extensively by companies like Netflix
+and Walmart. The team demonstrated the ability to
+query and export data from SQL using the \textbf{Sina} package, and plans to
+extend that functionality to the Cassandra back-end. The team is now exploring
+how \textit{JupyterHub}, \textit{Jupyter Notebooks}, and the newly released (in
+beta) \textit{JupyterLab} enhance sharing and reproducibilty while
+incorporating these modern database capabilities.  The first version of the
+\textbf{Mnoda} schema has been defined, and the Cassandra importer leverages
+that tool to map simulation meta-data and non-bulk scalars and file paths to
+the Cassandra and SQL back-ends.
+
+The Syflux effort has stood up a Django-based web portal, and has enabled users
+to upload and curate data and media files and implemented a basic permission
+model for them.  The ability to cross-link resources (input files, output
+files, and documents/reports) was also added to the prototype.
+
+\paragraph{Next Steps}
+\begin{enumerate}
+\item \textbf{C2C:} the highest priority for the team is to integrate the C++
+	library into the first application code and continue to enhanceme 
+	assembly files. 
+\item \textbf{Siboka:} Release an initial Mnoda schema, and create a specification for a C linkable API for writing data for applications that do not want to write the JSON output directly. Enhance the support for Cassandra and release an updated version of \textbf{Sina} to our users, as well a set of JupyterHub examples.
+\item \textbf{Syflux}: prototype an integration of multiple databases, such as
+	the Granta database into the portal.
+
+\end{enumerate}

@@ -1,0 +1,76 @@
+\subsubsection{LANL ATDM Tools}
+
+\paragraph{Overview}
+The Los Alamos National Laboratory ATDM Tools project provides tools and software 
+infrastructure for improving various aspects of the Exascale programming 
+environment.  At present our efforts are focused in two key areas that are prioritized 
+to meet the needs of LANL's ATDM efforts and are also broadly applicable to broader 
+ECP scope: 
+
+\begin{enumerate}
+
+ \item \textbf{Kitsune}: An advanced LLVM~\cite{LLVM:2018} compiler 
+        and tool infrastructure supporting a new explicit parallel intermediate 
+        representation for the C/C++ and Fortran programming languages. 
+        
+ \item \textbf{QUO}: A runtime library that assists application developers in the 
+        composition of multiple software components (e.g. libraries, multi-physics 
+        components) that have disjoint mappings to the underlying hardware components.
+        Explicit coordination of this mapping is often critical to not only improve
+        performance but also to make more effective use of computing resources (i.e. 
+        allowing developers to avoid over-subscription of a job's node allocations).
+        
+\end{enumerate}
+
+\paragraph{Key Challenges}
+The general challenge across both project components is providing and supporting a 
+productive development environment in a currently \emph{yet-to-be-defined} set of 
+system architectures.  This is not only difficult given a large number of applications 
+(and application components) but can become increasingly complex if the attributes of 
+potential target platforms are divergent. This requires that we must be flexible and also
+understand that many platform-centric decisions can have a significant and potentially 
+unexpected impact on our current techniques and software infrastructure. 
+
+\paragraph{Solution Strategy}
+Given the project challenges outlined above, our approach takes aspects of today's 
+programming systems (e.g. MPI and OpenMP) into consideration and aims to improve and 
+expand upon their capabilities to address the needs of Exascale computing across a range
+of application areas.  This allows us to attempt to strike a balance between incremental
+improvements to existing infrastructure along with more aggressive techniques that seeks 
+to provide innovative solutions to help both manage risk and the ability to introduce 
+new breakthrough technologies.  
+
+In addition, we are working to form close working relationships with the LLVM community 
+to help provide an impactful and longer term set of technologies to the broader computing
+community.  These activities span both academic and industry collaborations. 
+
+\paragraph{Recent Progress}
+For the Kitsune compiler effort, our recent efforts have focused on supporting an 
+infrastructure that maps multiple language constructs from Kokkos, FleCSI and OpenMP into 
+an common intermediate representation that explicitly captures the parallel operations 
+for analysis and optimization (this is a capability that does not exist in the mainline 
+LLVM infrastructure).  This parallel representation may then also be targeted to different
+runtime systems (not necessarily those of use by the initial programming system).  See
+our most recent paper for a discussion of our overall approach~\cite{Stelle:2017}.  In 
+addition, this work will be presented at the upcoming EuroLLVM 
+workshop~\cite{EuroLLVM:2018}.  We will continue to use such events to provide the larger
+LLVM community with updates to our lessons learned and example use cases of this 
+technology. 
+
+The QUO infrastructure has been recently deployed and used by LANL's production codes and
+is in active daily use.  Initial steps have been taken to integrate some of its 
+functionality into the Kokkos programming system and we have also briefed code teams at
+LLNL about the use of the library in multi-physics codes.  Our most recent paper on QUO
+highlights the impact of the library's use on application performance across a range of
+different applications case studies~\cite{Gutierrez:2017}. 
+
+\paragraph{Next Steps}
+Both QUO and Kitsune are working towards quarterly milestones and multiple software 
+releases throughout the coming year.  At this point in time QUO has reached a production 
+ready state and many activities are focused on performance tweaks, bug fixes and small 
+additions to the overall capabilities. Kitsune is still very much an active 
+proof-of-concept compiler toolchain focused on C and C++ with future plans to add support
+for Fortran via the Flang project~\cite{Flang:2018}.  Even though it is not yet production
+ready we are actively releasing source code and the supporting infrastructure for 
+deployment as an exploratory and early evaluation candidate. 
+

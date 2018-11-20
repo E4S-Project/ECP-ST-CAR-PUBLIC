@@ -1,0 +1,58 @@
+\subsubsection{LLNL ATDM Development Tools Projects}
+
+\paragraph{Overview} The LLNL ATDM Tools Project came together from two tool efforts at LLNL, ProTools and AID.  The ProTools project provides a productization path for research-quality tool software.  The ProTools team works with tool research groups and provides the software engineering effort needed to move their tools into production.  This includes tasks like writing test suites and documentation, porting to new systems, adding user-driven features, and integrating tools with application codes.  Some of the larger efforts in ProTools are:
+
+\begin{itemize}
+\itemsep 0em 
+\item Ubiquitous Performance Analysis - A suite of tools and visualizations that enable a performance analysis workflow where tools are built into the application and monitor the performance of every run.
+\item SCR - The Scalable Checkpoint/Restart library, which abstracts away IO technologies such as burst buffers for applications.
+\item mpiFileUtils - A suite of IO-tools based on common UNIX file utilities (cp, rm, cmp, ...), but optimized for HPC.
+\item OMPD - A debugging standardization effort for OpenMP.
+\item Umpire - An abstraction layer for managing the different types of memory found in current and next-generation systems.
+\end{itemize}
+
+The AID project is developing next-generation debugging and code-correctness tools, with a focus towards tool viability at Exascale  The significant projects in AID are:
+\begin{itemize}
+\itemsep 0em 
+\item STAT - A debugging tool that can narrow down the debugging search space for hangs and other issues at massive scales.
+\item Archer - A tool for automatically identifying race conditions in OpenMP programs.
+\item ReMPI/Ninja - A suite of tools that can inject noise in applications to expose MPI races, and record/replay those races when found.
+\item FLiT - A tool for testing floating point consistency and workloads.
+\end{itemize}
+
+\paragraph{Key Challenges}
+There are several challenging areas that are common not just among the LLNL ATDM Tool Projects, but across tool efforts through-out the HPC community:
+\begin{itemize}
+\itemsep 0em
+\item Platform Portability - Tools are particularly challenging to port to new systems.  Unlike applications, which rely on standards such as OpenMP and MPI, tools are generally built weaker body of standards.  Porting to a new system can involve detailed low-level dives into runtimes and system components.  Tools rarely have platform-independent code bases and require significant effort to bring up on new systems.  
+\item Application Complexity - In addition to the increasing complexity of systems, applications are growing in size and complexity.  New programming models are increasing the distance between the low-level machine code that tools generally measure and the high-level code that programmers think about.  Mapping between these layers requires significant infrastructure in each tool.
+\item Application Adoption - At any one time it can be easier to add a new printf statement rather than learn a new debugging or performance analysis tool.  It has been historically difficult to encourage application teams to consider tool adoption a priority, though with approaching challenges of next-generation and Exascale system this trend seems to be changing.
+\end{itemize}
+
+\paragraph{Solution Strategy}
+Specific solutions to the above problems can vary with each instance and tool.  Though there are several high-level trends across the LLNL ATDM Tool Projects:
+\begin{itemize}
+\itemsep 0em
+\item Application and Tool Integration - As previously mention, tools can be challenging because they generally live in a smaller standards space.  Some efforts are towards shifting tools into the application domain, where they can utilize application-level standards and infrastructure.  Examples of this from the Ubiquitous Performance Analysis project and Caliper projects include doing performance attribution with application-level annotations rather than binary analysis and DWARF line mappings.  Or instead of building low-impact tool communication infrastructure like MRNet, we can use MPI have the application team to annotate code with safe communication points.
+\item Standardization and Co-design - The LLNL ATDM Tool Project is engaging with standards committees to create tool-specific interfaces in programming models.  The recent OMPD work added a interface for debuggers into OpenMP, which looks likely to be accepted into OpenMP 5.0.  Beyond formal standardization efforts, the LLNL ATDM Tool Projects also work with vendors during system design to ensure the available of tools on upcoming systems.  Team members have recently engaged in the CORAL project and are working directly with IBM and NVIDIA on providing numerous tools.
+\item Tool Componentization and Composability - Rather than have tools reinvent the wheel and then stumble over the same potholes in every system, the LLNL ATDM Tool Projects have striven to make tools that both share common best-practice components and be composedly with other tools.  Gotcha, from the Ubiquitous Performance Analysis project, is a new component library that does function wrapping and is being adopted in several other tools.  The AID project is building an inter-operable software stack of debugging tools, where projects like STAT and ReMPI can work together with classical debuggers like TotalView and DDT.  By sharing code and relying on other tool's strengths we can minimize the amount of repeated work across the tools community.
+\item Application Adoption - To help application teams adopt tools, members of the LLNL ATDM Tool Projects work directly with them through early tool efforts.  This can take the form of software development effort, such as when ProTools team members helped an ASC application adopt SCR.  Or it can be a hand-holding exercise when first running a tool, such as when the AID team helped a math library identify a significant race condition with Archer.
+\end{itemize}
+
+
+\paragraph{Recent Progress}
+
+There are several recent notable achievements from the LLNL ATDM Tools Projects:
+\begin{itemize}
+\itemsep 0em
+\item The OMPD standard looks likely to be adopted into the OpenMP 5.0 standard.  In addition to the many OpenMP contributors, The ProTools team worked with the standards group in the LLNL ATDM Data and Visualization project on this.  ProTools focused on the reference implementation and the standards group on the standards document.
+\item The ProTools team will soon be releasing the initial version of the Gotcha library, which will provide other tools (primarily performance analysis tools) with a better way to implement and control function wrapping.
+\item The AID project has had several publication on OpenMP race detection\cite{pmodelconcurrency2018},\cite{swordopenmp2018} and floating point consistency\cite{Flit2017}.
+\end{itemize}
+
+\paragraph{Next Steps}
+
+The ProTools team is starting a major new thrust in the Ubiquitous Performance Analysis effort.  They are aiming to add Caliper into a targeted ASC code, and then build and integrated performance analysis workflow that brings together caliper and web-based performance visualization.  The end result of this is to have application users running codes, producing behind-the-scenes performance data, and then application developers browsing and analyzing the performance data with analytic frameworks and novel visualizations.
+
+The AID team is focusing on vendor interactions and co-design, for both CORAL systems and subsequent next-generation systems.
+

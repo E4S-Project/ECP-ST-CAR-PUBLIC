@@ -1,0 +1,71 @@
+\subsubsection{xSDK4ECP} 
+\paragraph{Overview} The xSDK4ECP project is creating a value-added aggregation of DOE math and scientific libraries through the {\em xSDK} (Extreme-scale Scientific Software Development Kit)~\cite{xsdk:homepage}, which increases the combined usability, standardization, and interoperability of these libraries as needed by ECP. The project focuses on community development and a commitment to combined success via quality improvement policies, better build infrastructure, and the ability use diverse, independently developed xSDK libraries in combination to solve large-scale multiphysics and multiscale problems.  We are extending draft xSDK package community policies and developing interoperability layers among numerical libraries in order to improve code quality, access, usability, interoperability, and sustainability. Focus areas are (1) coordinated use of on-node resources, (2) integrated execution (control inversion and adaptive execution strategies), and (3) coordinated and sustainable documentation, testing, packaging, and deployment.
+
+xSDK4ECP is needed for ECP because it enables ECP apps such as ExaAM and ExaWind to seamlessly leverage the entire scientific libraries ecosystem.  For example, ExaWind has extremely challenging linear solver scaling problems.  xSDK4ECP provides access to all scalable linear solvers with minimal changes.  xSDK4ECP is also an essential element of the product release process for ECP ST.  xSDK4ECP provides an aggregate build and install capability for all ECP math libraries that supports hierarchical, modular installation of ECP software.  Finally, xSDK4ECP provides a forum for collaborative math library development, helping independent teams to accelerate adoption of best practices, enabling interoperability of independently developed libraries and improving developer productivity and sustainability of the ECP ST software product.
+
+\paragraph{Key Challenges}
+The complexity of application codes is steadily increasing due to more sophisticated scientific models.  While some application areas will use Exascale platforms for higher fidelity, many are using the extra computing capability for increased coupling of scales and physics.  Without coordination, this situation  leads to difficulties when building application codes that use 8 or 10 different libraries, which in turn might require additional libraries or even different versions of the same libraries.
+
+The xSDK represents a different approach to coordinating library development and deployment.  Prior to the xSDK, scientific software packages were cohesive with a single team effort, but not across these efforts. The xSDK goes a step further by developing community policies followed by each independent library included in the xSDK.  This policy-driven, coordinated approach enables independent development that still results in compatible and composable capabilities.
+
+\paragraph{Solution Strategy}
+
+The xSDK effort has two primary thrusts:
+\begin{enumerate}
+	\item \textbf{Increased interoperability:} xSDK packages can be built with a single Spack package target.  Furthermore, services from one package are accessible to another package.
+	\item \textbf{Increased use of common best practices:}  The xSDK has a collection of community policies that set expectations for a package, from best design practices to common look-and-feel.
+\end{enumerate}
+
+xSDK interoperability efforts began first with eliminating incompatibilities that prohibited correct compilation and integration of the independently developed libraries.  These issues include being able to use a common version of a library such as SuperLU by PETSc and Trilinos.  The second, and ongoing phase is increased use of one package's capabilities from another.  For example, users who build data objects using PETSc can now access Trilinos solvers without copying to Trilinos data structures.
+
+xSDK community package policies~\cite{xsdk-policies:homepage,
+xSDK-community-package-policies2017} are a set of minimum requirements (including topics of configuring, installing, testing, MPI usage, portability, contact and version information, open source licensing, namespacing, and repository access) that a software package must satisfy in order to be considered xSDK compatible. The designation of xSDK compatibility informs potential users that a package can be easily used with others. 
+
+xSDK community installation policies~\cite{xSDK-community-installation-policies2017} help make configuration and installation of xSDK software and other HPC packages as efficient as possible on common platforms, including standard Linux distributions and Mac OS X, as well as on target machines currently available at DOE computing facilities (ALCF, NERSC, and OLCF) and eventually on new Exascale platforms.
+
+Community policies for the xSDK promote long-term sustainability and interoperability among packages, as a foundation for supporting complex multiphysics and multiscale ECP applications. In addition, because new xSDK packages will follow the same standard, installation software and package managers (for example, Spack~\cite{gamblin+:sc15}) can easily be extended to install many packages automatically.
+
+
+\paragraph{Recent Progress}
+
+Figure~\ref{fig:xsdk-schematic} illustrates a new {\em Multiphysics
+	Application C}, built from two complementary applications that can
+readily employ any libraries in the xSDK, shown in green.  Current xSDK member packages (version 0.3.0, released December 2017) are the four founding libraries
+(hypre~\cite{hypre:homepage}, PETSc~\cite{petsc:homepage}, SuperLU~\cite{superlu:homepage}, and Trilinos~\cite{trilinos:homepage}) 
+and three additional ECP math libraries added during this release (MAGMA~\cite{magma:homepage}, MFEM~\cite{mfem:homepage}, and SUNDIALS~\cite{sundials:homepage}).  
+Application domain components are represented
+in orange.  Of particular note is Alquimia~\cite{alquimia:homepage}, a domain-specific interface
+that support uniform access to multiple biogeochemistry capabilities, including
+PFLOTRAN~\cite{pflotran:homepage}.  Additional ECP math libraries are working toward becoming xSDK member packages and plan to participate in future xSDK releases.
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=6in]{projects/2.3.3-MathLibs/2.3.3.01-xSDK/xSDK-diagram}
+	\caption{\label{fig:xsdk-schematic}The December 2017 release of the xSDK contains many of the most popular math and scientific libraries used in HPC.  The above diagram shows the interoperability of the libraries and a multiphysics or multiscale application.}
+\end{figure}
+
+The arrows among
+the xSDK libraries indicate current support for
+a package to call another to provide scalable linear solvers
+functionality on its behalf.  For example, {\em Application~A} could
+use PETSc for an implicit-explicit time advance, which in turn could
+interface to SuperLU to solve the resulting linear systems with a
+sparse direct solver.  {\em Application~B} could use Trilinos to solve
+a nonlinear system, which in turn could interface to hypre to solve
+the resulting linear systems with algebraic multigrid.  Of course,
+many other combinations of solver interoperability are also possible.
+The website \url{https://xsdk.info/example-usage}
+and \cite{Klinvex-xSDKTrilinos} provide examples of
+xSDK usage, including interoperability among linear solvers in hypre,
+PETSc, SuperLU, and Trilinos.
+
+
+\paragraph{Next Steps}
+
+
+Our next efforts are:
+\begin{enumerate}
+	\item \textbf{Include more libraries:} xSDK4ECP will continue efforts to expand the number of participating packages, adapt community policies, and exploit increased interoperability.  The next phase of xSDK packages will include deal.II, a popular finite element library that has not been funded by DOE.  We anticipate some adaptation of language and policies that may be DOE centric.
+	
+		\item \textbf{Process control transfer interfaces:} The ever-increasing use of concurrency within the top-level MPI processes requires that computational resources used by an application or library can be transferred to another library. Transfer of these resources is essential for obtaining good performance.  The xSDK project will develop interfaces to support sharing and transfer of computational resources.
+	
+\end{enumerate}
