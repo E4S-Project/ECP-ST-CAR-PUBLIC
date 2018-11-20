@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% File  : ecpreportv2.cls
+% File  : ecpreport-publicv1.cls
 % Author: Tom Evans
 % Date  : Monday December 18 23:6:57 2017
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{ecpreportv2}[2017/12/19 ECP Report Class Version 2]
+\ProvidesClass{ecpreport-publicv1}[2018/11/20 ECP Public Report Class Version 1]
 
 \ExecuteOptions{a4paper,11pt,oneside,onecolumn,number}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
