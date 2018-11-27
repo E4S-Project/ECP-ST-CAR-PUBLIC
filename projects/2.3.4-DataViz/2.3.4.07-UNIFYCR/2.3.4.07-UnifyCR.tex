@@ -80,44 +80,35 @@ it can deliver high performance.
 
 \paragraph{Recent Progress}
 
-In the first year of this project, the team spent the bulk of the time
-evaluating the research prototype code that forms the basis for
-UnifyCR and designing the framework for the production version 
-of UnifyCR (See Figure \ref{fig:milestone2}). The major changes we plan to make to the research prototype
-code include: replacing MPI communication with DataLib software; integrating
-UnifyCR with resource managers; implementing support for advanced
-storage devices (burst buffers); and implementing support for I/O libraries and 
-VeloC. 
+In the second year of this project, the team began
+implementing the design plan that was established in the first
+year of the project (See Figure \ref{fig:milestone2}). In particular
+we worked to replace MPI communication with DataLib software; to integrate
+UnifyCR with resource managers; to evaluate and implement support for I/O 
+libraries; and to implement support for Sierra and Summit platforms.
+We also began to implement a testing framework for continuous integration
+testing, detected and fixed bugs, designed and began implementing a 
+metadata abstraction layer, and have begun outreach to applications teams.
 \begin{figure}[htb]
         \centering
         \includegraphics[width=4in]{projects/2.3.4-DataViz/2.3.4.07-UNIFYCR/milestone2}
         \caption{\label{fig:milestone2} \textbf{UnifyCR Design.} The UnifyCR
-instance will consist of a dynamic library and a UnifyCR daemon that runs
-on each compute node in the job. The library will intercept I/O calls to
-the UnifyCR mount point from applications, I/O libraries, or VeloC and communicate them to the UnifyCR daemon that will handle the I/O operation.}
+instance consists of a dynamic library and a UnifyCR daemon that runs
+on each compute node in the job. The library intercepts I/O calls to
+the UnifyCR mount point from applications, I/O libraries, or VeloC and communicates them to the UnifyCR daemon that handles the I/O operation.}
 \end{figure}
 
 
-Upon completing the evaluation and design milestones, we released an 
-alpha version of the code UnifyCR 0.1 on GitHub at 
-\url{https://github.com/LLNL/UnifyCR}. Subsequently, we implemented 
-support for easily starting and stopping UnifyCR from within a user
-batch script. 
-In addition, we have performed other code changes to ensure production
-ready use of UnifyCR, including adding testing, improving the build
-mechanisms, improving the I/O interception functionality; and including
-code documentation.
-
-
-
+Our source code for UnifyCR is available on 
+GitHub at \url{https://github.com/LLNL/UnifyCR}. 
 \paragraph{Next Steps}
 
-For our next milestone effort, we are going to be implementing support
-for I/O libraries into UnifyCR. We are targeting HDF5, MPI-IO, PnetCDF, and
-ADIOS. When user applications utilize these high level I/O libraries,
-we will ensure that their I/O operations are intercepted and 
-handled as easily as if they came from POSIX in the application.
+For our next milestone effort, we are focused on improving the performance
+of UnifyCR on Summit and Sierra. Additionally, we are continuing work on 
+integrating and supporting ECP collaborator software including:
+I/O libraries HDF5, MPI-IO, PnetCDF, and ADIOS; completing the replacement
+of MPI communication with Mercury from ECP DataLib; implementing
+support for ECP VeloC; and supporting ECP applications such as
+E3SM, GEOS, and Chombo.
+We also plan to release UnifyCR 1.0 at the end of the fiscal year.
 
-Following this milestone, we will begin the effort of supporting 
-the advanced storage hardware that will be available on the upcoming
-CORAL systems at LLNL and ORNL (Sierra and Summit). 
