@@ -59,36 +59,36 @@ needed by optimization, SA, and UQ solvers.
 \paragraph{Recent Progress}
 
 In the past year, we have released PETSc 3.10 (available at \url{http://www.mcs.anl.gov/petsc})
-that features pipeline Krylov implementations and improved performance on SIMD
-architectures.  Performance at scale on Theta at Argonne for a 2-D reaction 
-diffusion example on a 16384x16384 mesh using a multigrid preconditioner with 
-6 levels is shown in Figure~\ref{fig:petsc-tao-fig}. The SIMD optimization 
-delivers 2x faster matrix multiply, while not obviously slowing down other 
-kernels.  The effect of better vectorization is minimal when available 
-memory bandwidth is low.
+that features enhanced GPU support.  In particular, PETSc’s algebraic multigrid (AMG) consists 
+of two main components: the setup (coarsening) phase which has both GPU and CPU intensive 
+portions and the solve stage which can run largely or completely on the GPU. A key 
+requirement is minimizing the amount of communication needed between the CPU 
+and GPU during both phases of the computation.  In the PETSc~3.10 release, we 
+completed porting key AMG kernels for both phases to GPUs via CUDA, enabling
+this code to run on a combination of the CPU and GPU.
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\textwidth]{projects/2.3.3-MathLibs/2.3.3.06-PETSc-TAO/aij_vs_sell}
-\caption{Performance at scale on Theta at Argonne for a 2-D reaction diffusion 
-example on a 16384x16384 mesh using a multigrid preconditioner with 
-6 levels.}
+\includegraphics[width=0.5\textwidth]{projects/2.3.3-MathLibs/2.3.3.06-PETSc-TAO/lib_ensemble}
+\caption{The libEnsemble control flow showing a manager coordinating workers executing 
+calculations of either simulation functions or generation functions.}
 \label{fig:petsc-tao-fig}
 \end{figure}
 
 We have also developed the libEnsemble API, implemented it in Python, released 
-version 0.1.0 (available at \url{https://github.com/Libensemble/libensemble}),
-and provided a Spack installation.  The code has been testing using the
-POUNDERS numerical optimization solver.
+version 0.4 (available at \url{https://github.com/Libensemble/libensemble}),
+and provided a Spack installation.
 
 \paragraph{Next Steps}
 
 Our next efforts are:
 \begin{enumerate}
-  \item \textbf{Release libEnsemble with monitoring and pools}: Incorporate improved scheduling 
-    and basic online monitoring into libEnsemble with a dynamic pool of simulations.  This will
-    be the first supported release.
-  \item \textbf{Release PETSc with enhanced GPU support}: Release of PETSc with enhanced GPU 
-    support specifically developed and optimized anticipated architectures.
+  \item \textbf{Release libEnsemble with active management capabilities}: Add active management 
+    capabilities into libEnsemble to set precision of the simulation and to store information 
+    from simulations to evaluate objectives as they evolve. Work with application teams to 
+    determine requirements on libEnsemble and provide assistance in its usage.
+  \item \textbf{Release PETSc/TAO with optimized support for LCF machines and ECP applications}:
+    Work with application teams to provide assistance in PETSc/Tao usage. Provide optimizations 
+    based on application profiling.
 \end{enumerate}
 
