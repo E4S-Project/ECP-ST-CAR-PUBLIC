@@ -65,51 +65,63 @@ Our approach is to incrementally add features to VTK-m and expose them in tools 
 
 \paragraph{Recent Progress}
 The VTK-m project is organized into many implementation activities.
-The following features have been completed in the past 12 months.
+The following features have been completed in the FY18 fiscal year.
 
 \begin{itemize}
-\item \textbf{Key Reduce Worklet:}
-  This adds a basic building block to VTK-m that is very useful in constructing algorithms that manipulate or generate topology \cite{Miller2014}.
-\item \textbf{Spatial Division:}
-  Introductory algorithms to divide space based on the distribution of geometry within it.
-  This is an important step in building spatial lookup structures.
-\item \textbf{Basic Particle Advection:}
-  Particle advection traces the path of particles in a vector field.
-  This tracing is fundamental for many flow visualization techniques.
-  Our initial implementation works on simple structures
-\item \textbf{Surface Normals:}
-  Normals, unit vectors that point perpendicular to a surface, are important to provide shading of 3D surfaces while rendering.
-  These often need to be derived from the geometry itself.
 \item \textbf{Multiblock Data:}
   Treat multiple blocks of data, such as those depicted in Figure \ref{fig:VTKmRecent} at left, as first-class data sets.
-  Direct support of multiblock data not only provides programming convenience but also allows us to improve scheduling tasks for smaller groups of data.
+  %Direct support of multiblock data not only provides programming convenience but also allows us to improve scheduling tasks for smaller groups of data.
 \item \textbf{Gradients:}
   Gradients, depicted in Figure \ref{fig:VTKmRecent} at center, are an important metric of fields and must often be derived using topological data.
-  Gradients are also fundamental in finding important vector field qualities like divergence, vorticity, and q-criterion.
+  %Gradients are also fundamental in finding important vector field qualities like divergence, vorticity, and q-criterion.
 \item \textbf{Field to Colors:}
   Pseudocoloring, demonstrated in Figure \ref{fig:VTKmRecent} at right, is a fundamental feature of scientific visualization, and it depends on a good mechanism of converting field data to colors.
 \item \textbf{VTK-m 1.1 Release:}
   VTK-m 1.1 was released in December 2017.
+\item \textbf{Extract External Surface:}
+  When rendering solid objects, it is only necessary to render the external surface of the object as the interior of the volume is hidden \cite{Lessley2016,Lessley2017}.
+  %As such, external surface extraction is one of the most common operations in scientific visualization applications.
+\item \textbf{Coordinate system transformations:}
+  3D rendering systems operate in Cartesian coordinate systems.
+  However, data are sometimes referenced in cylindrical or spherical coordinate systems.% to match the physical structure of the data.
+  %Consequently, visualization tools need a fast method to convert coordinates among different spaces.
+\item \textbf{Affine Transformations:}
+  Affine transformations, which include translate, rotate, and scale, are a common and important method to manipulate objects in 3D space.
+\item \textbf{Location Structures:}
+  Finding mesh components from a coordinate in space requires search structures.
+\item \textbf{Rendering Topological Entities:}
+  It is often helpful to analysts to view representations of the constitute components of a mesh.
+\item \textbf{OpenMP:}
+  %Much of the code we wish to integrate with uses OpenMP \cite{OpenMP}, which can conflict with other threading implementations.
+  %VTK-m now supports multiple threading libraries, including OpenMP, to better match the code it integrates with.
+  VTK-m now supports OpenMP \cite{OpenMP}, to better match the code it integrates with.
 \end{itemize}
 
 \paragraph{Next Steps}
 Our next efforts include:
 
 \begin{itemize}
-\item \textbf{External Surface:}
-  Extracting the external faces of solid geometry is important for efficient solid rendering.
-\item \textbf{Location Structures:}
-  Many scientific visualization algorithms require finding points or cells based on a world location.
 \item \textbf{Dynamic Types:}
-  The initial implementation of VTK-m used templating to adjust to different data structures.
-  However, when data types are not known at compile time, which is common in applications like ParaView and VisIt, templating for all possible combinations becomes infeasible.
+  %The initial implementation of VTK-m used templating to adjust to different data structures.
+  %However, when data types are not known at compile time, which is common in applications like ParaView and VisIt, templating for all possible combinations becomes infeasible.
   Provide mechanisms to enable runtime polymorphism.
-\item \textbf{OpenMP:}
-  Our current multicore implementation uses TBB \cite{TBB} for its multicore support.
-  However, much of the code we wish to integrate with uses OpenMP \cite{OpenMP}, and the two threading implementations can conflict with each other.
-  Thus, add a device adapter to VTK-m that uses OpenMP so this conflict will not happen.
+\item \textbf{ZFP:}
+  We are assisting the ZFP project (WBS 2.3.4.11) by helping them implement {\zfp} in VTK-m and port across ECP platforms.
+\item \textbf{Clip:}
+  Cuts away a mesh based on a spatial intersection or field values.
+\item \textbf{Ghost Cells:}
+  Provide better support for ghost/halo regions across blocks in a mesh.
+\item \textbf{Merge Points:}
+  Combine points in a mesh that can be considered coincident.
+\item \textbf{Connected Components:}
+  Identify regions in a mesh where all cells are topologically connected to each other.
+\item \textbf{Particle Advection:}
+  Many flow visualization algorithms depend on computing the movement of weightless particles in a flow vector field.
+%% \item \textbf{Lightweight Cell Library:}
+%%   There is much repetition between VTK-m and other visualization code to perform operations on cells.
+%%   We would like to consolidate that code into a lightweight library.
 \end{itemize}
 
 \noindent
-{\tiny Sandia National Laboratories is a multimission laboratory managed and operated by National Technology \& Engineering Solutions of Sandia, LLC, a wholly owned subsidiary of Honeywell International Inc., for the U.S. Department of Energy's National Nuclear Security Administration under contract DE-NA0003525. \hfill SAND~2018-4009~R
+{\tiny Sandia National Laboratories is a multimission laboratory managed and operated by National Technology \& Engineering Solutions of Sandia, LLC, a wholly owned subsidiary of Honeywell International Inc., for the U.S. Department of Energy's National Nuclear Security Administration under contract DE-NA0003525. \hfill SAND~2018-XXXX~R
 \par}
