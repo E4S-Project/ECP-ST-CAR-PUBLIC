@@ -1,4 +1,4 @@
-\subsubsection{\stid{1.0} LLNL ATDM Programming Models and Runtimes}
+\subsubsection{\stid{1.03} LLNL ATDM Programming Models and Runtimes}
 
 
 \paragraph{Overview} 
@@ -78,13 +78,16 @@ performance gap analysis for RAJA with different compilers.}}
 
 \textbf{ROSE.} The team continued to improve ROSE's C++11 support 
 and the ROSE-based 
-tool, rajaChecker. With bug fixes to ROSE, rajaChecker can process 
-1650 files in an ASC application without errors, compared to the original 
-1405 files.  We also added new features into rajaChecker, such as recognizing 
-user-defined RAJA wrappers, MIN/MAX macros, indirect loop index variables, 
-etc.  The latest test shows that rajaChecker finds 87 loops in an 
-ASC application matching the data race pattern users requested, compared 
-to the original 20.
+tool, rajaChecker. 
+The team improved rajaChecker to support patterns buried deep within control 
+flows. Additionally, they improved the robustness of rajaChecker and 
+significantly reduced compilation errors in a large ASC application.
+The team improved the tool's debugging support by adding more detailed
+execution tracing information. The debugging information was used to
+find the root cause of several false negative reports, which the team 
+subsequently fixed. They also added new features in rajaChecker to
+collect statistics about the total number of loops analyzed and how 
+many loops are lambda or regular loops.
 
 
 
@@ -92,17 +95,18 @@ to the original 20.
 approaches to incorporate fault tolerance in the MPI Standard, including 
 standardizing primitives to support fundamental fault-tolerance methods.  
 They also worked on the MPI\_T\_Events interface for tools.
-The MPI participants attended the MPI Forum meeting in Portland in 
-February and proposed new approaches to incorporate fault tolerance in the 
+The MPI participants attended the MPI Forum meetings in 2018
+and proposed new approaches to incorporate fault tolerance in the 
 MPI Standard, including standardizing primitives to support fundamental 
 fault-tolerance methods.
 
-\textbf{OpenMP.} In OpenMP, the project members worked with the Tools 
-subcommittee to prepare and enact several tickets to improve OMPT 
-and OMPD specifications.  The project members attended the OpenMP 
+\textbf{OpenMP.} In OpenMP, 
+the project members attended the OpenMP 
 face-to-face meeting in Austin and worked with the Tools subcommittee 
 to prepare and enact several tickets to improve OMPT and OMPD 
-specifications.
+specifications. In particular, they improved the OMPD prototype for
+NVIDIA GPUs and the clang/LLVM runtime. They also updated the OMPD
+prototype runtime to be fully compliant with OpenMP 5.0.
 
 
 \paragraph{Next Steps}  \leavevmode \\
