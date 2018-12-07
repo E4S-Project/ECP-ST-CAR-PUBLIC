@@ -23,22 +23,23 @@ To address the challenges above, the SNL ATM Math Libraries project is taking a 
 \paragraph{Recent Progress}
 In this section we provide several high-level snapshots of recent progress in the Math Libraries project
 \begin{itemize}
-\item The EA team has completed the integration of sensitivity analysis and ROL optimization tools with Tempus in support of transient full-space optimization.
-\item The KK team completed development of a prototype for unified SIMD types as Kokkos SIMD type
-\item The KK team built batched BLAS kernels based on the Kokkos SIMD type to be run on GPUs. On a P100 GPU, the Kokkoskernels triangular solve and dense matrix-matrix multiply provide up to 2x and 170x speedup, respectively, compared to NVIDIA?s cuBLAS.
-\item Profiling of the miniEM application in Panzer by the SS team, using a mesh provided by EMPIRE developers, has identified memory growth in problems during setup which has led to a reduced memory footprint.
-\item Initial results, gathered by the SS team, for performance of Tpetra stack (Belos,MueLu,Ifpack2) have been gathered for the solve phase on GPUs. This resulted in the identification of performance bottlenecks that either are in the process of or have been resolved.
-\item The AC team completed construction and testing of the operator-split stepper in Tempus. This is required for time integrating the PIC and E-field solves.
-\item The AC team implemented and verified a variable time-stepping algorithm (Denner, 2014) within Tempus for use with the BDF2 time-integration scheme and other Tempus schemes. 
+\item The SS team has recently achieved 10 solves/sec for the miniEM proxy application for EMPIRE, this is important for meeting the efficiency requirements to complete upcoming milestones.
+\item The SS team is also making good progress in identifying other performance bottlenecks, such as over-decomposition. We now have performance date supporting hypotheses like these.
+\item the AC team is working to promote CUDA aware GPU/GPU transfers in Tpetra.
+\item the KK team made a recent presentation to Jim Peltz on the feagtures of KK and recent progress.
+\item 
+\item The EA team has made progress in terms of addressing Stokhos issues that were holding up Kokkos promotion.
+\item The AC team has made implemented a hierarchical parallelism approach to some of the kernels in Panzer leading to significant speedup.
+\item the KK team finished work on SIMD with the University of Utah and submitted a paper on how to use SIMD in three cases.
 \end{itemize}
 
 \paragraph{Next Steps}
 The following list details the next steps being taking by each component of the ATDM SNL Math Libraries project:
 
 \begin{itemize}
-\item The SS team is investigating, in collaboration with the University of Wyoming, the use of Multilevel solvers, which will eventually get integrated into SPARC via MueLu.
-\item The KK team will continue to work on Integration of Kokkoskernels into IFPACK2 line preconditioners as well as testing on Volta GPUs.
-\item The AC team will be focusing on the integration of Tempus into EMPIRE-PIC.
-\item The EA team will extend the work that was done for adjoint sensitivities to transient, full-space optimization.
+\item The KK team is investigating using dynamic sizing for batched BLAS.
+\item The SS team is continuing to investigate, in collaboration with the University of Wyoming, the use of Multilevel solvers, which will eventually get integrated into SPARC via MueLu.
+\item The AC is continuing to work on the integration of Tempus into EMPIRE-PIC, including enabling higher order integration schemes.
+\item The EA team is working on enabling transient full space optimization in SPARC.
 
 \end{itemize}
