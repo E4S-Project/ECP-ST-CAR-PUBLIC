@@ -15,25 +15,31 @@ Since computer architectures continue to change rapidly, it is important to come
 \paragraph{Recent Progress}
 
 Under internal LLNL funding we pursued the following ECP-related tasks: enabling portions of several solvers for GPUs, and introducing a new memory model that is based on an abstract machine model.
-
-We  implemented the new memory model. The new model modified {\sl hypre}'s memory allocation and copying routines to include memory allocations: HYPRE$\_$MEMORY$\_$HOST, HYPRE$\_$MEMORY$\_$DEVICE and HYPRE$\_$MEMORY$\_$SHARED. It also includes a new routine SetExecutionMode that can be used to define where the current code can be run.
-The new model can be mapped to the actual hardware in a variety of ways through the configure process, e.g., a host-only machine (all allocations are just mallocs) or with or without unified memory. Since it is based on an abstract machine model, it is expected that it will increase portability to future architectures. The implementation of the model was very intensive, since it affected the whole library. 
-
-In addition, we implemented various GPU capabilities in {\sl hypre}. For the structured solvers, SMG and PFMG\cite{AsFa1996}, both setup and solve phase can now completely be run on GPUs, using both CUDA or OpenMP4.5, and do not require unified memory. In addition, options to use RAJA and Kokkos are available, albeit not well tested yet. Figure \ref{fig:pfmg} shows the performance of the total run times, including both setup and solve phase, for our fastest performing multigrid solver PFMG-CG for a 7-point 3D Laplace problem using 32 million grid points per node, comparing performance on the CPU only utilizing all its cores, to running the same problem on the GPUs using CUDA and OpenMP 4.5.
+We  implemented the new memory model as well as 
+various GPU capabilities in {\sl hypre}. For the structured solvers, SMG and PFMG\cite{AsFa1996}, both setup and solve phase can now completely be run on GPUs, using both CUDA or OpenMP4.5, and do not require unified memory. In addition, options to use RAJA and Kokkos are available, albeit not well tested yet. 
+Porting the unstructured solver, BoomerAMG turned out to be far more complex. Currently only the solve phase can be run on the GPU for select smoothers, mainly Jacobi smoothers, and requires unified memory. The setup phase can currently be performed on the CPU only.
 
 \begin{figure}
 \centering
-\includegraphics[width=5in]{projects/2.3.3-MathLibs/2.3.3.01-xSDK/PFMG-PCG.png}
-\caption{\label{fig:pfmg} Performance of PFMG-PCG on Ray at LLNL, using Power 8 CPUs and Pascal GPUs}
+	\includegraphics[width=5in]{projects/2.3.3-MathLibs/2.3.3.01-xSDK/COGMRES.png}
+	\caption{\label{fig:cogmres} Performance of new GMRES on Vulcan at LLNL}
 \end{figure}
-
-Porting the unstructured solver, BoomerAMG turned out to be far more complex. Currently only the solve phase can be run on the GPU for select smoothers, mainly Jacobi smoothers, and requires unified memory. The setup phase can currently be performed on the CPU only.
-
+`
+Under new ECP funding, we implemented a new GMRES solver that has better communication and parallelization properties than the current one and showed improved performance on a BG/Q. 
+Figure \ref{fig:cogmres} illustrates the percentage of improvement for increasing the Krylov subspace size k for a 27-point 3D diffusion problem with n x n x n grid points per core using 8192 cores, where n=10, 20, 30, 40, 50, 60. 
+For most runs loop unrolling in 8 batches was used, except for `10, no', where none was used to show the effect of saving communication and for n=40, where 4 batches were used. The current implementation is restricted to the CPU, but the solver shows great potential for GPUs. The design of the new solver was a collaboration with the ExaWind team, who demonstrated excellent GPU performance in a paper submitted to Numerical Linear Algebra with Applications \cite{cogmres}. 
+We have also started to introduce a new integer datatype called HYPRE$\_$BigInt. The current {\sl hypre} version requires that all integers are converted to 64 bits when solving linear systems greater than 2 billions using the unstructured solvers. The new datatype will allow to only convert variables that need to be 64 bits in that case. This will improve performance and memory usage.
 
 \paragraph{Next Steps}
 
-Our most immediate plans are to improve the efficiency of interfacing applications with {\sl hypre}'s solvers. This includes removal of unnecessary copies, and increasing use of threading, wherever possible. We plan to remove the requirement to use unified memory for BoomerAMG and want to increase the portions of its solve phase that are not GPU-enabled yet, but are well suited for GPUs, e.g. polynomial smoothers. Further out we would like to investigate how to enable the setup phase for GPUs, initially porting algorithms that are suitable as well as finding ways to improve convergence where necessary.
-In addition, we would like to work with ECP application teams who are using {\sl hypre} or would like to use it, to achieve best performance by tuning the solvers for them and potentially implementing suitable algorithmic changes. One example would be the implementation of ICGS-GMRES to improve ExaWind's solve times.
+We will pursue the following tasks:
 
-Other interesting topics that could impact ECP applications, but are currently pursued under SciDAC funding is the development of parallel smoothers that lead to better convergence than Jacobi, such as ILU related methods, as well as the development of multigrid solvers that are more capable to take advantage of the structure of a problem.
+\begin{itemize}
+
+\item We will finalize the implementation of HYPRE$\_$BigInt and make the new capability available to {\sl hypre} users. 
+
+\item We will continue to add new GPU capabilities to {\sl hypre}. This includes converting various components that are currently running only on the CPU to be usable on the GPU using CUDA or OpenMP 4.5. We will particularly focus on some of the smoothers, e.g. polynomial smoothers, the new GMRES solver, as well as suitable setup kernels. We also plan on improving the efficiency of interfacing applications with {\sl hypre}'s solvers.
+\end{itemize}
+In addition, we would like to work with ECP application teams who are using {\sl hypre} or would like to use it, to achieve best performance by tuning the solvers for them and potentially implementing suitable algorithmic changes. 
+
 
