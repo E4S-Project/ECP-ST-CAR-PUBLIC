@@ -20,12 +20,12 @@ applications such as HACC, NWChem, QMCPACK, LatticeQCD and EXAALT.
 
 Applications typically employ simple checkpoint-restart mechanisms to
 survive failures that directly use a parallel file system.  However,
-I/O bottlenecks to to concurrent writes are a known limitation in this
+I/O bottlenecks to concurrent writes are a known limitation in this
 case. At Exascale, failures are more frequent but the available file
 system I/O bandwidth per compute unit decreases. Therefore, there is a
 need to checkpoint more frequently but simple checkpointing becomes
 even less scalable and efficient. To compensate for the decreasing I/O
-bandwidth per compute unit, the storage stack is become increasingly
+bandwidth per compute unit, the storage stack is becoming increasingly
 more heterogeneous (e.g. NVRAM, burst buffers, key-value stores,
 etc.). This aspect introduces a new level of complexity for
 application developers: they need to adapt their checkpoint strategy
@@ -50,15 +50,15 @@ efforts such as FTI~\cite{FTI} and SCR~\cite{SCR}, this strategy
 greatly improves performance and scalability.
 
 Second, it offers a simple API that enables users to either manually
-capture checkpoints into node-local files or to define memory regions
-that are automatically serialized into node-local files. All interactions
+capture checkpoints into files or to define memory regions
+that are automatically serialized into files. All interactions
 with the complex heterogeneous storage stack is transparently handled
 by VeloC, which facilitates ease-of-use.
 
-Third, VeloC separates the management of node-local checkpoints
+Third, VeloC separates the management of checkpoints
 from the actual implementation of the resilience strategies by
 using a client library that interfaces with a resilience engine.
-The engine can be linked directly into the application and will
+The engine can be linked directly into the application and
 run in synchronous mode, or it can be part of a separate backend
 process that facilitates an asynchronous mode where the resilience
 strategies are applied in the background to avoid blocking the
@@ -66,7 +66,7 @@ application. This ultimately leads to better performance and scalability.
 
 \paragraph{Recent Progress}
 
-We have interviewed and met with several ECP application team in an
+We have interviewed and met with several ECP application teams in an
 effort to understand their checkpointing needs. Most of our current
 efforts involved the HACC, ECP NWChem-X, Lattice QCD and QMCPACK
 teams. These interviews helped us understand the needs to the ECP
@@ -83,8 +83,8 @@ can be found in the VeloC design document, submitted to ECP during
 past milestones. Working off the design specification, we implemented
 the VeloC software according to the design principles introduced in
 the previous section. We have worked on understanding, refactoring,
-modularizing several components of the Fault Tolerance Interface
-(FTI) and Scalable Checkpoint/Restart (SCR) library to extract
+and modularizing several components of the Fault Tolerance Interface
+(FTI) and Scalable Checkpoint/Restart (SCR) libraries to extract
 self-contained modules that can be used in the VeloC software. We
 recently completed the integration of self-contained modules and
 other driver modules into a flexible engine that allows VeloC the
@@ -134,4 +134,4 @@ resource and job manager and the possibility to run two MPI executions
 The team will be working on the VeloC software release for the next quarter.
 Our goal is to finalize the integration and testing of all modules, clean up
 the code and run end-to-end testing. Furthermore, we will add documentation
-and tutorials to facilitate easy adopting in our user community.
+and tutorials to facilitate easy adoption by our user community.
