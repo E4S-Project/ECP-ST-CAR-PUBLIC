@@ -18,7 +18,7 @@ significantly less overhead.  Furthermore, interoperability between
 BOLT and internode programming systems opens up new optimization
 opportunities by promoting asynchrony and reducing hardware
 synchronization (atomics and memory barriers).  Initial studies on
-this proposal can be found in \cite{ccgrid, ppopp}.  This report
+this proposal can be found in \cite{amer2018, ccgrid, ppopp}. This report
 briefly summarizes the issues in OpenMP runtimes that rely on OS-level
 threading, describes BOLT as the solution to this challenge, the
 current status in the BOLT effort, and the next steps for further
@@ -52,7 +52,7 @@ notoriously known that OS-level thread safety in production MPI
 libraries suffers significant performance issues.  Despite the recent
 improvements to OS-level thread safety in MPI libraries, the
 state-of-the-art performance results are still indicating serious
-scalability issues.  While continues progress on improving OS-level
+scalability issues.  While continued progress on improving OS-level
 thread safety in these important internode programming systems is
 crucial for traditional interoperability, we propose in this work
 exploring an orthogonal direction that assumes a more lightweight
@@ -73,38 +73,49 @@ leverages Argobots, a highly optimized lightweight threading library,
 as its underlying threading layer.  OpenMP threads and tasks are
 spawned as Argobots work units and nested parallel regions are managed
 through an efficient work-stealing scheduler.  Furthermore, new
-compiler hints are being investigated to allow reducing thread
-management overheads even further.  Interoperability improvements have
-also been demonstrated by having BOLT interoperate with an MPI library
-(MPICH) through the Argobots threading layer rather than OS-level
-threads.  Results showed that this approach allows better
-communication progress and outperforms the traditional Pthreads-level
-interaction.
+compiler hints and runtime optimizations have been developed to allow
+reducing thread management overheads even further~\cite{iwasaki2018}.
+Interoperability improvements have also been demonstrated by having
+BOLT interoperate with an MPI library (MPICH) through the Argobots
+threading layer rather than OS-level threads.  Results showed that
+this approach allows better communication progress and outperforms the
+traditional Pthreads-level interaction~\cite{seo2018}.
 
 \paragraph{Recent Progress}
 
 The development of BOLT went through several steps that involved
 developing or optimizing various aspects.  The first step was to fork
 BOLT from the upstream LLVM OpenMP runtime (https://openmp.llvm.org)
-and replace the Pthreads layer with a basic Argobots design.  Next, we
-implemented advanced scheduling strategies to improve the performance
-of BOLT under fine-grained nested parallelism regimes.
-Figure~\ref{fig:sollve-bolt} shows the development of BOLT.  The
-following step was to investigate ways to reduce thread management
-overheads by exploiting application knowledge.  By taking into account
-the suspension likelihood of a thread or task (e.g., yield execution
-on a blocking I/O operation), we have extended Argobots to leverage
-such information and incorporated these features into the BOLT
-runtime.  With respect to interoperability with MPI, we have
+and replace the Pthreads layer with a basic Argobots design. As shown
+in Figure~\ref{fig:sollve-bolt}, BOLT takes advantage of the maturity
+and the ABI compatibility of the LLVM OpenMP runtime with the Intel
+and GCC compilers, which makes it easily deployable in production
+environments.  Next, we implemented advanced scheduling strategies to
+improve the performance of BOLT under fine-grained nested parallelism
+regimes.  The following step was to investigate ways to reduce thread
+management overheads by exploiting application knowledge.  By taking
+into account the suspension likelihood of a thread or task (e.g.,
+yield execution on a blocking I/O operation), we have extended
+Argobots to leverage such information, incorporated these features
+into the BOLT runtime, and developed prototype compiler hints to
+exploit them. With respect to interoperability with MPI, we have
 investigated the shortcomings of current interoperability models at
 the implementation as well as standard specification levels.  We have
 investigated the benefits of having a more lightweight
 interoperability layer through Argobots using BOLT as the OpenMP
 runtime and MPICH as the MPI library and demonstrated encouraging
-results.  BOLT and Argobots have been subject to two releases and our
-latest progress results have been published in the prestigious IEEE
-Transactions on Parallel and Distributed Systems journal and some
-results have been described in an ECP report.
+results.
+
+BOLT and Argobots have been subject to three releases and the
+associated scientific contributions have been published in top tier
+venues in the field.  The latest BOLT release has been upgraded to be
+compatible with LLVM OpenMP 7.0, which includes support for the
+important explicit task dependency and task loop features, and has
+been subject to more optimizations and validation testing. More
+applications that could benefit from BOLT within and outside ECP have
+been discovered and BOLT's position within the ECP ecosystem has been
+solidified through new connections with other software technology and
+application projects.
 
 \begin{figure}[htb]
   \centering
@@ -121,16 +132,15 @@ following we enumerate some of the key aspects under progress:
 
 \begin{enumerate}
 
-\item User hints to lower thread management overheads previously
-  described were only implemented at the runtime level.  We plan to
-  work with the compiler team of the SOLLVE project to integrate these
-  hints at the compiler level.
+\item Tighter integration of BOLT with the other components of the
+SOLLVE project
 
-\item Only benchmarks and a few application cases have been used for
-  evaluation purposes.  We plan to investigate a wider range of
-  applications, including ECP ones, to evaluate the effectiveness of
-  our solution and potentially discover new areas of needed
-  improvement.
+\item Despite BOLT has reached more applications and users, its reach
+and impact remain limited.  We plan to investigate a wider range of
+applications, including ECP ones, and expand the BOLT user base.  This
+will allow us to evaluate the effectiveness of our solution and
+potentially discover new areas of needed improvement as well as
+increase BOLT's impact among users.
 
 \item The interoperability results between BOLT and MPI were
   encouraging but still preliminary.  We are planning on doing more
