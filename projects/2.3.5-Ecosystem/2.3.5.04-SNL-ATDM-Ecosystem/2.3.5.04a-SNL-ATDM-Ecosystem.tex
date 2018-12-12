@@ -51,15 +51,22 @@ application milestones.
 
 \paragraph{Recent Progress}
 
-The Sierra Solid Mechanics team helped integrate a GPU enabled bounding
-box search into the Technology Demonstrator (TD) application. This is the
-first component needed for a GPU contact algorithm and is the result
-of an ongoing collaboration between ATDM and Sierra/SM. The TD
-application is linking in this search and exercising it on both a CPU
-and GPU.
+The Technology Demonstrator team has continued progress toward a 
+performant, optimized GPU contact implementation. 
+Two final parts of the contact algorithm are being ported to run on the GPU: 
+interaction determination and interaction enforcement. The Sierra Solid 
+Mechanics and NimbleSM teams have begun, and are continuing, joint work on 
+porting the existing NimbleSM CPU-only routines and expect to test GPU 
+execution. Initial performance data indicated that providing a full 
+implementation of GPU contact could provide significant performance 
+improvements over CPU-only execution, and performance data will be 
+gathered once the routines are ready.
 
 \paragraph{Next Steps}
 
-The next component to integrate is a GPU enabled closest point
-projection, also developed jointly by ATDM and Sierra/SM.
+The team's next focus will be to add a frictional contact capability to 
+NimbleSM using node-face contact. This effort will include demonstrating 
+correctness through a few canonical verification problems, optimization
+ as needed, and evaluations of relative performance on hardware 
+representative of LLNL's ATS-2 platform.
 

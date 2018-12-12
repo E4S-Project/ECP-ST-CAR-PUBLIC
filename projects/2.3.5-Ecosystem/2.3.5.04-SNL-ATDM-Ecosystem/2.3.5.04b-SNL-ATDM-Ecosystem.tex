@@ -4,10 +4,8 @@
 
 This project is part of the NNSA/ASC program and is primarily focused
 on operating system and runtime system (OS/R) technology
-development and evaluation. This project is tightly aligned with the
-Qthreads ECP project.
-
-This project focuses on the design, implementation, and evaluation of
+development and evaluation.
+The project focuses on the design, implementation, and evaluation of
 OS/R interfaces, mechanisms, and policies supporting the efficient
 execution of the ATDM application codes on next-generation ASC
 platforms. Priorities in this area include the development of
@@ -31,7 +29,7 @@ Key challenges for this project include:
 
 \begin{itemize}
 
-  \item {\bf Improve the understanding of the use of containers and
+  \item {\bf Developing best practices for the use of containers and
     virtualization technology to support ATDM applications and
     workloads} Containers are gaining popularity as a way to package
   applications and virtualize the underlying OS to allow a set of
@@ -48,6 +46,13 @@ Key challenges for this project include:
     the sources of system noise and characterize the non-local side
     effects of unplanned detours that interrupt application execution
     flow.
+
+  \item {\bf Contributing to the OpenMP specification and MPI standard} 
+    To prepare for Exascale and to ensure that our ASC mission applications 
+    are well supported by these industry-standard programming models, 
+    we represent Sandia on the OpenMP Langauge Committee and MPI Forum.
+    We also work with vendors to ensure quality implementations of these
+    standards that meet the needs of ASC.
 
 \end{itemize}
 
@@ -67,32 +72,28 @@ employing an ATM programming model, are impacted by OS noise.
 
 \paragraph{Recent Progress}
 
-Potential use cases and technical options for container technologies
-in ATDM were evaluated and published in a conference
-paper~\cite{Younge:Tale:2017}, which was nominated for best paper.
+The team recently completed successful containerization of the NALU 
+computational fluid dynamics application.  NALU is a good proxy for 
+Sandia's production applications since it uses similar dependences 
+and components such as Trilinos and Kokkos but is not a restriced code.
+NALU also serves as a basis for the ExaWind ECP application.
+The container was developed on the desktop and deployed on one of 
+Sandia's Commodity Technology Systems (CTS).
 
 A journal article with analyses of MPI queue behavior observed during
-executions of Sandia mini-apps, as well as LAMMPS and CTH, has been
-accepted for publication~\cite{Ferreira:Characterizing:2018}.  The
-techniques were also applied to SPARC, and an expanded tech report
-version including the SPARC results will be available soon.
+executions of Sandia mini-apps, as well as LAMMPS and CTH, was 
+published in {\it Parallel Computing}~\cite{Ferreira:Characterizing:2018}.
+The techniques were also applied to SPARC, one of Sandia's ATDM
+applications, and an expanded tech report version including the SPARC 
+results was prepared for the SPARC team.
 
 \paragraph{Next Steps}
 
-Sandia's Kitten lightweight kernel has been ported to the Cray
-XC architecture and has been demonstrated on the Volta testbed system.
-Going forward, we are working on plans to port Kitten and/or the RIKEN
-McKernel lightweight kernel to the Vanguard Petascale ARM platform.
-We will be visiting RIKEN in early March to discuss plans and
-collaboration opportunities.
+This year a full Sandia ASC mission application will be containerized.
 
-Close to having the Qthreads backend to Kokkos patched up after last
-year's frontend-to-backend API changes.  Completion is contingent on
-resolution of the Kokkos team's remaining patches to the threads
-back-end, with which Qthreads shares common hooks.
-
-We are participating in an ECP working group on container technology
-and using the results of evaluation to guide future activities in this
-area.
+We continue to participate in the OpenMP Language Committee and the 
+MPI forum.  Additionally, the team is participating in an ECP working 
+group on container technology and using the results of evaluation to 
+guide future activities in this area.
 
 
