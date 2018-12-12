@@ -52,7 +52,7 @@ library.
 
 Without the OMPI-X project, there will be less competition and less
 innovation in addressing the needs of ECP users in the critical area
-of scalable, performant, and capable exascale-quality inter-process
+of scalable, performant, and expressive exascale-quality inter-process
 communication capabilities.
 
 \paragraph{Key  Challenges}
@@ -67,14 +67,14 @@ The MPI ecosystem (the standard and its implementations) needs to
 evolve to address challenges
 %% on the programming side
 driven by
-architectural change, as well taking advantage of new features and
+architectural change, as well as taking advantage of new features and
 capabilities.
 %
 As applications and libraries
 %% they rely on
 build up to exascale,
 %% levels of computing and beyond,
-the number of node, processes, and
+the number of nodes, processes, and
 threads required will rise significantly, whereas other key resources,
 such as memory tend to go \emph{down} on a per-node, -process, or
 -thread basis.  This emphasizes the importance of scalability in terms
@@ -82,7 +82,7 @@ of both performance and resource utilization.
 %% to allow MPI to scale to
 %% meet those needs.
 %
-Finally, we must work with in the much larger and broader MPI
+Finally, we must work within the much larger and broader MPI
 community to find approaches to address these challenges which do not
 adversely impact the capabilities, performance, or scalability for
 other users of MPI and Open MPI.
@@ -213,14 +213,13 @@ expectations.
 %% \end{wrapfigure}
 
 The OMPI-X team has been active in the MPI Forum, driving
-conversations about the Endpoints and Finepionts approaches to
+conversations about the Endpoints and Finepoints approaches to
 supported threaded programming, and the Sessions concept, which will
 improve the scalablity and flexibility of MPI.  Our prototype
 Finepoints implementation shows improvements of 25\% in communicaton
-time and 5\% in total runtime for an ECP mini-application.  A
-newly-optimized library allows new aggregation techniques that has
-been shown to provide 445\% increase in communication bandwidth in
-certain cases.
+time and 5\% in total runtime for an ECP mini-application.  New
+aggregation techniques have been shown to provide 445\% increase in
+communication bandwidth in certain cases.
 
 The OMPI-X team is also active in other areas of the evolution of the
 MPI standard. We have been driving development of the ``Sessions''
@@ -230,8 +229,7 @@ implementations, as well as greater flexibility.
 We are also tracking work on the PMPI tools interface replacement and
 the enhancements to the MPI\_T tools interface.  We are working with
 other members of the community to bring production-quality
-implementations of the latest versions of these interfaces to Open
-MPI.
+implementations of these updated interfaces to Open MPI.
 
 In the resilience area, we continued prior work on the User-Level
 Fault Mitigation (ULFM) capability, fully integrating it into Open MPI
@@ -251,8 +249,8 @@ message matching implementation which improves matching performance by
 up to 2x and saves significantly (1 GB) in memory, providing an
 improvement in total runtime for on applicaton of 6\%.  We have also
 worked to improve the MPI startup process by up to 5x in some
-configurations.  And we have begun baselining the memory utilizaion of
-the library in order to analyze and improve memory scalability.
+configurations.  And we have begun baselining memory utilization
+in order to analyze and improve memory scalability.
 
 %% We expect to be working on scalability and performance of Open MPI
 %% throughout the project, but some early successes have been
@@ -285,4 +283,7 @@ interoperability, pushing forward the Finepoints and Sessions
 prototypes and standards proposals, as well as implementations of the
 PMPI replacement and MPI\_T improvements.  We will also continue our
 internal improvements in performance, scalability, and capabilities to
-take maximum advantage of modern system capabilities.
+take maximum advantage of modern system capabilities. We are
+tentatively planning to merge 2.3.1.15-Qthreads into OMPI-X in the
+second phase of ECP ST activities due to the close technical and
+personnel connections.
