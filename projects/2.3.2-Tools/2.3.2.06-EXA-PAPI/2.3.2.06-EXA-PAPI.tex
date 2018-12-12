@@ -77,85 +77,78 @@ are already seeing in new architectures.
 
 \paragraph{Recent Progress}
 
-The Exa-PAPI hardware and power effort began with the implementation of new
-PAPI components enabling Intel Knights Landing (KNL) hardware counter and power
-management support. In December 2017, the latest version of PAPI (5.6.0) was
-shipped, releasing two new components that are fully integrated into the PAPI library for 
-KNL core and uncore support. Additionally, PAPI ships with a powercap component for 
-power/energy measurement and control. This development delivers two improvements. 
-First, in the past, PAPI power components supported only \emph{reading} power information. 
-The new component exposes running average power limit (RAPL) functionality to allow users 
-to read and write power. Second, the original PAPI power component accessed the RAPL 
-model-specific registers (MSRs) directly, and, therefore, reading
-power data required root privileges. The new PAPI power component uses the
-powercap interface that comes built-in with the Linux kernel. The purpose of this
-interface is to expose the RAPL settings to user-space. Therefore, power
-reading is possible without any superuser privileges---only Linux kernel version
-3.13 (or higher) is required.
+On the \textbf{software event} front, we began with the design and implementation of a new API to 
+expose any kind of software-defined events. It extends PAPI's role so that it becomes 
+the de-facto standard for exposing performance-critical events from different software
+layers.
 
-Since the concept of writing (or capping) power is new to PAPI, we studied
-numerical building blocks of varying computational intensity, and used the PAPI
-powercap component to detect power optimization opportunities. We experimented
-with a wide range of power caps on the KNL architecture to reduce
-the power usage for different numerical kernels while keeping the execution
-time constant so that real energy savings can be achieved.
-Figure~\ref{fig:Jacobi_power} shows one example where we use
-the Jacobi iterative method to solve a finite difference discretization of the
-Helmholtz equation. While the default power consumption is around 185 Watts,
-with power capping, we were able to improve the energy efficiency by~25\%
-without any loss in time-to-solution. All our findings have been published in a
-conference paper~\cite{power1} and a journal paper~\cite{power2}.
-%
+Since the concept of software-defined events is new to PAPI, we worked closely with 
+developers of different libraries and runtimes that serve as natural targets for early 
+adoption of the new SDE API.
+As of today, we have integrated SDEs into the sparse linear algebra library MAGMA-Sparse 
+(2.3.3.10 STMS11-PEEKS), the tensor algebra library TAMM (2.2.1.02 ADSE11-NWChemEx), 
+the task-scheduling runtime PaRSEC (2.3.1.09 STPM11-ParSEC), and the compiler-based 
+performance analysis tool BYFL (HT-DSE). 
+
 \vspace{-4pt}
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=0.82\textwidth]{projects/2.3.2-Tools/2.3.2.06-EXA-PAPI/Exa-PAPI-jacobi.pdf}
-\caption{Average power measurements (Watts on y axis) of Jacobi algorithm on a 
-12,800 x 12,800 grid for different power caps. (A) FLAT mode: data allocated to DDR4; 
-(B) FLAT mode: data allocated to MCDRAM}
-\label{fig:Jacobi_power}
+  \subfloat[ ]{\label{fig:sde_magma}
+  \includegraphics[width=0.49\linewidth]{projects/2.3.2-Tools/2.3.2.06-EXA-PAPI/Exa-PAPI_sde_magma.pdf}}
+  \subfloat[ ]{\label{fig:sde_parsec}
+  \includegraphics[width=0.49\linewidth]{projects/2.3.2-Tools/2.3.2.06-EXA-PAPI/Exa-PAPI_sde_parsec.pdf}}
+\caption{(a) PAPI SDE-Recorder logging convergence of different ILU-preconditioned MAGMA-sparse Krylov solvers for a 2D/3D Problem; (b) PAPI SDE-Recorder logging the status of different task queues in PaRSEC.}
 \end{center}
 \end{figure}
-%
 \vspace{-8pt}
-
-On the software-defined events front, we have already proposed an API
-(publicly available on Jira:
-\url{https://jira.exascaleproject.org/secure/attachment/12251/2017_SDE_API_report.pdf})
-and received significant feedback and requests for changes by members of the
-runtime and library communities, which we have incorporated. We have also
-developed a prototype implementation of an SDE component in PAPI, which we are
-using to integrate SDE support in various ECP projects, such as:
 %
-\begin{enumerate}
-\vspace{-3pt}
-\item ByFL (HT-DSE): \url{https://bitbucket.org/jagode/byfl_papi_sde}
-\vspace{-5pt}
-\item PaRSEC (2.3.1.09 STPM11-ParSEC): \url{https://bitbucket.org/herault/parsec/branch/PAPI-SDE}
-\vspace{-5pt}
-\item PEEKS (2.3.3.10 STMS11-PEEKS): \url{https://bitbucket.org/icl/magma} (branch: \verb+PAPI_SDE+)
-\vspace{-5pt}
-\item NWchemEx (2.2.1.02 ADSE11-NWChemEx): \url{https://bitbucket.org/jagode/nwchem_papi_sde}
-\end{enumerate}
+%
+The examples in Figure~\ref{fig:sde_magma} illustrate how the convergence of Krylov solvers can be
+visualized with the help of PAPI SDEs. Each of these solvers behave very differently 
+for different problems and matrices, which, once more, stresses the importance of 
+\emph{exposing these details in a standardized way}. This allows the domain
+scientist to quickly identify the fastest and most robust method of choice for 
+their very unique problems. Most importantly, this information can now be obtained without 
+expert knowledge about algorithm-specific characteristics,
+and without having to instrument MAGMA library code, but simply by calling \verb+PAPI_read()+
+in the top-level application.
+
+Figure~\ref{fig:sde_parsec} serves as a second showcase, illustrating the evolution of 
+various task queues during the execution of a Cholesky factorization in PaRSEC.
+With SDEs in PARSEC, a user can get a view of what is happening inside the runtime
+by simply calling \verb+PAPI_start()+ and \verb+PAPI_stop()+ in their application, without the need to
+instrument the PaRSEC runtime code. 
+
+
+
+\vspace{10pt}
+On the \textbf{hardware counter} front, we have developed a new PAPI component, called ``PCP'' for 
+IBM Power9 hardware counters. It adds support for (1) core performance events, which are specific
+to each core; and (2) shared events, which monitor the performance of
+node-wide resources that are shared between cores. Access to shared
+events require elevated privileges. However, IBM's official route for providing
+access to shared events is through the Performance Co-Pilot (PCP) for non-root users.
+The new PAPI-PCP component---available from the PAPI git repository (\url{https://bitbucket.org/icl/papi.git})---enables 
+all users to access Power9 shared events through PAPI.
+(A report is publicly available on Jira:
+\url{https://jira.exascaleproject.org/secure/attachment/13461/2018-06__Exa-PAPI__PCP__Milestone_Report.pdf})
 
 \paragraph{Next Steps}
 
 Our next efforts will focus on:
 \begin{enumerate}
-\item \textbf{Development of a PAPI component for IBM Power9 Hardware Counter
-	Support:} Add support for (1) core performance events, which are specific
-		to each core; and (2) shared events, which monitor the performance of
-		node-wide resources that are shared between cores. Access to shared
-		events require elevated privileges. However, IBM's official route for providing
-		access to shared events will be through the
-		Performance Co-Pilot (PCP) for non-root users. Thus, one of the
-		Exa-PAPI efforts is to develop a PAPI-PCP component so that all users
-		can access Power9 shared events through PAPI.
+\item \textbf{PAPI Support for NVIDIA GPU Next-generation Monitoring Capabilities:} 
+		Develop support for NVIDIA GPU performance counters and power 
+		monitoring and capping capabilities. The released version of PAPI 
+		will have fully integrated support for the NVIDIA GPU counters and power management.
 %
-\item \textbf{Release of PAPI's SDE component, and integration of SDEs with other ECP efforts}: 
-		Refine the PAPI SDE prototype implementation based on
-		feedback from the ECP community and experience acquired from
-		instrumenting ECP projects. Instrument ECP libraries, runtimes, and
-		applications, such as PaRSEC, PEEKS, and NWChem to use software-defined
-		events to export performance information.
+\item \textbf{Prototype Tool to Assist with Native Counter Disambiguation}: 
+		Create a prototype toolkit consisting of a collection of benchmarks 
+		(some implemented as part of Exa-PAPI; some collected from existing 
+		benchmark suites) that can assist developers in understanding the differences 
+		between different native hardware events.
+%
+\item \textbf{Fulfillment of Software-defined Event Implementation}:
+		Refine the PAPI component for SDEs based on feedback from the ECP community 
+		and experience acquired from instrumenting ECP projects.
 \end{enumerate}
