@@ -82,19 +82,6 @@ expose any kind of software-defined events. It extends PAPI's role so that it be
 the de-facto standard for exposing performance-critical events from different software
 layers.
 
-%Because the PAPI SDE API will be used by different ECP libraries, and runtimes, 
-%and also applications, this has been a Co-Design effort, and we have 
-%shared our early Prototype API version with the community to gather feedback from the 
-%different ECP teams.
-%These interactions revealed two principal concerns. First, performance analysis tools 
-%community strongly emphasized the importance of preserving the existing API,
-%which is currently exported by PAPI for measuring hardware events.%Second, library and runtime communities were mostly concerned with the performance 
-%overhead caused by the introduction of SDEs in their codes.
-%
-%Since PAPI is positioned as a middleware layer, success depends on adoption 
-%by other software modules and toolkits. As a result, we used the feedback from  
-%the different communities to guide our design decisions.
-
 Since the concept of software-defined events is new to PAPI, we worked closely with 
 developers of different libraries and runtimes that serve as natural targets for early 
 adoption of the new SDE API.
@@ -116,9 +103,11 @@ performance analysis tool BYFL (HT-DSE).
 \vspace{-8pt}
 %
 %
-The examples in Figure~\ref{fig:sde_magma} illustrate how the convergence of Krylov solvers can bevisualized with the help of PAPI SDEs. Each of these solvers behave very differently 
+The examples in Figure~\ref{fig:sde_magma} illustrate how the convergence of Krylov solvers can be
+visualized with the help of PAPI SDEs. Each of these solvers behave very differently 
 for different problems and matrices, which, once more, stresses the importance of 
-\emph{exposing these details in a standardized way}. This allows the domainscientist to quickly identify the fastest and most robust method of choice for 
+\emph{exposing these details in a standardized way}. This allows the domain
+scientist to quickly identify the fastest and most robust method of choice for 
 their very unique problems. Most importantly, this information can now be obtained without 
 expert knowledge about algorithm-specific characteristics,
 and without having to instrument MAGMA library code, but simply by calling \verb+PAPI_read()+
