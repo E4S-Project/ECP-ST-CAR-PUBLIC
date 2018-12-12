@@ -75,7 +75,7 @@ and hierarchical low-rank matrix structures.
 % Parallel pre-pivoting for both packages.
 
 The improvements for SuperLU will be mainly in two areas: (1) develop
-a communication-avoiding 3D factorization code that have provably 
+a communication-avoiding 3D factorization code that has provably 
 lower communication complexity; (2) develop a synchronization-avoiding
 triangular solve code to enable more overlap of communications of different
 processes at different substitution steps.
@@ -86,7 +86,7 @@ low-rank representations, which leads to linear scaling $O(n)$ or $O(n \log n)$
 memory and arithmetic complexity for PDEs with smooth kernels.
 The developments for STRUMPACK will focus on several areas:
 (1) develop robust stopping criteria --- both absolute and relative --- for
-    adaptive (incremental) randomized sampling scheme to reveal numerical
+    adaptive (incremental) randomized sampling schemes to reveal numerical
     ranks in the low-rank compression routine. The goal is to use
     enough samples for stability, but not too many for efficiency;
 (2) add OpenMP support for both HSS compression and ULV factorization routines,
@@ -94,8 +94,8 @@ The developments for STRUMPACK will focus on several areas:
 (3) reduce MPI communication in all stages of the code, including HSS
     construction, ULV factorization and triangular solve;
 (4) in addition to HSS, develop codes to support other simpler low-rank
-    format, such as HOLDR. The HSS format has asymptotically lower complexity
-    than HOLDR, but has larger prefactor constant. We expect HSS to be more
+    formats, such as HOLDR. The HSS format has asymptotically lower complexity
+    than HOLDR, but has a larger prefactor constant. We expect HSS to be more
     useful for large-scale problems while HOLDR is more useful for mid-range
     problems;
 (5) work with the ECP application teams to examine their specific problem
@@ -125,7 +125,7 @@ for pivot selection~\cite{AWPM2018}. The other improvements are:
       3) Improvement in HSS ULV solve with reduced communication and more
       OpenMP support, leading up to 7x faster in matrix redistribution and
       1.4x faster in the entire solve.
-\item For both STRUMPACK and SuperLU, we performed initial bottleneck study
+\item For both STRUMPACK and SuperLU, we performed initial bottleneck studies
   for two ECP applications: CEED (MFEM indefinite Maxwell simulation) and
   ExaSGD (Optimizing stochastic grid dynamics). We identified performance
   bottlenecks of the solvers, proposed remedies, and documented the
