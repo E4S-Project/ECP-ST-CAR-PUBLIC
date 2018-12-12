@@ -58,18 +58,15 @@ C++ or SWIG.
 
 Our next efforts include:
 \begin{enumerate}
-  \item \textbf{Merge Fortran module to upstream SWIG:} The work is in progress
-    to push the developed SWIG/Fortran functionality to upstream SWIG project.
-    This would allow projects both inside and outside ECP ecosystem to start using
-    this functionality independently of ForTrilinos to provide Fortran
-    interfaces to their own libraries. We anticipate multiple projects taking
-    advantage of this capability.
   \item \textbf{Provide wrappers for more libraries:} ForTrilinos will continue
-    efforts to increase the number of wrapped Trilinos libraries. The next phase
-    of the project will include libraries corresponding to nonlinear solvers,
-    such as NOX. We anticipate that once that functionality is available, many
-    applications in ECP, including E3SM-MMF, will be able to start using ForTrilinos in the
-    production.
+    efforts to increase the number of wrapped Trilinos libraries. The scheduled
+    release of the next phase of the project will include libraries
+    corresponding to nonlinear solvers, such as NOX.
+  \item \textbf{Integrate developed capabilities into applications:} E3SM-MMF
+    is an Earth system model development and simulation project. It relies on
+    Trilinos for its implicit capabilities. The ForTrilinos project will
+    integrate the developed nonlinear solver with IoC into E3SM-MMF to provide
+    path forward to heterogeneous stack.
   \item \textbf{Provide interfaces for heterogeneous platforms:} ForTrilinos
     will develop support for heterogeneous memory through providing access to
     Kokkos-based interfaces in Trilinos. This will allow full exposure to
