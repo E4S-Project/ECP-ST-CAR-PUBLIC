@@ -20,9 +20,9 @@ standard, and its specific implementation in Open MPI meet the needs
 of the ECP community in terms of performance, scalability, and
 capabilities or features. MPI is the predominant interface for
 inter-process communication in high-end computing.  Nearly all of the
-ECP application (AD) projects (93\%~\cite{Bernholdt:2017:smu-talk})
+ECP application (AD) projects (93\%~\cite{Bernholdt:2018:SMU-tr})
 and the majority of software technology (ST) projects
-(57\%~\cite{Bernholdt:2017:smu-talk}) rely on it.
+(57\%~\cite{Bernholdt:2018:SMU-tr}) rely on it.
 %% Since its
 %% inception, the MPI standard has evolved to address the changing needs
 %% of massively parallel libraries and applications as well as the
@@ -52,7 +52,7 @@ library.
 
 Without the OMPI-X project, there will be less competition and less
 innovation in addressing the needs of ECP users in the critical area
-of scalable, performant, and capable exascale-quality inter-process
+of scalable, performant, and expressive exascale-quality inter-process
 communication capabilities.
 
 \paragraph{Key  Challenges}
@@ -67,14 +67,14 @@ The MPI ecosystem (the standard and its implementations) needs to
 evolve to address challenges
 %% on the programming side
 driven by
-architectural change, as well taking advantage of new features and
+architectural change, as well as taking advantage of new features and
 capabilities.
 %
 As applications and libraries
 %% they rely on
 build up to exascale,
 %% levels of computing and beyond,
-the number of node, processes, and
+the number of nodes, processes, and
 threads required will rise significantly, whereas other key resources,
 such as memory tend to go \emph{down} on a per-node, -process, or
 -thread basis.  This emphasizes the importance of scalability in terms
@@ -82,7 +82,7 @@ of both performance and resource utilization.
 %% to allow MPI to scale to
 %% meet those needs.
 %
-Finally, we must work with in the much larger and broader MPI
+Finally, we must work within the much larger and broader MPI
 community to find approaches to address these challenges which do not
 adversely impact the capabilities, performance, or scalability for
 other users of MPI and Open MPI.
@@ -172,74 +172,118 @@ importance to ECP.
 \paragraph{Recent Progress}
 %% \textit{Describe what you have done recently.  It would be good to
 %% have some kind of figure or diagram in this section.}
-One of the first activities of the project was to conduct a survey of
-ECP AD and ST projects to better understand their current and expected
-usage of MPI, and look for significant issues in the MPI environment
-that we might have overlooked in our planning for the project.  A
-paper describing the survey results was presented at the ExaMPI 2017
-workshop held in conjunction with SC17~\cite{Bernholdt:2017:smu-talk},
-and will appear in a special issue of Concurrency and Computing:
-Practice and Experience.  The survey has generated a great deal of
-interest in the MPI community, and there are plans to expand the scope
-to provide a better characterization of MPI usage around the world.
+The survey of MPI usage conducted last year continues to have impact
+in the community.  In an article in The Next Platform in August
+described our technical report \cite{Bernholdt:2018:SMU-tr} as a
+``must read''.  Additionally, the MPI community, led in part by OMPI-X
+team members, has launched a survey to obtain input from the broader
+international MPI user community.
 
-We have delivered an implementation of the User-Level Fault Mitigation
-(ULFM) resilience approach, which are under consideration by the MPI
-Forum for inclusion in the standard.  ULFM provides the basic building
-blocks for cheap, tailored recovery capabilities within applications
-and libraries using MPI.  ULFM imposes no overhead on raw
-communication performance on ECP-relevant hardware.  We are now
-working with several application teams to demonstrate the capabilities
-it provides.
+During the past year, we have ramped up our work in runtime
+interoperability for ``MPI+X'' programming approachs.  We have
+prototyped a capability to coordinate placement of ranks and threads
+between MPI and OpenMP which cannot be achieved by ``standard''
+methods.  This work has garnered significant interest in the community
+and we forsee these activities expanding beyond our original
+expectations.
 
-\begin{wrapfigure}{r}{4in}
-\begin{minipage}[c]{2in}
-\vspace{0pt}
-\includegraphics[width=\textwidth]{projects/2.3.1-PMR/2.3.1.11-OMPI-X/pritchard-rma-mt-put-rate.png}
-\end{minipage}
-\begin{minipage}[c]{2in}
-\vspace{0pt}
-\includegraphics[width=\textwidth]{projects/2.3.1-PMR/2.3.1.11-OMPI-X/pritchard-rma-mt-get-rate.png}
-\end{minipage}
-\caption{Comparison of put (left) and get (right) RMA performance in a
-multi-threaded context for Open MPI.  Recent OMPI-X contributions are
-reflected in version 4.0.0a1 (top group of lines), in comparison with
-v2.1.3.}
-\label{fig:ompix-rma}
-\end{wrapfigure}
+%% We have delivered an implementation of the User-Level Fault Mitigation
+%% (ULFM) resilience approach, which are under consideration by the MPI
+%% Forum for inclusion in the standard.  ULFM provides the basic building
+%% blocks for cheap, tailored recovery capabilities within applications
+%% and libraries using MPI.  ULFM imposes no overhead on raw
+%% communication performance on ECP-relevant hardware.  We are now
+%% working with several application teams to demonstrate the capabilities
+%% it provides.
 
-We expect to be working on scalability and performance of Open MPI
-throughout the project, but some early successes have been
-demonstrated.  We have improved the RMA implementation so achieve
-performance levels comparable to those obtained only by high tuned
-implementations by vendors and significantly improved their
-performance in multi-threaded contexts (Fig.~\ref{fig:ompix-rma}).  We
-have also been able to improve message matching by up to 2$\times$
-generally, and up to 45$\times$ on Intel Xeon Phi processors, and we
-have made significant improvement to performance when MPI is used in a
-multi-threaded environment.
+%% \begin{wrapfigure}{r}{4in}
+%% \begin{minipage}[c]{2in}
+%% \vspace{0pt}
+%% \includegraphics[width=\textwidth]{projects/2.3.1-PMR/2.3.1.11-OMPI-X/pritchard-rma-mt-put-rate.png}
+%% \end{minipage}
+%% \begin{minipage}[c]{2in}
+%% \vspace{0pt}
+%% \includegraphics[width=\textwidth]{projects/2.3.1-PMR/2.3.1.11-OMPI-X/pritchard-rma-mt-get-rate.png}
+%% \end{minipage}
+%% \caption{Comparison of put (left) and get (right) RMA performance in a
+%% multi-threaded context for Open MPI.  Recent OMPI-X contributions are
+%% reflected in version 4.0.0a1 (top group of lines), in comparison with
+%% v2.1.3.}
+%% \label{fig:ompix-rma}
+%% \end{wrapfigure}
 
-Early work with the prototype implementation of Finepoints shows
-improvements of 25\% in communication costs and 5\% in overall
-execution time for one ECP mini-app.
+The OMPI-X team has been active in the MPI Forum, driving
+conversations about the Endpoints and Finepoints approaches to
+supported threaded programming, and the Sessions concept, which will
+improve the scalablity and flexibility of MPI.  Our prototype
+Finepoints implementation shows improvements of 25\% in communicaton
+time and 5\% in total runtime for an ECP mini-application.  New
+aggregation techniques have been shown to provide 445\% increase in
+communication bandwidth in certain cases.
+
+The OMPI-X team is also active in other areas of the evolution of the
+MPI standard. We have been driving development of the ``Sessions''
+concept, will allow increased scalability in MPI applications and
+implementations, as well as greater flexibility.
 %
-Open MPI support for the MPI\_T interface has been extended~\cite{icl:957} to
-provide a set of low-level counters to present a more detailed performance
-characteristics map to tools and to users.
+We are also tracking work on the PMPI tools interface replacement and
+the enhancements to the MPI\_T tools interface.  We are working with
+other members of the community to bring production-quality
+implementations of these updated interfaces to Open MPI.
+
+In the resilience area, we continued prior work on the User-Level
+Fault Mitigation (ULFM) capability, fully integrating it into Open MPI
+for the v4 release.  We also continue to pursue the ``Reinit'' fault
+tolerance approach, completing the initial API design and plan for
+implementation within Open MPI.
+
+Behind the scenes of the Open MPI implementation, we are pursuing
+efforts to improve performance and scalability, take full advantage of
+the increasingly complex and sophisticated memory architectures that
+are becoming available at the node level, and providing increased
+topology and congestion awareness within the library.  We have made
+improvements in RMA performance, which allows better scaling and
+provides out-of-the-box performance in Open MPI which is comparable to
+highly-tuned vendor implementations.  We have prototyped improved an
+message matching implementation which improves matching performance by
+up to 2x and saves significantly (1 GB) in memory, providing an
+improvement in total runtime for on applicaton of 6\%.  We have also
+worked to improve the MPI startup process by up to 5x in some
+configurations.  And we have begun baselining memory utilization
+in order to analyze and improve memory scalability.
+
+%% We expect to be working on scalability and performance of Open MPI
+%% throughout the project, but some early successes have been
+%% demonstrated.  We have improved the RMA implementation so achieve
+%% performance levels comparable to those obtained only by high tuned
+%% implementations by vendors and significantly improved their
+%% performance in multi-threaded contexts (Fig.~\ref{fig:ompix-rma}).  We
+%% have also been able to improve message matching by up to 2$\times$
+%% generally, and up to 45$\times$ on Intel Xeon Phi processors, and we
+%% have made significant improvement to performance when MPI is used in a
+%% multi-threaded environment.
+
+%% %% Early work with the prototype implementation of Finepoints shows
+%% %% improvements of 25\% in communication costs and 5\% in overall
+%% %% execution time for one ECP mini-app.
+%% %
+%% Open MPI support for the MPI\_T interface has been extended~\cite{icl:957} to
+%% provide a set of low-level counters to present a more detailed performance
+%% characteristics map to tools and to users.
 %
-Finally, we have deployed the MTT testing infrastructure used by Open
-MPI on ORNL's SummitDev and Summit platforms, as well as improving the
-MTT system itself.
+Finally, we continue to build out the MTT testing infrastructure and
+continuous integration testing capabilities to provide better testing
+capabilities for ECP-relevant platforms, including Summit at ORNL.
 
 \paragraph{Next Steps}
 %% \textit{Describe what you are working on next.}
 We are making progress across multiple fronts, some of which has been
-described above.  In FY18, we expect to complete our primary efforts
-in the area of resilience in Open MPI, an implementation of the
-``ReInit'' approach to complement the already completed User-Level
-Fault Mitigation (ULFM) capability.  Both approaches continue to be
-debated within the MPI Forum, but we are hopeful that demonstrations
-based on our implementations can help bring these discussions to a
-conclusion. Early in FY19, we will also be delivering a formal
-proposal and prototype implementation of the ``Finepoints'' approach to
-supporting environments with large numbers of threads.
+described above.  In FY19, we expect to continue our efforts on MPI+X
+interoperability, pushing forward the Finepoints and Sessions
+prototypes and standards proposals, as well as implementations of the
+PMPI replacement and MPI\_T improvements.  We will also continue our
+internal improvements in performance, scalability, and capabilities to
+take maximum advantage of modern system capabilities. We are
+tentatively planning to merge 2.3.1.15-Qthreads into OMPI-X in the
+second phase of ECP ST activities due to the close technical and
+personnel connections.
