@@ -63,15 +63,15 @@ which provides applications with asynchronous memory migration
 between memory tiers and other convenience mechanisms.
 
 \item \textbf{Power management:}
-\emph{PowerStack} will explore hierarchical interfaces for power management
+\emph{PowerStack} explores hierarchical interfaces for power management
 at three specific
 levels~\cite{Ellsworth:argo,ellsworth_e2sc2016,patki2016,sakamoto2017}: the
 global level of batch job schedulers (which we refer to as the Global
 Resource Manager or GRM), the enclave level of job-level runtime systems
 (open-source solution of Intel GEOPM and the ECP Power Steering project
-will be leveraged here), and the node-level through measurement and control
+are being leveraged here), and the node-level through measurement and control
 mechanisms integrated with the NRM (described below).
-At the node level, we will develop low-level, vendor-specific 
+At the node level, we are developing low-level, vendor-neutral
 monitoring/controlling capabilities to monitor power/energy consumption,
 core temperature and other hardware status~\cite{osti_1353371,zhang2015minimizing}, and control the hardware power
 capping and the CPU frequencies. 
@@ -92,89 +92,97 @@ create subjobs that can communicate with each other.
 
 \paragraph{Recent Progress}
 
-We identified initial representative ECP applications and benchmarks of
-interest, focusing in particular on characteristics such as: coupled codes
-consisting of multiple components, memory-intensive codes that do not fit
-well in DRAM or that are bandwidth-bound, and codes with dynamically
-changing resource requirements.
-%We interfaced (either face-to-face or via
-%teleconferencing) with the representatives of the following projects:
-%NWChemEx, PaRSEC, CANDLE, GAMESS, MPI teams, PETSc, SOLLVE, SICM, PowerRT,
-%and Flux.
-
-We designed and developed an API between Node Power and Node
-Resource Manager (NRM), which in turn allows Global Resource
-Manager (GRM) to control and monitor power and other node-local
-resources. Additionally, we studied the effect of power capping on
-different applications using the NodePower API and developed power
-regression models required for a demand-response policy, which may be
-added to the GRM in future.
-
-We developed Yggdrasil, a resource event reactor that provides the enclave
-abstraction.  It can use standard HPC schedulers such as SLURM or Flux as a
-backend.
-
-We developed the initial, centralized version of the Global Resource
-Manager (GRM) providing a hierarchical framework for power control.  We
-enhanced existing PowSched codebase to use the power controller in the node
-OS to acquire node local power data and adjust the power caps. We also developed a variation-aware
-scheduler to address manufacturing variability under power constraints with Flux infrastructure, 
-and extended SLURM to support power scheduling plugins to enable our upcoming GRM 
-milestones. 
-
-We designed and developed the first version of the unified Node
-Resource Manager.  The NRM provides high level of control over node
-resources, including initial allocation at job launch and dynamic
-reallocation at the request of the application and other services.
-The initial set of
-managed resources includes CPU cores and memory; they can be allocated to
-application components via a container abstraction, which is used to describe
-partitions of physical resources (to decrease interference),
-and more.
-
 We developed the first stable version of UMap, the user-space memory map
-page fault handler for NVRAM. 
-UMap handler maps application
-threads' virtual address ranges to persistent data sets, transparently
-pages in active pages and evicts unused pages.  We evaluated the costs and
-overheads of various approaches and characterized end-to-end performance
-for simple I/O intensive applications.
+page fault handler for NVRAM.  UMap handler maps application threads'
+virtual address ranges to persistent data sets, transparently pages in
+active pages and evicts unused pages.  We evaluated the costs and overheads
+of various approaches and characterized end-to-end performance for simple
+I/O intensive applications.
+%
+Further work on performance evaluation and capability improvements is
+ongoing.  UMap API has been extended to allow for application-specific I/O
+strategies.  Read-only support was added to enable the use with released
+enterprise versions of the Linux kernel.  UMap now runs on LLNL Sierra.  We
+are studying locality-aware eviction and replacement algorithms and are
+conducting scaling studies using astronomy application and data.
 
-We designed AML, a memory library for explicit management of deep memory
-architectures, and validated it on Intel's Knights Landing. Its main
-feature is a scratchpad API, allowing applications to implement algorithms
-similar to out-of-core for deep memory.
-We provided multiple optimized versions of memory migration facilities,
-ranging from a regular copy to a transparent move of memory pages, using
-synchronous and asynchronous interfaces and single- and multithreaded
-backends.
+We developed AML, a memory library for explicit management of deep memory
+architectures. Its main feature is a flexible and composable API, allowing
+applications to implement algorithms similar to out-of-core for deep
+memory.  We provided multiple optimized versions of memory migration
+facilities, ranging from a regular copy to a transparent move of memory
+pages, using synchronous and asynchronous interfaces and single- and
+multithreaded backends.  We validated the initial implementation on Intel's
+Knights Landing using a pipelining scheme for stencil applications.  We
+also identified interaction points between UMap and AML.  Further
+performance and capability improvements are underway.  In particular, we
+performed exhaustive studies comparing performance of various approaches
+for block-based DGEMM and task-based Cholesky decomposition.
 
-\begin{figure}[h]
-\centering
-\includegraphics[height=.15\textheight]{projects/2.3.5-Ecosystem/2.3.5.05-Argo/argo-global}\hspace{1em}%
-\includegraphics[height=.15\textheight]{projects/2.3.5-Ecosystem/2.3.5.05-Argo/argo-node}
-\caption{Global and node-local components of the Argo software stack and
- interactions between them and the surrounding HPC system components.}
-\end{figure}
+We developed an API between Node Power and Node Resource Manager (NRM),
+which in turn allows Global Resource Manager (GRM) to control and monitor
+power and other node-local resources.  Additionally, we studied the effect
+of power capping on different applications using the NodePower API and
+developed power regression models required for a demand-response policy.
+We also developed a variation-aware scheduler to address manufacturing
+variability under power constraints with Flux infrastructure, and extended
+SLURM to support power scheduling plugins.  This was tested on two systems
+up to 1,200 nodes and resulted in two publications.  PowerStack is now a
+community-wide effort encompassing five industry partners and multiple
+academic and research labs across the US, Europe, and Asia.  It enables
+prioritization of the critical path, application performance, and
+throughput.
+
+We developed the first version of the unified Node Resource Manager.  The
+NRM provides high level of control over node resources, including initial
+allocation at job launch and dynamic reallocation at the request of the
+application and other services.  The initial set of managed resources
+includes CPU cores and memory; they can be allocated to application
+components via a container abstraction, which is used to describe
+partitions of physical resources (to decrease interference), and more.  NRM
+integrates dynamic power control using COOLR and libMSR, and provides
+support for tracking and reporting of application progress.  Such
+functionality is needed by the BSP-oriented power policy, which we are
+currently evaluating and scaling up.  Work is also ongoing to support
+third-party container technologies such as Docker, Singularity, and
+Shifter.  At the job level, we enabled enclave-aware MPI facilities that
+can be used to create inter-communicators between MPI jobs launched in
+separate enclaves.
+
+On the overall project integration front, we succeeded in creating a first
+integrated release, internal for now.  Sources from all the individual
+components were pulled into one location.  Testsuites and Spack packages
+were created.  We used ChameleonCloud as the first integration platform,
+thanks to its capability to provision raw hardware resources.  We also
+developed custom CI infrastructure, running on development KNL boxes,
+on the ChameleonCloud, and on systems at LLNL.
+
+%\begin{figure}[h]
+%\centering
+%\includegraphics[height=.15\textheight]{projects/2.3.5-Ecosystem/2.3.5.05-Argo/argo-global}\hspace{1em}%
+%\includegraphics[height=.15\textheight]{projects/2.3.5-Ecosystem/2.3.5.05-Argo/argo-node}
+%\caption{Global and node-local components of the Argo software stack and
+% interactions between them and the surrounding HPC system components.}
+%\end{figure}
 
 
 \paragraph{Next Steps}
 
-We plan to investigate different power management policies,
-particularly demand response, which is becoming a crucial feature for
-data centers, allowing to reduce the power consumption of servers
-without killing running applications or shutting down nodes.
-We plan to continue the 
-development of power-aware versions of SLURM and Flux, and enable the path toward  
-integration with GEOPM and NRM. 
+As outlined above, we are actively working on performance and capability
+improvements of individual software components and on scaling them up to
+leadership-class systems; significant work remains in these areas.
 
-We plan to improve the control loop inside the NRM to take into account I/O and
-memory interference when placing containers on a node. We are also working on
-making the NRM implementation compatible with Singularity.
+We need to intensify our engagement with ECP applications and runtimes so
+that they can benefit from the technologies we have been developing.  We
+expect that the newly expanded project team at ANL will enable us to make
+significant progress in this area in the near future.
 
-We plan to improve the performance of UMap and demonstrate it with an
-astronomy application having hundreds of files.
-%
-We plan to port applications to AML and integrate with runtime projects like
-BOLT or PaRSEC for efficient use of Knights Landing memory using our
-scratchpad.
+Final software release will take place when the scalability and performance
+is validated on a set of relevant ECP workloads.
+
+Looking further into the future, we want to improve resource management for
+emerging hardware accelerators, expand dynamic resource management and
+placement making it the default, add advanced AI-based autotuning
+techniques, use container abstraction to target coupled codes, workflows,
+ensembles, and so on.  True byte-addressable NVRAM will enable new,
+flexible management and access.

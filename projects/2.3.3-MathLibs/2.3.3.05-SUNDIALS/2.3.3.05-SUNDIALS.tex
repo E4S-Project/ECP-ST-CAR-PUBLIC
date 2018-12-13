@@ -14,26 +14,30 @@ Current implementations of efficient time integrators face challenges on many fr
 
 \paragraph{Solution Strategy}
 
-This project includes a number of implementation activities that will prepare the SUNDIALS suite of time integrators for exascale systems. The main activity is a redesign of all linear solver interfaces and encapsulation of the nonlinear solvers within the time integrators in SUNDIALS.  The new linear solver interfaces will make it much easier to interface external solver packages while maintaining the efficiency of SUNDIALS integrators. Encapsulating the nonlinear solvers, will reduce redundant code and allow the time integrators to better leverage common code thus lowering the code maintenance burden with SUNDIALS.  In addition, the integrators will be able to take advantage of outside nonlinear solvers.  
+This project includes a number of implementation activities that will prepare the SUNDIALS suite of time integrators for exascale systems. A major activity is a redesign of all linear solver interfaces and encapsulation of the nonlinear solvers within the time integrators in SUNDIALS.  The new linear solver interfaces make it much easier to interface external solver packages while maintaining the efficiency of SUNDIALS integrators. Encapsulating the nonlinear solvers reduces redundant code and allows the time integrators to better leverage common code resulting in a lower code maintenance burden within SUNDIALS.  In addition, the integrators are able to take advantage of outside nonlinear solvers.  
 
-This project is also introducing a set of optional fused vector kernels into SUNDIALS.  The goal of these kernels is to execute multiple vector operations at once thereby reducing the number of kernel launches in GPU environments and also reducing the number of communications required for reduction operations.  These new kernels will be added to all supplied SUNDIALS vectors and will be invoked through optional interfaces.
+This project also introduced a set of optional fused vector kernels into SUNDIALS.  These kernels execute multiple vector operations at once thereby reducing the number of kernel launches in GPU environments and also reducing the number of communications required for reduction operations.  These new kernels were added to all supplied SUNDIALS vectors and are invoked through optional interfaces.
 
 Lastly, this project is developing a many-vector capability for SUNDIALS.  Due to the tight data encapsulation within SUNDIALS, users are able to supply any vector they would like underneath the integrators.  This project will supply the infrastructure needed to make it easy to place a vector of vectors underneath the integrators.  This vector of vectors is essential for later implementation of time integrators that will advance various parts of the system with different time step sizes.  This many-vector capability will also ease the use of different programming environments as differing vectors can be instantiated on different parts of a hybrid machine. 
 
 \paragraph{Recent Progress}
 
-In September of 2017, SUNDIALS 3.0.0 including new linear solver and matrix interfaces, was released \cite{SUNDIALSweb}.  Figure \ref{fig:sunorg1} shows the new organization of SUNDIALS where separate linear solver interfaces are provided for direct and iterative linear solver methods.  These interfaces are shared across all SUNDIALS integrators.  Individual integrators have the freedom to supply specific information from the integrator that controls the linear solver.  In addition, a single interface to each external solver, such as SuperLU\_MT or KLU, is shared across the suite, as opposed to the prior situation where each integrator included its own interface to each solver.  In addition, a SUNMATRIX class was developed that can be instantiated with a dense, banded, or sparse matrix.  Again, this class is shared by all integrators.  
+In May of 2018, SUNDIALS 4.0.0-dev was released, including new fused vector kernels in the vector API and in all supplied vectors.  Results show speedup from using these routines, especially for parallel reductions.  In September of 2018, SUNDIALS 4.0.0-dev.2 was released, including a full redesign of the nonlinear solver interfaces to the time integrators and encapsulation of the nonlinear solevrs.  Figure \ref{fig:sunorg1} shows the new organization of SUNDIALS where separate nonlinear solver interfaces are provided for Newton and fixed point nonlinear solver methods.  These interfaces are shared across all SUNDIALS integrators.  
+Individual integrators have the freedom to supply specific information from the integrator that controls the solver.  In addition, the SUNDIALS team has been collaborating closely with the AMReX Co-Design Center team to 
+design effective interfaces to SUNDIALS time integrators from AMReX for applications using ODE integrators,
+such as for chemistry reaction systems as in Nyx, Castro, and PELE.
 
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=6in]{projects/2.3.3-MathLibs/2.3.3.05-SUNDIALS/sunorg1.pdf}
-	\caption{\label{fig:sunorg1}New structure of SUNDIALS showing options for the new SUNLINEARSOLVER and SUNMATRIX classes.}
+	\caption{\label{fig:sunorg1}New structure of SUNDIALS showing options for the new SUNNONLINEARSOLVER classes.}
 \end{figure}
 
 \paragraph{Next Steps}
 
-During the remainder of FY18, this project team will:
+During the remainder of FY19, this project team will:
 \begin{enumerate}
-\item Complete a release of SUNDIALS with the new fused vector routines implemented within each supplied vector and optionally used from the integrator packages.
-\item Complete a release of SUNDIALS with all nonlinear solvers encapsulated and with implementations of the new nonlinear solver interfaces for both the Newton and fixed point solvers used in the integrator packages.
+\item Complete a release of SUNDIALS with a new many-vector that will enable easier use of SUNDIALS on heterogeneous architectures and for multiphysics systems.
+\item Complete a scalable demonstration example program that will enable performance assessments on large-scale problems and provide a testbed for new time integrators.
+\item Continue to support AMReX and CEED Co-Design Centers in their use of SUNDIALS for ECP applications.
 \end{enumerate}
