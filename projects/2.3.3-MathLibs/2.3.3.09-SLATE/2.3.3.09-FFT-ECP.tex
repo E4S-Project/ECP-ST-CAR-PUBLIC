@@ -76,7 +76,7 @@ provide effient GPU support for their main communication primitives.
 \begin{enumerate}
 \item
 \textbf{Communication costs:}
-Today’s machines have very complex memory hierarchies and thus data movement, 
+Today's machines have very complex memory hierarchies and thus data movement, 
 data layout translation, and communication should be the main focus of any 
 distributed FFT library that aims to improve the performance of any ECP 
 application that relies on FFT. Vendors and optimized open-source libraries 
@@ -140,7 +140,7 @@ The APIs will be synchronized with ECP applications to be flexible, e.g.,
 allowing easy construction of application-specific loading from 
 and storing to arbitrary tiling of a 3D domain, data transformations from 
 brick-to-pencil, pencil-to-brick, and pencil-to-pencil. Local packing and 
-unpacking kernels would be accelerated leveraging GPUs’ high bendwidth.
+unpacking kernels would be accelerated leveraging GPUs' high bendwidth.
 % and effient GPU transposition kernels that are already available in MAGMA.
 \end{enumerate}
 
