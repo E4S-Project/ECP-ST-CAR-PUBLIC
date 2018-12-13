@@ -1,4 +1,4 @@
-\subsubsection{\stid{5.03} LLNL ATDM SW Ecosystem \& Delivery: DevRAMP}
+\subsubsection{\stid{5.03} LLNL ATDM SW Ecosystem \& Delivery: DevRAMP and Flux}
 
 \paragraph{Overview}
 The {\bf DevRAMP} (Reproducibility, Analysis, Monitoring, and Productivity
@@ -149,3 +149,107 @@ means we will be able to match optimized binaries to the machine.
     creating binary packages from such builds. We aim to provide binary
     packages for common configurations of Spack packages.
 \end{enumerate}
+
+
+\paragraph{Overview}
+The goal of the {\bf Flux} scheduling project is to identify, define, and build
+the common infrastructures and interfaces to support the scheduling
+of exascale workflows. Flux is a next-generation
+resource and job management software (RJMS) framework
+under active development at LLNL, and we extend
+Flux as a user-level RJMS platform and tools for exascale systems.
+
+
+\paragraph{Key  Challenges}
+RJMS is central to enabling efficient execution of applications on HPC systems,
+and therefore is also the main interface for scheduling
+and executing these complex workflows.
+%
+However, trends towards exascale workflows with new execution patterns
+significantly complicate efficient (co-)scheduling and execution of
+their tasks.
+%
+Traditional \emph{centralized} techniques implemented within RJMS
+such as SLURM~\cite{SLURM}, LSF~\cite{LSF}, MOAB~\cite{MOAB}, or
+PBS Pro~\cite{PBSPro} no longer work well as they are
+fundamentally designed for the traditional paradigm: a few large,
+long-running, homogeneous jobs rather than ensembles composed of
+many, and often small, short-running heterogeneous elements.
+%
+%
+Key challenges include:
+{\bf Throughput challenge}:
+      large ensemble simulations can generate massively large numbers
+      of jobs that cannot comfortably be ingested and scheduled
+      by the traditional approach;
+{\bf Co-scheduling challenge}: complex coupling requires
+      sophisticated co-scheduling that the existing centralized approaches
+      cannot easily provide;
+{\bf Job coordination and communication challenge}:
+      intimate interactions with RJMS is required to keep
+      track of the overall progress of the ensemble execution for which existing
+      approaches lack well-defined interfaces;
+and {\bf Portability challenge}:
+      there has been a proliferation of ad hoc implementations
+      of user-level schedulers as an attempt to tackle the
+      above challenges. However, they are often non-portable
+      and come with a myriad of side effects (e.g., millions
+      of small files just to coordinate the current state of an ensemble).
+
+
+\paragraph{Solution Strategy}
+The Flux framework is a suite of projects, tools and libraries that can be used
+to build site-custom resource managers and schedulers at HPC sites.
+Flux supports a fully hierarchical architecture that allows for seamless nesting
+in a highly scalable, customizable, and resilient manner.
+Leveraing this architecture,
+we aim at addressing the key exascale workflow scheduling challenges
+in a scalable, easy-to-use, and portable manner. More specifically,
+our solution~\cite{FluxSC18} is based on four distinct scheduling
+techniques:
+scheduler parallelism for throughput challenge,
+scheduler specialization for co-scheduling challenge,
+rich APIs for easy job coordination and communication,
+and consistent API set for high portability.
+
+\paragraph{Recent Progress}
+We co-designed our solutions with emerging workflow practices at LLNL
+and have begun to power them up on our high-end systems including
+our new pre-exascale system, Sierra.
+We recently solved the scheduling challenges that two major worflows
+of the Sierra early science application had:
+the Cancer Moonshot Pilot2 and LLNL's
+Machine Learning Strategic Initiative (MLSI) project.
+Both commonly suffered from each of the key technical challenges described above
+and came to the Flux team for further assistance. We integrated
+our Flux scheduler into their workflow archiecture, which is now underpinning
+their production runs on our pre-exscale systems as well as Linux capacity clusters.
+
+\paragraph{Next Steps}
+\begin{enumerate}
+
+    \item {\bf Job-dependency Management and Exception Model Co-design with LLNL UQP team}:
+    The current approach to handle exceptions that are relevant to workflow
+    managers is largely ad hoc.
+    We plan to formalize exascale workflow exception
+    types and to co-design with LLNL's UQP team mechanisms by which
+    workflows and RJMS can cooperatively
+    detect, propagate, and handle these exceptions.
+
+    \item {\bf DYnamic and Asynchronous Data Streamliner (DYAD)}: The Sierra early science
+    applications have exposed a challenge in efficiently sharing data among co-scheduled job elements
+    in their complex workflows. Our near-term goal includes developing a general-purpose
+    data-trasfer infrastructure built on top of Flux APIs
+    by which producers' data can transparently be transferred to consumers.
+
+    \item {\bf Performance Variability-Aware Scheduling}: An exascale RJMS issue
+    is that of performance variation and lack of reproducibility.
+    We will extend Flux’s graph-based resource matching service to enable a variation-aware scheduling
+    policy that mitigates the harmful effect of such performnace variation.
+
+    \item {\bf Steer and Co-design CORAL2 RM APIs}: We will co-design various RJMS
+    interfaces including power monitoring and controling with
+    one of the CORAL2 vendors with the ultimate goal of deploying Flux as its system-level RJMS.
+
+\end{enumerate}
+
