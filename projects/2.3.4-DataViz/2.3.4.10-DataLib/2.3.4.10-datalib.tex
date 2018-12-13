@@ -105,32 +105,21 @@ for ECP.
 \paragraph{Recent Progress}
 
 \emph{Darshan.}
-We added Python bindings to the log parsing library to facilitate
-analysis and created a module for Autoperf
-(https://www.alcf.anl.gov/user-guides/automatic-performance-collection-autoperf),
-used in ALCF for performance counter and MPI information. An initial
-version of HXHIM module for Darshan has been completed (towards
-STDM12-8). We are iterating with HXHIM development team on what more
-interesting statistics could be collected on the client side (where
-Darshan runs). This interaction has also accelerated work with
-Thallium by the HXHIM team, a layer for enabling use of
-Mercury. We released Darshan 3.1.6 with bug fixes for specific
-application problems.
+Darshan has won a 2018 R&D 100 Award. The award is given by R&D magazine
+to the 100 top new technologies for the year. The Darshan software
+package enables researchers to investigate and tune the I/O behavior of
+complex high-performance computing (HPC) applications. A key feature of
+the package is its ability to run on some of the largest systems in the
+world, including Crays, IBM Blue Gene systems and Linux clusters. 
+
+We've begun designing automatic tracing in Darshan (STDM12-13), starting
+with an analysis of use cases provided by a number of stakeholders.
 
 \emph{Mochi and Mercury.}
 Nightly tests are now running on Aires, InfiniBand, and OmniPath networks
 (STDM12-7). See below for more information on STDM12-7.
 
 \emph{PnetCDF.}
-We are revising APIs to reduce memory footprint (towards STDM12-10),
-migrating PnetCDF wiki pages to GitHub
-(https://parallel-netcdf.GitHubio), and working on driver to enable
-netCDF-4 access from PnetCDF (towards SDTM12-11). We are also adjusting the
-API in PnetCDF to better support I/O patterns with very
-large numbers of small requests, something we are seeing in E3SM
-workloads (via their PIO library layer). Finally, we are evaluating burst buffer
-features of PnetCDF on Theta, using local SSDs.
-
 Figure~\ref{fig:pnetcdf} illustrates a refactoring of the PnetCDF
 library to include a dispatch layer. The dispatch layer provides a
 mechanism for implementing multiple back-ends under the standard
@@ -138,17 +127,28 @@ API. This functionality is being used to enable writing in a log
 format for intermediate data and access of data in the netCDF-4 format
 (stored in HDF5 files).
 
+The PnetCDF Burst Buffer capabilities have been tested, and results were
+published at the PDSW workshop in conjunction with SC18 (STDM12-10).
+ADIOS and netCDF-4 read capabilities have been implemented in PnetCDF,
+and testing of ADIOS read capabilities under PnetCDF (STDM12-11) is
+underway.
+%
+We continue to make improvements in support of E3SM workloads.
+
 \emph{ROMIO.}
-We implemented a bug fix for single MPI-IO requests of larger than 4GiB on some
-platforms, added a check for monotonicity of offsets in types, an MPI
-requirement, and tested logFS backend on Cori. We have begun integration
-of pipelined I/O functionality into ROMIO (STDM12-9), specifically
-into the Lustre driver. We are also debugging the LogFS ROMIO back-end.
+Integration of pipelined I/O functionality into ROMIO (STDM12-9) is complete,
+specifically into the Lustre driver. We continue to improve the LogFS
+ROMIO back-end.
 
 \emph{ParSplice.}
-We are pushing KV updates back into Mochi repository, refining Spack build
-process, and working through bugs with ParSplice use of Mochi
-components in newest revisions.
+Work with ParSplice is complete for now (STDM12-21). Specialized segment
+store attains similar performance as a tightly integrated solution for
+current problem sizes. As the application team scales up, we expect
+the scalability of the segment store to provide a performance benefit,
+but this is TBD.
+
+\emph{Portage/JALI}. Examining Portage/JALI as next candidate for service
+specialization (STDM12-21).
 
 \begin{figure}[htb]
         \centering
@@ -158,8 +158,11 @@ components in newest revisions.
 \end{figure}
 
 \paragraph{Next Steps}
-%
-Next we will demonstrate a non-POSIX I/O characterization module for
-representative ECP I/O library (STDM12-8), demonstrate a PnetCDF
-prototype burst buffer backend on relevant ECP platform (STDM12-10),
-and release ROMIO including a pipelined I/O capability (STDM12-9).
+Closing on the end of our first three year project period, we are focusing
+on (a) wrapping up software releases of Darshan, PnetCDF, and Mercury
+suite (STDM12-13, STDM12-11, and STDM12-12); (b) adding new optimized
+collective I/O capabilities in ROMIO (STDM12-14); (c) completing automatic
+triggering of tracing in Darshan (STDM12-13); and (d) investigating
+additional use cases of specialized services in ECP applications
+(STDM12-21). 
+
