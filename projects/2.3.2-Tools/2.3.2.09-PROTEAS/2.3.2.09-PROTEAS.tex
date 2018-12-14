@@ -6,7 +6,7 @@ Programmer productivity and performance portability are two of the most importan
 
 
 \paragraph{Solution Strategy:}
-The PROTEAS (PROgramming Toolchain for Emerging Architectures and Systems) project is a strategic response to the continuous changes in architectures and hardware that are defining the landscape for emerging ECP systems. PROTEAS is a flexible programming framework and integrated toolchain that will provide ECP applications the opportunity to work with programming abstractions and to evaluate solutions that address the Exascale programming challenges they face. Specifically, the PROTEAS objectives are to
+The PROTEAS (\textit{PROgramming Toolchain for Emerging Architectures and Systems}) project is a strategic response to the continuous changes in architectures and hardware that are defining the landscape for emerging ECP systems. PROTEAS is a flexible programming framework and integrated toolchain that will provide ECP applications the opportunity to work with programming abstractions and to evaluate solutions that address the Exascale programming challenges they face. Specifically, the PROTEAS objectives are to
 
 \begin{enumerate}
     
@@ -24,7 +24,7 @@ The PROTEAS (PROgramming Toolchain for Emerging Architectures and Systems) proje
 
 Our team has started with a strong existing base of relevant technological and software capabilities. Importantly, our solutions are based on our significant, continuing work with LLVM, ARES HLIR, OpenARC, and TAU. We have extensive experience and a demonstrated track record of accomplishment in all aspects of this proposed work including existing software deployments, interaction with application teams, vendor interaction, and participation in open source community and standards organizations.
 
-Our strong emphasis on delivering an effective toolchain to application developers within the next few years emphasizes the importance of adopting an integrated programming solution that will be further refined for the architecture capabilities known to be in the Exascale system procurement. We will develop an integrated system (i.e. compilers, runtime systems, debuggers, and performance tools) suitable for deployment in the 2019 timeframe. The experience gained from this development will inform vendor collaborations, proposals to standards committees, and existing open source software to make key elements of our developed technology commercially available for ECP deployment in the 2021 timeframe.
+Our strong emphasis on delivering an effective toolchain to application developers within the next few years emphasizes the importance of adopting an integrated programming solution that will be further refined for the architecture capabilities known to be in the Exascale system procurement. We will develop an integrated system (i.e. compilers, runtime systems, debuggers, and performance tools) suitable for deployment in the 2021 timeframe. The experience gained from this development will inform vendor collaborations, proposals to standards committees, and existing open source software to make key elements of our developed technology ready for ECP deployment, either from vendors, through the ECP SDKs, or directly from other open-source venues.
 
 While PROTEAS will be oriented towards foreseeable architectural trends, it will not lock in to specific choices that will constrain what new hardware features it can address. Rather, it is important for the programming framework to embody interoperability, open interfaces, and flexibility in the toolchain, allowing it to pursue high-value solutions as opportunities arise and thereby achieve Exascale performance potential. 
 
@@ -34,9 +34,9 @@ Our recent work has focused on five topics:
 
 \begin{enumerate}
     
-    \item OpenACC and Clacc. Develop production-quality, standard-conforming OpenACC compiler and runtime support as an extension of clang/LLVM. See \S\ref{s:clacc}.
+    \item OpenACC and Clacc~\cite{clacc:2018:denny}. Develop production-quality, standard-conforming OpenACC compiler and runtime support as an extension of clang/LLVM. See \S\ref{s:clacc}.
     
-    \item Papyrus for portability across NVM architectures. 
+    \item Papyrus~\cite{Kim:2017:DIP,Kim:2017:PHP} for portability across NVM architectures. 
     Develop a portable interface to NVM architectures to provide massive, persistent data structures as required by many applications.
     See \S\ref{s:papyrus}.
     
@@ -58,9 +58,9 @@ Our next efforts are:
 \begin{enumerate}
 	\item Clacc. Complete Clacc support for a prescriptive interpretation of OpenACC by lowering OpenACC directives to use the existing LLVM OpenMP infrastructure.
     
-	\item Papyrus. Improve support for data compress and encryption to provide enhanced storage reduction and performance improvements, and security for sensitive data, respectively.
+	\item Papyrus. Improve support for versioning and other performance improvements.
     
-    \item Tau. Improve performance instrumentation for deep memory hierarchies in Tau, focusing primarily on KNL MCDRAM and NVM.
+    \item Tau. Improve performance instrumentation for deep memory hierarchies in Tau, focusing primarily on various GPUs and emerging NVM.
     
     \item LLVM Parallel IR. Develop a conceptual prototype for mapping LLVM Clang operations to the proposed Parallel IR, and implement a prototype.
 

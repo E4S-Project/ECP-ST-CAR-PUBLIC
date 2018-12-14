@@ -21,26 +21,62 @@ We describe our key goals for Papyrus: high performance, scalability, portabilit
 
 Meraculous~\cite{Georganas:2014:PDB} is a state-of-the-art de novo assembler written in UPC. Its parallel algorithm for de Bruijn graph construction and traversal leverages the one-sided communication in UPC to facilitate the requisite random access pattern in the global de Bruijn graph. The de Bruijn graph is implemented as a distributed hash table with an overlapping substring of length {\it k}, referred to as a {\it k-mer}, as key and a two-letter code [ACGT][ACGT] as value as shown in \autoref{fig:papyrus-meraculous}. A hash function is used to define the affinities between UPC threads and hash table entries. We ported the distributed hash table written in UPC to a PapyrusKV database. The keys in the database are k-mers and the values are two-letter codes. The PapyrusKV runtime calls the same hash function in the UPC application to determine the owners of key-value pairs in the database by specifying the custom hash function when the database is created. Thus, the thread-data affinities in UPC and PapyrusKV are the same as shown in \autoref{fig:papyrus-meraculous}. PapyrusKV requires fewer lines of source code than UPC because it calls standard put and get API functions without implementing an application-specific algorithm for the distributed hash table construction and traversal. \autoref{fig:papyrus-meraculous-eval} shows the performance comparison between PapyrusKV and UPC of Meraculous on Cori. Both versions are built and run using Berkeley UPC, an MPI-interoperable UPC implementation. We measured the total execution time on 32, 64, 128, 256, and 512 UPC threads (32 UPC threads per node). UPC shows better performance than PapyrusKV due to its RDMA capability and built-in remote atomic operations during the graph traversal. The performance gap between UPC and PapyrusKV decreases as the number of UPC threads increases. On 512 UPC threads, PapyrusKV runs 1.5 times slower than UPC. This is mainly because of the asynchronous migration in PapyrusKV during the graph construction.
 
-\begin{figure}[htb]
-\centering
-\includegraphics[width=3in]{projects/2.3.2-Tools/2.3.2.09-PROTEAS/papyrus-meraculous}
-\caption{K-mer distributed hash table implementations in UPC and PapyrusKV.}
-\label{fig:papyrus-meraculous}
+%\begin{figure}[htb]
+%\centering
+%\includegraphics[width=3in]{projects/2.3.2-Tools/2.3.2.09-PROTEAS/papyrus-meraculous}
+%\caption{K-mer distributed hash table implementations in UPC and PapyrusKV.}
+%\label{fig:papyrus-meraculous}
+%\end{figure}
+%
+%\begin{figure}[htb]
+%\centering
+%\includegraphics[width=3in]{projects/2.3.2-Tools/2.3.2.09-PROTEAS/papyrus-meraculous-eval}
+%\caption{Meraculous performance comparison between PapyrusKV (PKV) and UPC on Cori.}
+%\label{fig:papyrus-meraculous-eval}
+%\end{figure}
+
+
+\begin{figure}[t]
+    \centering
+    \begin{subfloat}[K-mer distributed hash table implementations in UPC and PapyrusKV.\label{fig:papyrus-meraculous}]
+        \centering
+        \includegraphics[width=.48\textwidth]{projects/2.3.2-Tools/2.3.2.09-PROTEAS/papyrus-meraculous}
+    \end{subfloat}
+    \hfill
+    \begin{subfloat}[Meraculous performance comparison between PapyrusKV (PKV) and UPC on Cori.\label{fig:papyrus-meraculous-eval}]
+        \centering
+        \includegraphics[width=.48\textwidth]{projects/2.3.2-Tools/2.3.2.09-PROTEAS/papyrus-meraculous-eval}
+    \end{subfloat}
+    \caption{Using PapyrusKV for Meraculous.}
 \end{figure}
 
-\begin{figure}[htb]
-\centering
-\includegraphics[width=3in]{projects/2.3.2-Tools/2.3.2.09-PROTEAS/papyrus-meraculous-eval}
-\caption{Meraculous performance comparison between PapyrusKV (PKV) and UPC on Cori.}
-\label{fig:papyrus-meraculous-eval}
-\end{figure}
+%\begin{figure}[t]
+%    \centering
+%    \begin{subfigure}[b]{0.45\textwidth}
+%        \includegraphics[width=.99\textwidth]{projects/2.3.2-Tools/2.3.2.09-PROTEAS/papyrus-meraculous}
+%        \caption{K-mer distributed hash table implementations in UPC and PapyrusKV.}
+%        \label{fig:papyrus-meraculous}        
+%    \end{subfigure}
+%    \hfill
+%    \begin{subfigure}[b]{0.45\textwidth}
+%        \includegraphics[width=.99\textwidth]{projects/2.3.2-Tools/2.3.2.09-PROTEAS/papyrus-meraculous-eval}
+%        \caption{Meraculous performance comparison between PapyrusKV (PKV) and UPC on Cori.}
+%        \label{fig:papyrus-meraculous-eval}
+%    \end{subfigure}
+%    \caption{Using PapyrusKV for Meraculous.}
+%\end{figure}
+
+
+This past year, we have added data compression and encryption to Papyrus. For data compression, the overhead of data access and movement becomes a serious bottleneck compared to compute overhead in large-scale HPC systems. We integrated data compression methods into Papyrus to achieve storage reduction and performance improvement. 
+For data encryption, we need to protect sensitive data (e.g., health records, DNA data) that is being used in distributed infrastructures, and users need practical methods to secure their data throughout its lifecycle. We will introduce data encryption in Papyrus to add an extra layer of security in the complex scientific workflows.
+
 
 \paragraph{Next Steps}
 Our next efforts are:
 
 \begin{enumerate}
-\item \textbf{Data compression:} The overhead of data access and movement becomes a serious bottleneck compared to compute overhead in large-scale HPC systems. We will integrate data compression techniques into Papyrus to achieve storage reduction and performance improvement. 
+\item \textbf{Versioning: } Versioning can be used to provide new levels of reliability and performance optimization. We will design and implement versioning in Papyrus.
 
-\item \textbf{Data encryption:} More sensitive data (e.g., health records, DNA data) is being used in distributed infrastructures, and users need practical methods to secure their data throughout its lifecycle. We will introduce data encryption in Papyrus to add an extra layer of security in the complex scientific workflows.
+\item \textbf{Performance optimization:} New APIs and hardware support is being developed for NVM technologies; we are implementing optimizations in Papyrus to take advantage of these advances.
 
 \end{enumerate}
