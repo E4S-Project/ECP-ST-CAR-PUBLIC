@@ -1,255 +1,180 @@
-\subsubsection{\stid{5.03} LLNL ATDM SW Ecosystem \& Delivery: DevRAMP and Flux}
+\subsubsection{\stid{5.03} LLNL ATDM SW Ecosystem \& Delivery: DevRAMP sub-project}
 
-\paragraph{Overview}
-The {\bf DevRAMP} (Reproducibility, Analysis, Monitoring, and Productivity
-for Developers) is creating tools and services that multiply the
-productivity of HPC developers through automation. The project has two
-major software efforts:
+\paragraph{Overview} The {\bf DevRAMP} (Reproducibility, Analysis,
+Monitoring, and Productivity) project is creating tools and services to
+multiply the productivity of HPC developers through several major
+software efforts:
 
 \begin{enumerate}
     \item {\bf Spack} is a package manager for
-    HPC~\cite{melara+:cug17,gamblin+:sc17-spack-tutorial,gamblin+:sc16-spack-tutorial,gamblin+:sc15,gamblin+:llnl-spack-tutorial-17,gamblin+:ecp18-spack-tutorial,gamblin:pp18-spack,gamblin:hpckp17,gamblin:fosdem18-compilers,gamblin:fosdem18-binary,gamblin:ecp18-spack-sotu,gamblin:eb-user-meeting18,becker+:hust16}. It
-    automates the process of downloading, building, and installing
-    different versions of HPC software packages and their dependencies.
-    With Spack, facilities can manage complex, multi-user software
-    deployments on supercomputers, and developers can keep their own
-    dependencies up to date in a single-user environment. Spack enables
-    complex applications to be assembled from components, lowers barriers
-    to software reuse, and allows complex HPC environments to be
-    reproduced easily. It is the glue that holds the ECP software
-    ecosystem together.
+    HPC~\cite{melara+:cug17,gamblin+:sc18-spack-tutorial,gamblin+:sc18-spack-bof,gamblin+:sc17-spack-tutorial,gamblin+:sc16-spack-tutorial,gamblin+:sc15,gamblin+:llnl-spack-tutorial-17,gamblin+:ecp18-spack-tutorial,gamblin:pp18-spack,gamblin:hpckp17,gamblin:fosdem18-compilers,gamblin:fosdem18-binary,gamblin:ecp18-spack-sotu,gamblin:eb-user-meeting18,becker+:hust16}.
+    It automates the process of downloading, building, and installing
+    different versions of HPC applications, libraries, and their
+    dependencies.  Facilities can manage multi-user software deployments,
+    and developers and users can manage their own stacks separately.
+    Spack enables complex applications to be assembled from components,
+    lowers barriers to reuse, and allows builds to be reproduced easily.
 
     \item {\bf Sonar} is a data cluster and a software stack for
-    performance monitoring and analysis. Sonar allows developers and
-    facility staff to understand how supercomputers and applications
-    interact. The system continuously aggregates data from system-level
-    monitoring services, application-level measurement tools, and
-    facility power and temperature meters.  Any facility user can log in,
-    examine performance data and other data collected about their HPC
-    jobs, and share it with other users. Our focus is on security for the
-    services running on Sonar (e.g., JupyterHub), and on developing an
-    easy-to-use query tool, which we call ScrubJay.
+    monitoring and analysis. It allows developers and facility staff to
+    understand how supercomputers and applications interact. Sonar
+    aggregates data from system-level monitoring services,
+    application-level measurements, and facility power/temperature
+    meters. Users analyze monitored data in Jupyter notebooks. Our focus
+    is on security for the services running on Sonar (e.g., JupyterHub),
+    and on developing the sophisticated {\it ScrubJay} query tool.
 \end{enumerate}
 
-
-\paragraph{Key  Challenges}
-{\it Spack} makes HPC application complexity manageable. HPC simulation
-codes are notoriously complicated, and installing a code on a new
-platform is not a simple task.  Codes are not self-contained; they rely
-on tens or even hundreds of {\it dependencies} to implement their
-functionality. While dependencies allow us to leverage the work of others
-through code reuse, integrating hundreds of dependencies in the same
-application is a monumental challenge.  Dependencies may require
-different configurations and versions of their own dependency libraries,
-and codes must be built and tested with different implementations of
-interfaces MPI, BLAS, and LAPACK. The space of possible builds is
-combinatorial in size, and it can only be effectively managed through
-automation.
+\paragraph{Key Challenges}
+{\it Spack} makes HPC software complexity manageable. Obtaining optimal
+performance on supercomputers is a difficult task; the space of possible
+ways to build software is combinatorial in size, and software reuse is
+hindered by the complexity of integrating a large number of packages and
+by issues such as binary compatibility.  Spack makes it easy to build
+optimized, reproducible, and reusable HPC software.
 
 {\it Sonar} aims to find the root causes of performance variability of
-jobs that run at Livermore Computing.  A single application execution may
-have a different runtime depending on the system it runs on, the file
-system it uses, or other jobs running at the same time.  A single
-application execution may not accurately characterize performance.  The
-causes of this variability may include file system performance, per-node
-power consumption, application code performance, and even processor
-performance from node to node. To analyze and understand performance
-variability, we must collect data from the HPC center {\it and} from jobs
-running at the facility, but we cannot show all application- and
-facility-level data to all users. We need hardened security and
-fine-grained permissions to ensure that data on Sonar is kept safe.
+jobs that run at Livermore Computing (LC).  A single application's runtime may
+depend on the system it runs on, the file system it uses, other jobs
+running at the same time, etc. Sonar aims to provide an integrated view
+of application performance that allows developers to understand the full
+range of performance factors affecting their applications.
 
 \paragraph{Solution Strategy}
-{\it Spack} addresses HPC software complexity in three ways. First, it
-provides a powerful build system and a domain-specific language for
-writing package recipes.  This allows HPC builds to be templated and
-easily mapped to HPC architectures. It provides dependency resolution
-infrastructure, including virtual dependencies, a full parameter system,
-and a dependency resolver we call a {\it concretizer}. Together, these
-allow developers to specify customize builds for their own environments
-based on {\it abstract} descriptions, while Spack handles the tedious
-aspects of integrating with a new machine. Finally, Spack is an online
-service where package recipes can be shared and the HPC community can
-leverage each others' effort to reuse software. One of Spack's greatest
-strengths is its very active online contributor community.
+{\it Spack} provides a domain-specific language for templated build
+recipes.  It provides a unique infrastructure called the {\it
+concretizer}, which solves the complex constraint problems that arise in
+HPC dependency resolution.  Developers can specify builds {\it
+abstractly}, and Spack automates the tedious configuration process and
+drives the build. Spack also includes online services to host recipes,
+code, and binaries for broad reuse.  These repositories are maintained by
+Spack's very active community of contributors.
 
-{\it Sonar} is a data cluster, a data model, a set of monitoring tools,
-and an analysis front-end for manipulating this data. To deploy this in
-the Livermore Computing (LC) center, our project has focused on securing
-all components of this stack so that they can be hosted as services in a
-multi-tenant environment. We have deployed the Cassandra database, the
-Spark parallel processing engine, a custom tool of our own called
-ScrubJay, among other components. We have added integration that allows
-each tool to use LC's user ids and groups with access control lists. In
-the case of Jupyter Notebooks and other services that launch jobs, we are
-also hardening the process launch infrastructure so that notebooks launch
-on behalf of users run {\it as} those users in the LC environment.
+
+{\it Sonar} is a data cluster and a suite of monitoring tools and
+front-end analysis services. The Sonar project focuses on adding security
+to components of this stack so that they can be used in multi-tenant HPC
+environments like LC. Sonar has secured and deployed Cassandra, Spark,
+Kafka, and it has developed a parallel data analysis tool called
+ScrubJay. Notably, the Sonar project contributes features to upstream
+open source projects like JupyterHub, so that they can be run securely
+not only at LC, but at any HPC center.
 
 \paragraph{Recent Progress}
-Figure~\ref{fig:sonar-spack} (left) shows the progress so far on Sonar
-deployment.  The Cassandra database, as well as data collection from
-compute clusters, filesystems, and facility temperature data is complete.
-We have also recently completed a full-center deployment of JupyterHub
-for accessing the data in the cluster. We were able to deploy JupyterHub
-by adding SSL encryption to links between the hub and each notebook; this
-required us to build a custom certificate authority into JupyterHub.  We
-are currently preparing to upstreaming our solution to the mainline
-JupyterHub repository.
-\begin{figure}[htb]
-    \centering
-    \includegraphics[height=1.5in]{projects/2.3.5-Ecosystem/2.3.5.03-LLNL-ATDM-Ecosystem/sonar}~~~~~~~
-    \includegraphics[height=1.5in]{projects/2.3.5-Ecosystem/2.3.5.03-LLNL-ATDM-Ecosystem/spack-fetch}
-    \caption{
-        \label{fig:sonar-spack} Sonar deployment (left) and
-        Spack binary packaging (right).
-    }
-\end{figure}
+In FY18, the Sonar team secured Apache Kafka and expanded continuous
+production monitoring to include three major LC production clusters. The
+team completed work on securing the open source JupyterHub
+tool~\cite{mendoza:jupyterhub-ssl}. For the first time, any user at an
+HPC center can launch an analysis notebooks securely on bare-metal
+clusters. This functionality is integrated and available to any user of
+the tool.
 
-We recently added the capability to create relocatable binary packages to
-Spack~(Figure~\ref{fig:sonar-spack}, right).  Spack typically builds all
-of its packages from source, as this is the de-facto software
-distribution method for HPC systems. Recent additions to Spack allow us
-to package even HPC software in optimized binary form, and to install in
-minutes what could previously take hours. We are currently working on
-making Spack's dependency resolution algorithm more robust to handle more
-aggressive use of binary packages. Figure ~\ref{fig:concretize} shows the
-current Spack concretizer, which will only reuse binaries that exactly
-match a client-side concrete spec. The new version will allow Spack to
-consider available remote binaries at install time, and to search more
-aggressively through available binaries for usable dependencies. This
-will mean even less rebuilding of software, and for HPC systems, this
-means we will be able to match optimized binaries to the machine.
-
-\begin{figure}[htb]
-    \centering
-    \includegraphics[width=\textwidth]{projects/2.3.5-Ecosystem/2.3.5.03-LLNL-ATDM-Ecosystem/spack-concretizer}
-    \caption{\label{fig:concretize}
-        Spack concretizer design changes.
-    }
-\end{figure}
-
+The Spack team completed two major projects: virtual {\it environments}
+that improve reproducibility and enhance developer workflow, and a cloud
+{\it build service} implemented in GitLab. Optimized Spack binaries are
+now precompiled so that in many cases Spack users will not need to build
+their own software.  The build service greatly accelerates deployment
+times, and it enables Spack releases to be rigorously tested.
 
 \paragraph{Next Steps}
 \begin{enumerate}
 
-    \item {\bf Securing Kafka for Sonar.}  Sonar will ingest application
-    data from the filesystem using a tool called Kafka. Kafka is a
-    streaming communication infrastructure; it runs as a daemon and
-    reliably transfers data from files to a database.  Kafka typically
-    runs as a single user, but HPC centers are multi-tenant
-    installations.  We will be adding functionality to ensure that Kafka
-    preserves the identity of file owners in the filesystem when it
-    ingests data into the database.
+    \item {\bf Expanded analytics for Sonar.} The sonar team will use the
+    recently deployed JupyterHub system to develop detailed analyses of
+    facility data that provide insight into application performance.
 
-    \item {\bf Spack release testing and binary hosting.} Spack serves as
-    a repository for package recipes, but we do not have any automated
-    build testing of packages included in the Spack repository.  To
-    increase the robustness and reliability of Spack, we are adding
-    automation for building all packages in each Spack release, and for
-    creating binary packages from such builds. We aim to provide binary
-    packages for common configurations of Spack packages.
+    \item {\bf Spack Stacks and Concretization.} The Spack team is
+    developing {\it spack stacks}, which will allow a facility to
+    describe and deploy an entire combinatorial software stack, including
+    module files, with a single, concise YAML file. The team is also
+    working on concretizer enhancements to better support binary caches
+    and build reuse. These enhancements will adapt Spack to use a
+    sophisticated SAT solver. Spack will provide a complete software
+    deployment pipeline users, developers, and facilities.
 \end{enumerate}
 
 
+\subsubsection{\stid{5.03} LLNL ATDM SW Ecosystem \& Delivery: Flux sub-project}
 \paragraph{Overview}
-The goal of the {\bf Flux} scheduling project is to identify, define, and build
-the common infrastructures and interfaces to support the scheduling
-of exascale workflows. Flux is a next-generation
-resource and job management software (RJMS) framework
-under active development at LLNL, and we extend
-Flux as a user-level RJMS platform and tools for exascale systems.
+The {\bf Flux} scheduling project aims to identify, define, and build the
+common infrastructures and interfaces to support the scheduling of
+exascale workflows. Flux is LLNL's next-generation resource and job
+management (RJM) system for its clusters, as well as a user-level RJM
+platform for exascale systems.
 
 
-\paragraph{Key  Challenges}
-RJMS is central to enabling efficient execution of applications on HPC systems,
-and therefore is also the main interface for scheduling
-and executing these complex workflows.
+\paragraph{Key Challenges}
+RJM systems are central to enabling efficient execution of HPC
+applications, and they are users' main interface for scheduling complex
+workflows.
 %
-However, trends towards exascale workflows with new execution patterns
-significantly complicate efficient (co-)scheduling and execution of
-their tasks.
+Emerging million- and billion-way parallel pre-exascale workflows
+significantly complicate efficient (co-)scheduling and execution.
 %
-Traditional \emph{centralized} techniques implemented within RJMS
-such as SLURM~\cite{SLURM}, LSF~\cite{LSF}, MOAB~\cite{MOAB}, or
-PBS Pro~\cite{PBSPro} no longer work well as they are
-fundamentally designed for the traditional paradigm: a few large,
-long-running, homogeneous jobs rather than ensembles composed of
-many, and often small, short-running heterogeneous elements.
-%
+Traditional \emph{centralized} techniques implemented within RJMs such as
+SLURM~\cite{SLURM}, LSF~\cite{LSF}, MOAB~\cite{MOAB}, and PBS
+Pro~\cite{PBSPro} are aimed at small numbers of large, homogeneous,
+long-running jobs.  Exascale workflows will comprise many, often small
+and short-running, heterogeneous elements.
 %
 Key challenges include:
-{\bf Throughput challenge}:
-      large ensemble simulations can generate massively large numbers
-      of jobs that cannot comfortably be ingested and scheduled
-      by the traditional approach;
-{\bf Co-scheduling challenge}: complex coupling requires
-      sophisticated co-scheduling that the existing centralized approaches
-      cannot easily provide;
-{\bf Job coordination and communication challenge}:
-      intimate interactions with RJMS is required to keep
-      track of the overall progress of the ensemble execution for which existing
-      approaches lack well-defined interfaces;
-and {\bf Portability challenge}:
-      there has been a proliferation of ad hoc implementations
-      of user-level schedulers as an attempt to tackle the
-      above challenges. However, they are often non-portable
-      and come with a myriad of side effects (e.g., millions
-      of small files just to coordinate the current state of an ensemble).
-
+{\it throughput}:
+      large ensemble simulations generate very large numbers
+      of jobs that cannot be scheduled efficiently with traditional approaches;
+{\it co-scheduling}: complex coupling requires
+      sophisticated co-scheduling that existing tools cannot easily provide;
+{\it job coordination and communication}:
+      existing approaches lack interfaces for fine-grained interactions between
+      jobs;
+and {\it portability}:
+      many ad-hoc user-level schedulers attempt to address these
+      challenges, but they are not portable or scalable (e.g., they may use
+      millions of small files).
 
 \paragraph{Solution Strategy}
-The Flux framework is a suite of projects, tools and libraries that can be used
-to build site-custom resource managers and schedulers at HPC sites.
-Flux supports a fully hierarchical architecture that allows for seamless nesting
-in a highly scalable, customizable, and resilient manner.
-Leveraing this architecture,
-we aim at addressing the key exascale workflow scheduling challenges
-in a scalable, easy-to-use, and portable manner. More specifically,
-our solution~\cite{FluxSC18} is based on four distinct scheduling
-techniques:
-scheduler parallelism for throughput challenge,
-scheduler specialization for co-scheduling challenge,
-rich APIs for easy job coordination and communication,
-and consistent API set for high portability.
+The Flux framework is a suite of tools and libraries that can be used to
+build custom resource managers and schedulers at HPC sites.  Flux's
+architecture is fully hierarchical, and it allows for seamless nesting in
+a highly scalable, customizable, and resilient manner.  This architecture
+addresses the key exascale workflow scheduling challenges in a scalable,
+easy-to-use, and portable manner. Flux is based on four distinct
+scheduling techniques: parallelism for throughput, specialization for
+co-scheduling, rich APIs for easy job coordination and communication, and
+a consistent API for portability~\cite{FluxSC18}.
 
 \paragraph{Recent Progress}
-We co-designed our solutions with emerging workflow practices at LLNL
-and have begun to power them up on our high-end systems including
-our new pre-exascale system, Sierra.
-We recently solved the scheduling challenges that two major worflows
-of the Sierra early science application had:
-the Cancer Moonshot Pilot2 and LLNL's
-Machine Learning Strategic Initiative (MLSI) project.
-Both commonly suffered from each of the key technical challenges described above
-and came to the Flux team for further assistance. We integrated
-our Flux scheduler into their workflow archiecture, which is now underpinning
-their production runs on our pre-exscale systems as well as Linux capacity clusters.
+Together with application teams, the Flux team co-designed workflow
+solutions for on LLNL's largest machines, including the pre-exascale
+system, Sierra.  Flux enabled two major workflows during Sierra's early
+science period: one for the Cancer Moonshot and another for LLNL's
+strategic Machine Learning project.  Integrating Flux enabled these teams
+to scale to billion-way concurrent ensembles on Sierra, and these teams
+now use Flux in production both on Sierra and on Linux clusters.
 
 \paragraph{Next Steps}
 \begin{enumerate}
 
-    \item {\bf Job-dependency Management and Exception Model Co-design with LLNL UQP team}:
-    The current approach to handle exceptions that are relevant to workflow
-    managers is largely ad hoc.
-    We plan to formalize exascale workflow exception
-    types and to co-design with LLNL's UQP team mechanisms by which
-    workflows and RJMS can cooperatively
-    detect, propagate, and handle these exceptions.
+    \item {\bf Job-dependency Management and Exception Model Co-design
+    with LLNL UQP team}: The flux teams will work on scalable approaches
+    to handle exceptions raised during ensemble workflows. Current
+    approaches to this problem are ad-hoc and machine-dependent.  Flux
+    will formalize exception types and partner with LLNL's UQP team to
+    cooperatively detect, propagate, and handle exceptions.
 
-    \item {\bf DYnamic and Asynchronous Data Streamliner (DYAD)}: The Sierra early science
-    applications have exposed a challenge in efficiently sharing data among co-scheduled job elements
-    in their complex workflows. Our near-term goal includes developing a general-purpose
-    data-trasfer infrastructure built on top of Flux APIs
-    by which producers' data can transparently be transferred to consumers.
+    \item {\bf DYnamic and Asynchronous Data Streamliner (DYAD)}: Sierra
+    early science applications exposed challenges for efficiently
+    data-sharing among co-scheduled workflow elements.  The Flux project
+    will develop a general-purpose data-transfer infrastructure using Flux
+    APIs, so that jobs can easily implement producer-consumer workflows.
 
-    \item {\bf Performance Variability-Aware Scheduling}: An exascale RJMS issue
-    is that of performance variation and lack of reproducibility.
-    We will extend Flux’s graph-based resource matching service to enable a variation-aware scheduling
-    policy that mitigates the harmful effect of such performnace variation.
+    \item {\bf Performance Variability-Aware Scheduling}: Performance
+    variation poses a challenge to workflows reproducibility.  The team
+    will extend Flux’s graph-based resource matching service to enable
+    variation-aware scheduling policies that mitigate variation.
 
-    \item {\bf Steer and Co-design CORAL2 RM APIs}: We will co-design various RJMS
-    interfaces including power monitoring and controling with
-    one of the CORAL2 vendors with the ultimate goal of deploying Flux as its system-level RJMS.
+    \item {\bf Steer and Co-design CORAL2 RM APIs}: The team will
+    co-design various RJM interfaces, e.g. power monitoring and control,
+    in collaboration with one of the CORAL2 vendors, with the ultimate
+    goal of using Flux as the CORAL2 RJM system.
 
 \end{enumerate}
-
