@@ -1,30 +1,27 @@
 \subsubsection{\stid{3.10} PEEKS} 
 \paragraph{Overview} 
-The PEEKS project is a focused team effort to advance the capabilities of the 
-ECP software stack in terms of communication-avoiding Krylov solvers and 
+The PEEKS project is a focused team effort to advance the capabilities of the
+ECP software stack in terms of communication-avoiding Krylov solvers and
 advanced preconditioning techniques featuring fine-grained parallelism.
-Previously developed techniques that are available as prototype codes are 
-turned into production-quality and integrated into the ECP software ecosystem 
-as part of the Trilinos and MAGMA-sparse software stack.
-As leading developers of these two software packages (Trilinos and 
+Previously developed techniques that are available as prototype codes -- as
+well as novel algorithm developments -- are turned into production-quality 
+implementations and integrated into the ECP software ecosystem 
+as part of the Trilinos~\footnote{\url{https://trilinos.org/}}, the 
+Ginkgo~\footnote{\url{https://github.com/ginkgo-project/ginkgo}}, and the 
+MAGMA-sparse~\footnote{\url{http://icl.cs.utk.edu/magma/}} software stacks.
+As leading developers of these software packages (Trilinos, Ginkgo, and 
 MAGMA-sparse), the members of the PEEKS project have a strong record of 
 delivering software packages that are used on future leadership-class 
-supercomputers. In fact, ECP application projects submitted to the DOE explicitly mention MAGMA and Trilinos as part of the software ecosystem to utilize Exascale computers. 
+supercomputers, and already now employed by ECP application projects.
 
-In order to make the new algorithms easily accessible to ECP applications,
-we design a generic software interface for the parallel preconditioning 
-techniques in MAGMA-sparse and the communication-avoiding Krylov solvers. 
-Featuring these interfaces, we integrate the production-ready solvers and 
-preconditioning techniques into the ECP software stack via the xSDK4ECP 
-software effort. This enables the ECP applications to adopt the new technology 
-without fundamental changes in their application design.
-
-A particular focus of the PEEKS project is on software portability, and we aim to 
-deliver high performance across the list of ECP-supported Exascale 
-architectures. This effort is realized using sophisticated software development 
-and testing practices, ensuring a robust production-quality software that can 
-be relied upon by ECP 
-application projects.
+In order to make the new algorithms easily accessible to ECP applications, we
+in particular focus on software sustainability and cross-platform portability.
+This effort is realized using sophisticated software development
+and testing practices, ensuring a robust production-quality software that can
+be relied upon by ECP application projects.
+Delivering the production-ready preconditioner- and solver routines
+via the xSDK4ECP software effort enables the ECP applications to adopt the new
+technology without fundamental changes in their application design.
 
 \paragraph{Key  Challenges}
 Running iterative solvers on the next-generation HPC systems results in two 
@@ -49,7 +46,7 @@ remained in prototype status and rarely made it into production code.
 Similarly, significant effort was put into developing new preconditioning 
 techniques that allow for the efficient parallelization of the preconditioner 
 setup and the preconditioner 
-application~\cite{chowisc2015,anzteuropa2015,ANZT20181}. 
+application~\cite{chowisc2015,anzteuropa2015,ANZT20181,doi:10.1137/16M1079506}. 
 Again, most implementations were 
 experimental and rarely adopted by application code.
 
@@ -103,21 +100,28 @@ The primary thrusts of the PEEKS project are:
 
 \paragraph{Recent Progress}
 \begin{enumerate}
-\item 
+\item
 We populated a white paper on a generic software interface in the scientific 
 community and collected feedback including design modifications. The white paper 
 is accessible at the PEEKS project webpage~\cite{peekswebpage}.
 \item 
-We recently completed the production code implementation of the parallel 
-generation of preconditioners based on incomplete factorization. In an initial 
-assessment of the hardware anticipated to become the backbone of the Summit and 
-Sierra pre-Exascale platforms, we identified for benchmark test problems 
-significant advantages over vendor-tuned functionality (see 
+We deployed the production code implementation of the parallel 
+generation of preconditioners based on incomplete factorization (PARILU) in the 
+MAGMA-sparse software package. In an 
+initial assessment of the hardware anticipated to become the backbone of the 
+Summit and Sierra pre-Exascale platforms, we identified for benchmark test 
+problems significant advantages over vendor-tuned functionality (see 
 Figure~\ref{fig:ILUperf}).
+\item
+More recently, we developed a parallel threshold ILU factorization 
+(ParILUT)~\cite{doi:10.1137/16M1079506}. We derived an implementation for GPU 
+architectures, and deployed the production code implementation in the 
+MAGMA-sparse software package.
 \item 
 Recently, we also realized pipeline Krylov solvers in the Trilinos 
 production code ecosystem and analyzed the performance for ECP application use 
-cases. A performance assessment report is available on the PEEKS 
+cases~\cite{1204}. A performance assessment report and slide decks documenting 
+the work flow are available on the PEEKS 
 webpage~\cite{peekswebpage}. 
 \end{enumerate}
 
