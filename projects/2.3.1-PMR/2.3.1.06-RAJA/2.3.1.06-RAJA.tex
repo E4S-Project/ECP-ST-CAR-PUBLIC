@@ -14,9 +14,14 @@ system-specific memory concerns.
 The software products provided by this project are three complementary and 
 interoperable libraries:
 \begin{enumerate}
-\item {\bf RAJA:} Software abstractions that enable C++ developers to write performance portable (i.e., single-source) numerical kernels (loops). 
-\item {\bf CHAI:} C++ ``managed array'' abstractions that enable transparent and automatic copying of application data to execution memory spaces at run time as needed based on RAJA execution contexts.
-\item {\bf Umpire:} A portable memory resource management library that provides a unified high-level API for resource discovery, memory provisioning, allocation, access, operations, and introspection.
+\item {\bf RAJA:} Software abstractions that enable C++ developers to write
+  performance portable (i.e., single-source) numerical kernels (loops). 
+\item {\bf CHAI:} C++ ``managed array'' abstractions that enable transparent
+  and automatic copying of application data to execution memory spaces at run
+    time as needed based on RAJA execution contexts.
+\item {\bf Umpire:} A portable memory resource management library that provides
+  a unified high-level API for resource discovery, memory provisioning,
+    allocation, access, operations, and introspection.
 \end{enumerate}
 
 Capabilities delivered by these software efforts are needed to manage the
@@ -28,39 +33,40 @@ numerical algorithms from platform-specific data and execution concerns, and
 without major disruption as new machine, programming models, and vendor
 software become available.
 
-These libraries in development in this project are currently used in 
-production ASC applications at Lawrence Livermore National Laboratory 
-(LLNL). They are also being used or being explored/adopted by several ECP 
-application and library projects, including: LLNL ATDM application, GEOS (Subsurface), SW4 (EQSIM), MFEM (CEED co-design), and SUNDIALS.
+These libraries in development in this project are currently used in production
+ASC applications at Lawrence Livermore National Laboratory (LLNL). They are
+also being used or being explored/adopted by several ECP application and
+library projects, including: LLNL ATDM application, GEOS (Subsurface), SW4
+(EQSIM), MFEM (CEED co-design), and SUNDIALS.
 
-The software projects are highly-leveraged with other efforts. Team members 
-include: ASC and ATDM application developers, ASD tool developers, university 
+The software projects are highly-leveraged with other efforts. Team members
+include: ASC and ATDM application developers, ASD tool developers, university
 collaborators, and vendors. This ECP ST project supports outreach to the ECP
 community and collaboration with ECP efforts.
 
 \paragraph{Key Challenges.}
 
 The main technical challenge for this project is enabling production
-applications to achieve performance portability in an environment of rapidly 
-changing, disruptive HPC hardware architecture design. Typical large 
-applications contain $O(10^5) - O(10^6)$ lines of code and $O(10K)$ loop 
-kernels. The codes must run efficiently on platforms ranging from 
-laptops to commodity clusters to large HPC platforms. The codes are 
-long-lived and are used daily for decades, so they must be portable across 
-machine generations. Also, the codes are under continual development, with a 
-steady stream of new capabilities added throughout their lifetimes -- continual 
-validation and verification is essential, which precludes substantial rewrites
-from scratch. Lastly, the complex interplay of multiple physics packages 
-and dozens of libraries makes it so that the data required for the full set of 
-components needed for a given simulation may not fit into a single system
-memory space. To advance scientific computing capabilities, applications 
-must navigate these constraints while facing substantial hardware architecture 
-disruption along the road toward Exascale computing platforms. 
+applications to achieve performance portability in an environment of rapidly
+changing, disruptive HPC hardware architecture design. Typical large
+applications contain $O(10^5) - O(10^6)$ lines of code and $O(10K)$ loop
+kernels. The codes must run efficiently on platforms ranging from laptops to
+commodity clusters to large HPC platforms. The codes are long-lived and are
+used daily for decades, so they must be portable across machine generations.
+Also, the codes are under continual development, with a steady stream of new
+capabilities added throughout their lifetimes -- continual validation and
+verification is essential, which precludes substantial rewrites from scratch.
+Lastly, the complex interplay of multiple physics packages and dozens of
+libraries makes it so that the data required for the full set of components
+needed for a given simulation may not fit into a single system memory space. To
+advance scientific computing capabilities, applications must navigate these
+constraints while facing substantial hardware architecture disruption along the
+road toward Exascale computing platforms. 
 
 While the software provided by this project has a substantial user base at
-LLNL, achieving broader adoption in the ECP (projects without LLNL involvement, 
-in particular) is another challenge. The software efforts are funded almost 
-entirely by LLNL programs and the majority of their developers work on LLNL 
+LLNL, achieving broader adoption in the ECP (projects without LLNL involvement,
+in particular) is another challenge. The software efforts are funded almost
+entirely by LLNL programs and the majority of their developers work on LLNL
 application projects. So resource limitations is a key issue.
 
 \paragraph{Solution Strategy.}
@@ -95,10 +101,10 @@ functionality of Umpire enables applications and libraries to make memory
 usage decisions based on allocation properties (size, location, sharing 
 between packages, etc.)
 
-All three software libraries are open source and 
-available on GitHub~\cite{RAJA-github, CHAI-github, Umpire-github}. There they 
-provide regular software and documentation releases. Each project has 
-dedicated email lists, issue tracking, test suites, and automated testing.
+All three software libraries are open source and available on
+GitHub~\cite{RAJA-github, CHAI-github, Umpire-github}. There they provide
+regular software and documentation releases. Each project has dedicated email
+lists, issue tracking, test suites, and automated testing.
 
 \paragraph{Recent Progress}
 
@@ -128,10 +134,18 @@ and $1/2$-day tutorial proposal were submitted to SC18.
 
 Our next efforts include:
 \begin{enumerate}
-\item {\bf Fill RAJA Gaps:} Not all features are available for all programming model back-ends; as models mature, such as OpenMP4.5, these gaps will be filled.
-\item {\bf Expand RAJA User Guide and Tutorial:} Build example codes and user documentation for latest RAJA features and prepare for future tutorials (ATPESC 2018 and SC18).
-\item {\bf Expand RAJA Performance Suite:} Include kernels that exercise more application use cases and RAJA features.
-\item {\bf Focus RAJA Vendor Interaction:} Work with CORAL vendors to address issues as applications port to the Sierra platform at LLNL; establish early interactions with CORAL-2 vendors to ensure RAJA will be supported well on CORAL-2 systems.
-\item {\bf CHAI-Umpire Integration:} Enable applications to customize CHAI array allocations; e.g., to use memory pools for temporaries.
-\item {\bf Expand Umpire Capabilities:} Explore potential collaboration with relevant ECP efforts, such as SICM project.
+\item {\bf Fill RAJA Gaps:} Not all features are available for all programming
+  model back-ends; as models mature, such as OpenMP4.5, these gaps will be
+    filled.
+\item {\bf Expand RAJA User Guide and Tutorial:} Build example codes and user
+  documentation for latest RAJA features and prepare for future tutorials
+    (ATPESC 2018 and SC18).
+\item {\bf Expand RAJA Performance Suite:} Include kernels that exercise more
+  application use cases and RAJA features.
+\item {\bf Focus RAJA Vendor Interaction:} Work with CORAL vendors to address
+  issues as applications port to the Sierra platform at LLNL; establish early
+    interactions with CORAL-2 vendors to ensure RAJA will be supported well on
+    CORAL-2 systems.
+\item {\bf Expand Umpire Capabilities:} Explore potential collaboration with
+  relevant ECP efforts, such as SICM project.
 \end{enumerate}
