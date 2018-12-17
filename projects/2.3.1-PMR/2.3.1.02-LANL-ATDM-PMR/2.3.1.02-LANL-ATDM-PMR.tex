@@ -4,7 +4,7 @@
 \paragraph{Overview} 
 %\textit{Provide an overview of your project.  You might find that the introductory text from your Fall 2017 Project Summary \url{https://confluence.exascaleproject.org/display/1ST/Fall+2017+ECP+ST+Project+Summaries} useful as a starting draft.}
 
-The LANL ATDM PMR effort is focusing on the development and use of advanced programming models for Advanced Technology Development and Mitigation use-cases. Our current focus is on research and development of new programming model capabilities in the Legion data-centric programming system. Legion provides unique capabilities that align well with our focus on the development of tools and technologies that enables a separation of concerns of computational physicists and computer scientists. Within the ATDM PMR effort we have focused on the development of significant new capabilities within the Legion runtime that are specifically required to support LANL's ATDM applications. Another key component of our work is the co-design and integration of advanced programming model research and development within FleCSI, a Flexible Computational Science Infrastructure. 
+The LANL ATDM PMR effort is focusing on the development and use of advanced programming models for Advanced Technology Development and Mitigation use-cases. Our current focus is on research and development of new programming model capabilities in the Legion data-centric programming system. Legion provides unique capabilities that align well with our focus on the development of tools and technologies that enables a separation of concerns of computational physicists and computer scientists. Within the ATDM PMR effort we have focused on the development of significant new capabilities within the Legion runtime that are specifically required to support LANL's ATDM applications. Another key component of our work is the co-design and integration of advanced programming model research and development within FleCSI, a Flexible Computational Science Infrastructure.
 
 A major benefit to the broader ECP community is the development of new features in the Legion programming system which are available as free open-source software \url{https://gitlab.com/StanfordLegion/legion}. 
 
@@ -26,20 +26,24 @@ FleCSI is a Flexible Computational Science Infrastructure whose goal is to provi
 
 \textbf{Legion.}
 
-In funded collaboration with NVIDIA, LANL and NVIDIA are developing new features in Legion to support our applications. Necessary features are identified through direct engagement with application developers and through rapid development, evaluation, and refactoring within the team. Major features include Dynamic Control Replication for improved scalability and productivity as well as Fortran interoperability for Legion based applications. 
+In funded collaboration with NVIDIA, LANL and NVIDIA are developing new features in Legion to support our applications. Necessary features are identified through direct engagement with application developers and through rapid development, evaluation, and refactoring within the team. Major features include Dynamic Control Replication for improved scalability and productivity and Dynamic Tracing to reduce runtime overheads for  applications with semi-regular data dependencies such as applications with stencil-based communication patterns. 
 
 
 \textbf{FleCSI Legion integration.}
 LANL staff work on co-design and integration of the Legion programming system into the FleCSI framework. We have regular milestones that align well with application needs and the development of new features within Legion. 
 
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=4in]{projects/2.3.1-PMR/2.3.1.02-LANL-ATDM-PMR/control-replication-performance}
+        \caption{\label{fig:control-replication-performance}\textbf{Productivity features such as Dynamic Control Replication scales well across multi-GPU systems in unstructured mesh computations.}}
+\end{figure}
+
 \begin{figure}[htb]
         \centering
         \includegraphics[width=4in]{projects/2.3.1-PMR/2.3.1.02-LANL-ATDM-PMR/tracing-performance}
-        \caption{\label{fig:tracing-performance}\textbf{New Legion features such as dynamic tracing significantly improves strong scaling in unstructured mesh computations.}}
+        \caption{\label{fig:tracing-performance}\textbf{New Legion features such as Tracing will improve strong scaling in unstructured mesh computations.}}
 \end{figure}
-
-
-
 
 \paragraph{Recent Progress} \leavevmode \\
 
@@ -58,7 +62,7 @@ Dynamic control replication is an important capability for LANL's ATDM effort, a
 \paragraph{Next Steps}  \leavevmode \\
 
 
-\textbf{FleCSI.} Focus on performance and scalability enhancements of the Dynamic Control Replication and other new Legion features. 
+\textbf{Legion.} Focus on hardening and scalability of Legion's Dynamic Control Replication and development of Dynamic Tracing for application use-cases. 
 
 \textbf{FleCSI Legion Integration.} Demonstrate the integration of Dynamic Control Replication and other new Legion features within FleCSI. Our goal is to demonstrate a multi-scale application on the Advanced Technology System, Sierra using our latest advances in the Legion and FleCSI systems. 
 
