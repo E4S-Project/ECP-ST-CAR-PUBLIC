@@ -152,4 +152,11 @@ Our next efforts are:
 	preconditioner application using the parallelism available within a single 
 	node. This step is strongly tied to the SDE effort, as we expect significant 
 	benefits for application-tuned parameter choices in particular.
+	\item \textbf{Explore other communication-avoiding methods:} We have 
+	started collaborate with the ExaWind team on their 
+	``communication-optimal'' Krylov methods. Further, polynomial 
+	preconditioners are known to reduce the number of global inner products in 
+	Krylov methods and are therefore communication-avoiding. We will explore 
+	ways to cheaply build good polynomials, which might augment our current 
+	approaches.
 \end{enumerate}
