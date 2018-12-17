@@ -208,5 +208,48 @@ for pivot selection~\cite{AWPM2018}. The other improvements are:
 \end{itemize}
 } %%%% ignored from last period ....
 
-%%%% FFTX sub-project
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% FFTX sub-project %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{\stid{3.07} Sub-project: FFTX} \label{subsubsect:fftx}
+\noindent
+
+\paragraph{Overview}
+The use of FFTs span a broad range of DOE science applications, including ones represented in the Exascale applications space. Most applications use the API from FFTW, an open-source library developed in the 1990's. FFTW is still used extensively on DOE HPC platforms, and the FFTW API has become the de-facto
+standard FFT interface: vendors that provide FFT libraries implement
+(at least a subset) of that interface. Thus, FFTW both defines the 
+standard FFT library interface, as well as being a key software component
+for applications.
+In the FFTX project, we are developing a new package for supporting FFT applications on exascale architectures. Our approach based on two ideas. The first is develop a backwards-compatible approach that builds on the FFTW interface but extends it to enable extraction of high performance on exascale machines. The second idea is to provide a toolchain that enables the
+specialization of the FFT calculation and its surrounding use case calculations (scaling, data layout transformation, marshalling/unmarshalling for communication), using code generation, symbolic analysis, automatic performance tuning, and applications-specific code generation. We will use SPIRAL, an open-source toolchain for FFT developed at CMU, as the basis for developing FFTX, and will use specific ECP applications and target ECP exascale platforms to provide a focus for this work.
+
+\paragraph{Key Challenges}
+The traditional approach of of applications using FFTs is to build up high-performance implementations out of calls to (usually 1D) FFT libraries (either FFTW or vendor libraries), interleaved with user-implemented code for use-case-specific operations. This approach may break down on the emerging ECP platforms, for two reasons. The first is that the node architectures have become more complex. Multiple cores and accelerators lead to multiple levels of parallelism, including threading and SIMD/SIMT. In addition, there are on-node complex memory hierarchies that are to varying extents user-controlled, and across which it is expensive to move data. This leads to more complex interleaving of the other components of multidimensional FFT-based applications with the core library FFTs in order to maximize the effective use of the floating point capabilities and minimize data movement across the memory hierarchy. Some of these are simply not expressible in the current FFTW interface; others can be expressed, but with great effort on the part of the applications programmer, and often with an outcome of not yielding the theoretically-predicted performance due to unexpected and opaque behavior of the FFT library software. A second problem is that the open-source FFTW libraries are no longer supported. The original developers have gone on to other things, and the support of FFTW, such as it is, is performed by volunteer labor. As a result, the extensions to support new node architectures are more brittle and provide less coverage. Expanding the feature set of FFTW to enable the more effective use of the new node architectures is not feasible, since it would entail significant modification and use of the back-end software system, which no one is supporting, and on which the expertise is no longer available.
+
+\paragraph{Solution Strategies} 
+There are three components to our approach to providing a new software stack for FFT applications.
+
+\begin{trivlist}
+\item
+(1) We will design an extension of the FFTW interface that both meets the needs of the FFT use cases arising in ECP applications, and exposes the
+oppportunities for obtaining high performance on current and future 
+architectures. The FFTX interface will be 
+backwards compatible with FFTW so that legacy code using FFTW runs unmodified and gains substantially on hardware to which FFTX has been ported.
+To express the additional opportunities for obtaining improved performance, we will add a small number of new features beyond the FFTW interface to express algorithmic features such as futures/delayed execution,
+offloading, data placement, callback kernels, and sparsity of inputs or outputs. Such changes will have the potential to extract
+much higher performance than standard FFTW calls, since higher level operations and new hardware features can be addressed. This interface will be designed as an embedded DSL, for which we will provide a standard C/C++ reference library implementation that enables rapid assessment of the interface by applications developers.
+\item
+(2) We will develop a new code-generation back end. FFT-based application kernels implemented using the extended FFTW interface described above will be treated as specifications. This allows the extraction of the algorithm semantics from source code and known library semantics, thus providing whole-kernel semantics and whole-kernel specifications. This enables build-time source-to-source translation and advanced performance optimizations, such as
+cross-library optimization, targeting of accelerators through off-loading, and inlining of user-provided kernels.
+Our approach allows for fine control over resource expenditure during optimization. Applications can control compile-time, initialization-time, invocation time optimization resources if they need to.
+\item
+(3) We will develop higher-level FFT-based applications driven primarily by the requirements of ECP applications projects, with the development of interfaces between FFTX and full ECP applications part of the co-design process. The strategy of having a library implementation of the FFTX interface will enable us to use the requirements of ECP applications for the design of the expanded FFTW interface and of the SPIRAL-based toolchain; in addition, the insights provided by opening up the design / tuning space for the constituent FFTs will lead to new ways of designing the applications solvers in order to obtain high performance. We will release the resulting integrated FFT-based packages as a library, called {\em SpectralPack}.
+
+\end{trivlist}
+
+The core code generation, symbolic analysis, and autotuning software for this project will be based on the open-source SPIRAL software stack,
+building on 20 years of research by the SPIRAL team at CMU.
+SPIRAL automatically maps computational kernels across a wide range of computing platforms to highly efficient code, and proves the correctness of the synthesized code.
+The SPIRAL approach has many of the same structural components as FFTW -- a high-level DSL, symbolic analysis, code generation, and autotuning. However, the approach used by SPIRAL integrates these ideas more closely into the user code, generating new source code for both the FFT calls and the glue code (e.g. pointwise operations, data motion) in an FFT-based application.
+
+
