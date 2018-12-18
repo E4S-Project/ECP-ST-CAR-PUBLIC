@@ -133,20 +133,25 @@ fine-grained data parallel operations.
 
 \paragraph{Next Steps}
 
-Future work will include the design and implementation of a
-\textit{set topology} data structure that is suitable for representing
-several different classes of particles, e.g., \textit{particle-in-cell
-(PIC)} method, \textit{material-point method (MPM)}, and
-\textit{Monte Carlo (MC)} methods. We are also working to incorporate
-changes to the Legion programming model that will provide: a more formal
-interface for reasoning about and managing graph coloring
-\textit{dependent partitioning}, and an improved task model that will
-significantly increase scalability \textit{control replication}.
-Control replication is an important design improvement to Legion, as it
-will allow runtime management of dynamically changing data types in a
-more efficient manner than is currently possible. We will continue to
-engage in co-design with runtime and application developers to refine
-and improve the FleCSI model and interface.
+Current work includes performance testing and tuning. Modifications 
+to enable compilation with Kitsune compiler from MIT. Additional 
+features to support checkpoint-restart, changes to support formated 
+input, geometeries and mesh models and allow applications to be driven 
+from existing Common-Model infrastructure.
+%Future work will include the design and implementation of a
+%\textit{set topology} data structure that is suitable for representing
+%several different classes of particles, e.g., \textit{particle-in-cell
+%(PIC)} method, \textit{material-point method (MPM)}, and
+%\textit{Monte Carlo (MC)} methods. We are also working to incorporate
+%changes to the Legion programming model that will provide: a more formal
+%interface for reasoning about and managing graph coloring
+%\textit{dependent partitioning}, and an improved task model that will
+%significantly increase scalability \textit{control replication}.
+%Control replication is an important design improvement to Legion, as it
+%will allow runtime management of dynamically changing data types in a
+%more efficient manner than is currently possible. We will continue to
+%engage in co-design with runtime and application developers to refine
+%and improve the FleCSI model and interface.
 
 \begin{figure}
   \centering
