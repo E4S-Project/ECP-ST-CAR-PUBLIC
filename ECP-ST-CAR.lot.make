@@ -2,8 +2,8 @@
 \contentsline {table}{\numberline {2}{\ignorespaces Software Development Kits (SDKs) provide an aggregation of software products that have complementary or similar attributes. ECP ST uses SDKs to better assure product interoperability and compatibility. SDKs are also essential aggregation points for coordinated planning and testing. SDKs are an integral element of ECP ST\nobreakspace {}\cite {Heroux-SDK-Podcast}\relax }}{5}{table.caption.3}
 \contentsline {table}{\numberline {3}{\ignorespaces ECP ST technical areas were reduced from 8 to 5 in November 2017. This figure shows how areas were remapped and merged. In addition, the ECP ST Director and Deputy Director changed from Rajeev Thakur (who continues as the Programming Models \& Runtimes\ lead) and Pat McCormick to Mike Heroux and Jonathan Carter, respectively.\relax }}{10}{table.caption.7}
 \contentsline {table}{\numberline {4}{\ignorespaces Programming Models and Runtimes Products (18 total).\relax }}{26}{table.caption.14}
-\contentsline {table}{\numberline {5}{\ignorespaces Development Tools Products (19 total).\relax }}{26}{table.caption.15}
+\contentsline {table}{\numberline {5}{\ignorespaces Development Tools Products (21 total).\relax }}{26}{table.caption.15}
 \contentsline {table}{\numberline {6}{\ignorespaces Mathematical Libraries Products (16 total).\relax }}{27}{table.caption.16}
 \contentsline {table}{\numberline {7}{\ignorespaces Visualization and Data Products (25 total).\relax }}{27}{table.caption.17}
-\contentsline {table}{\numberline {8}{\ignorespaces Software Delivery and Ecosystems Products (11 total).\relax }}{28}{table.caption.18}
+\contentsline {table}{\numberline {8}{\ignorespaces Software Delivery and Ecosystems Products (12 total).\relax }}{28}{table.caption.18}
 \contentsline {table}{\numberline {9}{\ignorespaces External products to which ECP ST activities contribute. Participation in requirements, analysis, design and prototyping activities for third-party products is some of the most effective software work we can do.\relax }}{29}{table.caption.20}
