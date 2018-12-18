@@ -67,26 +67,26 @@ resilient backend based on nested parity. We have also extended our top-level
 erasure approach to use RDMA operations for more efficient coding and data movement.
 
 The LANL monitoring stack has been successfully deployed into multiple
-computing enclaves within LANL's HPC facility. We have procured additional
-hardware and are currently deploying the monitoring infrastructure and
-dashboards into LANL's secure computing environment. Our approach currently
-supports both administrators, analysts, and code teams with multiple
+computing enclaves within LANL's HPC facility, including LANL's secure
+computing environment. Our approach currently supports data ingest and
+analysis by system administrators, data analysts, and code teams with multiple
 dashboards for each role. We continue to refine our security approach to
 ensure that new monitoring monitoring dashboards comply with the requirements
 of LANL's CCB, the voting body for ensuring that all LANL deployments are
 secured appropriately. The use of our monitoring system by application teams
 (which monitor information that includes classified data) has required a
-highly granular approach to storage and access roles.
+highly granular approach to storage and access roles -- but also makes it more
+broadly useful and provides direct benefit to the code teams and users.
 
-%\begin{figure}[htb]
-%	\centering
-%	\includegraphics[width=6in]{hxhim-main}
-%	\caption{\label{fig:hxhim} Relevant components of the HXHIM
-%	embeddable service. The client library is provided as a set of API
-%	calls while the server capability is provided by a thread running
-%	within the application. Communication uses the Margo and Mercury RPC
-%	layer to provide efficient support for remote key-value access.}
-%\end{figure}
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=6in]{hxhim-main}
+	\caption{\label{fig:hxhim} Relevant components of the HXHIM
+	embeddable service. The client library is provided as a set of API
+	calls while the server capability is provided by a thread running
+	within the application. Communication uses the Margo and Mercury RPC
+	layers to provide efficient support for remote key-value access.}
+\end{figure}
 
 Recent progress on HXHIM, a key-value store for HPC platforms, includes the
 integration of a new transport layer based on Margo and Mercury (projects
@@ -128,13 +128,11 @@ of extreme scale data.
 
 \paragraph{Next Steps}
 %\textit{Describe what you are working on next.}
-We are continuing to add features and work on improving code quality for
-each of our projects. This includes improving the performance, scalability,
-and maintainability of each of the associated subprojects. Our MarFS project is
-focused on improving read/write performance via increased protocol
-efficiencies. Our monitoring work continues to explore the most efficient
-indexing for supporting popular queries without dramatically increasing
-storage requirements. HXHIM is in the process of adding layers for managing
-memory and network resources efficiently. Cinema is identifying new
-application workflows that can be reasonably made efficient and new analysis
-methods to apply efficiently for cinema users.
+Cinema is identifying new application workflows that can be reasonably made
+efficient and new analysis methods to apply efficiently for cinema
+users.
+
+HXHIM, MarFS, and the monitoring infrastructure have all been descoped
+from ECP though the work will continue as part of LANL's Computational Systems
+and Software Environments effort. We do not expect this change to alter the
+trajectory of any of the descoped projects.
