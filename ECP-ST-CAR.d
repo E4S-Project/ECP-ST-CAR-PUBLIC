@@ -155,13 +155,64 @@ ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm
 ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.2-Tools/2.3.2.05-Exascale-Code-Generation-Toolkit/2.3.2.05-Exascale-Code-Generation-Toolkit.tex)
 ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.2-Tools/2.3.2.06-EXA-PAPI/2.3.2.06-EXA-PAPI.tex)
 ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.2-Tools/2.3.2.07-Autotuning/2.3.2.07-Autotuning.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.2-Tools/2.3.2.08-HPCToolkit/2.3.2.08-HPCToolkit.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.2-Tools/2.3.2.09-PROTEAS/2.3.2.09-CLACC.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.2-Tools/2.3.2.09-PROTEAS/2.3.2.09-PAPYRUS.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.2-Tools/2.3.2.09-PROTEAS/2.3.2.09-PROTEAS.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.2-Tools/2.3.2.09-PROTEAS/2.3.2.09-TAU.tex)
 ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3-MathLibs.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.01-xSDK/2.3.3.01-xSDK-hypre.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.01-xSDK/2.3.3.01-xSDK.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.02-LANL-ATDM-MathLibs/2.3.3.02-LANL-ATDM-MathLibs.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.03-LLNL-ATDM-MathLibs/2.3.3.03-LLNL-ATDM-MathLibs.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.04-SNL-ATDM-MathLibs/2.3.3.04-SNL-ATDM-MathLibs.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.05-SUNDIALS/2.3.3.05-SUNDIALS.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.06-PETSc-TAO/2.3.3.06-PETSc-TAO.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/2.3.3.07-STRUMPACK-SuperLU.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.08-ForTrilinos/2.3.3.08-ForTrilinos.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.09-SLATE/2.3.3.09-FFT-ECP.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.09-SLATE/2.3.3.09-SLATE.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.10-PEEKS/2.3.3.10-PEEKS.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.3-MathLibs/2.3.3.11-ALExa/2.3.3.11-ALExa.tex)
 ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4-DataViz.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.01-DataViz-SDK/2.3.4.01-DataViz-SDK.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.02-LANL-ATDM-DataViz/2.3.4.02-LANL-ATDM-DataViz.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.03-LLNL-ATDM-DataViz/2.3.4.03-LLNL-ATDM-DataViz.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.04-SNL-ATDM-DataViz/2.3.4.04-SNL-ATDM-Data.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.04-SNL-ATDM-DataViz/2.3.4.04-SNL-ATDM-Viz.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.05-VeloC/2.3.4.05-VeloC.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.06-EZ/2.3.4.06-EZ.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.07-UNIFYCR/2.3.4.07-UNIFYCR.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.08-ExaHDF5/2.3.4.08-ExaHDF5.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.09-ADIOS/2.3.4.09-ADIOS.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.10-DataLib/2.3.4.10-DataLib.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.11-ZFP/2.3.4.11-ZFP.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.12-ALPINE/2.3.4.12-ALPINE.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/2.3.4.13-ECP-VTK-m.tex)
 ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.5-Ecosystem/2.3.5-Ecosystem.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/2.3.5.01-Ecosystem-SDK.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.5-Ecosystem/2.3.5.02-LANL-ATDM-Ecosystem/2.3.5.02-LANL-ATDM-Ecosystem.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.5-Ecosystem/2.3.5.03-LLNL-ATDM-Ecosystem/2.3.5.03-LLNL-ATDM-Ecosystem.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.5-Ecosystem/2.3.5.04-SNL-ATDM-Ecosystem/2.3.5.04a-SNL-ATDM-Ecosystem.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.5-Ecosystem/2.3.5.04-SNL-ATDM-Ecosystem/2.3.5.04b-SNL-ATDM-Ecosystem.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.5-Ecosystem/2.3.5.05-Argo/2.3.5.05-Argo.tex)
+ECP-ST-CAR.aux ECP-ST-CAR.aux.make ECP-ST-CAR.d ECP-ST-CAR.pdf: $(call path-norm,projects/2.3.5-Ecosystem/2.3.5.06-Flang/2.3.5.06-Flang.tex)
 .SECONDEXPANSION:
 -include cover.pdf.gpi.d
 ECP-ST-CAR.d: $$(call graphics-source,cover.pdf,ECP-ST-CAR)
 ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,cover.pdf,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
 -include ecp-small.png.gpi.d
 ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
 ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
@@ -351,9 +402,15 @@ ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-S
 -include ecp-small.png.gpi.d
 ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
 ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
--include projects/2.3.1-PMR/2.3.1.08-Legion/tg.jpg.gpi.d
-ECP-ST-CAR.d: $$(call graphics-source,projects/2.3.1-PMR/2.3.1.08-Legion/tg.jpg,ECP-ST-CAR)
-ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,projects/2.3.1-PMR/2.3.1.08-Legion/tg.jpg,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include projects/2.3.1-PMR/2.3.1.09-ParSEC/cc_abcd.pdf.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,projects/2.3.1-PMR/2.3.1.09-ParSEC/cc_abcd.pdf,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,projects/2.3.1-PMR/2.3.1.09-ParSEC/cc_abcd.pdf,ECP-ST-CAR)
 -include ecp-small.png.gpi.d
 ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
 ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
@@ -468,3 +525,363 @@ ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-S
 -include ecp-small.png.gpi.d
 ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
 ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include projects/2.3.2-Tools/2.3.2.09-PROTEAS/clacc.pdf.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,projects/2.3.2-Tools/2.3.2.09-PROTEAS/clacc.pdf,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,projects/2.3.2-Tools/2.3.2.09-PROTEAS/clacc.pdf,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include projects/2.3.3-MathLibs/2.3.3.01-xSDK/COGMRES.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,projects/2.3.3-MathLibs/2.3.3.01-xSDK/COGMRES.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,projects/2.3.3-MathLibs/2.3.3.01-xSDK/COGMRES.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include projects/2.3.4-DataViz/2.3.4.06-EZ/sz-illu.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,projects/2.3.4-DataViz/2.3.4.06-EZ/sz-illu.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,projects/2.3.4-DataViz/2.3.4.06-EZ/sz-illu.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include projects/2.3.4-DataViz/2.3.4.11-ZFP/ZFP.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,projects/2.3.4-DataViz/2.3.4.11-ZFP/ZFP.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,projects/2.3.4-DataViz/2.3.4.11-ZFP/ZFP.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+-include ecp-small.png.gpi.d
+ECP-ST-CAR.d: $$(call graphics-source,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.pdf ECP-ST-CAR._graphics: $$(call graphics-target,ecp-small.png,ECP-ST-CAR)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.01-PMR-SDKs/2.3.1.01-PMR-SDKs.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.02-LANL-ATDM-PMR/2.3.1.02-LANL-ATDM-PMR.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.03-LLNL-ATDM-PMR/2.3.1.03-LLNL-ATDM-PMR.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.05-Global-Arrays/2.3.1.05-Global-Arrays.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.06-RAJA/2.3.1.06-RAJA.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.07-Exascale-MPI/2.3.1.07-Exascale-MPI.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.08-Legion/2.3.1.08-Legion.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.09-ParSEC/2.3.1.09-ParSEC.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.11-OMPI-X/2.3.1.11-OMPI-X.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.12-Power-Steering/2.3.1.12-Power-Steering.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.13-SOLLVE/2.3.1.13-SOLLVE-ARGOBOTS.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.13-SOLLVE/2.3.1.13-SOLLVE-BOLT.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.13-SOLLVE/2.3.1.13-SOLLVE.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/2.3.1.14-GASNet-EX.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/2.3.1.14-UPCxx.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.15-Qthreads/2.3.1.15-Qthreads.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.1-PMR/2.3.1.16-SICM/2.3.1.16-SICM.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.2-Tools/2.3.2.01-Tools-SDKs/2.3.2.01-Tools-SDKs.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.2-Tools/2.3.2.02-LANL-ATDM-Tools/2.3.2.02-LANL-ATDM-Tools.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.2-Tools/2.3.2.03-LLNL-ATDM-Tools/2.3.2.03-LLNL-ATDM-Tools.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.2-Tools/2.3.2.04-SNL-ATDM-Tools/2.3.2.04-SNL-ATDM-Tools.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.2-Tools/2.3.2.05-Exascale-Code-Generation-Toolkit/2.3.2.05-Exascale-Code-Generation-Toolkit.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.2-Tools/2.3.2.06-EXA-PAPI/2.3.2.06-EXA-PAPI.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.2-Tools/2.3.2.07-Autotuning/2.3.2.07-Autotuning.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.2-Tools/2.3.2.08-HPCToolkit/2.3.2.08-HPCToolkit.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.2-Tools/2.3.2.09-PROTEAS/2.3.2.09-CLACC.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.2-Tools/2.3.2.09-PROTEAS/2.3.2.09-PAPYRUS.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.2-Tools/2.3.2.09-PROTEAS/2.3.2.09-PROTEAS.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.2-Tools/2.3.2.09-PROTEAS/2.3.2.09-TAU.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.3-MathLibs/2.3.3.01-xSDK/2.3.3.01-xSDK-hypre.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.3-MathLibs/2.3.3.01-xSDK/2.3.3.01-xSDK.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.3-MathLibs/2.3.3.02-LANL-ATDM-MathLibs/2.3.3.02-LANL-ATDM-MathLibs.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.3-MathLibs/2.3.3.03-LLNL-ATDM-MathLibs/2.3.3.03-LLNL-ATDM-MathLibs.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.3-MathLibs/2.3.3.04-SNL-ATDM-MathLibs/2.3.3.04-SNL-ATDM-MathLibs.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.3-MathLibs/2.3.3.05-SUNDIALS/2.3.3.05-SUNDIALS.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.3-MathLibs/2.3.3.06-PETSc-TAO/2.3.3.06-PETSc-TAO.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/2.3.3.07-STRUMPACK-SuperLU.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.3-MathLibs/2.3.3.08-ForTrilinos/2.3.3.08-ForTrilinos.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.3-MathLibs/2.3.3.09-SLATE/2.3.3.09-SLATE.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.3-MathLibs/2.3.3.10-PEEKS/2.3.3.10-PEEKS.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.3-MathLibs/2.3.3.11-ALExa/2.3.3.11-ALExa.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.4-DataViz/2.3.4.01-DataViz-SDK/2.3.4.01-DataViz-SDK.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.4-DataViz/2.3.4.02-LANL-ATDM-DataViz/2.3.4.02-LANL-ATDM-DataViz.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.4-DataViz/2.3.4.03-LLNL-ATDM-DataViz/2.3.4.03-LLNL-ATDM-DataViz.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.4-DataViz/2.3.4.04-SNL-ATDM-DataViz/2.3.4.04-SNL-ATDM-Data.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.4-DataViz/2.3.4.04-SNL-ATDM-DataViz/2.3.4.04-SNL-ATDM-Viz.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.4-DataViz/2.3.4.05-VeloC/2.3.4.05-VeloC.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.4-DataViz/2.3.4.06-EZ/2.3.4.06-EZ.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.4-DataViz/2.3.4.07-UNIFYCR/2.3.4.07-UNIFYCR.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.4-DataViz/2.3.4.09-ADIOS/2.3.4.09-ADIOS.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.4-DataViz/2.3.4.11-ZFP/2.3.4.11-ZFP.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.4-DataViz/2.3.4.12-ALPINE/2.3.4.12-ALPINE.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/2.3.4.13-ECP-VTK-m.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/2.3.5.01-Ecosystem-SDK.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.5-Ecosystem/2.3.5.02-LANL-ATDM-Ecosystem/2.3.5.02-LANL-ATDM-Ecosystem.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.5-Ecosystem/2.3.5.03-LLNL-ATDM-Ecosystem/2.3.5.03-LLNL-ATDM-Ecosystem.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.5-Ecosystem/2.3.5.04-SNL-ATDM-Ecosystem/2.3.5.04-SNL-ATDM-Ecosystem.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.5-Ecosystem/2.3.5.05-Argo/2.3.5.05-Argo.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./projects/2.3.5-Ecosystem/2.3.5.06-Flang/2.3.5.06-Flang.bib)
+ECP-ST-CAR.bbl ECP-ST-CAR.aux ECP-ST-CAR.aux.make: $(call path-norm,./references.bib)
