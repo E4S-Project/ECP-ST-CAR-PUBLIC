@@ -1,7 +1,7 @@
 \subsubsection{\stid{4.02} LANL ATDM Data and Visualization} 
 
 \paragraph{Overview} 
-The LANL ATDM Data and Visualization project is focused on developing scalable
+The LANL ATDM Data and Visualization project develops scalable
 systems software for the generation, analysis, and management of data
 produced by ECP applications. This project is essential for ECP because
 existing systems software is inadequate with respect to deploying advanced
@@ -13,7 +13,7 @@ simulations.
 
 Scientific simulations running on Exascale platforms will
 continue to have access to enormous solid-state storage tiers that provide 
-opportunities for rapid data acquisition. Similarly, massive campaign storage
+opportunities for rapid data acquisition. Massive campaign storage
 systems built from affordable media offer the opportunity for maintaining
 large data sets over longer time periods to support longer duration
 simulations and accompanying analysis. Finally, advanced monitoring frameworks
@@ -32,12 +32,10 @@ challenging both in its breadth and depth. Fundamentally, our approach is
 focused on unlocking the value that currently exists within scientific data,
 but has traditionally been too time consuming to extract. As part of these
 efforts we've identified the need for software and facility infrastructure
-that supports finding data within the diverse set of storage resources
-
+that supports finding data within the diverse set of storage resources.
 Similarly, our efforts to better provide in-application support for modern
 analysis techniques require careful attention to performance, memory use, and
 data reduction without loss of insight. 
-Scaling challenges.
 
 \paragraph{Solution Strategy}
 %\textit{Describe your basic strategy for addressing the challenges.}
@@ -100,34 +98,31 @@ interconnects and typical scientific storage workloads.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=6in]{projects/2.3.4-DataViz/2.3.4.02-LANL-ATDM-DataViz/cinema}
-	\caption{Screen capture of both the
-	Cinema:Newsfeed viewer (left and Cinema:Explorer viewer, showing
-	different views of data from the workflow described above. On the
-	left, the Cinema:Newsfeed viewer shows a graph resulting from the
-	change detection algorithm, and snapshots from the timesteps at the
-	inflection points for the change detection algorithm. This viewer
-	shows a compact `newsfeed' view of the end-to-end analysis. Clicking
-	on the images in this viewer takes the scientist to a more detailed
-	view of the overall set of features captured during the
-	simulation. Because these viewers are implemented in a browser, it is
-	easy to link different viewers together for new tasks and workflows. }
+	\includegraphics[width=5in]{projects/2.3.4-DataViz/2.3.4.02-LANL-ATDM-DataViz/ECPReviewScreenshot.png}
+	\caption{
+        Screen capture of a browser-based set of Cinema viewers 
+        for a set of ECP datasets. We ran a variety of ALPINE algorithms
+        extracted relevant data features, and then output 
+        results as Cinema databases visualized in
+        a variety of ways, including comparison views, database
+        explorers, and change detection.
+    }
 \end{figure}
 
-Recent progress on the Cinema project has focused on development of capability
+Recent Cinema work has focused on development of capability
 and workflows for change detection in-situ data analysis artifacts. These
-promote new types of analysis of data from ECP simulations, including
-automated and assisted analysis. We are creating capabilities that allow
+promote new ways of analyzing ECP data, including
+automated and assisted analysis. New capabilities provide 
 scientists more options in analyzing and exploring the results of large
 simulations by provide a workflow that 1) detects features in-situ, 2)
-captures data artifacts from those features in Cinema databases, 3) promotes
-post-hoc analysis of the data for things such as change detection, and 4)
+captures data artifacts in Cinema databases, 3) promotes
+post-hoc analysis of the data, and 4)
 provides data viewers that allow interactive, structured exploration of the
-resulting artifacts. In particular, in our most recent milestone, we ran a Nyx
-simulation and captured in-situ features (isosurfaces), saved a Cinema
-database to disk, analyzed that database to determine inflection points in the
-complexity of those isosurfaces, and presented the results in a newsfeed
-viewer linked to other views of the data. This overall workflow provides a
+resulting artifacts. In our most recent milestone, we ran
+ALPINE algorithms and Cinema viewer creation workflows on a variety of
+ECP and ATDM simulation results to demonstrate integration with applications
+and progress in focusing on ECP application needs.
+This overall workflow provides a
 flexible method of applying new algorithms to the analysis and visualization
 of extreme scale data.
 
