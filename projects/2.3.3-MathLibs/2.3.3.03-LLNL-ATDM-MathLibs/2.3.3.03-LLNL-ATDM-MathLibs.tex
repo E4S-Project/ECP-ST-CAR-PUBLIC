@@ -95,7 +95,8 @@ other efforts available through CEED.
 
 To reach its many customers and partners in NNSA, DOE Office of Science, academia
 and industry, the MFEM team delivers regular releases on GitHub (e.g. mfem-3.3 and
-mfem-3.3.2 in 2017) that include detailed documentation and many example codes.
+mfem-3.3.2 in 2017, mfem-3.4 in 2018) that include detailed documentation and
+many example codes.
 Code quality is ensured by smoke tests with Travis CI on Linux, Mac, Windows and
 nightly regression testing at LLNL.
 
@@ -104,24 +105,59 @@ nightly regression testing at LLNL.
 Selected recent highlights:
 \begin{itemize}
 \item
-New optimized version of parallel AMR in MFEM, including construction of parallel interpolation, parallel refinement and rebalancing, demonstrated excellent weak and strong scalability during runs on the full Vulcan BG/Q machine at LLNL (400K MPI tasks).
+Developed a new formulation for discretizing problems with 1D spherical symmetry
+in BLAST. Extended BLAST to the 3T-model (separate equations for the electron
+and ion internal energies). Added support for changing masses during the
+Lagrangian phase.
 \item
-An interface for the new TMOP mesh optimization capabilities from mfem-3.3.2 was completed in the BLAST code, so that its remesh phase can use the TMOP functionality.
+Completed the delivery of discretization support for the FY18 MARBL ATDM L2
+milestone, including new 3T radiation-diffusion algorithms, and a simulation
+capability for problems with spherical and cylindrical symmetry via weight
+adjustments. With this and other support from the MFEM team, the MARBL team
+successfully defended its ATDM L2 milestone.
 \item
-Completed initial version of multi-group radiation-diffusion in BLAST.
+Worked on high-order ALE algorithms in BLAST: developed remap step for density
+component masses, various code improvements and bugs fixes related to L2
+milestone.
 \item
-Participated in the ATDM L2 milestone for MARBL, ``Demonstration of Modular Transport Capability in a Multi-Physics Code'', which included MFEM support for high-order (HO) to low-order-refined (LOR) field transfer.
+MFEM version 3.4 was released with many new features including: significantly
+improved non-conforming unstructured AMR scalability; integration with PUMI;
+block nonlinear operators and variable order NURBS; Conduit mesh blueprint
+support; general high-order-to-low-order refined field transfer; new specialized
+time integrators and 12 new examples and miniapps.
 \item
-BLAST's closure model was improved by separating the material energies into finite element and point-based parts, avoiding L2 projections of highly oscillatory modes.
-\item MFEM v3.3.2 was released with many new features including: support for high-order mesh optimization, xSDK support, integration with STRUMPACK, 5 new examples and miniapps, physical-to-reference space mapping, continuous integration testing on Linux, Mac and Windows, and more.
-\item MFEM v3.3 was released with many new features including: support for PETSc, SUNDIALS, CMake, matrix-free preconditioning, parallel mesh format, 36 new integrators, 16 new examples, and more.
-\item Moved main MFEM development to GitHub, including many internal branches and pull requests.
+Implemented an initial draft of MFEM’s ``engine'' interface extension to support
+GPUs and other accelerators. Performed tests with the new ``engine'' extension
+on Sierra. Explored its use in the Laghos miniapp and BLAST.
+\item
+Improvements in AMR interpolation matrix for better construction of
+communication groups and performance monitoring in the Laghos miniapp.
+\item
+Several AMR improvements, including better local conforming tetrahedral
+refinement (collaborating with a GitHub user), fix for boundary coefficient
+projection, and general communication groups on for non-conforming AMR
+supporting the AMR integration in BLAST.
+\item
+With summer student made progress on matrix-free algorithms for high-order field
+monotonicity, targeting performance improvements in the remap phase of
+MARBL/BLAST.
+\item
+GLVis version 3.4 was released with several new features including: 10 new color
+palettes, better multi-screen window manager support, capability to show element
+and vertex numbering in 2D, use of X.509 certificates in secure sockets, and a
+new CMake build system.
+\item
+Developed a new version of the hogtess high order experimental visualization
+tool based on modern OpenGL 4.3 compute shaders that does correct cutting of
+high order meshes in 3D.
 \end{itemize}
 
 \paragraph{Next Steps}
 
 Our next steps include:
-prepare and release mfem-3.4; continue to attend and contribute to the weekly MARBL and BLAST meetings;
-complete an initial draft of MFEM's unified interface extensions to support GPUs and other accelerators;
+test the new engine API on Sierra using MFEM examples and the Laghos miniapp;
+prepare and release the next version of MFEM, v4.0, with initial support for
+GPU architectures;
+continue to attend and contribute to the weekly MARBL and BLAST meetings;
 and provide support for the upcoming MARBL L2 milestones.
 
