@@ -19,7 +19,7 @@ The xSDK effort has two primary thrusts:
 xSDK interoperability efforts began first with eliminating incompatibilities that prohibited correct compilation and integration of the independently developed libraries.  These issues include being able to use a common version of a library such as SuperLU by PETSc and Trilinos.  The second, and ongoing phase is increased use of one package's capabilities from another.  For example, users who build data objects using PETSc can now access Trilinos solvers without copying to Trilinos data structures.
 
 xSDK community package policies~\cite{xsdk-policies:homepage,
-xSDK-community-package-policies2017} are a set of minimum requirements (including topics of configuring, installing, testing, MPI usage, portability, contact and version information, open source licensing, namespacing, and repository access) that a software package must satisfy in order to be considered xSDK compatible. The designation of xSDK compatibility informs potential users that a package can be easily used with others. 
+xSDK-community-package-policies2018} are a set of minimum requirements (including topics of configuring, installing, testing, MPI usage, portability, contact and version information, open source licensing, namespacing, and repository access) that a software package must satisfy in order to be considered xSDK compatible. The designation of xSDK compatibility informs potential users that a package can be easily used with others. 
 
 xSDK community installation policies~\cite{xSDK-community-installation-policies2017} help make configuration and installation of xSDK software and other HPC packages as efficient as possible on common platforms, including standard Linux distributions and Mac OS X, as well as on target machines currently available at DOE computing facilities (ALCF, NERSC, and OLCF) and eventually on new Exascale platforms.
 
@@ -30,31 +30,31 @@ Community policies for the xSDK promote long-term sustainability and interoperab
 
 Figure~\ref{fig:xsdk-schematic} illustrates a new {\em Multiphysics
 	Application C}, built from two complementary applications that can
-readily employ any libraries in the xSDK, shown in green.  Current xSDK member packages (version 0.3.0, released December 2017) are the four founding libraries
-(hypre~\cite{hypre:homepage}, PETSc~\cite{petsc:homepage}, SuperLU~\cite{superlu:homepage}, and Trilinos~\cite{trilinos:homepage}) 
-and three additional ECP math libraries added during this release (MAGMA~\cite{magma:homepage}, MFEM~\cite{mfem:homepage}, and SUNDIALS~\cite{sundials:homepage}).  
+readily employ any libraries in the xSDK, shown in green.  Current xSDK member packages (xSDK-0.4.0, released December 2018) are the four founding libraries
+(hypre~\cite{hypre:homepage}, PETSc~\cite{petsc:homepage}, SuperLU~\cite{superlu:homepage}, and Trilinos~\cite{trilinos:homepage}), three libraries added in xSDK-0.3.0, released December 2017 (MAGMA~\cite{magma:homepage}, MFEM~\cite{mfem:homepage}, and SUNDIALS~\cite{sundials:homepage}), and ten more libraries added in this release, including seven with DOE support (AMRex~\cite{amrex:homepage}, DTK~\cite{dtk:homepage}, Omega\_h~\cite{omega_h:homepage}, PLASMA~\cite{plasma:homepage}, PUMI~\cite{pumi:homepage}, STRUMPACK~\cite{strumpack:homepage}, and Tasmanian~\cite{tasmanian:homepage}) and three in the broader community (deal.II~\cite{deal.ii:homepage}, PHIST~\cite{phist:homepage}, and SLEPc~\cite{slepc:homepage}).  
 Application domain components are represented
 in orange.  Of particular note is Alquimia~\cite{alquimia:homepage}, a domain-specific interface
 that support uniform access to multiple biogeochemistry capabilities, including
-PFLOTRAN~\cite{pflotran:homepage}.  Additional ECP math libraries are working toward becoming xSDK member packages and plan to participate in future xSDK releases.
+PFLOTRAN~\cite{pflotran:homepage}.  Additional libraries are working toward becoming xSDK member packages and plan to participate in future xSDK releases.
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=6in]{projects/2.3.3-MathLibs/2.3.3.01-xSDK/xSDK-diagram}
-	\caption{\label{fig:xsdk-schematic}The December 2017 release of the xSDK contains many of the most popular math and scientific libraries used in HPC.  The above diagram shows the interoperability of the libraries and a multiphysics or multiscale application.}
+	\includegraphics[width=6in]{projects/2.3.3-MathLibs/2.3.3.01-xSDK/xSDK-diagram.png}
+	\caption{\label{fig:xsdk-schematic}The December 2018 release of the xSDK contains many of the most popular math and scientific libraries used in HPC.  The above diagram shows how multiphysics and multiscale applications can readily access xSDK packages.}
 \end{figure}
 
-The arrows among
-the xSDK libraries indicate current support for
-a package to call another to provide scalable linear solvers
-functionality on its behalf.  For example, {\em Application~A} could
-use PETSc for an implicit-explicit time advance, which in turn could
-interface to SuperLU to solve the resulting linear systems with a
-sparse direct solver.  {\em Application~B} could use Trilinos to solve
-a nonlinear system, which in turn could interface to hypre to solve
-the resulting linear systems with algebraic multigrid.  Of course,
-many other combinations of solver interoperability are also possible.
-The website \url{https://xsdk.info/example-usage}
-and \cite{Klinvex-xSDKTrilinos} provide examples of
+% The arrows among the xSDK libraries indicate current support for
+% a package to call another to provide scalable linear solvers
+% functionality on its behalf.  For example, {\em Application~A} could
+% use PETSc for an implicit-explicit time advance, which in turn could
+% interface to SuperLU to solve the resulting linear systems with a
+% sparse direct solver.  {\em Application~B} could use Trilinos to solve
+% a nonlinear system, which in turn could interface to hypre to solve
+% the resulting linear systems with algebraic multigrid.  Of course,
+% many other combinations of solver interoperability are also possible.
+Each xSDK member package uses or can be used with one or more xSDK packages, and the connecting interface is regularly tested for regressions.  
+The sites \url{https://xsdk.info/example-usage} and 
+\url{https://xsdk-project.github.io/ATPESC2018HandsOnLessons}, as well as
+\cite{Klinvex-xSDKTrilinos} provide examples of
 xSDK usage, including interoperability among linear solvers in hypre,
 PETSc, SuperLU, and Trilinos.
 
@@ -64,8 +64,8 @@ PETSc, SuperLU, and Trilinos.
 
 Our next efforts are:
 \begin{enumerate}
-	\item \textbf{Include more libraries:} xSDK4ECP will continue efforts to expand the number of participating packages, adapt community policies, and exploit increased interoperability.  The next phase of xSDK packages will include deal.II, a popular finite element library that has not been funded by DOE.  We anticipate some adaptation of language and policies that may be DOE centric.
-	
-		\item \textbf{Process control transfer interfaces:} The ever-increasing use of concurrency within the top-level MPI processes requires that computational resources used by an application or library can be transferred to another library. Transfer of these resources is essential for obtaining good performance.  The xSDK project will develop interfaces to support sharing and transfer of computational resources.
+	\item \textbf{Include more libraries:} xSDK4ECP will continue efforts to expand the number of participating packages, adapt community policies, and exploit increased interoperability.  We are coordinating with broader SDK efforts and working toward the inclusion of additional domain application packages.
+	\item \textbf{Extend application usage:}  xSDK4ECP will continue partnering with application teams to evaluate the effectivness of current functionality and to motivate new capabilities.
+% 		\item \textbf{Process control transfer interfaces:} The ever-increasing use of concurrency within the top-level MPI processes requires that computational resources used by an application or library can be transferred to another library. Transfer of these resources is essential for obtaining good performance.  The xSDK project will develop interfaces to support sharing and transfer of computational resources.
 	
 \end{enumerate}
