@@ -53,12 +53,31 @@ to meet the requirements of the LLVM community, to enable LLVM developers to
 easily ramp up and contribute, and to support all of modern Fortran and its
 related programming models in a fully robust way across all supported platforms.
 
+The above significant refactoring of Flang is embodied in the subproject we call
+\emph{F18}, which is a new C++ Fortran front-end aligned with modern software
+principles and LLVM coding standards. The goal is for F18 to be adopted as a
+full LLVM project, and that for F18 to replace the current Flang front-end when
+its support of Fortran standards and HPC programming models exceeds current Flang's.
+
 \paragraph{Recent Progress}
-Recent developments have added support for Fortran debugging, substantially all
-of OpenMP 4.5 \cite{openmp-spec-45} targeting multicore CPUs, and an all-new infrastructure for optimized
+Recent developments have added support for additional Fortran debugging metadata
+(including effort to upstream LLVM changes into their code base),
+initial support for GPU offload for OpenMP 4.5 \cite{openmp-spec-45} based on
+Clang's support for GPU offload,
+support for Fortran 2018 DO CONCURRENT and
+Fortran 2008 SUBMODULE and internal procedure pointers,
+and improvements to the \emph{libpgmath} infrastructure for optimized
 scalar and SIMD Fortran numerical intrinsics. With these in place, Flang delivers
 performance averaging 5\% faster than gfortran across a range of benchmarks and
 enables ECP developers to write and test OpenMP 4.5 on multicore CPU targets.
+
+We continued development on the F18 Fortran 2018 parser and released this to the
+Flang community on GitHub.
+F18 is able to parse full the full Fortran 2018 language,
+and perform semantic analysis on symbols, expressions,
+types, modules and submodules.
+We are designing the control flow graph structure and beginning
+to support translation of the Fortran ASTs to the CFG.
 
 \
 
@@ -71,13 +90,20 @@ Figure~\ref{fig:flang-performance} illustrates the relative performance of Flang
 \end{figure}
 
 \paragraph{Next Steps}
-We have recently started work on OpenMP 4.5 target offload support for NVIDIA Tesla
-GPUs and on an all-new Fortran 2018 parser written in modern C++ suitable for the LLVM project.
-We will continue work on GPU targeting for the remainder of 2018, and after DOE review we
-will open source the new Fortran 2018 parser and begin work on related components
-including semantic analysis, OpenMP support in the new parser, and the aspects of
-the front-end required for lowering representations and bridging to LLVM.  As we
-work through these aspects of modernization, we will continue to build up the Flang
+We have recently added work on OpenMP 4.5 target offload support for NVIDIA Tesla
+GPUs to Flang open source.
+We will continue work on robustness of the GPU targeting for the remainder of 2019.
+
+As we work through these aspects of modernization, we will continue to build up the Flang
 testing infrastructure and be as responsive as possible to bug reports and minor
 requests for enhancement from what will hopefully be a growing base of Flang users
 in the ECP and HPC communities.
+
+We will continue development on the F18 Fortran 2018 parser, increasing our resource
+investment and outreach to other compiler development teams associated with ECP.
+We will complete design of the control flow graph (CFG) structure
+and will continue to work on translation of the Fortran ASTs to the CFG.
+We will work to get early feedback on the structure of F18 for the development
+of Fortran-specific programming tools.
+
+We plan to achieve formal adoption of F18 as an LLVM subproject in 2019.
