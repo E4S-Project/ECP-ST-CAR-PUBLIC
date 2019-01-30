@@ -65,6 +65,29 @@ ST is also planning to increase integration within the ST portfolio through incr
 
 To accelerate this transition, we need a greater commitment on the part of software component developers to provide reliable and portable software that users can consider to be part of the software ecosystem in much the same way users depend on MPI and compilers. At the same time, we must expect application developers to participate as clients and users of reusable components, using capabilities from components, transitioning away from (or keeping as a backup option) their own custom capabilities.
 
+\subsubsection{The Extreme-scale Scientific Software Stack (E4S)}
+On November 8, 2018, ECP ST released version 0.1 of the Extreme-scale Scientific Software Stack, E4S (\url{http://e4s.io}).  E4S contains a collection of the software products to which ECP ST contributes.  E4S will be the primary conduit for providing easy access to ECP ST capabilities for ECP and the broader community.  E4S will also be the ECP ST vehicle for regression and integration testing across DOE pre-Exascale and Exascale systems.
+
+\begin{figure}
+		\centering
+		\includegraphics[scale=0.3]{E4S-Build-Tree}
+	\caption{Using Spack~\cite{gamblin+:ecp18-spack-tutorial}, E4S builds a comprehensive software stack.  As ECP ST efforts proceed, we will use E4S for continuous integration testing, providing developers with rapid feedback on regression errors and providing user facilities with a stable software base as we prepare for Exascale platforms.  This diagram shows how E4S builds ECP products via an SDK target (the math libraries SDK called xSDK in this example).  The SDK target then builds all product that are part of the SDK (see Figure~\ref{fig:sdk-definition1} for SDK groupings), first defining and building external software products. Green-labeled products are part of the SDK. The blue-label indicates expected system tools, in this case a particular version of Python.  Black-labeled products are expected to be previously installed into the environment (a common requirement and easily satisified).  Using this approach, a user who is interested in only SUNDIALS (a particular math library) can be assured that the SUNDIALS build will be possible since it is a portion of what E4S builds and tests.}
+	\label{fig:e4s-build-tree}
+\end{figure}
+
+E4S has the following key features:
+\begin{itemize}
+	\item \textbf{The E4S suite is a large and growing effort to build and test a comprehensive scientific software ecosystem:} E4S V0.1 contained 25 ECP products.  E4S V0.2, release in January 2019 contained 37 ECP products and numerous additional products needed for a complete software environment.  Eventually E4S will contain all open source products to which ECP contributes, and all related products needed for a holistic environment.
+	\item \textbf{E4S is not an ECP-specific software suite:}  The products in E4S represent a holistic collection of capabilities that contain the ever-growing SDK collections sponsored by ECP and all additional underlying software required to use ECP ST capabilities.  Furthermore, we expect the E4S effort to live beyond the timespan of ECP, becoming a critical element of the scientific software ecosystem.
+	\item \textbf{E4S is partitionable:} E4S products are built and tested together using a tree-based hierarchical build process.  Because we build and test the entire E4S tree, users can built any subtree of interest, without building the whole stack (see Figure~\ref{fig:e4s-build-tree}).
+	\item \textbf{E4S uses Spack:} The Spack~\cite{gamblin+:ecp18-spack-tutorial} meta-build tools invokes the native build process of each product, enabling quick integration of new products, including non-ECP products.
+	\item \textbf{E4S is available via containers:} In addition to a build-from-source capability using Spack, E4S maintains several container environments (Docker, Singularity, Shifter, CharlieCloud) that provides the lowest barrier to use.  Container distributions dramatically reduce installation costs and provide a ready-made environment for tutorials that leverage E4S capabilities.  For example, the ECP  application project CANDLE (Cancer Deep Learning Environment) uses an E4S container to provide a turnkey tutorial execution environment.
+	\item \textbf{E4S distribution:} E4S products are available at \url{http://e4s.io}.
+	\item \textbf{E4S developer community resources:} Developers interested in participating in E4S can visit the E4S-Project GitHub community at \url{https://github.com/E4S-Project}.	
+\end{itemize}
+
+The E4S effort is described in further detail in Sections~\ref{subsect:ecosystem}, especially Section~\ref{subsubsect:sdks}.
+
 \subsubsection{Software Development Kits}\label{subsubsect:sdks}
 One opportunity for a large software ecosystem project such as ECP ST is to foster increased collaboration, integration and interoperability among its funded efforts. Part of ECP ST design is the creation of software development kits (SDKs).  SDKs are collections of related software products (called packages) where coordination across package teams will improve usability and practices and foster community growth among teams that develop similar and complementary capabilities. SDKs have the following attributes:
 \begin{table}
@@ -78,30 +101,31 @@ One opportunity for a large software ecosystem project such as ECP ST is to fost
 	\item \textbf{Community outreach:} Efforts to reach out to the user and client communities will include explicit focus on SDK as product suite.
 \end{enumerate}
 	\end{mdframed}
-\caption{\label{table:sdk-attributes} Software Development Kits (SDKs) provide an aggregation of software products that have complementary or similar attributes.  ECP ST uses SDKs to better assure product interoperability and compatibility.  SDKs are also essential aggregation points for coordinated planning and testing. SDKs are an integral element of ECP ST~\cite{Heroux-SDK-Podcast}}.
+\caption{\label{table:sdk-attributes} Software Development Kits (SDKs) provide an aggregation of software products that have complementary or similar attributes.  ECP ST uses SDKs to better assure product interoperability and compatibility.  SDKs are also essential aggregation points for coordinated planning and testing. SDKs are an integral element of ECP ST~\cite{Heroux-SDK-Podcast}.  Section~\ref{subsubsect:ecosystem-sdk} describes the six SDK groupings and the current status of the SDK effort.}
 \end{table}
 
 \paragraph{ECP ST SDKs}
 As part of the delivery of ECP ST capabilities, we will establish and grow a collection of SDKs. The new layer of aggregation that SDKs represent are important for improving all aspects of product development and delivery. The communities that will emerge from SDK efforts will lead to better collaboration and higher quality products. Established community policies will provide a means to grow SDKs beyond ECP to include any relevant external effort. The meta-build systems (based on Spack) will play an important role in managing the complexity of building the ECP ST software stack, by providing a new layer where versioning, consistency and build options management can be addressed at a mid-scope, below the global build of ECP ST products.
-Each ECP ST L3 (five of them) has funds for an SDK project from which we will identify and establish at least one SDK effort. Fortunately, we will be able to leverage an existing SDK in the Math Libraries sub-element to inform our broader efforts. This SDK, called the xSDK, has been in existence for several years and has proven the value of an SDK approach in its domain (Figure~\ref{fig:xsdk-diagram}). 
+Each ECP ST L3 (five of them) has funds for an SDK project from which we have identified a total of six SDKs and an at-large collection of remaining products that will be delivered outside of the SDK grouping.  Section~\ref{subsubsect:ecosystem-sdk} provides an update on the progress in defining SDK groupings. 
+%will identify and establish at least one SDK effort. Fortunately, we will be able to leverage an existing SDK in the Math Libraries sub-element to inform our broader efforts. This SDK, called the xSDK, has been in existence for several years and has proven the value of an SDK approach in its domain (Figure~\ref{fig:xsdk-diagram}). 
 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.9\linewidth]{xSDK-Diagram}
-	\caption{The xSDK is the first SDK for ECP ST, in the Mathematical Libraries technical area~\ref{table:wbs}. The xSDK provides the collaboration environment for improving build, install and testing capabilities for member packages such as hypre, PETSc, SuperLU and Trilinos (and other products with green background). Domain components (see orange ovals) are also an important category of the ecosystem, providing leveraged investments for common components in a specific scientific software domain.  xSDK capabilities are essential for supporting the multi-physics and multi-scale application requirement that lead to combined use of xSDK libraries. Furthermore, the availability of advanced software platforms such as GitHub, Confluence, JIRA and others enable the level of collaboration needed to create an SDK from independently developed packages.}
-	\label{fig:xsdk-diagram}
-\end{figure}
-
-
-\paragraph{The xSDK}
-Initially funded by the DOE Office of Advanced Scientific Computing Research and the office of Biological and Environmental Research as part of the IDEAS Project~\cite{Bartlett:2017:XFT:3148208.3148212}, the xSDK is a collection of independent math library packages, initially the popular libraries hypre, PETSc, SuperLU and Trilinos. The xSDK was established in recognition that collaboration across independent library development efforts could have a tremendous positive impact on the math libraries capabilities provided to users, and the productivity of library developers and sustainability of library software.
-Figure~\ref{fig:xsdk-diagram} illustrates the scope and interaction of xSDK packages and Figure~\ref{fig:xsdk-policies} lists the community policies that govern xSDK activities and set expectations for future xSDK members. While we recognize that xSDK experiences cannot be blindly applied to creation of new SDKs in ECP, the xSDK does provide a concrete, working example to guide ECP ST SDK efforts going forward.
-\begin{figure}
-	\centering
-	\includegraphics[width=0.9\linewidth]{xSDK-Policies}
-	\caption{\textbf{xSDK Community Policies emerged from challenging and passionate discussions about essential values of the math libraries community.} Once established, these community policies represent a living statement of what it means to be part of an SDK, and are used as the criteria for welcoming future members.}
-	\label{fig:xsdk-policies}
-\end{figure}
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.9\linewidth]{xSDK-Diagram}
+%	\caption{The xSDK is the first SDK for ECP ST, in the Mathematical Libraries technical area~\ref{table:wbs}. The xSDK provides the collaboration environment for improving build, install and testing capabilities for member packages such as hypre, PETSc, SuperLU and Trilinos (and other products with green background). Domain components (see orange ovals) are also an important category of the ecosystem, providing leveraged investments for common components in a specific scientific software domain.  xSDK capabilities are essential for supporting the multi-physics and multi-scale application requirement that lead to combined use of xSDK libraries. Furthermore, the availability of advanced software platforms such as GitHub, Confluence, JIRA and others enable the level of collaboration needed to create an SDK from independently developed packages.}
+%	\label{fig:xsdk-diagram}
+%\end{figure}
+%
+%
+%\paragraph{The xSDK}
+%Initially funded by the DOE Office of Advanced Scientific Computing Research and the office of Biological and Environmental Research as part of the IDEAS Project~\cite{Bartlett:2017:XFT:3148208.3148212}, the xSDK is a collection of independent math library packages, initially the popular libraries hypre, PETSc, SuperLU and Trilinos. The xSDK was established in recognition that collaboration across independent library development efforts could have a tremendous positive impact on the math libraries capabilities provided to users, and the productivity of library developers and sustainability of library software.
+%Figure~\ref{fig:xsdk-diagram} illustrates the scope and interaction of xSDK packages and Figure~\ref{fig:xsdk-policies} lists the community policies that govern xSDK activities and set expectations for future xSDK members. While we recognize that xSDK experiences cannot be blindly applied to creation of new SDKs in ECP, the xSDK does provide a concrete, working example to guide ECP ST SDK efforts going forward.
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.9\linewidth]{xSDK-Policies}
+%	\caption{\textbf{xSDK Community Policies emerged from challenging and passionate discussions about essential values of the math libraries community.} Once established, these community policies represent a living statement of what it means to be part of an SDK, and are used as the criteria for welcoming future members.}
+%	\label{fig:xsdk-policies}
+%\end{figure}
 
 \subsubsection{ECP ST Software Delivery}
 An essential activity for, and the ultimate purpose of, ECP ST is the delivery of a software stack that enables productive and sustainable Exascale computing capabilities for target ECP applications and platforms, and the broader high-performance computing community. The ECP ST Software Ecosystem and Delivery sub-element (WBS 2.3.5) and the SDKs in each other sub-element provide the means by which ECP ST will deliver its capabilities.
@@ -170,10 +194,15 @@ These projects started work in January–March 2017 depending on when the contra
 \item 41 ASCR-funded projects.  Added  2 \ecosystem\ projects and 4 SDK projects.
 \item 15 ATDM projects: Combined the previous 31 ATDM projects into one project per technical area per lab.  ATDM projects are generally more vertically integrated and would not perfectly mapped to any proposed ECP ST technical structure.  Minimizing the number of ATDM projects within the ECP WBS structure reduces complexity of ATDM to ECP coordination and gives ATDM flexibility in revising its porfolio without disruption to the ECP-ATDM mapping.
 \end{itemize}
+\item Phase 3: Fewer, larger and more uniform-sized projects
+\begin{itemize}
+	\item Starting with FY2020, ECP ST will further consolidate L4 projects to foster additional synergies and amortize project overheads as ECP heads into Critical Decision Phase 2~\cite{413.3B}, where more rigor in planning and execution are needed.
+	\item Details of this plan are available to project stakeholders in the CAR V1.5 appendix and will be in the public portion of the CAR V2.0 in July 2019.
+\end{itemize}
 \end{itemize}
 \end{mdframed}
 
-\caption{\label{fig:project-remapping}Project remapping summary from Phase 1 (through November 2017) to Phase 2 (After November 2017)}
+\caption{\label{fig:project-remapping}Project remapping summary from Phase 1 (through November 2017) to Phase 2 (After November 2017) to Phase 3 (After October 1, 2019)}
 \end{figure}
 
 
@@ -197,25 +226,26 @@ These projects started work in January–March 2017 depending on when the contra
 \end{figure}
 
 \subsection{New Project Efforts}
-ECP ST has initiated four newly-funded efforts as a result of findings in our September 2017 Gap Analysis~\cite{Thakur2017GapAnalysis}.  We anticipate several additional efforts in the coming months in order to mitigate some of the higher risks we have identified in programming environments and data management.  We will report this second phase of additions in the next version of this report.
+ECP ST is preparing several strategic changes for the FY2020 restructuring (Phase 3).   These changes will be reported in the CAR V2.0.  No other signficant changes have been made since the CAR V1.0.
 
-\subsubsection{FFTs}\label{subsubsect:ffts}
-ECP ST has initiated two new efforts in Fast Fourier Transforms (FFTs).  FFTs provide an essential mathematical tool to many application areas.  From the very beginning of HPC, vendors have provided optimized FFT libraries for their users.  The advent of FFTW~\cite{FFTW05}, a tunable high-performance library with a well-designed interface, enabled a \textit{de facto} standardization of FFT interfaces, and an effective source base for vendor libraries, which adapted FFTW source for their platforms.
 
-There is some concern in the community that FFTW is no longer actively developed, nor well prepared for emerging platforms.  Furthermore, FFTW's strong copylefting license (which forces its users to make their own software open source in the same way) has always been a challenge to users.  While vendors are still committed to providing optimized FFT libraries, whether or not FFTW is available, we believe it is prudent to explore a new software stack and have funded a short-term project to explore this possibility.  The new library will also explore problem formulations that could significantly reduce the computational cost of FFTs.  This new effort, called FFTX, will be led by Lawrence Berkeley National Lab, under the existing math libraries project (Section~\ref{subsubsect:strumpack}).
-
-A second FFT project will address a consensus opportunity to provide a sustainable 3D FFT library built from established but \textit{ad hoc} software tools that have traditionally been part of application codes, but not extracted as independent, supported libraries.  These 3D FFTs rely on third-party 1D FFTs, either from FFTW or from vendor libraries.
-
-The goal of this second project, FFT-ECP, led by the University of Tennessee and integrated into one of its existing projects (Section~\ref{subsubsect:slate}) is to:
-\begin{itemize}
-\item Collect existing FFT capabilities recently made available from ECP application teams (LAMMPS/fftMPI and HACC/SWFFT). 
-\item Assess gaps and make available as a sustainable math library.
-\item Explore opportunities to build 3D FFT libraries on vendor 1D and 2D kernels, especially leveraging on-node concurrency from 2D and batched 1D formulations.
-\item Focus on capabilities for Exascale platforms.
-\item Emphasize leverage of vendor capabilities and addressing vendor deficiencies over creation of new and independent software stack.
-\end{itemize}
-
-This effort, while not addressing the concerns about FFTW directly, is essential to providing a new and sustainable FFT software stack that leverages the large investment by the broader HPC community in FFT software.  The payoff from this effort is almost guaranteed.  Also, should the FFTX project also go forward, it will provide an FFTW-compatible interface that would allow FFT-ECP to use FFTX as one option, in addition to external FFT libraries.
-
-\subsubsection{LLNL Math Libraries}\label{subsubsect:llnl-math-libs}
-When ECP ST started, some important capabilities were not part of the original portfolio, even though their engagement is essential for ECP application success.  This is true of the LLNL math library \textit{hypre}~\cite{hypre}.  This library is widely used to provide scalable multigrid preconditioners across several ECP applications.  Funding to support adaptation of \textit{hypre}  in preparation for Exascale platforms at science lab facilities, e.g., Argonne, and for ECP science applications was not part of the original ECP ST portfolio.  We have added funding for this effort, starting in June 2018.  In addition, we provided new funding for another LLNL math library, MFEM~\cite{mfem:homepage}, so that the MFEM team can participate in SDK efforts for math libraries.
+%\subsubsection{FFTs}\label{subsubsect:ffts}
+%ECP ST has initiated two new efforts in Fast Fourier Transforms (FFTs).  FFTs provide an essential mathematical tool to many application areas.  From the very beginning of HPC, vendors have provided optimized FFT libraries for their users.  The advent of FFTW~\cite{FFTW05}, a tunable high-performance library with a well-designed interface, enabled a \textit{de facto} standardization of FFT interfaces, and an effective source base for vendor libraries, which adapted FFTW source for their platforms.
+%
+%There is some concern in the community that FFTW is no longer actively developed, nor well prepared for emerging platforms.  Furthermore, FFTW's strong copylefting license (which forces its users to make their own software open source in the same way) has always been a challenge to users.  While vendors are still committed to providing optimized FFT libraries, whether or not FFTW is available, we believe it is prudent to explore a new software stack and have funded a short-term project to explore this possibility.  The new library will also explore problem formulations that could significantly reduce the computational cost of FFTs.  This new effort, called FFTX, will be led by Lawrence Berkeley National Lab, under the existing math libraries project (Section~\ref{subsubsect:strumpack}).
+%
+%A second FFT project will address a consensus opportunity to provide a sustainable 3D FFT library built from established but \textit{ad hoc} software tools that have traditionally been part of application codes, but not extracted as independent, supported libraries.  These 3D FFTs rely on third-party 1D FFTs, either from FFTW or from vendor libraries.
+%
+%The goal of this second project, FFT-ECP, led by the University of Tennessee and integrated into one of its existing projects (Section~\ref{subsubsect:slate}) is to:
+%\begin{itemize}
+%\item Collect existing FFT capabilities recently made available from ECP application teams (LAMMPS/fftMPI and HACC/SWFFT). 
+%\item Assess gaps and make available as a sustainable math library.
+%\item Explore opportunities to build 3D FFT libraries on vendor 1D and 2D kernels, especially leveraging on-node concurrency from 2D and batched 1D formulations.
+%\item Focus on capabilities for Exascale platforms.
+%\item Emphasize leverage of vendor capabilities and addressing vendor deficiencies over creation of new and independent software stack.
+%\end{itemize}
+%
+%This effort, while not addressing the concerns about FFTW directly, is essential to providing a new and sustainable FFT software stack that leverages the large investment by the broader HPC community in FFT software.  The payoff from this effort is almost guaranteed.  Also, should the FFTX project also go forward, it will provide an FFTW-compatible interface that would allow FFT-ECP to use FFTX as one option, in addition to external FFT libraries.
+%
+%\subsubsection{LLNL Math Libraries}\label{subsubsect:llnl-math-libs}
+%When ECP ST started, some important capabilities were not part of the original portfolio, even though their engagement is essential for ECP application success.  This is true of the LLNL math library \textit{hypre}~\cite{hypre}.  This library is widely used to provide scalable multigrid preconditioners across several ECP applications.  Funding to support adaptation of \textit{hypre}  in preparation for Exascale platforms at science lab facilities, e.g., Argonne, and for ECP science applications was not part of the original ECP ST portfolio.  We have added funding for this effort, starting in June 2018.  In addition, we provided new funding for another LLNL math library, MFEM~\cite{mfem:homepage}, so that the MFEM team can participate in SDK efforts for math libraries.
