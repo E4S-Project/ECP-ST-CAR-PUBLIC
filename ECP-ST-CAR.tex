@@ -1,6 +1,6 @@
 
 \documentclass{ecpreport-publicv1}
-\usepackage{draftwatermark}
+%\usepackage{draftwatermark}
 \usepackage{wrapfig}
 \usepackage{subfig}
 \usepackage{xcolor,colortbl}
@@ -31,8 +31,13 @@
 	linkcolor=blue,
 	urlcolor=blue
 }
-
 %\usepackage{subcaption}
+
+% Toggle between public and internal version of report.
+% If publictrue is uncommented, the appendix is omitted and the title is changed to Internal.  References to the appendix are not generated.
+\newif\ifpublic
+\publictrue % Comment the beginning of this line to enable the Internal version (with Appendix)
+
 
 %%---------------------------------------------------------------------------%%
 %% VARIABLES
@@ -44,13 +49,21 @@
   \and Lois Curfman McInnes, Mathematical Libraries Lead
   \and James Ahrens, Data \& Visualization Lead
   \and J.~Robert Neely, Software Ecosystem \& Delivery Lead}
-\title{ECP Software Technology Capability Assessment Report}
+\ifpublic
+\title{ECP Software Technology Capability Assessment Report--Public}
+\else
+\title{ECP Software Technology Capability Assessment Report--Internal}
+\fi
 %\date{\today}
-\date{January 1, 2019}
+\date{February 1, 2019}
 %\wbs{2.3}
-\id{ECP-RPT-ST-0001-2019}
-\reportnum{ECP-RPT-ST-0001-2019}
-
+\ifpublic
+\id{ECP-RPT-ST-0001-2019--Public}
+\reportnum{ECP-RPT-ST-0001-2019--Public}
+\else
+\id{ECP-RPT-ST-0001-2019--Internal}
+\reportnum{ECP-RPT-ST-0001-2019--Internal}
+\fi
 \submitter{Michael A.~Heroux}
 
 %\concurrence{Douglas Kothe}
@@ -72,7 +85,7 @@
 \begin{revlog}
 
   1.0 & July 1, 2018 & \textit{ECP ST Capability Assessment Report } \\\hline
-  1.5 & \today & New revision--DRAFT \\\hline
+  1.5 & February 1, 2019 & \textit{Second release} \\\hline
 \end{revlog}
 
 %%---------------------------------------------------------------------------%%
@@ -295,7 +308,8 @@ Exascale computing imperative.
 %% APPENDIX
 %%---------------------------------------------------------------------------%%
 % The ECP ST CAR Appendix is kept in a private repo.  It must be cloned/forked and be side-by-side with the ECP-ST-CAR-PUBLIC repo if the following line is uncommented.
-
+\ifpublic
+\else
 \input{../ECP-ST-CAR-APPENDIX/appendix}
-
+\fi
 \end{document}
