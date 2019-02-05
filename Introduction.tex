@@ -17,7 +17,7 @@ The ECP ST portfolio has established a set of interdependent projects that will 
 
 ECP ST is developing a software stack to meet the needs of a broad set of Exascale applications. The current software portfolio covers many projects spanning the areas of programming models and runtime, mathematical libraries and frameworks, tools, data management, analysis and visualization, and software delivery. The ECP software stack was developed bottom up based on application requirements and the existing software stack at DOE HPC Facilities. The portfolio comprises projects selected in two different ways: 
 \begin{enumerate}
-\item Thirty five projects funded by the DOE Office of Science (ASCR) that were selected in October 2016 via an RFI and RFP process, considering prioritized requirements.
+\item Thirty-five projects funded by the DOE Office of Science (ASCR) that were selected in October 2016 via an RFI and RFP process, considering prioritized requirements.
 \item A similar number of ongoing DOE NNSA/ASC funded projects that are part of the Advanced Technology Development and Mitigation (ATDM) program, which is in its fourth year (started in FY14). These projects are focused on longer term research to address the shift in computing technology to extreme, heterogeneous architectures and to advance the capabilities of NNSA/ASC simulation codes. 
 \end{enumerate}
 Since the initial selection process, ECP ST has reorganized efforts as described in Section~\ref{subsect:ProjectRestructuring}.
@@ -79,8 +79,8 @@ E4S has the following key features:
 \begin{itemize}
 	\item \textbf{The E4S suite is a large and growing effort to build and test a comprehensive scientific software ecosystem:} E4S V0.1 contained 25 ECP products.  E4S V0.2, release in January 2019 contained 37 ECP products and numerous additional products needed for a complete software environment.  Eventually E4S will contain all open source products to which ECP contributes, and all related products needed for a holistic environment.
 	\item \textbf{E4S is not an ECP-specific software suite:}  The products in E4S represent a holistic collection of capabilities that contain the ever-growing SDK collections sponsored by ECP and all additional underlying software required to use ECP ST capabilities.  Furthermore, we expect the E4S effort to live beyond the timespan of ECP, becoming a critical element of the scientific software ecosystem.
-	\item \textbf{E4S is partitionable:} E4S products are built and tested together using a tree-based hierarchical build process.  Because we build and test the entire E4S tree, users can built any subtree of interest, without building the whole stack (see Figure~\ref{fig:e4s-build-tree}).
-	\item \textbf{E4S uses Spack:} The Spack~\cite{gamblin+:ecp18-spack-tutorial} meta-build tools invokes the native build process of each product, enabling quick integration of new products, including non-ECP products.
+	\item \textbf{E4S is partitionable:} E4S products are built and tested together using a tree-based hierarchical build process.  Because we build and test the entire E4S tree, users can build any subtree of interest, without building the whole stack (see Figure~\ref{fig:e4s-build-tree}).
+	\item \textbf{E4S uses Spack:} The Spack~\cite{gamblin+:ecp18-spack-tutorial} meta-build tool invokes the native build process of each product, enabling quick integration of new products, including non-ECP products.
 	\item \textbf{E4S is available via containers:} In addition to a build-from-source capability using Spack, E4S maintains several container environments (Docker, Singularity, Shifter, CharlieCloud) that provides the lowest barrier to use.  Container distributions dramatically reduce installation costs and provide a ready-made environment for tutorials that leverage E4S capabilities.  For example, the ECP  application project CANDLE (Cancer Deep Learning Environment) uses an E4S container to provide a turnkey tutorial execution environment.
 	\item \textbf{E4S distribution:} E4S products are available at \url{http://e4s.io}.
 	\item \textbf{E4S developer community resources:} Developers interested in participating in E4S can visit the E4S-Project GitHub community at \url{https://github.com/E4S-Project}.	
@@ -165,7 +165,7 @@ Users access ECP ST products using these basic mechanisms (see Figure~\ref{fig:p
 
 \subsection{ECP ST Project Restructuring}\label{subsect:ProjectRestructuring}
 
-The initial organization of ECP ST was based on discussions that occurred over several years of Exascale planning within DOE, especially the DOE Office of Advanced Scientific Computing Research (ASCR).  Figure~\ref{fig:ecpstv1} shows the conceptual diagram of this first phase.  The 66 ECP ST projects were mapped into 8 technical areas, in some cases arbitrating where a project should go based on its primary type of work, even if other work was present in the project.  In November 2017, ECP ST was reorganized into 5 technical areas, primarily through merging a few smaller areas, and the number of projects was reduced to 56 (presently 55 due to further merging in \ecosystem).  Figure
+The initial organization of ECP ST was based on discussions that occurred over several years of Exascale planning within DOE, especially the DOE Office of Advanced Scientific Computing Research (ASCR).  Figure~\ref{fig:ecpstv1} shows the conceptual diagram of this first phase.  The 66 ECP ST projects were mapped into 8 technical areas, in some cases arbitrating where a project should go based on its primary type of work, even if other work was present in the project.  In November 2017, ECP ST was reorganized into 5 technical areas, primarily through merging a few smaller areas, and the number of projects was reduced to 56 (presently 55 due to further merging in \ecosystem).  Figure~\ref{fig:ecpstv2} shows the diagram of the second phase of ECP ST.  With the CAR V2.0, we will describe the next phase of organization refinement needed to best position ECP ST for success in the CD-2 phase of the project.
 
 \begin{table}
 \begin{tabular}{|L{1in}|L{1in}|L{1.0in}|L{2.5in}|}\hline
@@ -200,7 +200,7 @@ These projects started work in January–March 2017 depending on when the contra
 (now 55 after further merging in 2.3.5)
 \begin{itemize}
 \item 41 ASCR-funded projects.  Added  2 \ecosystem\ projects and 4 SDK projects.
-\item 15 ATDM projects: Combined the previous 31 ATDM projects into one project per technical area per lab.  ATDM projects are generally more vertically integrated and would not perfectly mapped to any proposed ECP ST technical structure.  Minimizing the number of ATDM projects within the ECP WBS structure reduces complexity of ATDM to ECP coordination and gives ATDM flexibility in revising its porfolio without disruption to the ECP-ATDM mapping.
+\item 15 ATDM projects: Combined the previous 31 ATDM projects into one project per technical area per lab.  ATDM projects are generally more vertically integrated and would not perfectly mapped to any proposed ECP ST technical structure.  Minimizing the number of ATDM projects within the ECP WBS structure reduces complexity of ATDM to ECP coordination and gives ATDM flexibility in revising its portfolio without disruption to the ECP-ATDM mapping.
 \end{itemize}
 \item Phase 3: Fewer, larger and more uniform-sized projects
 \begin{itemize}
@@ -224,7 +224,7 @@ These projects started work in January–March 2017 depending on when the contra
 	\centering
 	\includegraphics[width=0.9\linewidth]{ECPSTV2}
 	\caption{ECP ST after November 2017 reorganization.  This diagram more accurately reflects the priorities and efforts of ECP ST given the new ECP project scope and the demands that we foresee.}
-	\label{fig:expstv2}
+	\label{fig:ecpstv2}
 \end{figure}
 \begin{figure}
 	\centering
@@ -233,8 +233,8 @@ These projects started work in January–March 2017 depending on when the contra
 	\label{fig:ecpstleads}
 \end{figure}
 
-\subsection{New Project Efforts}
-ECP ST is preparing several strategic changes for the FY2020 restructuring (Phase 3).   These changes will be reported in the CAR V2.0.  No other signficant changes have been made since the CAR V1.0.
+%\subsection{New Project Efforts}
+%ECP ST is preparing several strategic changes for the FY2020 restructuring (Phase 3).   These changes will be reported in the CAR V2.0.  No other significant changes have been made since the CAR V1.0.
 
 
 %\subsubsection{FFTs}\label{subsubsect:ffts}
