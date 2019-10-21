@@ -1,88 +1,81 @@
 \subsubsection{\stid{6.01} LANL ATDM Tools}
 
 \paragraph{Overview}
-The Los Alamos National Laboratory ATDM Tools project provides tools
-and software infrastructure for improving various aspects of the
-Exascale programming environment.  At present our efforts are
-primarily focused on an advanced LLVM~\cite{LLVM:2018} compiler and
-tool infrastructure supporting a new explicit parallel intermediate
-representation for the C/C++ and Fortran programming languages.  These
-efforts also include interactions with the broader LLVM community and
-several platform vendors (e.g. NVIDIA and ARM).  This work also covers
-a set of interactions and engagements focused on collaboration with the
-Flang project (ST 2.3.5.06) with a goal of providing a long-term Fortran
-language capability within the LLVM infrastructure. 
+The Kitsune Project, part of LANL's ATDM CSE efforts, provides a
+compiler-focused infrastructure for improving various aspects of the
+exascale programming environment.  At present, our efforts are primarily
+focused on advanced LLVM compiler and tool infrastructure to support the
+use of a \emph{parallel-aware} intermediate representation.  In
+addition, we are actively involved in the Flang Fortran compiler that
+is now an official sub-project within the overall LLVM infrastructure.
+All these efforts include interactions across ECP as well as
+with the broader LLVM community and industry.  
 
 \paragraph{Key Challenges}
-One fundamental challenge for our efforts is planning for and
-providing system architectures that yet to be completed defined in a
-manner that makes them a well-defined target for compilation.  This
-risk is likely significantly mitigated given the wide use and adoption
-of LLVM across the many key system and processor vendors.  Additional
-challenges stem from the adoption of our designs and implementations
-into the overall LLVM community -- given their broader and more
-general focus.  
+A key challenge to our efforts is reaching agreement within the broader community that
+a parallel intermediate representation is beneficial and needed within
+LLVM.  This not only requires showing the benefits but also providing a
+full implementation for evaluation and feedback from the community.
+In addition, significant new compiler capabilities represent a
+considerable effort to implement and involve many complexities and technical
+challenges.  These efforts and the process of up-streaming potential
+design and implementation changes do involve some amount of time and
+associated risk. 
+
+Additional challenges come from a range of complex issues surrounding
+target architectures for exascale systems.  Our use of the LLVM
+infrastructure helps reduce many challenges here since many processor
+vendors and system providers now leverage and use LLVM for their
+commercial compilers.
 
 \paragraph{Solution Strategy}
-Given the project challenges, our approach considers aspects of
+Given the project challenges, our approach takes aspects of
 today's node-level programming systems (e.g. OpenMP and Kokkos) and
 popular programming languages (e.g. C++ and Fortran) into
 consideration and aims to improve and expand upon their capabilities
 to address the needs of ECP.  This allows us to attempt to strike a
 balance between incremental improvements to existing infrastructure
-along with more aggressive techniques that seeks to provide innovative
-solutions to help both manage risk and the ability to introduce new
+and more aggressive techniques that seek to provide innovative
+solutions, thereby managing risk while also providing the ability to introduce new
 breakthrough technologies.
 
-To mitigate some aspects of risk, we are working to form close working
-relationships with the LLVM community to help provide an impact and
-longer term set of technologies to the broader computing community.
-These activities span both academic and industry collaborations.
+Unlike current designs, our approach introduces the notion of explicit
+parallel constructs into the LLVM intermediate representation, building
+off of work done at MIT on Tapir~\cite{2.3.6.01:kitsune:Schardl:2017}. 
+We are exploring extensions to this work as well as making some changes
+to fundamental data structures within the LLVM infrastructure to assist with
+and improve analysis and optimization passes. 
 
 \paragraph{Recent Progress}
-Our most recent efforts have focused on supporting an infrastructure
-that maps multiple language constructs from Kokkos, FleCSI and OpenMP
-into an common intermediate representation that explicitly captures
-the parallel operations for analysis and optimization (this is a
-capability that does not exist in the mainline LLVM infrastructure).
-This parallel representation may then also be targeted to different
-runtime systems (not necessarily those of use by the programming
-system used in the original source programs).  See our most recent
-paper for a discussion of our overall approach~\cite{Stelle:2017}.  In
-addition, this work will be presented at the upcoming EuroLLVM
-workshop~\cite{EuroLLVM:2018}.  We will continue to reach out to the
-broader LLVM community via such events to provide updates and share the
-lessons learned and example use cases of this technology.  Most recently,
-at the US LLVM Developer's Meeting, an RFC for was released for
-adding parallel intrinsics to LLVM as a collaboration between LANL,
-MIT, ANL, Intel, and UIUC~\cite{LLVMPAR:rfc}.
 
-In addition to runtime improvements, we've shown that by compiling
-directly to parallel IR instead of the codepath based on C++
-template explansion for Kokkos we can gain significant improvements in
-overall application compile time and a significant reduction in binary
-size. See Figure~\ref{fig:2.3.2.02:time_size} for quantification of the compile
-time speedup and binary size reduction.
-
-\begin{figure}
-  \includegraphics[width=0.8\textwidth]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/kokkos-compile-times.png}
-  \includegraphics[width=0.8\textwidth]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/kokkos-file-size.png}
-  \caption{Compile time improvements and object file size reductions for
-           Kokkos applications with an increasing number of parallel-for
-           looping constructs.}
-  \label{fig:2.3.2.02:time_size}                      
-\end{figure}
-
+Our primary focus is the delivery of capabilities for LANL's ATDM
+Ristra application (AD 2.2.5.01).  In support of the requirements for
+Ristra, we are targeting the lowering of Kokkos constructs directly
+into the parallel-IR representation.  At present, this requires
+explicit lowering of Kokkos constructs and we have basic support
+for \texttt{parallel\_for} and \texttt{parallel\_reduce} in place.  In
+addition we are looking at replacement of LLVM's dominator tree, a key
+data structure for optimizations including parallelization and
+memory usage analysis, with a \emph{dominator directed-acyclic-graph}
+(DAG).  This work is currently underway and should near its initial
+implementation early in the 2020 calendar year.  In addition, we are
+actively watching recent events within the LLVM community around
+multi-level intermediate representations (MLIR) and the relationship
+they have with parallel semantics, analysis, optimization, and code
+generation.  Furthermore, we are participating in ongoing discussions within the
+community about general details behind parallel intermediate forms. 
 
 \paragraph{Next Steps}
-The Kitsune efforts are highlighed by a series of quarterly milestones
-and associated software releases throughout the coming year.  The
-Kitsune compiler is still very much an active \emph{proof-of-concept}
-compiler toolchain focused on C and C++ with plans to soon add support
-for Fortran via the Flang project~\cite{Flang:2018}.  Even though it
-is not yet production ready we are actively releasing source code and
-the supporting infrastructure for deployment as an exploratory and
-early evaluation candidate.  These efforts will all continue to
-include significant interactions and collaborations with the other ECP
-efforts surrounding LLVM and also engage with the broader LLVM and
-vendor communities on our assocaited technology.
+
+The key next step for our feature set is to complete implementation of Kokkos use cases 
+that match the needs of Ristra.  Where possible, we will also
+explore the broader set of use cases within ECP's overall use of
+Kokkos constructs.  The Kitsune toolchain is still very much an
+active \emph{proof-of-concept} effort based on Clang (C and C++) with
+plans to add support for Fortran via the newly established Flang front
+end within LLVM (ST 2.3.2.12).  Even though it is not yet production
+ready, we are actively updating and releasing source code and the supporting
+infrastructure for deployment as an early evaluation candidate.  In
+addition to these components, we will actively begin to explore targeting
+the exascale systems (Aurora, Frontier, and El Capitan).
+
