@@ -1,0 +1,196 @@
+\subsubsection{\stid{1.18} ISC4MCM (RAJA)} 
+
+\paragraph{Overview.} 
+The Integrated Software Components for Managing Computation and Memory 
+Interplay at Exascale (ISC4MCM) project is providing software libraries that 
+enable application and library developers to meet advanced architecture 
+portability challenges. The project goals are to enable writing performance 
+portable computational kernels and coordinate complex heterogeneous memory 
+resources among components in a large integrated application. These 
+libraries enhance developer productivity by insulating them from much of the 
+complexity associated with parallel programming model usage and 
+system-specific memory concerns.
+
+The software products provided by this project are three complementary and 
+interoperable libraries:
+\begin{enumerate}
+\item {\bf RAJA:} Software abstractions that enable C++ developers to write
+  performance portable (i.e., single-source) numerical kernels (loops). 
+\item {\bf CHAI:} C++ ``managed array'' abstractions that enable transparent
+  and automatic copying of application data to execution memory spaces at run
+    time as needed based on RAJA execution contexts.
+\item {\bf Umpire:} A portable memory resource management library that provides
+  a unified high-level API for resource discovery, memory provisioning,
+    allocation, access, operations, and introspection.
+\end{enumerate}
+
+Capabilities delivered by these software efforts are needed to manage the
+diversity and uncertainty associated with current and future HPC architecture
+design and software support. Moving forward, ECP applications and libraries 
+need to achieve performance portability: without becoming bound to particular
+(potentially-limiting) hardware or software technologies, by insulating 
+numerical algorithms from platform-specific data and execution concerns, and 
+without major disruption as new machine, programming models, and vendor
+software become available.
+
+These libraries in development in this project are currently used in production
+ASC applications at Lawrence Livermore National Laboratory (LLNL). They are
+also being used or being explored/adopted by several ECP application and
+library projects, including: LLNL ATDM application, GEOS (Subsurface), SW4
+(EQSIM), MFEM (CEED co-design), and SUNDIALS.
+
+The software projects are highly-leveraged with other efforts. Team members
+include: ASC and ATDM application developers, ASD tool developers, university
+collaborators, and vendors. This ECP ST project supports outreach to the ECP
+community and collaboration with ECP efforts.
+
+\paragraph{Key Challenges.}
+
+The main technical challenge for this project is enabling production
+applications to achieve performance portability in an environment of rapidly
+changing, disruptive HPC hardware architecture design. Typical large
+applications contain $O(10^5) - O(10^6)$ lines of code and $O(10K)$ loop
+kernels. The codes must run efficiently on platforms ranging from laptops to
+commodity clusters to large HPC platforms. The codes are long-lived and are
+used daily for decades, so they must be portable across machine generations.
+Also, the codes are under continual development, with a steady stream of new
+capabilities added throughout their lifetimes -- continual validation and
+verification is essential, which precludes substantial rewrites from scratch.
+Lastly, the complex interplay of multiple physics packages and dozens of
+libraries makes it so that the data required for the full set of components
+needed for a given simulation may not fit into a single system memory space. To
+advance scientific computing capabilities, applications must navigate these
+constraints while facing substantial hardware architecture disruption along the
+road toward Exascale computing platforms. 
+
+While the software provided by this project has a substantial user base at
+LLNL, achieving broader adoption in the ECP (projects without LLNL involvement,
+in particular) is another challenge. The software efforts are funded almost
+entirely by LLNL programs and the majority of their developers work on LLNL
+application projects. So resource limitations is a key issue.
+
+\paragraph{Solution Strategy.}
+
+The software libraries in this project focus on encapsulation and 
+application-facing APIs to insulate users from the complexity and 
+challenges associated with diverse forms of parallelism and heterogeneous 
+memory systems. This approach allows users to exploit new capabilities 
+with manageable rewriting of their applications.
+
+RAJA provides various C++ abstractions for parallel loop execution. It
+supports: various parallel programming model back-ends, such as OpenMP 
+(CPU multithreading and target offload), CUDA, Intel Threading Building Blocks,
+etc.; loop iteration space and data view constructs to reorder, 
+aggregate, tile, and partition loop iterations; complex loop kernel 
+transformations for optimization, such as reordering loop nests, fusing 
+loops, etc. RAJA also supports portable atomic operations, parallel scans, 
+and CPU and GPU shared memory. After loops have been converted to RAJA, 
+developers can explore implementation alternatives via RAJA features without 
+altering loop kernels at the application level.
+
+CHAI provides C++ ``managed array'' abstractions that automatically copy 
+data to execution memory spaces as needed at run time based on RAJA execution 
+contexts. Access to array data in loop kernels looks the same as when using
+traditional C-style arrays.
+
+Umpire provides a portable API for managing complex memory resources by 
+providing uniform access to other libraries and utilities that provide
+system-specific capabilities. Umpire decouples resource allocation from 
+specific memory spaces, allocators, and operations. The memory introspection 
+functionality of Umpire enables applications and libraries to make memory 
+usage decisions based on allocation properties (size, location, sharing 
+between packages, etc.)
+
+All three software libraries are open source and available on
+GitHub~\cite{RAJA-github, CHAI-github, Umpire-github}. There they provide
+regular software and documentation releases. Each project has dedicated email
+lists, issue tracking, test suites, and automated testing.
+
+\paragraph{Recent Progress}
+
+In FY18, CHAI and Umpire have been released as open source software projects
+and they are now developed on GitHub Recent development has focused on 
+user documentation and cleaner integration of these two libraries to give 
+applications more flexible and easy access to their capabilities.
+
+Many new features have been added to RAJA in FY18 to enable flexible
+loop transformations for complex loop kernels via execution policies.
+LLNL applications are assessing this new functionality now in a 
+"pre-release" version; it will be generally available before the end of FY18.
+
+The RAJA Performance Suite~\cite{RAJAPerf-github} was released and made 
+available on Github in January 2018. The Suite is used to assess and track 
+performance of RAJA across programming models and diverse loop 
+kernels. It is also being used for compiler acceptance testing in the CORAL 
+procurement and was prepared for use as a benchmark for the CORAL-2 procurement.
+
+In 2018, the RAJA project expanded its visibility beyond DOE NNSA Labs. 
+Recent presentations include a RAJA tutorial at the 2018 ECP Annual Meeting 
+and an application use case study the 2018 NVIDIA GPU Tech Conference (GTC). 
+Future tutorials are planned at 2018 ATPESC and GTC 2019. Also, a RAJA paper 
+and $1/2$-day tutorial proposal were submitted to SC18.
+
+\paragraph{Next Steps}
+
+Our next efforts include:
+\begin{enumerate}
+\item {\bf Fill RAJA Gaps:} Not all features are available for all programming
+  model back-ends; as models mature, such as OpenMP4.5, these gaps will be
+    filled.
+\item {\bf Expand RAJA User Guide and Tutorial:} Build example codes and user
+  documentation for latest RAJA features and prepare for future tutorials
+    (ATPESC 2018 and SC18).
+\item {\bf Expand RAJA Performance Suite:} Include kernels that exercise more
+  application use cases and RAJA features.
+\item {\bf Focus RAJA Vendor Interaction:} Work with CORAL vendors to address
+  issues as applications port to the Sierra platform at LLNL; establish early
+    interactions with CORAL-2 vendors to ensure RAJA will be supported well on
+    CORAL-2 systems.
+\item {\bf Expand Umpire Capabilities:} Explore potential collaboration with
+  relevant ECP efforts, such as SICM project.
+\end{enumerate}
+\subsubsection{\stid{1.10} Kokkos Support} 
+
+\paragraph{Overview} 
+Kokkos Support provides documentation, training and community building support for the Kokkos programming model. 
+To that end, the project develops programming guides, API references and tutorial material for Kokkos which is presented both as independent events and at conferences such as Supercomputing.
+Kokkos Support is also responsible for setting up community interaction channels such as the Slack channels now used for user communication and fostering the GitHub interactions between Kokkos developers and users.
+Finally, the project supports engagement with the C++ standard in order to further the adoption of successful Kokkos concepts into the core language. 
+
+\paragraph{Key Challenges}
+For a new programming model to be successful, a comprehensive support and training infrastructure is absolutely critical. 
+Prospective users must learn how to use the programming model, current users must be able to bring up issues with the development team and access detailed documentation, and the development team of the model must be able to continue technical efforts without being completely saturated with support tasks. 
+The latter point became a significant concern for the Kokkos team with the expected growth of the user base through ECP.  
+Already before the launch of ECP, there were multiple application or library teams starting to use Kokkos for each developer on the core team -- a level not sustainable into the future without a more scalable support infrastructure. 
+This issue was compounded by the fact that Kokkos development was funded through NNSA projects, making it hard to justify extensive support for open science applications. 
+
+\paragraph{Solution Strategy}
+
+Kokkos Support addresses these challenges through a number of ways. 
+First and foremost, it provides explicit means for supporting all DOE ECP applications. 
+A main component of that is funding for local Kokkos experts at the Sandia, Oak Ridge and Los Alamos laboratories which can serve as direct contacts for local applications and, in Oak Ridge's case, for users of the Oak Ridge Leadership Computing Facility. 
+Secondly, the project develops a reusable support infrastructure, which makes supporting more users scalable and cost effective. 
+
+The support infrastructure consists of GitHub wiki pages for the programming guide and an API reference, GitHub issues to track feature requests and bug reports, a Slack channel for direct user-to-user and user-to-developer communication, and tutorial presentations and cloud-based Kokkos hands-on exercises. 
+
+\paragraph{Recent Progress}
+
+Kokkos Support has successfully run multiple Kokkos bootcamps for DOE applications as well as organized a number of single day tutorials. 
+At the most recent tutorial during the DOE ECP All Hands meeting, the new cloud-based hands-on infrastructure was used for the first time, allowing tutorial attendees to use GPUs on remote servers without the hassle of temporary user account administration at DOE computing facilities. 
+The project also improved existing documentation and transferred it to GitHub wiki pages which are tailored for software documentation and more maintainable. 
+The Slack channels usage is growing, which have seen participation from users across the DOE and Kokkos community. 
+There are also more interactions on GitHub issues, including a number of pull requests volunteered from external users as a result of these interactions to improve small parts of the Kokkos implementation. 
+These latter two points are a sign that the community is growing and more actively participating in advancing Kokkos, a necessary step for a more sustainable future where users may answer other users questions, and the community begins to provide new features and solutions to problems. 
+ 
+\paragraph{Next Steps}
+
+There are two main thrusts of development underway: the writing of a Kokkos API Reference and the development of more advanced tutorials. 
+While the Kokkos Programming Guide and the Tutorial Presentations are well received, more advanced users often only want to look up the API of Kokkos features. 
+Such an API reference is not yet available. Its development is under way, and we hope to have it cover the majority of Kokkos features by the end of Summer 2018. 
+
+For tutorials, feedback provided by attendees indicate that some of the material covered in the standard tutorial is a bit too advanced for an introduction to Kokkos. On the other hand, as the number of users who have had previous exposure to Kokkos is growing, they are asking for more of the advanced features to be covered. To support both types of attendees, it is clear that splitting the tutorial into beginner and advanced sections, as well as extending the advanced section beyond what is currently covered is necessary. 
+
+Finally, we would like to improve the accessibility of all of the resources that are being developed to support Kokkos and increase its adoption. 
+Currently, all documentation, tutorials, references, and support channels are in various locations that are best suited to their differing format requirements. 
+However, having a one-stop landing page where new encounters can learn about the project and current users can find the location of all available resources would increase usage of the various materials and communication channels within the community, among both developers and users.
+
