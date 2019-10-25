@@ -1,0 +1,72 @@
+\subsubsection{\stid{6.03} Sandia ATDM Software Ecosystem and Delivery -
+  Technology Demonstrator} 
+
+\paragraph{Overview} 
+
+This project is part of the NNSA/ASC program and is primarily focused
+on the integration of programming models technologies in existing
+applications. This project spans both the Code Development and
+Applications (CDA) and Architecture and Software Development (ASD)
+components of Sandia's ATDM program element, and this description only
+covers the ASD portion of the project.
+
+The purpose of this project is to broaden the impact of
+programming model technologies developed in ATDM by integrating these
+technologies into an existing ASC code suite, evaluating the ability
+of these technologies to be incrementally added into a legacy code
+base and to deliver performance improvements on current- and
+next-generation computing platforms. In particular, this subproject
+focuses on using and evaluating Kokkos and asynchronous many task
+(AMT) programming models in the NGP Contact code. Kokkos is an
+abstraction layer that implements a parallel programming model in C++
+for writing performance portable applications targeting all major HPC
+platforms. NGP Contact is a performance-critical proximity search
+component relevant to many NNSA applications, including ASC production
+applications that invoke mechanical or thermal contact, coupled
+physics transfers, and particle algorithms. This project is important
+the overall ECP efforts because it evaluates how well technologies
+developed for next-generation applications can be leveraged by
+existing large application code bases, such as the ASC Sierra toolkit,
+in an effort to maximize the impact of ECP technologies. 
+
+\paragraph{Key  Challenges}
+
+The main challenge associated with this project is the incremental
+integration of a new programming model and programming system into an
+existing very large production application. This challenge is similar
+in many ways to the incremental integration of OpenMP into an existing
+large MPI application. As Kokkos is a higher-level abstraction layer
+that can be implemented using OpenMP, there are additional challenges
+around the ability of Kokkos' abstractions and interfaces to integrate
+into an existing application and minimizing the performance penalty of
+the abstraction layer for different underlying hardware
+implementations.
+
+\paragraph{Solution Strategy}
+
+The strategy for this project is to produce demonstration applications
+that drive the development of an AMT scheduling toolset and to enable
+leveraging of Sierra-developed technologies to support ATDM
+application milestones.
+
+\paragraph{Recent Progress}
+
+The Technology Demonstrator team has continued progress toward a 
+performant, optimized GPU contact implementation. 
+Two final parts of the contact algorithm are being ported to run on the GPU: 
+interaction determination and interaction enforcement. The Sierra Solid 
+Mechanics and NimbleSM teams have begun, and are continuing, joint work on 
+porting the existing NimbleSM CPU-only routines and expect to test GPU 
+execution. Initial performance data indicated that providing a full 
+implementation of GPU contact could provide significant performance 
+improvements over CPU-only execution, and performance data will be 
+gathered once the routines are ready.
+
+\paragraph{Next Steps}
+
+The team's next focus will be to add a frictional contact capability to 
+NimbleSM using node-face contact. This effort will include demonstrating 
+correctness through a few canonical verification problems, optimization
+ as needed, and evaluations of relative performance on hardware 
+representative of LLNL's ATS-2 platform.
+
