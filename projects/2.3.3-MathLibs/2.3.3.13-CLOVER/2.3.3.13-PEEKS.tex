@@ -1,6 +1,6 @@
 \subsubsection{\stid{3.13} PEEKS} 
 \paragraph{Overview} 
-The PEEKS project is a focused team effort to advance the capabilities of the
+The PEEKS subproject is a focused team effort to advance the capabilities of the
 ECP software stack in terms of communication-avoiding Krylov solvers and
 advanced preconditioning techniques featuring fine-grained parallelism.
 Previously developed techniques that are available as prototype codes -- as
@@ -75,7 +75,7 @@ The primary thrusts of the PEEKS project are:
 	algorithm implementation from the hardware-specific kernel implementations, 
 	therewith allowing for ecosystem extensibility while allowing for heavy, 
 	architecture-specific kernel optimization. 
-	\item \textbf{Sustainability efforts:}
+   \item \textbf{Sustainability efforts:}
 	The Ginkgo software development cycle adheres the Better Scientific 
 	Software (BSSw) design principles~\cite{betterscientificsoftware} that 
 	ensure production-quality code by featuring unit testing, automated 
@@ -84,11 +84,11 @@ The primary thrusts of the PEEKS project are:
 	framework~\cite{pasc_anzt}. Ginkgo is an 
 	open source effort licensed under BSD 3-clause and ships with the latest 
 	version of the xSDK package (v.0.5.0). 
-	\item \textbf{Pipelined and CA Krylov methods:} 
+   \item \textbf{Pipelined and CA Krylov methods:} 
     We realize pipelined and 
 	communication-avoiding Krylov methods in production-quality code, and 
-	successfully integrated into the ECP ExaWIND 
-	project~\cite{cakrylovexawind}. 
+	we are actively collaborating with the ECP ExaWind project to integrate 
+        our new features into their application~\cite{Yamazaki-lowsynch}. 
 	\item \textbf{ParILUT -- A parallel threshold ILU:}  We are spearheading 
 	the manycore-parallel computation of threshold-based 
 	incomplete factorization preconditioners~\cite{sisc_anzt,ipdps_anzt}. 
@@ -96,7 +96,7 @@ The primary thrusts of the PEEKS project are:
 	production-ready block-Jacobi preconditioner that reduces the runtime by 
 	carefully selecting the storage format of the distinct block inverses 
 	without impacting the preconditioner quality~\cite{toms_anzt}. 
-    \item \textbf{Software-defined events (SDE):}  We team up with the ECP 
+   \item \textbf{Software-defined events (SDE):}  We team up with the ECP 
     Exa-PAPI project to design and realize an ecosystem for software-defined 
     events. The idea is to provide application scientists with easy access 
     to library-, domain- and solver-specific metrics via the PAPI interface. 
@@ -116,9 +116,11 @@ also realized a web-based Ginkgo Performance Explorer that allows to
 interactively explore archived performance 
 data~\cite{gpewebpage}.
 \item
-We demonstrated the efficient use of communication-avoiding Krylov methods 
-inside wind turbine simulations of the ECP ExaWIND 
-project~\cite{cakrylovexawind}.
+We implemented and released five variations of communication-avoiding
+and pipelined Krylov solvers in the Belos Trilinos package.
+\item
+We demonstrated the efficient use of communication-avoiding Krylov methods in Trilinos
+inside wind turbine simulations of the ECP ExaWind project~\cite{Yamazaki-lowsynch}.
 \item 
 We deployed ParILUT, the first production-ready manycore-parallel algorithm for 
 generating threshold-based incomplete factorization preconditioner and 
@@ -148,6 +150,7 @@ Our next efforts are:
 	\item \textbf{Low-synchronous orthogonalization:} The success of 
 	communication-avoiding Krylov methods motivates to push the synchronization 
 	limits further by deploying low-synchronous orthogonalization methods.
+        (Collaboration with the ExaWind team at NREL.)
 	\item \textbf{Parallel incomplete factorization preconditioner 
 	application:} With the advances in the parallel incomplete factorization
 	preconditioner generation, the focus increasingly turns to the efficient 
@@ -175,6 +178,7 @@ Our next efforts are:
 	\item \textbf{Polynomial preconditioners:} The communication cost of 
 	numerical preconditions is high. In particular for communication-avoiding 
 	pipelined Krylov methods, the synchronization necessary by standard 
-	preconditioning can become a bottleneck. We investigate the effectiveness 
+	preconditioning can become a bottleneck. We will deliver a new
+        polynomial preconditioner in Trilinos (Belos). We will investigate the effectiveness 
 	and efficiency of polynomial preconditioners for ECP applications.
 \end{enumerate}
