@@ -114,37 +114,44 @@ the study and evaluation of MPI endpoints.
 
 \paragraph{Recent Progress}
 
-Figure~\ref{fig:sep18} provides the details of the milestones completed in FY18Q3 and FY18Q4.
-In the first milestone completed in June 2018, a communicator info hint is proposed to expose
-communication progress characteristics to the user to provide a more efficient way of ensuring
-MPI progress that results in better application  performance.
-In the second milestone completed in June 2018, a study report was submitted on efforts needed to
-achieve interoperability between MPI and task and to enable direct transfer of data from
-GPU memory to NIC with MPI calls.
-In the third milestone completed in June 2018, three categories of applications are investigated: 1)
-stencil computation applications; 2)cosmology applications;  3)dynamic  execution  environment  applications.
-While these applications currently do
-not benefit from ULFM, we think it is still important for us to provide ULFM in the Exascale
-MPI library and explore on a broader range of applications.
-In the fourth milestone completed in June 2018, a list of recommendations that will be
-helpful to users wishing to exploit memory heterogeneity \cite{hetero4} in their MPI codes.
+Figure~\ref{fig:fy19} provides the details of major milestones completed
+in FY2019. In the first milestone, we studied the performance
+of the RMA improvements using the large quantum chemistry application
+suite NWChem (version 6.6) with ARMCI-MPI and MPICH on the Cray XC40
+supercomputer. The results shown that enabling network hardware atomics
+with the info hints fully eliminated the performance bottleneck in the
+Density Functional Theory (DFT) module and improved the performance
+scalability of NWChem DFT. In the second milestone, we studied the
+performance impact of ULFM when there is no failure. A study report has
+been submitted on performance analysis of the ULFM prototype. In the
+third milestone, we studied the performance of MPI Endpoints. The
+results shown significant improvement of using MPI endpoints
+prototype---the multithreaded MPI communication reached a message rate
+that is close to the case of single-threaded MPI communication. We
+concluded that exposing the application level parallelism to the MPI
+through the use of endpoints enables effectively scheduling of the
+traffic. In such a way, multiple hardware resource can be utilized to
+reduce the contention between threads and improve performance.
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=6in]{projects/2.3.1-PMR/2.3.1.07-Exascale-MPI/MPICH-recent-milestones.pdf}
-  \caption{\label{fig:sep18}MPICH milestones
-    completed in June 2018 and Septmeber 2018}
+  \caption{\label{fig:fy19}Major MPICH milestones completed in fiscal year 2019}
 \end{figure}
 
-In the first milestone completed in September 2018, lightweight send and receive requests
-for communication are instroduced. In this
-way, we are able to only use constant number of requests to track many operations which
-significantly reduce the memory scalability
-of MPI. Furthermore, by sharing the preallocated requests, we also avoid the costs
-of request allocation and initialization within each operation and achieved even higher message rate.
-In the second milestone completed in September 2018, introduced MPI info, "disable\_shm\_accumulate",
-to only use network-based atomics for MPI accumulates in specific windows and
-"which\_accumulate\_ops", to limit the need of atomic support at runtime.
+In the fourth milestone, we evaluated the benefit of using
+topology-aware neighborhood collectives. We used the neighborhood
+collective integration in the PETSc scalable linear solvers (KSP)
+component for this evaluation. The results did show benefit, but with a
+caveat that is the neighborhood collectives incurs significant setup
+cost which currently overshadowing the communication benefit. The
+addition of ``persistent'' collective operations in MPI-4 will allow us
+to remove the per-operation setup cost. In the last milestone, we
+performed comprehensive evaluation of the project which included
+functional tests and performance tests.  The experiment results using
+Nek5000 on OLCF Summit supercomputer shown significant improvements in
+performance and scalability due to the techniques developed in this ECP
+project.
 
 \paragraph{Next Steps}
 Exascale MPI ongoing efforts include ECP application performance evaluation of utilizing
