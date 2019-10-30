@@ -84,6 +84,34 @@ global optimization and optimization under uncertainty.
 
 {\it URL:} http://tasmanian.ornl.gov
 
+
+{\bf ForTrilinos} (Fortran for Trilinos)
+
+{\it Purpose:} ForTrilinos provides a seamless pathway for large and complex
+Fortran-based codes to access Trilinos without C/C++ interface code.
+This access includes Fortran versions of Kokkos abstractions for code
+execution and data management..
+
+{\it Significance:} The Exascale Computing Project (ECP) requires the successful
+transformation and porting of many Fortran application codes in preparation for
+ECP platforms. A significant number of these codes rely upon the scalable
+solution of linear and nonlinear equations. The Trilinos Project contains
+a large and growing collection of solver capabilities that can utilize
+next-generation platforms, in particular scalable multicore, manycore,
+accelerator and heterogeneous systems. Trilinos is primarily written in C++,
+including its user interfaces. While C++ is advantageous for gaining access to
+the latest programming environments, it limits Trilinos usage via Fortran.
+
+{\it SWIG capabilities:}  an interface generator, SWIG, which the project is
+extending, to create the object-oriented Fotran wrapper code that users can
+access directly. This language translation will occur in both directions;
+ForTrilinos will provide an inversion of control functionality that enables
+custom extensions of the Trilinos solvers that are Fortran-based. Once the
+ForTrilinos project is complete, a functional, extensible suite of capabilities
+to access Trilinos on next-generation computing systems will be provided.
+
+{\it URL:} https://github.com/trilinos/ForTrilinos
+
 \paragraph{Key Challenges}
 
 \indent
@@ -103,6 +131,17 @@ when employing the standard fork-join adaptive sparse grid algorithms.  After
 the surrogate has been constructed, collecting the samples for statistical
 analysis (or multi-physics simulations) requires a massive number of basis
 evaluations and many sparse and dense linear operations.
+
+{\bf ForTrilinos:} Developing the interfaces to the C++ libraries that provide
+access to cutting-edge research, such as Trilinos,  is of significant benefit
+to Fortran community. However, such interfaces must be well documented,
+sustainable and extensible, which would require significant amount of resources
+and investment. This is further complicated by the requirements to support
+heterogeneous platforms (e.g., GPUs) and inversion-of-control functionality.
+The manual approach to such interfaces has been shown to be unsustainable as it
+requires interface developers to have in-depth expertise in  multiple languages
+and the peculiarities in their interaction on top of the time commitment to
+update the interfaces with changes in the library.
 
 \paragraph{Solution Strategy}
 
@@ -124,6 +163,16 @@ evaluations and linear algebra to the GPU accelerators, and leverage the
 SLATE/MAGMA capabilities to ensure performance portability across relevant
 platforms.
 
+{\bf ForTrilinos:} Develop a Fortran module for the Simplified Wrapper
+Interface Generator (SWIG) utility~\cite{beazley1996swig}. SWIG is used to parse
+C++ code and generate wrapper code, and was already used for this purpose for
+several dozen target languages, most notably Python. The project took the
+approach of adding a Fortran 2003 wrapper generator for SWIG in order to
+fulfill many of the critical feature requirements for ForTrilinos.
+The developed SWIG/Fortran functionality allowed to proceed with automatic
+generation of Fortran interfaces to selected Trilinos libraries. The work is
+conducted in phases, with each phase increasing the number of wrapped of
+Trilinos packages.
 
 %----------------------------------------
 
@@ -145,7 +194,7 @@ capability for additive manufacturing simulations.
 {\bf Tasmanian:} The infrastructure of Tasmanian has been upgraded to support
 the broader ECP focus of the work.  GPU acceleration of sparse grid surrogates
 has been implemented.  Tasmanian recently enabled the ExaStar project to
-reduce the size of a large-memory table of neutrino opacities by 100X while
+reduce the size of a large-memory table of neutrino opacities by 10X while
 still preserving accuracy.
 
 \begin{figure}[htb]
@@ -153,6 +202,30 @@ still preserving accuracy.
         \includegraphics[width=1.5in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/tasmanian-gpu}
         \caption{\label{fig:tasmanian-gpu}Tasmanian approximation (right) of neutrino capacities (left).}
 \end{figure}
+
+{\bf ForTrilinos:}
+Figure~\ref{fig:fortran_ioc} illustrates a new Inversion-of-Control~(IoC)
+implementation in ForTrilinos. The new approach allows Fortran users to define
+an operator by using a derived type on the Fortran side, and use Trilinos
+algorithms, e.g. Krylov solvers, to solve the linear system with that operator.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.8,width=6in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/ForTrilinos_ioc}
+    \caption{\label{fig:fortran_ioc}The proposed Inversion-of-Control approach
+    allowing Fortran applications to define operators on Fortran side while
+    still using ForTrilinos types.}
+\end{figure}
+
+This approach allows the user callback functions to interact with native Fortran
+types and ForTrilinos class wrapper types. In the same vein, users would not
+have to manually pass \texttt{type(C\_PTR)} instances into and out of the
+callback function, as the C++ Fortran conversions can be tedious and
+error-prone, which indeed is the motivation for using SWIG to generate
+ForTrilinos.  Another important feature is that it allows the application code
+to extend Trilinos without having to generate any new interface code, either by
+hand or using SWIG. In other words, the Fortran end user should not have to know
+C++ or SWIG.
 
 %----------------------------------------
 
@@ -164,7 +237,25 @@ still preserving accuracy.
 lightweight library, ArborX, to provide these ECP investments to a broader
 user base.
 
-{\bf Tasmanian:} Work will continue with the development of the asynchronous
-construction methods that exploit the native sparse grids DAG hierarchy.
+{\bf Tasmanian:} Work will continue with the development of mixed precision
+algorithms for fast surrogate evaluations and integratinv the capability within
+the ExaStar project.
+
+{\bf ForTrilinos:} the next efforts will include
+\begin{enumerate}
+  \item \textbf{Provide wrappers for more libraries:} ForTrilinos will continue
+    efforts to increase the number of wrapped Trilinos libraries. The scheduled
+    release of the next phase of the project will include libraries
+    corresponding to nonlinear solvers, such as NOX.
+  \item \textbf{Integrate developed capabilities into applications:} E3SM-MMF
+    is an Earth system model development and simulation project. It relies on
+    Trilinos for its implicit capabilities. The ForTrilinos project will
+    integrate the developed nonlinear solver with IoC into E3SM-MMF to provide
+    path forward to heterogeneous stack.
+  \item \textbf{Provide interfaces for heterogeneous platforms:} ForTrilinos
+    will develop support for heterogeneous memory through providing access to
+    Kokkos-based interfaces in Trilinos. This will allow full exposure to
+    Trilinos capabilities targeting Exascale machines.
+\end{enumerate}
 
 %----------------------------------------
