@@ -4,19 +4,24 @@
 \paragraph{Overview}
 
 The ALExa project ({\sl Accelerated Libraries for Exascale}) focuses on
-preparing the DTK and Tasmanian libraries for exascale platforms and
+preparing the DTK, Tasmanian and ForTrilinos libraries for exascale platforms and
 integrating these libraries into ECP applications.  These libraries deliver
 capabilities identified as needs of ECP applications: (1) the ability to
 transfer computed solutions between grids with differing layouts on parallel
 accelerated architectures, enabling multiphysics projects to seamlessly
 combine results from different computational grids to perform their required
-simulations (DTK); and
+simulations (DTK);
 %
 (2) the ability to construct fast and memory efficient surrogates to large
 scale engineering models with multiple inputs and large number of outputs,
 enabling uncertainty quantification (both forward and inverse) as well as
 optimization and efficient multi-physics simulations in projects such as
-ExaStar (Tasmanian).
+ExaStar (Tasmanian); and
+%
+(3) the ability to interface large and complex Fortran-based codes to the
+growing collection of Trilinos advanced solver capabilities that can
+utilize next-generation platforms, the interface is done without C/C++
+interface code.
 
 These capabilities are being developed through ongoing interactions with our
 ECP application project collaborators to ensure they will satisfy requirements
