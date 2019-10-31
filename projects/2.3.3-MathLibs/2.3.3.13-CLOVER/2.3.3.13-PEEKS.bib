@@ -2,12 +2,20 @@
 %% http://bibdesk.sourceforge.net/
 
 
-%% Created for Hartwig Anzt at 2019-10-28 10:59:33 +0100 
+%% Created for Hartwig Anzt at 2019-10-31 18:52:48 +0100 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@article{toms_anzt,
+	Author = {Flegar, Goran and Anzt, Hartwig and Cojean, Terry and Quintana-Ort\'{\i}, Enrique S.},
+	Date-Added = {2019-10-31 18:34:34 +0100},
+	Date-Modified = {2019-10-31 18:35:46 +0100},
+	Journal = {{ACM Trans. on Mathematical Software}},
+	Title = {{Customized-Precision Block-Jacobi Preconditioning for Krylov Iterative Solvers on Data-Parallel Manycore Processors}},
+	Year = {submitted}}
 
 @article{carson2,
 	Author = {Erin Carson and Nicholas J. Higham},
@@ -58,11 +66,13 @@
 	Bdsk-Url-1 = {https://onlinelibrary.wiley.com/doi/abs/10.1002/cpe.4460},
 	Bdsk-Url-2 = {https://doi.org/10.1002/cpe.4460}}
 
-@webpage{gpewebpage,
+@article{gpewebpage,
+	Author = {Ginkgo Performance Explorer},
 	Date-Added = {2019-10-28 10:41:01 +0100},
-	Date-Modified = {2019-10-28 10:41:48 +0100},
-	Url = {Ginkgo Performance Explorer: https://ginkgo-project.github.io/gpe/},
-	Year = {2019}}
+	Date-Modified = {2019-10-31 18:52:48 +0100},
+	Title = {\url{https://ginkgo-project.github.io/gpe/}},
+	Year = {2019},
+	Bdsk-Url-1 = {Ginkgo%20Performance%20Explorer:%20https://ginkgo-project.github.io/gpe/}}
 
 @article{doi:10.1177/1094342019846287,
 	Abstract = { The methodology and standardization layer provided by the Performance Application Programming Interface (PAPI) has played a vital role in application profiling for almost two decades. It has enabled sophisticated performance analysis tool designers and performance-conscious scientists to gain insights into their applications by simply instrumenting their code using a handful of PAPI functions that ``just work'' across different hardware components. In the past, PAPI development had focused primarily on hardware-specific performance metrics. However, the rapidly increasing complexity of software infrastructure poses new measurement and analysis challenges for the developers of large-scale applications. In particular, acquiring information regarding the behavior of libraries and runtimes---used by scientific applications---requires low-level binary instrumentation, or APIs specific to each library and runtime. No uniform API for monitoring events that originate from inside the software stack has emerged. In this article, we present our efforts to extend PAPI's role so that it becomes the de facto standard for exposing performance-critical events, which we refer to as software-defined events (SDEs), from different software layers. Upgrading PAPI with SDEs enables monitoring of both types of performance events---hardware- and software-related events---in a uniform way, through the same consistent PAPI. The goal of this article is threefold. First, we motivate the need for SDEs and describe our design decisions regarding the functionality we offer through PAPI's new SDE interface. Second, we illustrate how SDEs can be utilized by different software packages, specifically, by showcasing their use in the numerical linear algebra library MAGMA-Sparse, the tensor algebra library TAMM that is part of the NWChem suite, and the compiler-based performance analysis tool Byfl. Third, we provide a performance analysis of the overhead that results from monitoring SDEs and discuss the trade-offs between overhead and functionality. },
@@ -215,9 +225,9 @@
 @inproceedings{Yamazaki-lowsynch,
 	Author = {Yamazaki, I. and Thomas, S. and Hoemmen, M. and Boman, Erik G. and Swirydowicz, K.},
 	Booktitle = {Proc. of SIAM Parallel Processing 2020},
+	Note = {submitted},
 	Title = {Low-synchronization orthogonalization for s-step and pipelined Krylov solvers in {Trilinos}},
-	Year = {2020},
-        note = "submitted"}
+	Year = {2020}}
 
 @misc{betterscientificsoftware,
 	Date-Added = {2018-04-04 22:23:31 +0000},
