@@ -1,62 +1,57 @@
-\subsubsection{\stid{4.14} ECP EZ: Fast, Effective, Parallel Error-bounded Exascale Lossy Compression for Scientific Data}
+\subsubsection{\stid{4.14} ECP SZ: Fast, Effective, Parallel Error-bounded Exascale Lossy Compression for Scientific Data}
 
 \paragraph{Overview}
 
-Extreme scale simulations and experiments are generating more data than can be stored, communicated and analyzed. Current lossless compression methods suffer from low compression ratio and do not adequately address the limitations in storage bandwidth and storage space of projected exascale systems. Existing lossy compressors, although enabling greater data reduction, are not covering the needs of many ECP applications.
+Extreme scale simulations and experiments are generating more data than can be stored, communicated and analyzed. Current lossless compression methods suffer from low compression ratio and do not adequately address the limitations in storage bandwidth and storage space of projected exascale systems. Existing lossy compressors are not covering the needs of many ECP applications.
 
-The EZ project is extending and improving the SZ lossy compressor for structured and unstructured scientific datasets respecting user-set error controls. SZ offers an excellent compression ratio and compression time. Further work is essential, however, to improve our SZ lossy compressor for ECP scientific datasets, while ensuring that user-set error controls are respected. Specifically, we are maximizing the effectiveness of SZ’s three core compression algorithms: prediction, quantization, and coding. The EZ project focuses on optimization of the compression quality, including improvement of compression ratio, memory cost minimization, parallelization, addition of more error controls, and integration of SZ into parallel I/O environments (PnetCDF, ADIOS, HDF5). Our goal is to produce a high-quality lossy compressor responding to the needs of ECP exascale applications and experiment users. To this end, we are working with multiple ECP application teams, including ExaSky cosmology teams (HACC and Nyx), molecular dynamics simulations groups (EXAALT), x-ray laser imaging experimentalists (ExaFEL), and computational chemists (NWChem-X, GAMESS) to optimize SZ for their applications and to harden SZ for production use.
+The VeloC-SZ project is extending and improving the SZ lossy compressor for structured and unstructured scientific datasets respecting user-set error controls. SZ offers an excellent compression ratio as well as very low distortion and compression time. Further work is essential, however, to improve our SZ lossy compressor for ECP scientific datasets, while ensuring that user-set error controls are respected. Specifically, we are: (i) optimizing SZ compression ratios, accuracy and speed based on end-user needs (ii) refactoring SZ in C++ to improve to support all data types used in ECP applications and I/O libraries, (iii) integrating and optimizing the integration of SZ in ECP client applications, (iv)  porting and optimizing SZ for Aurora and Frontier, (v) developing automatic compression parameter tuning, (vi) delivering a comprehensive test suite and extensively testing SZ and its different implementations for all client ECP applications. Our goal is to produce a high-quality lossy compressor responding to the needs of ECP exascale applications and experiment users. To this end, we are working with multiple ECP application teams, including ExaSky cosmology teams (HACC), molecular dynamics simulations groups (EXAALT), x-ray laser imaging experimentalists (ExaFEL), and computational chemists (NWChem-X, GAMESS) to optimize SZ for their applications and to harden SZ.
 
 \paragraph{Key Challenges}
 
-There are several key challenges in the EZ project.
+SZ faces several key challenges:
 \begin{itemize}
-\item One challenge in designing an efficient compressor for HPC applications is the large
-diversity of scientific data, such as various dimensions, scales, and dynamic data changes in both
-space and time.
-\item Another challenge is that the scientific data may have irregular characteristics. The simulation data may exhibit spiky changes in small regions. For instance, the data in HACC simulation are all stored in 1D arrays: three coordinate fields (xx, yy, zz) and three velocity fields (vx, vy, vz). It is hard to get a high compression ratio because of lack of correlations between adjacent particles in each array.
-\item It is non trivial to support random access under the traditional SZ compression model, which has a relatively strong dependency among the data points during the compression/decompression. 
-\item Integrating SZ into parallel I/O libraries (such as PnetCDF and HDF5) is non-trivial, because these I/O libraries are designed and implemented differently with various interfaces. We need to develop the integration codes carefully based on the I/O libraries' interface with minimal cost.
-\item It is non-trivial to parallelize SZ to get a high speed-up. A new version (SZ 2.0) (released on July 26th) significantly improved the compression quality for high-compression cases, but also introduced more challenges on the implementation of parallel version of SZ. Specifically, SZ 2.0 splits the whole dataset into multiple non-overlapped small blocks (such as 8x8x8) and performs the compression in each block by selecting an adaptive prediction method. SZ 2.0 still has a certain dependency across the blocks in the block-wise compression, which is a challenge for the implementation over GPU. 
-
+\item One challenge in optimizing lossy compression for scientific applications is the large
+diversity of scientific data, dimensions, scales, and dynamic data changes in both space and time. Each application requires specific parameters tuning and in some cases, a specific compression pipeline.
+\item Another challenge is supporting the compression optimization for a large variety of data formats. A template based approach must be used to improve robustness, debugging and testability.
+\item A third challenge is the diversity of the integration schemes for the different ECP client applications: HACC integrates SZ in a proprietary I/O library (GIO), Exafel integrates SZ directly in the LCLS data processing pipeline. GAMESS integrates SZ in the application directly replacing some code sections. NWChem-X integrates SZ for checkpoint/restart. 
+\item Optimization of SZ for Aurora and Frontier requires writing portable accelerator codes that are non trivial for complex compression pipeline. 
+\item While automatic compression parameter tuning to maximize compression performance (speed and accuracy) is useful for end-users to avoid a cumbersome optimization process, is not trivial to implement. 
+\item The SZ testing infrastructure (unit test, correctness test, performance test, regression test, continuous integration) will need to be adapted and its performance optimized for the new C++ implementation. 
 \end{itemize}
 
 \paragraph{Solution Strategy}
 
-As for the first challenge, we keep a close communication with ECP application users to understand their specific demands on the lossy compression. For instance, we have a weekly meeting with ECPSky team to discuss the required error bounds and compression quality of cosmology simulation data. We also provide multiple types of error bounds (such as absolute error bound, PSNR, relative error bound) allowing users to control the errors in different ways. We also exploit an adaptive prediction method to optimize the compression quality for diverse datasets. 
+As for the first challenge, we keep a close communication with ECP application users to understand their specific demands on the lossy compression. For instance, we have a weekly meeting with ECP application teams to discuss the required error bounds and compression speed and quality. We also provide multiple types of error bounds (such as absolute error bound, PSNR, relative error bound) allowing users to control the errors in different ways. We also exploit an adaptive prediction method to optimize the compression quality for diverse datasets. 
 
-As for the second challenge, we develop some particular compression techniques based on specific data features across different applications.
+As for the second challenge, we refactor SZ in C++, starting from the current C version. This refactoring is the perfect occasion to implement a new more modular design of SZ, capable of integrating more stages in the compression pipeline and of selecting compression stages based on specific application data features.
 
-As for the third challenge, we split each dataset into multiple non-overlapped small blocks and ensure that the compression in each block is totally independent with other blocks. To this end, we reorganize the data access in the code and separating the Huffman encoding function. 
+As for the third challenge, our weekly meetings with the application teams provide us a clear understanding of the integration pathway as well as the expected performance. We also often discuss potential solutions with application teams when needed. 
 
-We overcome the last challenge by understanding the principle of the I/O libraries deeply (either reading the related documents carefully or communicating with the I/O library developers closely).
+Concerning the fourth challenge, we are in contact with ALCF and OLCF as well as with vendors to access simulators and early systems that will help to optimize the aceelerator implementations.
 
-As for the fourth challenge, the work is still under the progress. We will develop the GPU version of SZ based on the random-access support code, and explore some new compression techniques (such as replacing Huffman encoding by arithmetic encoding) if necessary.  
+For the fifth challenge, we are designing and integrating of a control loop capable of adjusting compression parameters from user set constraints. The automatic part of the tuning will use optimization techniques to exploration of a large potential configuration space.
+
+Concerning the test suite, we are continuously developing and improving it. We will need to adapt it for C++ as part of the SZ refactoring. We will also use ECP testing environment when it becomes available.
 
 \paragraph{Recent Progress}
 
-SZ 2.0 is released as an open source on github. Figure \ref{fig:sz-principle} (a) demonstrates the core step (data prediction and linear-scaling quantization) in SZ lossy compression using a 2D dataset. Figure \ref{fig:sz-principle} (b) demonstrates the visual quality of decompressed data for ECPSky-NYX VX field: SZ 2.0 has a pretty high visual quality with a high compression ratio of 156:1. This paper was accepted by IEEE BigData18.
+SZ is an open source software on github, and the latest version is SZ 2.1.7, which has been optimized compared with SZ 2.0. 
+
+SZ 2 also has significant improvement on compression ratio compared to SZ 1, especially on high-compression cases. Specifically, SZ 2 adopts a hybrid prediction model by leveraging both Lorenzo predictor and linear-regression prediction method. It splits each dataset into multiple non-overlapped blocks and selects the bestfit prediction approach in each block by a sampling method. Figure \ref{fig:sz-principle} demonstrates the core step (data prediction and linear-scaling quantization) in SZ lossy compression using a 2D dataset and that SZ still produces a high visual quality for the NYX VX field with a compression ratio of 156:1.
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=2.8in]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/sz-illu.png}
 \includegraphics[width=3.2in]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/Visual-quality-NYX-SZ.png}
 \vspace{-2mm}
-	\caption{\label{fig:sz-principle}Illustration of data prediction in SZ and visual quality of decompressed data for ECPSky-NYX VX field}
+	\caption{\label{fig:sz-principle} SZ principle and  original vs. decompressed NYX VX field}
 \end{figure}
 
-We have improved the compression quality for some ECP applications significantly. For instance, we develop PaSTRI code that can significantly improve the compression ratio for GAMESS two-electron integral datasets by leveraging the potential scaled repeated patterns, and this work is awarded as the overall best paper in IEEE CLUSTER18. We also implemented effective compression method supporting point-wise relative error bounds for the ECPSky project and studied its lossy compression quality with multiple resolutions. Experiments with point-wise relative error bound based compression shows that our solution leads to 31\%-210\% higher compression ratio than other lossy compressors do. It also receives the best-paper award in the software track of IEEE CLUSTER18. We completed the integration of SZ into different I/O libraries such as HDF5 and ADIOS. 
+We have improved the compression quality for different ECP applications significantly, including ECP HACC, EXAFEL, GAMESS, and others. For instance, SZ leads to higher compression ratio for asbolute error bound on these datasets than the second best lossy compressor, with comparative compression rate. We also implemented effective compression method supporting point-wise relative error bounds for the ECP ExaSky project. Experiments with point-wise relative error bound based compression shows that our solution leads to 31\%-210\% higher compression ratio than other lossy compressors do (best paper at IEEE CLUSTER18). We accelerated the compression rate significantly (by 50\% in most of cases) by a table-lookup method, which was published in IEEE MSST19. 
+Moreover, SZ allows users to customize their own prediction method to adapt to the special features of datasets. For instance, the compression ratio has been improved about 2$\sim$3X by leveraging the patterns existing in the GAMESS dataset (overall best paper award at IEEE Cluster 2018).  
 
-We also improved compression quality for cosmological simulation by developing an in-situ time-dimension based compression mechanism. From Fig. \ref{fig:szcompression} (a), we see that our solution (labeled as SZ\_vlct) exhibits much better rate-distortions than others. Fig. \ref{fig:szcompression} (b) shows the break-down of the data dumping/loading times of three solution (SZ\_single\_snapshot, SZ\_prestep, and SZ\_vlct). We can see that our solution leads to the shortest overall I/O time. We present the random-access performance evaluation results in Fig. \ref{fig:szcompression} (c), which shows that the random-access function in SZ 2.0 can significantly reduce the decompression time on demand. 
+All the improvements and functionalities developed in SZ comes from user practical requirements. SZ supports multiple I/O libraries such as HDF5, PnetCDF, and ADIOS; and it also supports both C and Fortran. We also developed various parallel versions such as multi-threaded version and GPU version. SZ also supports random access during the data decompression, allowing users to decompress only interesting regions/parts of the data. We also optimized the I/O performance by exploring the best tradeoff between the compression ratio and compression rate, also taking into account the varied bandwidth with increasing execution scales. This work was published in IEEE Cluster 2019.
 
-\begin{figure}[htb]
-\centering
-\includegraphics[width=6in]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/time-based-comp-and-random.jpg}
-\vspace{-2mm}
-\caption{Compression Results of Time-based SZ and Random-Access}
-\label{fig:szcompression}
-\vspace{-5mm}
-\end{figure}
-
-\paragraph{Next Steps} Our next efforts are: Improve compression performance by analyzing SZ's performance and implementing the parallel version over GPU.
+\paragraph{Next Steps} Our next efforts are: Improve compression performance by analyzing SZ's performance, refactoring SZ in C++, integrating SZ in more ECP applications, and implementing a portable GPU version for Aurora and Frontier and improving SZ testing environment.
 
 %\textbf{Support advanced error controls allowing the user to specify relative error bounds and to control the error distribution.} We will write a report describing the integration of additional error controls (relative error bound and control of error distribution) in SZ.
