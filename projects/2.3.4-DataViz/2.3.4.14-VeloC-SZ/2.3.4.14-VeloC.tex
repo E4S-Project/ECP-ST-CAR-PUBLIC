@@ -1,8 +1,8 @@
-\subsubsection{\stid{4.14} STDM07-VeloC: Very Low Overhead Transparent Multilevel Checkpoint/Restart} 
+\subsubsection{\stid{4.14} VeloC: Very Low Overhead Checkpointing System} 
 
 \paragraph{Overview} 
 
-The VeloC project aims to provide a high-performance, scalable
+The VeloC-SZ project aims to provide VeloC, a high-performance, scalable
 checkpoint/restart framework that leverages multi-level checkpointing
 (the combination of several resilience strategies and heterogeneous
 storage) to ensure that ECP applications run to completion with
@@ -11,135 +11,134 @@ that increases development productivity by reducing the complexity of
 having to deal with a heterogeneous storage stack and multiple vendor
 APIs. VeloC offers a client library that can be used by the
 applications to capture local application states, which are then
-coordinated and persisted using a resilience engine. The VeloC
-software intends to serve ECP applications such as HACC, NWChemEx,
-LatticeQCD and EXAALT.
+coordinated and persisted using a resilience engine.  VeloC runs the resilience engine asynchronously, which overlaps a large part of the checkpointing
+with the application runtime, thereby reducing its overhead.
+
+VeloC has been released and shows significant lower checkpointing
+overhead for several ECP applications, such as HACC, LatticeQCD, 
+EXAALT. Further work is essential however to improve performance
+and scalability while maintaining a simple API that increases application 
+productivity. 
 
 \paragraph{Key Challenges}
-
-Applications typically employ simple checkpoint-restart mechanisms to
-survive failures that directly use a parallel file system.  However,
-I/O bottlenecks due to concurrent writes are a known limitation in
-this case. At Exascale, I/O bottlenecks are amplified both because
-failures happen more frequently and because I/O bandwidth per compute
-unit decreases (high increase in compute capability, modest increase
-in I/O capability). Therefore, simple checkpoint-restart mechanisms
-are not feasible. To compensate for the decreasing I/O bandwidth per
-compute unit, the storage stack is becoming increasingly more
-heterogeneous (e.g. NVRAM, burst buffers, key-value stores,
-etc.). This aspect introduces a new level of complexity for
-application developers: they need to adapt their checkpoint strategy
-to a variety of new storage sub-systems that may or may not be
-available on every machine. This is further amplified by the diversity
-of vendors that offer custom APIs. Thus, it is important to provide a
-scalable high-performance checkpointing solution that can leverage the
-heterogeneous storage stack transparently without sacrificing ease of
-use and flexibility.
+VeloC faces several key challenges:
+\begin{itemize}
+    \item \textbf{I/O bottlenecks:} applications typically employ simple checkpoint-restart mechanisms to survive failures that directly use a parallel file system. With diminishing I/O bandwidth available per 
+    core, this leads to high checkpointing overhead and is not sustainable
+    \item \textbf{Deep heterogeneous storage} To compensate for diminishing
+    parallel file system I/O bandwidth per core, the storage stack
+    is becoming increasingly deeper and heterogeneous: node-local NVRAM, burst buffers, key-value stores, etc. However, the variety of vendors and performance characteristics make it difficult for application developers to take advantage of it.
+    \item \textbf{Restart-in-place:} a majority of failures affect only a small
+    part of the nodes where the job is running. Therefore, reusing the 
+    surviving nodes immediately after a failure is more efficient than
+    submitting a new job (which may wait in the batch queue) that restarts from the latest checkpoint.
+    \item \textbf{Portability and robustness:} applications need to run on
+    a variety of supercomputing architectures, each featuring distinct
+    capabilities. Their critical data structures that need to be checkpointed are constantly growing in size and complexity. Therefore,
+    a flexible checkpointing solution is needed that can adapt to a variety
+    of scenarios and configurations without sacrificing performance and scalability.
+\end{itemize}
 
 \paragraph{Solution Strategy}
 
-To address these challenges, VeloC is based on several design principles.
+To address these challenges, VeloC adopts the following principles:
 
-First, it implements multi-level checkpointing. Specifically, it
-persists the local checkpoints to other nodes using collaborative
-resilience strategies (e.g., partner replication and partner erasure
-coding) and to external storage that may include a complex
-heterogeneous hierarchy (e.g., parallel file system, burst buffers,
-I/O nodes, key-value stores, etc.). Based on experience from previous
-efforts such as FTI~\cite{FTI} and SCR~\cite{SCR}, this strategy
-greatly improves performance and scalability.
-
-Second, it offers a simple API that enables users to either manually
-capture checkpoints into files or to define memory regions
-that are automatically serialized into files. All interactions
-with the complex heterogeneous storage stack is transparently handled
-by VeloC, which facilitates ease-of-use.
-
-Third, VeloC separates the management of checkpoints
-from the actual implementation of the resilience strategies by
-using a client library that interfaces with a resilience engine.
-
-This modular design has two advantages. First, the engine
-can be linked either directly into the application (which
-simplifies deployment but limits the use of VeloC in blocking
-mode) or into an active backend, which enables the asynchronous
-mode that does not block the application, ultimately leading
-to better performance and scalability. Second, the user can
-easily extend the engine with custom modules to perform
-additional post-processing (e.g. filtering, compression)
-as needed.
-
+\begin{itemize}
+    \setlength{\itemindent}{-2em}
+    \item \textbf{Multi-level checkpointing:} is based on the idea that
+    a majority of failures can be mitigated without involving the parallel file system: node-local checkpoints can be used to recover from 
+    software bugs, replication/erasure coding can be used to recover from 
+    most combinations of node failures. This reduces the frequency of
+    checkpointing to the parallel file system and therefore the I/O
+    bottlenecks.
+    \item \textbf{Asynchronous mode:} once a node-local checkpoint has been
+    written, applications do not need to wait for replication, erasure
+    coding or writes to the parallel file system: these can be applied
+    in the background, while the application continues running. However,
+    in this case, it is important to minimize interference.
+    \item \textbf{Transparent use of heterogeneous storage:} we developed
+    several techniques that can leverage a variety of 
+    local storage (in-memory file systems, flash storage) and external
+    storage (burst buffers, key-value stores, parallel file systems) options. These techniques select the best available storage options,
+    tune them with the optimal parameters and leverage any vendor-specific
+    API if needed to transfer data.
+    \item \textbf{Job scheduler integration:} to implement restart-in-place,
+    we have developed a series of scripts that interact with a variety
+    of job schedulers to run jobs with spare nodes, continue execution on failures, restart on the surviving nodes and spares using the fastest possible recovery strategy (which ideally avoids reading checkpoints
+    from the parallel file system). This is transparent to the users.
+    \item \textbf{Declarative API and automated serialization:} 
+    we offer a simple API that enables users to either manually
+    capture checkpoints into files or to define memory regions
+    that are automatically serialized into checkpoint files.
+    \item \textbf{Modular design:} applications link with a client
+    library that is responsible to manage local checkpoints, while
+    a separate engine is responsible to employ the rest of the resilience
+    strategies as plugin-able modules. This simplifies the implementation of the asynchronous mode, enables users the flexibility choose any
+    combination of resilience strategies, as well as to customize 
+    the checkpoiting pipeline (e.g., add new post-processing operations
+    such as analytics or compression)
+\end{itemize}
+    
 \paragraph{Recent Progress}
 
 We met and closely collaborated with several ECP application teams in
 an effort to address their checkpointing needs. Most of our current
-efforts involve the HACC, NWChemEx, LatticeQCD and EXAALT teams. Based
-on these interactions, we carefully refined the initial VeloC API to
-make sure it addresses the needs while minimizing the integration
-effort. Three of the ECP applications have been integrated with VeloC,
-either directly into the main code (LatticeQCD, EXAALT) or into
-a plugin that is separate from the main code and can be activated
-if needed (HACC). Integration with NWChemEx is ongoing.
-
-In parallel with the co-design effort done in collaboration with the
-ECP application teams, we designed and implemented the architecture and
-core features of VeloC. The modular design mentioned previously is
-illustrated in Figure~\ref{fig:veloc:arch}. The design details of
-VeloC can be found in the VeloC design document, submitted to ECP
-during past milestones. Specifically, we implemented the client
-library and the backbone of the engine from scratch. Two components,
-the erasure-coding module (EC) and the data transfer module (AXL) were
-refactored and modularized for VeloC based on the SCR code. We
-completed the integration of the self-contained modules with the
-backbone into a flexible engine that allows VeloC the capability of
-running in synchronous mode directly in the application processes or
-in asynchronous mode in a separate active backend process. VeloC was
-successfully tested and released as v1.0.
+efforts involve the HACC, LatticeQCD and EXAALT teams. The integration
+with HACC aimed to isolate the checkpointing code in a plugin to enable
+easier maintenance, ability to switch checkpointing on/off and sharing
+of critical data used for checkpoints with other in-situ plugins (e.g., analytics, post-processing, etc.). To this end, we designed and 
+implemented a VELOC checkpointing plugin for CosmoTools, the
+in-situ framework used by HACC. For LatticeQCD and EXAALT, the integration
+has been performed directly into the main code. Integration with 
+other ECP applications is ongoing.
 
 \begin{wrapfigure}{l}{0.47\textwidth}
-  \includegraphics[width=0.47\textwidth]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/veloc-arch}
+  \includegraphics[width=0.4\textwidth]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/veloc-arch}
   \caption{VeloC: Architecture}%
   \label{fig:veloc:arch}%
 \end{wrapfigure}
 
 
-\begin{figure}[t]
-  \begin{subfloat}[HACC\label{fig:veloc:hacc}]
-  \centering
-  \includegraphics[width=.47\textwidth]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/veloc-hacc}
-  \end{subfloat}
-  \hfill
-  \begin{subfloat}[LatticeQCD\label{fig:veloc:lqcd}]
-  \centering
-  \includegraphics[width=.47\textwidth]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/veloc-lqcd}
-  \end{subfloat}
-  \caption{VeloC results with ECP applications: increase in execution time due to checkpointing (lower is better)}
-  \label{fig:veloc:results}%
-\end{figure}
+In parallel with the co-design effort done in collaboration with the
+ECP application teams, we improved the asynchronous mode mentioned previously and illustrated in Figure~\ref{fig:veloc:arch}. Specifically, 
+we have introduced an experimental hybrid local checkpointing strategy
+that leverages hybrid local storage (memory, flash) simultaneously to
+enable faster asynchronous flushes to the parallel file system~\cite{VeloCIPDPS19}. Furthermore, we have explored interference mitigation strategies
+during asychronous checkpointing based on the prediction of shared
+resource utilization, which can be used for better scheduling of
+background operations~\cite{PredictionEuroPar19}.
 
-We have evaluated VeloC with two representative use cases from the
-HACC and LatticeQCD teams. The experiments were performed on the
-ANL Theta platform (KNL nodes, local SSD, Lustre parallel file system).
-We compared checkpointing using VeloC in asynchronous mode vs. the
-original checkpointing mechanism used by the application (GenericIO
-for HACC, direct writes to the parallel file system for LatticeQCD).
-Results are shown in Figure~\ref{fig:veloc:results}: the impact
-of checkpointing (measured as increase in runtime vs. the case
-when no checkpointing is used) was reduced by up to 10x when using
-VeloC.
+The latest release v.1.2 introduces several new capabilities: (1) non-collective mode that enables processes
+to checkpoint independently rather than as a single group;
+(2) improved file-based mode that preserves custom file names
+when flushing to the parallel file system, which is especially
+useful for applications that make use of the SCR-to-VeloC 
+compatibility translation library; (3) AXL, the library
+responsible for transfers to/from external storage now auto-detects
+and configures the best way to transfer files between local and
+external storage.
 
-We are also interacting with ALCF to understand the constraints for
-VeloC deployment on CORAL systems, such as the configuration of the
-resource and job manager and the possibility to run two MPI executions
-(application + backend) on each node.
+In addition, we have added several new features that facilitate better integration with the ECP ecosystem: (1) restart-in-place scripts
+for the following platforms: ANL Theta, ORNL Summit, LLNL Lassen;
+(2) automated testing infrastructure based on Travis, which facilitates a smooth transition towards the ECP continuous integration initiative;
+(3) Python bindings, which enables the use of VeloC in applications
+that make use of high level analytics and artificial intelligence
+libraries (e.g. Keras); (4) Spack installation packages and integration
+into the OpenHPC distribution.
 
-We integrated VeloC with the rest of the ECP ecosystem as well. Specifically,
-we have created a Spack installation package and have facilitated its
-integration in the OpenHPC distribution.
-
-We created an SCR-to-VeloC translation library that enables existing
-SCR applications to run on the VeloC library.  This is posted
-in the ECP-VeloC repository and is now available to external SCR users.
+%\begin{figure}[t]
+%  \begin{subfloat}[HACC\label{fig:veloc:hacc}]
+%  \centering
+%  \includegraphics[width=.47\textwidth]{projects/2.3.4-DataViz/2.3.4.14-Vel%oC-SZ/veloc-hacc}
+%  \end{subfloat}
+%  \hfill
+%  \begin{subfloat}[LatticeQCD\label{fig:veloc:lqcd}]
+%  \centering
+%  \includegraphics[width=.47\textwidth]{projects/2.3.4-DataViz/2.3.4.14-Vel%oC-SZ/veloc-lqcd}
+%  \end{subfloat}
+% \caption{VeloC results with ECP applications: increase in execution time %due to checkpointing (lower is better)}
+%  \label{fig:veloc:results}%
+%end{figure}
 
 Finally we expanded the documentation and created tutorials that were
 presented at various international venues to raise awareness about
@@ -147,11 +146,15 @@ VeloC within the broader HPC community at international level.
 
 \paragraph{Next Steps}
 
-As a next step, we are working towards two goals. First, we plan to
-evaluate VeloC with the ECP applications at larger scale to validate
-correctness and fix potential bottlenecks and performance issues.
-Based on these findings, we will improve VeloC and prepare for the
-next release. In parallel, we will continue to collaborate with the
+We are working towards several goals: (1) improving the integration 
+of VeloC  with resource managers to automate the process of checking 
+the status of jobs and nodes, detect failures and relaunch jobs on failed nodes; (2) improving portability and robustness by introducing support for
+flexible client-engine communication (e.g. Mercury) and advanced
+serialization (e.g. C++ high-level data structures); (3) continue 
+hardening the integration with existing ECP applications; (4) improve 
+the automated testing infrastructure  and build environment for VeloC to support comprehensive testing on ECP machines. 
+
+In parallel, we will continue to collaborate with the
 application teams to address new requirements should they arise.
 Furthermore, we will expand our user base beyond ECP to interact and
 get feedback from the broader international community.
