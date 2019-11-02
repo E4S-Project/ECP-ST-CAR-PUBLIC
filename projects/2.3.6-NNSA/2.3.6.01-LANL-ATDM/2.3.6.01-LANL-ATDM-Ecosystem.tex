@@ -1,106 +1,4 @@
-\subsubsection{\stid{6.01} LANL ATDM Software Ecosystem \& Delivery Projects - Resilience Subproject} 
-
-\paragraph{Overview}
-The resilience subproject has a goal of providing tools and solutions for
-users and administrators of the Exascale machines to deal with expected
-unreliable operations.  Due to the extreme scale and bleeding-edge components
-necessary to meet the needs of the ECP project, it is expected that the
-applications will need to deal with application / job interrupts at a rate
-higher than users are used to on conventional extreme-scale systems of today.
-This also means that datacenter operations will be affected and modeling tools
-needs to be provided to monitor and be prepared for this eventuality.
-
-In general, this subproject approaches this through a combination of data
-collection of today's extreme-scale systems (monitoring), data analytics,
-machine learning, model building, and fault injection into applications at
-scale.
-
-\paragraph{Key Challenges}
-The key challenges in this area are that it is difficult to acquire data on
-contemporary systems for a number of reasons such as NDA, security, and 
-jitter / noise.  We expect future systems will be complex enough that it is
-hard to estimate the parameters well and it must be understood that the
-modeling can only be as good as the input to the models.  Care must be taken to
-get good input data from the vendors and the ECP project should place emphasis
-on getting quality monitoring data from around DOE datacenters that can seed
-modeling efforts on contemporary systems.
-
-Reliability is a topic area which is sensitive not only amongst the government
-but also the vendors providing solutions and, as such, thought should be put
-into how we are to assemble information and disseminate for maximal progress of
-the project while also protecting the participants.
-
-\paragraph{Solution Strategy}
-This subproject's solution leverages data collection and analytics to do what
-is termed \emph{data-driven datacenter design}.  That is, using data from
-supercomputer field data (real and modeled from prospective / hypothetical
-machines) to design better datacenters and supercomputers themselves to better
-fit our users' needs.  Further, we provide software evaluation tools to emulate
-soft faults so users can inject faults into their code and empirically evaluate
-their applications' resiliency and vulnerability to corruption.  In this way,
-they can develop mitigation strategies and evaluate the efficacy of those
-approaches.  It is important to understand, however, that these approaches are
-predicated on good input data that these faults are reasonable given what is
-expected for target Exascale computer platforms.  The tools provided by this
-subproject can create nearly any fault model, but those faults need to be
-configured and driven by some information and while we can provide some initial
-suggestions it is theoretically possible that those would be incorrect.
-
-\paragraph{Recent Progress}
-The modeling efforts in recent months have focused on modeling memory
-reliability for prospective machines using publically available reliability
-data.  Additionally, there are versions of this modeling effort which use NDA
-data as input.
-
-The FSEFI\cite{pfsefigithub,6877352} fault injector recently demonstrated the
-capability to inject faults into parallel programs.  Now, using FSEFI, users
-can not only perform thousands of individual fault injection trials at the same
-time but these individual trials can be parallel programs themselves.  This
-effort brought to light some performance improvements needed with FSEFI as well
-as enhancements the team is working on to make the tool suite more
-user-friendly.
-
-The machine learning and data analytics portion of this subproject have
-recently focused on studying data from Los Alamos National Laboratory's largest
-classified machine, Trinity, as well as the laboratory's largest cluster used
-for open science, Grizzly.  As is common with this kind of analysis, a
-surprising amount of investment is needed in simply curating and ``cleaning''
-dirty data for analysis.  Initial experiments on this data has focused
-studying job logs from systems combined with system / console logs.
-
-%previous 'recent progress'
-%The subproject recently completed a milestone where two supercomputer
-%resiliency models were created.  One is considerably more complex than the
-%other but includes parameters which we found to be hard to measure on
-%contemporary systems.  It provides an example of features which we find
-%desirable measurement points on future systems.  The simplified model we
-%provided we used on the Trinity supercomputer at LANL, the largest system at
-%LANL.  Due to the nature of the work performed on the system and the NDA-nature
-%of the results of the analysis, we were unable to share publicly the results
-%but did share the results in meetings with several laboratories and other
-%government agencies, demonstrating the model and showed that it closely matches
-%certain parameters from RFP (NDA) documents and neutron beam studies that have
-%been published by the team.  
-
-\paragraph{Next Steps}
-FY19's focus in this subproject is mostly on stabilization of FSEFI for users
-and enhancements of FSEFI by integrating with the
-DisCVar\cite{DBLP:conf-ppopp-MenonM18} tool.  DisCVar is a tool that analyzes
-static sequential programs and identifies variables that are deemed to have the
-most impact of final program correctness.  As such, it can inform developers
-requires of an application that need more protections and checks to detect
-silent data corruption.  The FSEFI team has already explored DisCVar and is
-working with LLNL to connect the tool to FSEFI to inform the fault injector
-where to target injections.  It would not be unreasonable to think of this as
-multi-scale fault injection where the goal is to use DisCVar to draw attention
-to where injections should be performed and then to use FSEFI for intense fault
-injection experiments.
-% previous 'next steps'
-%The FSEFI\cite{pfsefigithub,6877352} fault injector continues development toward a late year milestone of
-%parallel fault injection demonstration.  Additionally, there is an upcoming
-%milestone for machine learning using data from supercomputer field data.
-
-\subsubsection{LANL ATDM Software Ecosystem \& Delivery Projects - BEE/Charliecloud Subproject} 
+\subsubsection{\stid{6.01} LANL ATDM Software Ecosystem \& Delivery Projects - BEE/Charliecloud Subproject} 
 
 \paragraph{Overview}
 The BEE/Charliecloud subproject is creating software tools to increase portability
@@ -166,15 +64,7 @@ part of OpenHPC.  Charliecloud won an 2018 R\&D-100 award.
 BEE fully supports launching Charliecloud containers on all LANL HPC systems.
 It can also launch containers on AWS and OpenStack clouds such as NSF
 Chameleon.  BEE also supports interactive launching of jobs with the SLURM
-resource manager.
+resource manager. BEE was shown at the end of FY19 to support a complex multiphysics application with setup, in situp visualization and checkpoint-restart on a production system at LANL.
 
 \paragraph{Next Steps}
-% previous next steps
-%There is an Integrated Project Team (IPT) working at LANL on demonstrating a
-%complete BEE/Charliecloud workflow using production applications on production
-%HPC systems.  This work will produce a well-documented and packaged BEE release
-%consisting of the BEE-Charliecloud launcher, BEEflow workflow management
-%system, and support for the Slurm resource manager.
-There is an ASC 2019 L2 milestone for LAP, BEE, and Charliecloud in production
-and this is the main focus for FY19.  The BEE team requested Q2 FY19 allocation
-on Summit (ORNL) to support expanding resource manager support to LSF.
+A refactoring of BEE to support an open standard is underway. Support for the Open Workflow standard will allow a base on a well defined workflow description language leveraged by other scientiic communities. This will then be tested on multiple systems to ensure portability.

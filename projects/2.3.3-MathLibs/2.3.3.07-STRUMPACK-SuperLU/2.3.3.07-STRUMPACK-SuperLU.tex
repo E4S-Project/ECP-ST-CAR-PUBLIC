@@ -1,11 +1,14 @@
 \newcommand{\ignore}[1]{}
-\subsubsection{\stid{3.07} Factorization Based Sparse Solvers and Preconditioners for Exascale} \label{subsubsect:strumpack}
+%\subsubsection{\stid{3.07} Factorization Based Sparse Solvers and Preconditioners for Exascale} \label{subsubsect:strumpack}
+\subsubsection{\stid{3.07} STRUMPACK-SuperLU} \label{subsubsect:strumpack}
 
 \paragraph{Overview} 
 % \textit{Provide an overview of your project.  You might find that the introductory text from your Fall 2017 Project Summary \url{https://confluence.exascaleproject.org/display/1ST/Fall+2017+ECP+ST+Project+Summaries} useful as a starting draft.}
 In this project we will deliver factorization based sparse solvers
 encompassing the two widely used algorithm variants: supernodal
-(SuperLU library) and multifrontal (STRUMPACK library). STRUMPACK is
+(SuperLU library: \url{https://portal.nersc.gov/project/sparse/superlu})
+and multifrontal (STRUMPACK library: \url{http://portal.nersc.gov/project/sparse/strumpacK}).
+STRUMPACK is
 further enhanced with scalable preconditioning functionality using
 hierarchical matrix algebra. Both libraries are purely algebraic,
 applicable to a large variety of application domains. We will address
@@ -75,10 +78,12 @@ and hierarchical low-rank matrix structures.
 % Parallel pre-pivoting for both packages.
 
 The improvements for SuperLU will be mainly in two areas: (1) develop
-a communication-avoiding 3D factorization code that has provably 
-lower communication complexity; (2) develop a synchronization-avoiding
-triangular solve code to enable more overlap of communications of different
-processes at different substitution steps.
+the communication-avoiding 3D factorization and triangular solve
+algorithms and codes that have provably lower communication complexity;
+(2) develop a synchronization-avoiding triangular solve code to enable more
+overlap of communications of different processes at different substitution steps;
+(3) develop new multi-GPU codes for both symbolic preprocessing step and
+numerical factorization and solve steps.
 
 In addition to exploiting structural sparsity as SuperLU does, STRUMPACK
 also exploits data sparseness in the dense blocks of sparse factors using
@@ -94,16 +99,79 @@ The developments for STRUMPACK will focus on several areas:
 (3) reduce MPI communication in all stages of the code, including HSS
     construction, ULV factorization and triangular solve;
 (4) in addition to HSS, develop codes to support other simpler low-rank
-    formats, such as HOLDR. The HSS format has asymptotically lower complexity
-    than HOLDR, but has a larger prefactor constant. We expect HSS to be more
-    useful for large-scale problems while HOLDR is more useful for mid-range
-    problems;
+    formats, such as HOLDR and BLR. The HSS format has asymptotically
+    lower complexity than HOLDR and BLR, but has a larger prefactor constant.
+    We expect HSS to be more useful for large-scale problems while HOLDR
+    and BLR are more useful for mid-range problems;
 (5) work with the ECP application teams to examine their specific problem
     characteristics and develop the best clustering/ordering methods to 
     reveal low-rank structures.
 
 \paragraph{Recent Progress}
 %\textit{Describe what you have done recently.  It would be good to have some kind of figure or diagram in this section.}
+In the past six months, we focused on adding more support for GPU and
+improving on-node threading performance.  To this end, we participated
+in the 3.5 days ECP OpenMP Hackathon at NERSC in August 2019. During hackathon,
+we worked closely with the other two ECP ST teams: HPCToolkit and SOLLVE,
+as well as the OpenMP/vectorization experts from Intel.  In particular,
+using HPCToolkit helps reveal several performance bottlenecks.  We rewrote
+the code to remove a few inefficiencies, and identified solution strategies
+for the other bottlenecks.
+
+We also worked with two ECP applications: MFEM electromagnetic diffusion
+problems governed by high frequency indefinite Maxwell equations
+(CEED Co-Design Center) and ExaSGD Miniapp2 -- sparse ACOPF matrices:
+\url{https://github.com/LLNL/hiop/tree/sandbox/matrices/data/acopf_matrices}
+
+The algorithmic changes and the results are detailed below.
+
+\paragraph\
+\underline{STRUMPACK}
+\begin{itemize}
+\item Algorithmic change: changed recursive tree traversal to a level-by-level
+traversal, which has less task scheduling overhead and allows to use batched
+dense linear algebra routines.
+\item There are many small dense linear algebra operations on lower levels
+of the supernodal elimination tree. Current solution strategy is to perform
+ small DLA operations on CPU, for larger ones use cuBLAS with CUDA streams.
+ The future solution strategy is to use variable sized batched operations
+ from MAGMA and/or SLATE.
+\item On Summit, for the MFEM matrix, 8CPU + 1GPU factorization achieved
+ 8x speedup over 8CPU cores, and 19x speedup over 1CPU core.
+\item Added the new Butterfly and low rank compression schemes. For the MFEM matrix,
+ this obtained much smaller numerical rank and better compression rate
+ compared to the HSS low rank format. 
+\end{itemize}
+
+\underline{SuperLU}
+\begin{itemize}
+\item Developed the first GPU code to perform supernodal sparse triangular solve.
+ On Summit 1 GPU, it achieved 2x speedup over 8 CPU cores for ExaSGD matrix.
+ It is 5.5x faster than Nvidia’s cuSPARSE. 
+\item Factorization: on-node OpenMP performance: currently a single
+ ``guided'' scheduling strategy is used in various OMP for-loops. 
+ HPCToolkit points out serious load imbalance for a couple of for-loops.
+ We are examining some hybrid scheduling strategies.
+\end{itemize}
+
+\vspace{-.3in}
+\begin{figure}[htb]
+\begin{minipage}[t]{0.48\columnwidth}
+\centering
+\includegraphics[scale=0.7]{projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/strumpack-Summit.pdf}
+\caption{STRUMPACK factorization on Summit GPU.}
+\label{fig:strumpack-parmetis-scaling}
+\end{minipage}
+\begin{minipage}[t]{0.48\columnwidth}
+\centering
+\includegraphics[scale=0.8]{projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/superlu-solve-Summit.pdf}
+\caption{SuperLU solve on Summit GPU.}
+\label{fig:strumpack-metis-scaling}
+\end{minipage}
+\end{figure}
+
+%%--------------------------------------
+\ignore{ %%%%%%%% from previous period 
 In the past six months, we have made good progress in several areas.
 For the latest releases of both packages, we integrated a parallel
 pre-ordering algorithm called Approximate-Weight Perfect Matching (AWPM)
@@ -154,7 +222,9 @@ for pivot selection~\cite{AWPM2018}. The other improvements are:
 \end{minipage}
 \end{figure}
 
-\ignore{  %%%% from last period ....
+} %%%%%---- ignored 
+
+\ignore{  %%%%%%%%%%%% from last period ....
 \begin{enumerate}
 \item We developed and evaluated a fully algebraic sparse preconditioner in 
       STRUMPACK. On top of the baseline multifrontal direct solver, we use
@@ -187,16 +257,21 @@ for pivot selection~\cite{AWPM2018}. The other improvements are:
       SuperLU and are released.
 \end{enumerate}
 } %%%% ignored from last period ....
-
+%%--------------------------------------
 
 \paragraph{Next Steps} Our future efforts will focus on the following areas:
 %\textit{Describe what you are working on next.}
 \begin{itemize}
+\item For STRUMPACK, Gather/Scatter operations are still on CPU. The future
+ solution strategy is to use CUDA kernel, or OpenMP 4.5+ target off-load feature.
+\item For SuperLU, we will develop a more scalable multi-GPU symbolic
+  factorization code, and develop a communication strategy to 
+  combine threading with one-sided communications.
 \item We will build detailed performance models and performance specific
   code optimizations for the ECP applications that use our solvers.
-\item We will design and implement new algorithms for the GPU systems.
 \end{itemize}
 
+%-----------
 \ignore{  %%%% from last period ....
 \begin{itemize}
 \item For STRUMPACK, we will improve the performance of the HSS solve
@@ -206,7 +281,7 @@ for pivot selection~\cite{AWPM2018}. The other improvements are:
       models and performance specific code optimizations for the ECP
       applications that use our solvers.
 \end{itemize}
-} %%%% ignored from last period ....
+} %%%%------ ignored from last period ....
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% FFTX sub-project %%%%
@@ -220,7 +295,8 @@ standard FFT interface: vendors that provide FFT libraries implement
 (at least a subset) of that interface. Thus, FFTW both defines the 
 standard FFT library interface, as well as being a key software component
 for applications.
-In the FFTX project, we are developing a new package for supporting FFT applications on exascale architectures. Our approach based on two ideas. The first is develop a backwards-compatible approach that builds on the FFTW interface but extends it to enable extraction of high performance on exascale machines. The second idea is to provide a toolchain that enables the
+In the FFTX project (\url{https://github.com/spiralgen/fftx}), 
+we are developing a new package for supporting FFT applications on exascale architectures. Our approach based on two ideas. The first is develop a backwards-compatible approach that builds on the FFTW interface but extends it to enable extraction of high performance on exascale machines. The second idea is to provide a toolchain that enables the
 specialization of the FFT calculation and its surrounding use case calculations (scaling, data layout transformation, marshalling/unmarshalling for communication), using code generation, symbolic analysis, automatic performance tuning, and applications-specific code generation. We will use SPIRAL, an open-source toolchain for FFT developed at CMU, as the basis for developing FFTX, and will use specific ECP applications and target ECP exascale platforms to provide a focus for this work.
 
 \paragraph{Key Challenges}
@@ -251,5 +327,22 @@ The core code generation, symbolic analysis, and autotuning software for this pr
 building on 20 years of research by the SPIRAL team at CMU.
 SPIRAL automatically maps computational kernels across a wide range of computing platforms to highly efficient code, and proves the correctness of the synthesized code.
 The SPIRAL approach has many of the same structural components as FFTW -- a high-level DSL, symbolic analysis, code generation, and autotuning. However, the approach used by SPIRAL integrates these ideas more closely into the user code, generating new source code for both the FFT calls and the glue code (e.g. pointwise operations, data motion) in an FFT-based application.
+
+
+\paragraph{Recent Progress}
+In the past six months, we did implementation of FFT use cases relevant to
+ accelerator modeling and materials science using FFTX v1.0. We performed 
+ initial code generation for V100 GPU-based systems and baseline performance
+ measurements on Summit. We released reference implementation of FFTX v1.0
+ for CPUs.
+
+\paragraph{Next Steps} Our future efforts will focus on the following areas:
+\begin{itemize}
+\item Deliver high performance on a single node GPU for ECP AD use cases.
+\item Use ``Plan of plans'' approach to integrate domain-specific operations
+  with FFTs. 
+\item Design detailed control of data placement / data motion.
+\item High-level C++ API to improve productivity, broaden adoption.
+\end{itemize}
 
 

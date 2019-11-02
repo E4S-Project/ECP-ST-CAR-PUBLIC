@@ -2,12 +2,129 @@
 %% http://bibdesk.sourceforge.net/
 
 
-%% Created for Hartwig Anzt at 2018-12-15 17:29:04 +0100 
+%% Created for Hartwig Anzt at 2019-10-31 18:52:48 +0100 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@article{toms_anzt,
+	Author = {Flegar, Goran and Anzt, Hartwig and Cojean, Terry and Quintana-Ort\'{\i}, Enrique S.},
+	Date-Added = {2019-10-31 18:34:34 +0100},
+	Date-Modified = {2019-10-31 18:35:46 +0100},
+	Journal = {{ACM Trans. on Mathematical Software}},
+	Title = {{Customized-Precision Block-Jacobi Preconditioning for Krylov Iterative Solvers on Data-Parallel Manycore Processors}},
+	Year = {submitted}}
+
+@article{carson2,
+	Author = {Erin Carson and Nicholas J. Higham},
+	Created = {2017.07.22},
+	Date-Added = {2019-10-28 10:59:32 +0100},
+	Date-Modified = {2019-10-28 10:59:32 +0100},
+	Doi = {10.1137/17M1140819},
+	Journal = {{SIAM J. Scientific Computing}},
+	Number = 2,
+	Pages = {A817-A847},
+	Title = {Accelerating the Solution of Linear Systems by Iterative Refinement in Three Precisions},
+	Updated = {2018.03.16},
+	Volume = 40,
+	Year = 2018,
+	Bdsk-Url-1 = {https://doi.org/10.1137/17M1140819}}
+
+@article{carson1,
+	Author = {Erin Carson and Nicholas J. Higham},
+	Created = {2017.03.28},
+	Date-Added = {2019-10-28 10:59:22 +0100},
+	Date-Modified = {2019-10-28 10:59:22 +0100},
+	Doi = {10.1137/17M1122918},
+	Journal = {SIAM J. Scientific Computing},
+	Number = 6,
+	Pages = {A2834-A2856},
+	Title = {A New Analysis of Iterative Refinement and its Application to Accurate Solution of Ill-Conditioned Sparse Linear Systems},
+	Updated = {2017.12.11},
+	Volume = 39,
+	Year = 2017,
+	Bdsk-Url-1 = {https://doi.org/10.1137/17M1122918}}
+
+@article{doi:10.1002/cpe.4460,
+	Abstract = {Summary We propose an adaptive scheme to reduce communication overhead caused by data movement by selectively storing the diagonal blocks of a block‐Jacobi preconditioner in different precision formats (half, single, or double). This specialized preconditioner can then be combined with any Krylov subspace method for the solution of sparse linear systems to perform all arithmetic in double precision. We assess the effects of the adaptive precision preconditioner on the iteration count and data transfer cost of a preconditioned conjugate gradient solver. A preconditioned conjugate gradient method is, in general, a memory bandwidth‐bound algorithm, and therefore its execution time and energy consumption are largely dominated by the costs of accessing the problem's data in memory. Given this observation, we propose a model that quantifies the time and energy savings of our approach based on the assumption that these two costs depend linearly on the bit length of a floating point number. Furthermore, we use a number of test problems from the SuiteSparse matrix collection to estimate the potential benefits of the adaptive block‐Jacobi preconditioning scheme.},
+	Author = {Anzt, Hartwig and Dongarra, Jack and Flegar, Goran and Higham, Nicholas J. and Quintana-Ort\'{i}, Enrique S.},
+	Date-Added = {2019-10-28 10:57:25 +0100},
+	Date-Modified = {2019-10-28 10:57:25 +0100},
+	Doi = {10.1002/cpe.4460},
+	Eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1002/cpe.4460},
+	Journal = {Concurrency and Computation: Practice and Experience},
+	Keywords = {adaptive precision, block‐Jacobi preconditioning, communication reduction, energy efficiency, Krylov subspace methods, sparse linear systems},
+	Note = {e4460 cpe.4460},
+	Number = {6},
+	Pages = {e4460},
+	Title = {{Adaptive precision in block-Jacobi preconditioning for iterative sparse linear system solvers}},
+	Url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/cpe.4460},
+	Volume = {31},
+	Year = {2019},
+	Bdsk-Url-1 = {https://onlinelibrary.wiley.com/doi/abs/10.1002/cpe.4460},
+	Bdsk-Url-2 = {https://doi.org/10.1002/cpe.4460}}
+
+@article{gpewebpage,
+	Author = {Ginkgo Performance Explorer},
+	Date-Added = {2019-10-28 10:41:01 +0100},
+	Date-Modified = {2019-10-31 18:52:48 +0100},
+	Title = {\url{https://ginkgo-project.github.io/gpe/}},
+	Year = {2019},
+	Bdsk-Url-1 = {Ginkgo%20Performance%20Explorer:%20https://ginkgo-project.github.io/gpe/}}
+
+@article{doi:10.1177/1094342019846287,
+	Abstract = { The methodology and standardization layer provided by the Performance Application Programming Interface (PAPI) has played a vital role in application profiling for almost two decades. It has enabled sophisticated performance analysis tool designers and performance-conscious scientists to gain insights into their applications by simply instrumenting their code using a handful of PAPI functions that ``just work'' across different hardware components. In the past, PAPI development had focused primarily on hardware-specific performance metrics. However, the rapidly increasing complexity of software infrastructure poses new measurement and analysis challenges for the developers of large-scale applications. In particular, acquiring information regarding the behavior of libraries and runtimes---used by scientific applications---requires low-level binary instrumentation, or APIs specific to each library and runtime. No uniform API for monitoring events that originate from inside the software stack has emerged. In this article, we present our efforts to extend PAPI's role so that it becomes the de facto standard for exposing performance-critical events, which we refer to as software-defined events (SDEs), from different software layers. Upgrading PAPI with SDEs enables monitoring of both types of performance events---hardware- and software-related events---in a uniform way, through the same consistent PAPI. The goal of this article is threefold. First, we motivate the need for SDEs and describe our design decisions regarding the functionality we offer through PAPI's new SDE interface. Second, we illustrate how SDEs can be utilized by different software packages, specifically, by showcasing their use in the numerical linear algebra library MAGMA-Sparse, the tensor algebra library TAMM that is part of the NWChem suite, and the compiler-based performance analysis tool Byfl. Third, we provide a performance analysis of the overhead that results from monitoring SDEs and discuss the trade-offs between overhead and functionality. },
+	Author = {Heike Jagode and Anthony Danalis and Hartwig Anzt and Jack Dongarra},
+	Date-Added = {2019-10-28 10:39:16 +0100},
+	Date-Modified = {2019-10-28 10:39:16 +0100},
+	Doi = {10.1177/1094342019846287},
+	Eprint = {https://doi.org/10.1177/1094342019846287},
+	Journal = {The International Journal of High Performance Computing Applications},
+	Number = {0},
+	Pages = {1094342019846287},
+	Title = {PAPI software-defined events for in-depth performance analysis},
+	Url = {https://doi.org/10.1177/1094342019846287},
+	Volume = {0},
+	Year = {0},
+	Bdsk-Url-1 = {https://doi.org/10.1177/1094342019846287}}
+
+@inproceedings{pasc_anzt,
+	Acmid = {3325719},
+	Address = {New York, NY, USA},
+	Articleno = {9},
+	Author = {Anzt, Hartwig and Chen, Yen-Chen and Cojean, Terry and Dongarra, Jack and Flegar, Goran and Nayak, Pratik and Quintana-Ort\'{\i}, Enrique S. and Tsai, Yuhsiang M. and Wang, Weichung},
+	Booktitle = {Proceedings of the Platform for Advanced Scientific Computing Conference},
+	Date-Added = {2019-10-28 10:30:24 +0100},
+	Date-Modified = {2019-10-28 10:30:28 +0100},
+	Doi = {10.1145/3324989.3325719},
+	Isbn = {978-1-4503-6770-7},
+	Keywords = {automated performance benchmarking, continuous integration, healthy software lifecycle, interactive performance visualization},
+	Location = {Zurich, Switzerland},
+	Numpages = {11},
+	Pages = {9:1--9:11},
+	Publisher = {ACM},
+	Series = {PASC '19},
+	Title = {Towards Continuous Benchmarking: An Automated Performance Evaluation Framework for High Performance Software},
+	Url = {http://doi.acm.org/10.1145/3324989.3325719},
+	Year = {2019},
+	Bdsk-Url-1 = {http://doi.acm.org/10.1145/3324989.3325719},
+	Bdsk-Url-2 = {https://doi.org/10.1145/3324989.3325719}}
+
+@inproceedings{ipdps_anzt,
+	Author = {H. {Anzt} and T. {Ribizel} and G. {Flegar} and E. {Chow} and J. {Dongarra}},
+	Booktitle = {2019 IEEE International Parallel and Distributed Processing Symposium (IPDPS)},
+	Date-Added = {2019-10-28 10:29:44 +0100},
+	Date-Modified = {2019-10-28 10:29:52 +0100},
+	Doi = {10.1109/IPDPS.2019.00033},
+	Issn = {1530-2075},
+	Keywords = {ParILUT, parallel threshold ILU, incomplete factorization preconditioners, parallel selection, GPU},
+	Month = {May},
+	Pages = {231-241},
+	Title = {ParILUT - A Parallel Threshold ILU for GPUs},
+	Year = {2019},
+	Bdsk-Url-1 = {https://doi.org/10.1109/IPDPS.2019.00033}}
 
 @techreport{1204,
 	Author = {Hartwig Anzt and Ichitaro Yamazaki and Mark Hoemmen and Erik Boman and Jack Dongarra},
@@ -20,10 +137,10 @@
 	Title = {Solver Interface \& Performance on Cori},
 	Year = {2018}}
 
-@article{doi:10.1137/16M1079506,
+@article{sisc_anzt,
 	Author = {Anzt, H. and Chow, E. and Dongarra, J.},
 	Date-Added = {2018-12-13 19:42:22 +0100},
-	Date-Modified = {2018-12-13 19:42:22 +0100},
+	Date-Modified = {2019-10-28 10:30:07 +0100},
 	Doi = {10.1137/16M1079506},
 	Eprint = {https://doi.org/10.1137/16M1079506},
 	Journal = {SIAM Journal on Scientific Computing},
@@ -104,6 +221,13 @@
 	Title = {{Asynchronous Iterative Algorithm for Computing Incomplete Factorizations on GPUs}},
 	Volume = {9137},
 	Year = {2015}}
+
+@inproceedings{Yamazaki-lowsynch,
+	Author = {Yamazaki, I. and Thomas, S. and Hoemmen, M. and Boman, Erik G. and Swirydowicz, K.},
+	Booktitle = {Proc. of SIAM Parallel Processing 2020},
+	Note = {submitted},
+	Title = {Low-synchronization orthogonalization for s-step and pipelined Krylov solvers in {Trilinos}},
+	Year = {2020}}
 
 @misc{betterscientificsoftware,
 	Date-Added = {2018-04-04 22:23:31 +0000},
