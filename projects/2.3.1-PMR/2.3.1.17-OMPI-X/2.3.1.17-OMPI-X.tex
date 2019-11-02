@@ -1,4 +1,4 @@
-\subsubsection{\stid{1.17} Open MPI for Exascale (OMPI-X)}\label{subsubsect:openmpi}
+\subsubsection{\stid{1.17} Open~MPI for Exascale (OMPI-X)}\label{subsubsect:openmpi}
 
 %% {\itshape
 
@@ -16,76 +16,68 @@
 %% \textit{Provide an overview of your project.  You might find that the introductory text from your Fall 2017 Project Summary \url{https://confluence.exascaleproject.org/display/1ST/Fall+2017+ECP+ST+Project+Summaries} useful as a starting draft.}
 
 The OMPI-X project ensures that the Message Passing Interface (MPI)
-standard, and its specific implementation in Open MPI meet the needs
+standard, and its specific implementation in Open~MPI meet the needs
 of the ECP community in terms of performance, scalability, and
 capabilities or features. MPI is the predominant interface for
 inter-process communication in high-end computing.  Nearly all of the
 ECP application (AD) projects (93\%~\cite{Bernholdt:2018:SMU-tr})
 and the majority of software technology (ST) projects
 (57\%~\cite{Bernholdt:2018:SMU-tr}) rely on it.
-%% Since its
-%% inception, the MPI standard has evolved to address the changing needs
-%% of massively parallel libraries and applications as well as the
-%% systems on which they are run.
 With the impending exascale era, the
 pace of change and growing diversity of HPC architectures pose new
 challenges that the MPI standard must address.  The OMPI-X project is
 active in the MPI Forum standards organization, and works within it to
 raise and resolve key issues facing ECP applications and libraries.
 
-Open MPI is an open source, community-based implementation of the MPI
-standard that is
-%% freely available, and
-used by a number of prominent
-HPC vendors as the basis for their commercial MPI offerings.  The
-OMPI-X team is comprised of active members of the Open MPI community,
+Open~MPI is an open source, community-based implementation of the MPI
+standard that is used by a number of prominent
+HPC vendors as the basis for their commercial MPI offerings.   The
+OMPI-X team is comprised of active members of the Open~MPI community,
 with an extensive history of contributions to this community.
-%% the development and
-%% maintenance of the library.
 The OMPI-X project focuses on prototyping
 and demonstrating exascale-relevant proposals under consideration by
 the MPI Forum, as well as improving the fundamental performance and
-scalability of Open MPI, particularly for exascale-relevant platforms
-and job sizes.  MPI users will be able to take advantage of these
-enhancements simply by linking against recent builds of the Open MPI
+scalability of Open~MPI, particularly for exascale-relevant platforms
+and job sizes.
+MPI users will be able to take advantage of these
+enhancements simply by linking against recent builds of the Open~MPI
 library.
 
-Without the OMPI-X project, there will be less competition and less
-innovation in addressing the needs of ECP users in the critical area
-of scalable, performant, and expressive exascale-quality inter-process
-communication capabilities.
+In addition to MPI and Open~MPI, the project also includes two other products,
+which are less visible to the end user, but no less important.
+PMIx (Process Management Interface for Exascale) provides facilities for
+scalable application launch, process wire-up, resilience, and coordination between runtimes.
+It originated as a spin-off from the Open~MPI community, but is now developing a
+community of its own as adoption grows.  Through a recent (FY20) merger,
+Qthreads (formerly WBS 2.3.1.15) is also part of the OMPI-X project.  Qthreads is a
+user-level lightweight asynchronous thread library particularly focused on improving support for
+multithreading in the context of network communications.  Both PMIx and Qthreads help the
+OMPI-X project address key issues of performance and capability for exascale applications.
+
 
 \paragraph{Key  Challenges}
 %% \textit{Describe what is hard to do, why it is challenging.}
 A number of aspects of ``exascale'' levels
 of computing pose serious challenges to the ``tried and true'' message
-passing model presented by MPI and its implementations, including Open
-MPI.
+passing model presented by MPI and its implementations, including Open~MPI.
 %
 Keeping pace with changes in HPC architecture is a major challenge.
-The MPI ecosystem (the standard and its implementations) needs to
-evolve to address challenges
-%% on the programming side
-driven by
-architectural change, as well as taking advantage of new features and
-capabilities.
+Examples include massive node-level concurrency, driving the
+growth of ``MPI+X'' programming approaches,
+and the complex memory architectures, which make the placement of data
+within memory more important. In the near-term, with GPUs dominating the exascale
+environment, how code running on the GPUs interacts with MPI and inter-process
+communications must also be addressed.  This will require both changes to the standard
+and changes and improvements within implementations.
 %
-As applications and libraries
-%% they rely on
-build up to exascale,
-%% levels of computing and beyond,
-the number of nodes, processes, and
-threads required will rise significantly, whereas other key resources,
-such as memory tend to go \emph{down} on a per-node, -process, or
--thread basis.  This emphasizes the importance of scalability in terms
-of both performance and resource utilization.
-%% to allow MPI to scale to
-%% meet those needs.
+Performance and scalability become both more important and more
+challenging as node counts increase
+and memory per node trends downward.
 %
-Finally, we must work within the much larger and broader MPI
-community to find approaches to address these challenges which do not
-adversely impact the capabilities, performance, or scalability for
-other users of MPI and Open MPI.
+Finally, as we identify solutions to these challenges that must be
+``implemented'' within the MPI \emph{standard} rather than particular MPI libraries,
+we must work within the much larger and broader MPI
+community that may not always be attuned to the needs of computing at the largest scales.
 
 \paragraph{Solution Strategy}
 %% \textit{Describe your basic strategy for addressing the challenges.}
@@ -95,231 +87,146 @@ these challenges.
 \emph{Runtime Interoperability for MPI+X and Beyond} MPI is
 increasingly being used concurrently with other runtime environments.
 This includes both ``MPI+X'' approaches, where X
-%% , in the ECP
-%% environment, X
 is most often a threading model, such as OpenMP, as
 well as the use of multiple inter-process runtimes within a single
 application.  Concerns include awareness of other runtimes,
 cooperative resource management capabilities, and ensuring that all
-concurrently active runtimes make progress.  We will develop APIs and
-demonstrate capabilities for interoperability in both MPI+X and
+concurrently active runtimes make progress.  We are developing APIs and
+demonstrating capabilities for interoperability in both MPI+X and
 multiple inter-process runtime situations.
 
 \emph{Extending the MPI Standard to Better Support Exascale
 Architectures} The MPI community is considering for standardization a
-number of ideas that 
-%% A number of ideas under consideration by the MPI
-%% community for standardization
+number of ideas that
 are particularly important to supporting
 the architectural and system size characteristics anticipated for
-exascale.  ``Finepoints'' and ``Endpoints''
-%% are approaches to
-deal
-with the growing use of threading for node-level concurrency, in
+exascale.  ``Partitioned communications'' (previously called ``Finepoints'')
+deal with the growing use of threading for node-level concurrency, in
 combination with MPI.  ``Sessions'' increases the flexibility of MPI
 semantics in a number of areas, which in turn can open opportunities
 for enhanced scalability, as well as easier support for
 multi-component applications such as coupled multi-physics
-simulations.  We will develop prototype implementations and work with
-ECP teams to evaluate the ability of these approaches to address ECP
-requirements in order to facilitate the standardization process.
+simulations. Error management and recovery capabilities are key to
+ensuring that applications can detect and respond effectively when errors,
+inevitably, occur during execution.  We are helping to drive incorporation
+of these and other ideas into the MPI standard by developing prototypes and
+working with ECP teams and the broader community to demonstrate their
+feasibility and value.
 
-\emph{Open MPI Scalability and Performance} As we push the scale of
+\emph{Open~MPI Scalability and Performance} As we push the scale of
 both hardware and applications, we stress MPI implementations and
-expose areas that need to be improved in order to improve scalability.
-OMPI-X is targeting memory usage within Open MPI, as well as remote
-memory access (RMA), tag matching, and other areas, for improvements
-in both scalability and performance.
+expose areas that need to be improved.
+OMPI-X is targeting key components within Open~MPI, such as threading capabilities,
+memory usage, remote memory access (RMA), tag matching, and other areas,
+for improvements in both scalability and performance.
 
 \emph{Supporting More Dynamic Execution Environments} We are
 developing and implementing strategies to help MPI applications
 better deal with topological process layout preferences
-%% as well as
-%% responding to
 and contention in the network.
 
-\emph{Resilience in MPI and Open MPI} Concerns about system and
-application resilience increase as either scales in size.
-%% (number of
-%% components or MPI ranks).
-We will provide implementations of the
-User-Level Fault Mitigation (ULFM) and ReInit proposals currently
-under discussion within the MPI Forum, as well as demonstrations of
-their use, in order to help drive standardization discussions, and to
-help ECP team understand how they can take advantage of these
-capabilities to improve the resilience of their libraries and
-applications.
+\emph{Resilience in MPI and Open~MPI} Concerns about system and
+application resilience increase as either scales in size.  Our goal in
+this area is to ensure that MPI, Open~MPI, and PMIx provide not only
+support for simplified
+recovery for the widely used checkpoint/restart fault tolerance strategy, but also the building
+blocks to support more general error management and recovery by applications (the evolution of the User-Level
+Fault Mitigation concept). We work within the MPI Forum, implement,
+and train users on resilience strategies.
 
 \emph{MPI Tools Interfaces}  Several interfaces within the
 MPI standard are primarily used to support performance and
 correctness tools.
-%% of various kinds.
 The MPI Forum is in the process
 of making significant revisions and extensions to these interfaces.
 We will track the discussions in the Forum and provide prototype
-implementations within Open MPI to facilitate evaluation and provide
+implementations within Open~MPI to facilitate evaluation and provide
 feedback.
-%% on the standardization discussions.
 We will work with the
 ECP community, including tool developers, to make additional data
 available through the MPI\_T interface.
 
-\emph{Quality Assurance for Open MPI}  We are enhancing the
-Open MPI testing infrastructure, adding tests to reflect ECP
+\emph{Quality Assurance for Open~MPI}  We are enhancing the
+Open~MPI testing infrastructure, adding tests to reflect ECP
 requirements, and instantiating routine testing on systems of
-importance to ECP.
+importance to ECP, both for correctness and performance.
+
+\begin{figure}
+\centering
+\begin{minipage}[c]{0.20\textwidth}
+\captionsetup{width=\textwidth,font=small,labelfont=bf} %% Need to override default width
+\caption{ReInit reduces the time for applications to recover from faults using checkpoints.}
+\label{fig:reinit}
+\end{minipage}
+\qquad
+\begin{minipage}[c]{0.20\textwidth}
+\includegraphics[width=\textwidth]{projects/2.3.1-PMR/2.3.1.17-OMPI-X/partitioned-communications-partial-sends.png}
+\end{minipage}
+\qquad
+\begin{minipage}[c]{0.33\textwidth}
+\includegraphics[width=\textwidth]{projects/2.3.1-PMR/2.3.1.17-OMPI-X/partitioned-communications-early-receive.png}
+\end{minipage}
+\end{figure}
+
+\begin{wrapfigure}{r}{0.40\textwidth}
+\includegraphics[width=0.40\textwidth]{projects/2.3.1-PMR/2.3.1.17-OMPI-X/reinit.png}
+\caption{ReInit reduces application recovery time.}
+\label{fig:reinit}
+\end{wrapfigure}
 
 \paragraph{Recent Progress}
 %% \textit{Describe what you have done recently.  It would be good to
 %% have some kind of figure or diagram in this section.}
-The survey of MPI usage conducted last year continues to have impact
-in the community.  In an article in The Next Platform in August
-described our technical report \cite{Bernholdt:2018:SMU-tr} as a
-``must read''.  Additionally, the MPI community, led in part by OMPI-X
-team members, has launched a survey to obtain input from the broader
-international MPI user community.
+There has been a great deal of activity within the MPI standards community recently
+as they work to finalize the feature set for MPI 4.0 by December 2019 and
+formal adoption by November 2020.  A number of error management and recovery features
+championed by the OMPI-X team have already been formally voted into 4.0.  The Sessions proposal,
+also driven significantly by OMPI-X is considered a mandatory feature
+for 4.0.  And it is considered extremely likely that Partitioned
+Communications (Figure~\ref{fig:partitioned-communications}), led by
+OMPI-X, will also make version 4.0. 
+In the longer-term discussions, OMPI-X is also championing the
+``ReInit'' proposal for simplified checkpoint/restart application
+recovery (Figure~\ref{fig:reinit}) and is actively engaged on other topics relevant to
+exascale, including MPI\_T events, enhanced hardware topologies, thread safety enhancements, half-precision datatypes, and a replacement for the PMPI interface.  ECP (mini-) applications which have been used in demonstrating various features and capabilities include: AMG, CoMD, LULESH, miniFE, miniMD, NWChemEx, and SimpleMOC.
 
-During the past year, we have ramped up our work in runtime
-interoperability for ``MPI+X'' programming approachs.  We have
-prototyped a capability to coordinate placement of ranks and threads
-between MPI and OpenMP which cannot be achieved by ``standard''
-methods.  This work has garnered significant interest in the community
-and we forsee these activities expanding beyond our original
-expectations.
+Motivated largely by support for the Partitioned Communications proposal and other situations where high network concurrency is required, a general user-level threading abstraction has been developed to support both the Qthreads and BOLT/Argobots threading libraries within either the Open~MPI or MPICH libraries.  This work, carried out in collaboration with the MPICH and Argobots ECP teams (WBS 2.3.1.07 and 2.3.5.05) is in the process of being integrated into the two MPI implementations.
 
-%% We have delivered an implementation of the User-Level Fault Mitigation
-%% (ULFM) resilience approach, which are under consideration by the MPI
-%% Forum for inclusion in the standard.  ULFM provides the basic building
-%% blocks for cheap, tailored recovery capabilities within applications
-%% and libraries using MPI.  ULFM imposes no overhead on raw
-%% communication performance on ECP-relevant hardware.  We are now
-%% working with several application teams to demonstrate the capabilities
-%% it provides.
+To provide better long-term support for resilience, a number of fault detection and coordination features have been refactored out of Open~MPI and moved into the PMIx implementation, where they can benefit to a larger community of programming models, including all other runtimes and tools that use PMIx.  The OMPI-X team has also played an active role in helping the PMIx community grow and formalize its processes within the last year.  This includes separating the standard from the reference implementation, and establishing and documenting governance procedures for both.  This will allow the PMIx community to better deal with the strong uptick in interest and actual and potential PMIx clients recently.
 
-%% \begin{wrapfigure}{r}{4in}
-%% \begin{minipage}[c]{2in}
-%% \vspace{0pt}
-%% \includegraphics[width=\textwidth]{projects/2.3.1-PMR/2.3.1.11-OMPI-X/pritchard-rma-mt-put-rate.png}
-%% \end{minipage}
-%% \begin{minipage}[c]{2in}
-%% \vspace{0pt}
-%% \includegraphics[width=\textwidth]{projects/2.3.1-PMR/2.3.1.11-OMPI-X/pritchard-rma-mt-get-rate.png}
-%% \end{minipage}
-%% \caption{Comparison of put (left) and get (right) RMA performance in a
-%% multi-threaded context for Open MPI.  Recent OMPI-X contributions are
-%% reflected in version 4.0.0a1 (top group of lines), in comparison with
-%% v2.1.3.}
-%% \label{fig:ompix-rma}
-%% \end{wrapfigure}
+Two areas of progress on supporting exacale-relevant architectures include complex memory and topology/congestion awareness within the MPI library. In collaboration with the ECP SICM project (WBS 2.3.1.16), we are integrating support for complex memory architectures into Open~MPI.  This will enable controlled placement of data objects within different memory spaces according to affinity and/or performance characteristics.  The ability to detect and adapt to network topology and traffic patterns is also a valuable capability to facilitate application performance which has been prototyped within Open~MPI.
 
-The OMPI-X team has been active in the MPI Forum, driving
-conversations about the Endpoints and Finepoints approaches to
-supported threaded programming, and the Sessions concept, which will
-improve the scalablity and flexibility of MPI.  Our prototype
-Finepoints implementation shows improvements of 25\% in communicaton
-time and 5\% in total runtime for an ECP mini-application.  New
-aggregation techniques have been shown to provide 445\% increase in
-communication bandwidth in certain cases.
-
-The OMPI-X team is also active in other areas of the evolution of the
-MPI standard. We have been driving development of the ``Sessions''
-concept, will allow increased scalability in MPI applications and
-implementations, as well as greater flexibility.
+In support of better ``MPI+X'' interoperability, we have redesigned the internal Open~MPI infrastructure to minimize contention on the execution path of independent MPI operations and optimize the handling of MPI requests, drastically improving the communication, point-to-point, RMA and collective, performance of Open~MPI in threaded contexts. In addition the progress engine has been reimplemented to maximize the opportunity for computation/communication overlap, and provide a guarantee for asynchronous progress when possible. Using these capabilities we also demonstrated fined-grained control of thread and process placement in the context of OpenMP and Open~MPI, in collaboration with the SOLLVE ECP project (WBS 2.3.2.11). Such a capability is crucial to the ability of MPI+X applications to effectively utilize current and future ``fat'' node architectures (with extensive compute capabilities), but can be hard or impossible to achieve unless the two runtimes are made aware of each other and (minimally) cooperate on resource management.
 %
-We are also tracking work on the PMPI tools interface replacement and
-the enhancements to the MPI\_T tools interface.  We are working with
-other members of the community to bring production-quality
-implementations of these updated interfaces to Open MPI.
+Because poor performance with threading is one of the most common
+complaints against (any) MPI implementations, a great deal of our
+recent effort has been devoted to improving this in various ways
+within Open~MPI.  We have redesigned point-to-point and remote
+memory access request management, and redesigned the progress engine
+for better performance with threads (Figure~\ref{fig:thread}).
+Moreover, the Partitioned Communications proposal, mentioned above also targets threaded execution by increasing opportunities for fine-grained overlap of computation with communication and reduced locking.  We have also improved the message matching implementation so support faster message rates and high thread counts.
 
-In the resilience area, we continued prior work on the User-Level
-Fault Mitigation (ULFM) capability, fully integrating it into Open MPI
-for the v4 release.  We also continue to pursue the ``Reinit'' fault
-tolerance approach, completing the initial API design and plan for
-implementation within Open MPI.
+\begin{figure}
+\centering
+\begin{minipage}[c]{0.2\textwidth}
+\captionsetup{width=\textwidth,font=small,labelfont=bf} %% Need to override default width
+\caption{Performance of point-to-point (left) and remote memory access
+(right) communication with threading.} 
+\label{fig:threading-performance}
+\end{minipage}
+\qquad
+\begin{minipage}[c]{0.2\textwidth}
+\includegraphics[width=\textwidth]{projects/2.3.1-PMR/2.3.1.17-OMPI-X/p2p-threading-performance.png}
+\end{minipage}
+\qquad
+\begin{minipage}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{projects/2.3.1-PMR/2.3.1.17-OMPI-X/rma-threading-performance.png}
+\end{minipage}
+\end{figure}
 
-Behind the scenes of the Open MPI implementation, we are pursuing
-efforts to improve performance and scalability, take full advantage of
-the increasingly complex and sophisticated memory architectures that
-are becoming available at the node level, and providing increased
-topology and congestion awareness within the library.  We have made
-improvements in RMA performance, which allows better scaling and
-provides out-of-the-box performance in Open MPI which is comparable to
-highly-tuned vendor implementations.  We have prototyped improved an
-message matching implementation which improves matching performance by
-up to 2x and saves significantly (1 GB) in memory, providing an
-improvement in total runtime for on applicaton of 6\%.  We have also
-worked to improve the MPI startup process by up to 5x in some
-configurations.  And we have begun baselining memory utilization
-in order to analyze and improve memory scalability.
+Finally, we continue to extend the testing infrastructure for Open~MPI and related products, increasing the platforms on which testing is implemented, and expanding the repertoire of tests.  We have enhanced the MTT tool used for testing of Open~MPI itself, and supplemented it with a new tool aimed at testing of application kernels and performance testing.  We have deployed testing capabilities on Summit, and are also testing on Cori.
 
-%% We expect to be working on scalability and performance of Open MPI
-%% throughout the project, but some early successes have been
-%% demonstrated.  We have improved the RMA implementation so achieve
-%% performance levels comparable to those obtained only by high tuned
-%% implementations by vendors and significantly improved their
-%% performance in multi-threaded contexts (Fig.~\ref{fig:ompix-rma}).  We
-%% have also been able to improve message matching by up to 2$\times$
-%% generally, and up to 45$\times$ on Intel Xeon Phi processors, and we
-%% have made significant improvement to performance when MPI is used in a
-%% multi-threaded environment.
-
-%% %% Early work with the prototype implementation of Finepoints shows
-%% %% improvements of 25\% in communication costs and 5\% in overall
-%% %% execution time for one ECP mini-app.
-%% %
-%% Open MPI support for the MPI\_T interface has been extended~\cite{icl:957} to
-%% provide a set of low-level counters to present a more detailed performance
-%% characteristics map to tools and to users.
-%
-Finally, we continue to build out the MTT testing infrastructure and
-continuous integration testing capabilities to provide better testing
-capabilities for ECP-relevant platforms, including Summit at ORNL.
 
 \paragraph{Next Steps}
 %% \textit{Describe what you are working on next.}
-We are making progress across multiple fronts, some of which has been
-described above.  In FY19, we expect to continue our efforts on MPI+X
-interoperability, pushing forward the Finepoints and Sessions
-prototypes and standards proposals, as well as implementations of the
-PMPI replacement and MPI\_T improvements.  We will also continue our
-internal improvements in performance, scalability, and capabilities to
-take maximum advantage of modern system capabilities. We are
-tentatively planning to merge 2.3.1.15-Qthreads into OMPI-X in the
-second phase of ECP ST activities due to the close technical and
-personnel connections.
-\subsubsection{\stid{1.15} Enhancing Qthreads for ECP Science and Energy Impact} 
-
-
-\paragraph{Overview} 
-
-``Enhancing Qthreads for ECP Science and Energy Impact'' is a project that aims to improve the performance of applications that use multithreading with communication, e.g., MPI.  Most ECP applications are using this combination of programming models, with the Kokkos or RAJA performance portability libraries and/or the OpenMP API for multithreading.  This project supports the Kokkos ECP software project and OpenMP from the underlying runtime layer to deliver thread-scalable performance to those applications.  To that end, our projects is developing techniques to incorporate support for better network concurrency into the multithreading runtime system.
-
-\paragraph{Key  Challenges}
-Our project addresses the challenge of scalably coupling multithreaded parallelism on the many-core node with communication such as MPI, which has traditionally performed poorly in multithreaded mode.  The key challenge arises when multiple threads make communication calls, and those calls must be serviced by the MPI implementation and NIC.  Existing solutions, such as MPI\_THREAD\_MULTIPLE, are often plagued by synchronization overheads.  Even the best vendor MPI implementations incur high overheads when the number of threads exceeds the number of hardware contexts in the NIC. 
-While current mechanisms are insufficient even for today's systems, emerging interconnect technologies expose even more network parallelism that must be exploited to maximize performance for Exascale.
-
-\paragraph{Solution Strategy}
-
-Unlike previous approaches, we attack the problem not only from the communication side (MPI), but with assistance from the multithreading runtime system.  Our work adds capabilities to enable the runtime system to identify and optimize for tasks that use communication, distinct from tasks that perform only local computation.  We use the Qthreads runtime~\cite{wheeler2008qthreads}, a scalable, event-driven library for node-level task parallelism, to implement our solution.  This work requires cooperation with a communication library that can scalably process communications operations coming from the runtime system.  For this purpose, we pair Qthreads with the new “FinePoints" library for threaded MPI execution developed in the OMPI-X ECP project.
-
-Developed at Sandia Labs since 2007, Qthreads serves as a back-end for Kokkos and the Cray Chapel language, as well as providing a portable native C API. Complementary to the current ECP project focusing on the coupling of the runtime with communication, development of Qthreads core capabilities is part of the NNSA ASC system software portfolio and has also been part of sponsored vendor collaborations and LDRD projects.  In addition, the techniques developed in this project will be the subject of tech transfer efforts to OpenMP and MPI.  The project technical lead is chair of the OpenMP Subcommittee on Task Parallelism, and one of the other technical experts on the project is a key contributor to the MPI Forum and the OMPI-X ECP project that is enhancing the open-source Open MPI implementation of MPI for exascale.  We are leveraging the work of that project, and synergies between Qthreads and the OpenMP and Kokkos tasking models.
-
-
-\paragraph{Recent Progress}
-
-Recently, we added the optional network task annotation to task definitions in Qthreads, allowing the identification of communication tasks to the runtime system.  We also demonstrated successful coupling of Qthreads with the MPI FinePoints library.  FinePoints uses a partitioned buffer to collect the contributions of the various tasks executing on the runtime’s threads.  Using only atomics rather than heavyweight locks keeps overhead costs low compared to existing methods like MPI\_THREAD\_MULTIPE, and unlike the Endpoints proposal, the MPI rank space does not expand with the use of more threads.  We ported FinePoints benchmark code to use Qthreads as the multithreading library instead of OpenMP and compared to the performance of the two configurations, shown in Figure~\ref{fig:qthreads-finepoints-graph}. The observed equivalence in performance justifies our use of Qthreads as a proxy for OpenMP, wherein Qthreads can be used for ease of rapid prototyping of new capabilities with eventual tech transfer back to OpenMP.  These results also serve as baselines to measure the performance of our further optimizations against.  Finally, we made an initial port of the miniGhost stencil mini-app to use FinePoints with Qthreads to confirm portability beyond benchmarks.  Tuning of that mini-app is currently work in progress.
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=6in]{projects/2.3.1-PMR/2.3.1.17-OMPI-X/FinePointsBW-QtOmp.pdf}
-	\caption{\label{fig:qthreads-finepoints-graph}This graph shows the performance of Qthreads and OpenMP paired with the FinePoints library for multithreaded MPI.  The x-axis varies the buffer sizes transferred in each experiment in the series, and the y-axis shows the network bandwidth achieved.  The similar performance of Qthreads and OpenMP justifies use of the former as a suitable proxy for the latter, with the advantage of flexibility for rapid prototyping of new runtime system techniques.}
-\end{figure}
-
-Progress from the project through the end of FY18 was incorporated in the Fall 2018 Qthreads release~\cite{qthreads-github}.  We also published a paper at the SC18 Correctness Workshop that showed the feasibility of model checking for correctness testing of tasking runtimes (with Qthreads as the runtime used for demonstration)~\cite{evans2018qthreads-model}.  This work emphasizes the importance of software robustness and the need to work toward systematic rather than ad hoc testing of system software such as threading runtimes.
-
-\paragraph{Next Steps}
-
-We plan to investigate several possible optimizations of the Qthreads runtime improvements in conjunction with FinePoints and the OpenMPI implementation. FinePoints is natively available as an extension of OpenMPI or as a library layered on top of any MPI implementation. We will evaluate new runtime scheduling strategies based on the categorization of network and non-network tasks enabled by our task tagging scheme. We have also begun work on an effort to integrate Qthreads as a threading layer for OpenMPI in place of pthreads. Since the Argobots team at Argonne National Laboratory has been working in a similar vein in MPICH, we will hold a working session with them in 2019 to work toward making both user-level threading libraries compatible with both MPI implementations.
-
-Based on the close ties between the Qthreads project and the OpenMPI-X project, we have asked that the Qthreads project become a part of the OpenMPI-X as part of the project reorganization for the second phase of ECP.
-
+In FY20 and beyond, we plan to continue working across the multiple fronts described above.  Finalizing version 4.0 of the MPI standard will be an important part of our work in FY20, as part of the larger community.  Since the first exascale systems have now been announced, we can also start incorporating activities targeted to those specific systems into our work as well.  Both the Argonne and Oak Ridge systems will utilize Cray's SlingShot network, which is currently under active development.  NERSC's Perlmutter system will include SlingShot version 10, while Aurora and Frontier will use version 11.
