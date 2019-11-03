@@ -1,84 +1,152 @@
 \subsubsection{\stid{5.09} Software Packaging Technologies} \label{subsubsect:sw-packaging}
 
-\paragraph{Overview} 
+\paragraph{Overview}
 
-\paragraph{Spack.}
+ECP is tasked with building the first capable exascale ecosystem, and the
+foundation of this ecosystem, per ECP's mission statement, is {\it an
+integrated software stack}.  Building and integrating software for
+supercomputers is notoriously difficult, and an integration effort for
+HPC software at this scale is unprecedented.  Moreover, the software
+deployment landscape is changing as containers and supercomputing-capable
+software package managers like Spack emerge.  Spack holds the promise to
+automate the builds of all ECP software, and to allow it to be
+distributed in new ways, including as binary packages.  Containers will
+enable entire application deployments to be packaged into reproducible
+images, and they hold the potential to accelerate development and
+continuous integration (CI) workflows.
 
-\paragraph{Supercontainers.}
-Container computing has revolutionized how many industries and enterprises develop and deploy software and services. Recently, this model has gained traction in the High Performance Computing (HPC) community through enabling technologies including Charliecloud, Shifter, Singularity, and Docker.  In this same trend, container-based computing paradigms have gained significant interest within the DOE/NNSA Exascale Computing Project (ECP). While containers provide greater software flexibility, reliability, ease of deployment, and portability for users, there are still several challenges in this area for Exascale.
-
-The goal of the ECP Supercomputing Containers Project (called Supercontainers) is to use a multi-level approach to accelerate adoption of container technologies for Exascale, ensuring that HPC container runtimes will be scalable, interoperable, and integrated into Exascale supercomputing across DOE. The core components of the Supercontainer project will focus on foundational system software research needed for ensuring containers can be deployed at scale, enhanced user and developer support for enabling ECP Application Development (AD) and Software Technology (ST) projects looking to utilize containers, validated container runtime interoperability, and both vendor and E6 facilities system software integration with containers.
-
-
-\paragraph{Key  Challenges}
-
-
-\paragraph{Spack.}
-
-\paragraph{Supercontainers.}
-Container technology enables users to define their own software environments. This ability for users to directly participate in creating environments, with tools such as Docker, rather than depending on vendors and system administrators, is a transformational capability.
-In addition to greater flexibility and agility for users, there are other benefits as well, including the potential for greater software portability between multiple users and also different systems. The goal of moving an HPC application container from initial development on a laptop and scaling to Exascale presents a powerful and tractable paradigm shift in HPC software deployment that the SuperContainers project hopes to realize.
-
-However, there are a number of challenges for containers in HPC, both today and especially further along the push toward Exascale. Solutions from industry, such as Docker, make assumptions such as:
-
-\begin{itemize}
-	\item	Containers can be built and run with elevated privileges.
-	\item	High level of isolation is needed, such as via network bridging.
-	\item	Nodes do not have shared resources such as network filesystems.
-	\item	Network hardware is commodity Ethernet and messages use IP.
-\end{itemize}
-
-These are intractable in HPC’s shared-resource, tightly-coupled application workload model. Further, the devil is in both high-level assumptions and a myriad of details which must be carefully navigated for an efficient solution.
+This project will build the tooling required to ensure that packaging
+technologies can meet the demands of the ECP ecosystem.  The project
+provides Spack packaging assistance for ST users and ECP facilities, and
+it develops new capabilities for Spack that enable automated deployments
+of software at ECP facilities, in containerized environments, and as part
+of continuous integration.  Concurrently, the ``Supercontainers''
+sub-project is investigating and develoing technologies and best
+practices that enable containers to be used effectively at ECP
+facilities. Supercontainers will ensure that HPC container runtimes will
+be scalable, interoperable, and integrated into Exascale supercomputing
+across DOE.
 
 
+\paragraph{Key Challenges}
+
+Historically, building software to run as fast as possible on HPC
+machines has been a manual process.  Users download source code for
+packages they wish to install, and they build and tune it manually for
+high performance machines. Spack has automated much of this process, but
+it still requires that users {\it build} software.  Spack needs
+modifications to enable it to understand complex microarchitecture
+details, ABI constraints, and runtime details of exascale machines.  This
+project will enable binary packaging, and it will develop new
+technologies that enable the same binary packags to to be used within
+containers {\it or} in bare metal deployments on exascale hardware.
+
+The Supercontainer effort faces similar challenges to deploying
+containers on HPC machines. Container technology most notably enables
+users to define their own software environments, using all the facilities
+of the containerized host OS.  Users can essentially bring {\it their
+own} software stack to HPC systems, and they can snapshot an entire
+application deployment, including dependencies, within a container.
+Containers also offer the potential for portability between users and
+machines. The goal of moving an HPC application container from a laptop
+to a supercomputer with little or no modification is in reach, but there
+are a number of challenges to overcome before this is possible on
+Exascale machines.  Solutions from industry, such as Docker, assume that
+containers can be built and run with elevated privileges, that containers
+are isolated from the host network, filesystem, and GPU hardware, and
+that binaries within a container are unoptimized and can run on any chip
+generation from a particular architecture. These go against the
+multi-user, multi-tenant user environment of most HPC centers, and
+optimized containers may not be portable across systems at all.
 
 \paragraph{Solution Strategy}
 
+The Spack project supports ST teams by developing portable build recipes
+and additional metadata for the ECP package ecosystem.  The end goal is
+to provide a packaging solution that can deploy on bare metal, in a
+container, or be {\it rebuilt} for a new machine on demand. Spack bridges
+the portability divide with portable package recipes; specialized
+packages can be built per-site if needed, or lowest-common denominator
+packages can be built for those cases that do not need highly optimized
+performance.  Packages are relocatable and can be used outside their
+original build environment.  Moreover, Spack provides {\it environments}
+that enable a number of software packages to be deployed together either
+on an HPC system or in a container.
 
-\paragraph{Spack.}
+The Supercontainer project seeks to document current practice and to
+leverage existing container runtimes, but also to develop new enabling
+technologies where necessary to allow container to run on HPC machines.
+Several HPC container runtimes (Shifter, Charliecloud, and Singularity)
+already exist, and this diversity enables wide exploration of the HPC
+container design space, and the Supercontainers project will work with
+their developers to address HPC-specific needs, including container and
+job launch, resource manager integration, distribution of images at
+scale, use of system hardware (storage systems, network and MPI
+libraries, GPUs and other accelerators, and usability concerns around
+interfaacing between the host and container OS (e.g., bind-mounting,
+etc. required for hardware support).
 
-\paragraph{Supercontainers.}
-
-To address issues of using commodity containers in HPC, several HPC container runtimes have been created, including Shifter, Charliecloud, and Singularity. This diversity is good, for two reasons: (1) containers in HPC is hard, and having multiple approaches to similar problems lets us find more robust solutions, and (2) it gives an opportunity to figure out interoperability of containers between solutions, which will be needed eventually regardless, sooner rather than later.  As with any new system software technology, there are known knowns (problems that need to be addressed, and we know how), known unknowns (problems that need to be addressed, but we don’t know how yet), and unknown unknowns (problems we don’t even know we have).  To address these challenges, the SuperContainer effort, in conjunction with the continuing ECP Container Working Group, will take a three-fold approach to advance the adoption and enhance the utility of containers in the ECP. 
-
-\paragraph{Approach 1: Research \& Development.}
-The project will address the necessary research foundations regarding the deployment of containers at extreme scale. This includes but is not limited to investigation of and development of solutions for:
-\begin{itemize}
-\item Container and job launch, including integration with resource managers.
-\item	Distribution of images at scale.
-\item	Use of storage resources (parallel file systems, burst buffers, on-node storage).
-\item	Efficient and portable MPI communications, even for proprietary networks.
-\item	Accelerators e.g. GPUs.
-\item	Integration with novel hardware and systems software associated with pre-Exascale and  Exascale platforms.
-\item	Usability and supportability of containers.
-\end{itemize}
-
-We will conduct these activities in the context of interoperability. We want portable solutions that work for multiple container implementations at multiple facilities at multiple scales from closet cluster to Exascale.
-Solutions that require container runtime changes will be added directly to Shifter and/or Charliecloud, and we will work with Sylabs regarding changes to Singularity.
-
-\paragraph{Approach 2: Collaboration.}
-The project will interface with key ECP contributors in ST and AD development areas to advise and support the container usage models necessary for deploying first Exascale applications and software ecosystems. For instance, container deep-dive initiative will support various AD teams which would like to leverage containerization to deploy their novel software toolkits. From this, a more robust DevOps model will be developed, integrated into R\&D efforts ongoing with a continuous integration (CI) platform. Concurrently, integration with the ECP SDK effort will be enhanced to create and deploy concise, right-sized container images that support a multiple of AD software ecosystems. 
-
-\paragraph{Approach 3: Training \& Education.}
-Training and educational efforts are needed at both the user support and facilities levels to ensure usable and performant deployments. As such, the team will draft a technical report to help educate new users and developers to the advantages of containers, as well as a best-practices report to help ensure efficient container utilization within supercomputing. Both of these will be living documents, periodically updated in response to lessons learned and feedback.
-
+The project will document best practices and produce a technical report
+to help educate new users and developers to the advantages of containers,
+as well as a best-practices report to help ensure efficient container
+utilization within supercomputing. Both of these will be living
+documents, periodically updated in response to lessons learned and
+feedback.  In addition, we will identify gaps, and implement changes and
+automation in one of the three existing runtimes, as needed.  The project
+will also interface with the E4S and SDK teams, as well as AD teams
+interested in containerizing their applications. We will work to enable
+these teams to deploy reproducible, minimally-sized container images that
+support a multiple of AD software ecosystems.
 
 \paragraph{Recent Progress}
 
-\paragraph{Spack.}
+\begin{enumerate}
+\item Developed a library for labeling and comparing microarchitectures for
+      compatibility. This enables Spack to distribute optimized binaries for
+      specific target architectures, and to label containers based on what
+      machines they are compatible with.
 
-\paragraph{Supercontainers.}
+\item Worked with the E4S team to build a Spack environment-based build of
+      E4S. In contrast to prior iterations, this version is reproducible
+      and integrates with DevOps and Spack's GitLab pipeline support.
 
-In FY19, the Supercontainer project team made numerous strides to enhance the usability and applicability of containers to the broader ECP ecosystem. First, the team developed an enhanced tutorial session which introduces the context of using containers in HPC systems. The tutorial starts with a base introduction to containers, helps attendees create their first container image, and enables the usage of a container Cori, a leadership-class HPC machine through NERSC training accounts, concluding with exemplar advanced use cases and best practices. The HPC container tutorial was successfully executed at the International Supercomputing Conference in June 2019 with over 60 participants. From this effort, we have updated the tutorial session and have been accepted for a half-day tutorial at IEEE/ACM Supercomputing 2019 in November. The tutorial is also planned for the 2020 ECP Annual Meeting in February.  The tutorial materials can be found online. \footnote{https://github.com/supercontainers/sc19-tutorial}
+\item Held a hackathon at LLNL for HI teams to get Spack pipelines working.
+      Five teams were able to set up and deploy Spack pipelines.
 
-The team is also actively engaged documenting best practices for efficient container utilization. This document is created with sphinx and to provide both web and PDF versions, with the plan to continually update and improve as a living document as the project progresses.
-The initial version of best practices document titled "Containers in HPC: Best practices and pitfalls for users" is now available via PDF and been pushed to a public website repository. \footnote{https://reidpr.gitlab.io/best-practices/}
+\item Produced the first revision of our best practices document for
+      efficient container utilization: "Containers in HPC: Best practices
+      and pitfalls for users", hosted on
+      GitLab pages~\footnote{https://reidpr.gitlab.io/best-practices/}.
+
+\item Developed an enhanced tutorial session which introduces the context
+      of using containers in HPC systems, with a demo on NERSC's Cori system.
+      The tutorial had over 60 participants at ISC and will appear again at
+      SC19.
+\end{enumerate}
 
 \paragraph{Next Steps}
 
-\paragraph{Spack.}
+\begin{enumerate}
+\item Modify Spack to support generating multi-stage container build recipes.
+      This will enable Spack to produce the Dockerfiles required to build
+      minimal application images.
 
-\paragraph{Supercontainers.}
+\item Continue working with E4S on Spack build hardening, and continue to
+      Support ST teams' Spack usage.
 
-The Supercontainers team will continue along the three previously outlined approaches. First, advanced R\&D activities will investigate container scalability and optimization strategies, both at the container image layers and also the container runtimes themselves.  Second, we will ramp up on collaborative activities across ECP. From ST, we will look to build optimized container images which leverage new features in Spack to generate the full E4S software stack. From AD, we will conduct deep dives with several apps teams to aid and advance container utilization strategies for application development. Finally, we will continue our training and outreach activities, including updating the best practices document and refining our introductory tutorial sessions to further educate interested stakeholders in using container technologies in HPC.
+\item Produced the first revision of our best practices document for
+      efficient container utilization: "Containers in HPC: Best practices
+      and pitfalls for users", hosted on GitLab
+      pages~\footnote{https://reidpr.gitlab.io/best-practices/}.
 
+\item Investigate container scalability and optimization strategies, both
+      at the container image layers and also within container runtimes.
+
+\item Build optimized container images which leverage new features in Spack to
+      generate the full E4S software stack.
+
+\item Conduct deep dives with several AD teams to aid and advance container
+      utilization strategies for application development.
+
+\item Continue tutorials and outreach activities.
+\end{enumerate}
