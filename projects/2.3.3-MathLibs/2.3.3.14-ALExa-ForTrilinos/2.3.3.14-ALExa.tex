@@ -23,10 +23,9 @@ enabling uncertainty quantification (both forward and inverse) as well as
 optimization and efficient multi-physics simulations in projects such as
 ExaStar (Tasmanian); and
 %
-(4) the ability to interface large and complex Fortran-based codes to the
-growing collection of Trilinos advanced solver capabilities that can
-utilize next-generation platforms, the interface is done without C/C++
-interface code (ForTrilinos).
+(4) the ability to automatically interface Fortran-based codes to existing
+large and complex C/C++ solftware libraries, such as Trilinos advanced solvers
+that can utilize next-generation platforms.
 
 
 These capabilities are being developed through ongoing interactions with our
@@ -107,9 +106,9 @@ global optimization and optimization under uncertainty.
 {\bf ForTrilinos} (Fortran for Trilinos)
 
 {\it Purpose:} ForTrilinos provides a seamless pathway for large and complex
-Fortran-based codes to access Trilinos without C/C++ interface code.
-This access includes Fortran versions of Kokkos abstractions for code
-execution and data management..
+Fortran-based codes to access Trilinos. In addition, the developed SWIG/Fortran
+allows automatic generation of the interfaces to any C/C++ library for seamless
+interaction with Fortran application.
 
 {\it Significance:} The Exascale Computing Project (ECP) requires the successful
 transformation and porting of many Fortran application codes in preparation for
@@ -121,13 +120,14 @@ accelerator and heterogeneous systems. Trilinos is primarily written in C++,
 including its user interfaces. While C++ is advantageous for gaining access to
 the latest programming environments, it limits Trilinos usage via Fortran.
 
-{\it SWIG capabilities:}  an interface generator, SWIG, which the project is
-extending, to create the object-oriented Fotran wrapper code that users can
-access directly. This language translation will occur in both directions;
-ForTrilinos will provide an inversion of control functionality that enables
-custom extensions of the Trilinos solvers that are Fortran-based. Once the
-ForTrilinos project is complete, a functional, extensible suite of capabilities
-to access Trilinos on next-generation computing systems will be provided.
+{\it SWIG capabilities:} The SWIG/Fortran interface generator, based on the
+original SWIG, creates the object-oriented Fotran wrapper code that users can
+access directly. This language translation will occur in both directions,
+allowing, for example, an inversion of control functionality in ForTrilinos
+that enables custom extensions of the Trilinos solvers that are Fortran-based.
+Once the ForTrilinos project is complete, a functional, extensible suite of
+capabilities to access Trilinos on next-generation computing systems will be
+provided.
 
 {\it URL:} https://github.com/trilinos/ForTrilinos
 
@@ -243,29 +243,9 @@ still preserving accuracy.
         \caption{\label{fig:tasmanian-gpu}Tasmanian approximation (right) of neutrino capacities (left).}
 \end{figure}
 
-{\bf ForTrilinos:}
-Figure~\ref{fig:fortran_ioc} illustrates a new Inversion-of-Control~(IoC)
-implementation in ForTrilinos. The new approach allows Fortran users to define
-an operator by using a derived type on the Fortran side, and use Trilinos
-algorithms, e.g. Krylov solvers, to solve the linear system with that operator.
-
-\begin{figure}[htb]
-    \centering
-    \includegraphics[scale=0.8,width=6in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/ForTrilinos_ioc}
-    \caption{\label{fig:fortran_ioc}The proposed Inversion-of-Control approach
-    allowing Fortran applications to define operators on Fortran side while
-    still using ForTrilinos types.}
-\end{figure}
-
-This approach allows the user callback functions to interact with native Fortran
-types and ForTrilinos class wrapper types. In the same vein, users would not
-have to manually pass \texttt{type(C\_PTR)} instances into and out of the
-callback function, as the C++ Fortran conversions can be tedious and
-error-prone, which indeed is the motivation for using SWIG to generate
-ForTrilinos.  Another important feature is that it allows the application code
-to extend Trilinos without having to generate any new interface code, either by
-hand or using SWIG. In other words, the Fortran end user should not have to know
-C++ or SWIG.
+{\bf ForTrilinos:} ForTrilinos was updated to support nonlinear solvers. The
+list of backends supported by ForTrilinos was expanded to include serial,
+OpenMP and CUDA. A thorough unit testing suite was added.
 
 %----------------------------------------
 
@@ -286,19 +266,15 @@ the ExaStar project.
 
 {\bf ForTrilinos:} the next efforts will include
 \begin{enumerate}
-  \item \textbf{Provide wrappers for more libraries:} ForTrilinos will continue
-    efforts to increase the number of wrapped Trilinos libraries. The scheduled
-    release of the next phase of the project will include libraries
-    corresponding to nonlinear solvers, such as NOX.
   \item \textbf{Integrate developed capabilities into applications:} E3SM-MMF
     is an Earth system model development and simulation project. It relies on
     Trilinos for its implicit capabilities. The ForTrilinos project will
     integrate the developed nonlinear solver with IoC into E3SM-MMF to provide
     path forward to heterogeneous stack.
-  \item \textbf{Provide interfaces for heterogeneous platforms:} ForTrilinos
-    will develop support for heterogeneous memory through providing access to
-    Kokkos-based interfaces in Trilinos. This will allow full exposure to
-    Trilinos capabilities targeting Exascale machines.
+  \item \textbf{Integrate ForTrilinos with upstream Trilinos project:}
+    ForTrilinos will develop a support model to interact with upstream Trilinos
+    developers. This will allow a faster integration of new capabilities, and
+    more robust testing infrastructure.
 \end{enumerate}
 
 %----------------------------------------
