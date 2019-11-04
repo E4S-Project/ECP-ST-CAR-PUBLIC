@@ -19,7 +19,11 @@ This \textit{ECP ST Capability Assessment Report (CAR)} provides an overview and
 
 \textbf{\pmr:} ECP ST is developing key enhancements to MPI and OpenMP, addressing in particular the important design and implementation challenges of combining massive inter-node and intra-node concurrency into an application.  We are also developing a diverse collection of products that further address next generation node architectures, to improve realized performance, ease of expression and performance portability.
 
-\textbf{\tools:}  We are enhancing existing widely used performance tools and developing new tools for next-generation platforms.  As node architectures become more complicated and concurrency even more necessary, impediments to performance and scalability become even harder to diagnose and fix.  Development tools provide essential insight into these performance challenges and code transformation and support capabilities that help software teams generate efficient code, utilize new memory systems and more.
+\textbf{\tools:}  We are enhancing existing widely used compilers (LLVM) and performance tools for next-generation platforms. Compilers are critical for heterogeneous architectures, and LLVM is the most popular compiler for heterogeneous systems. 
+%
+As node architectures become more complicated and concurrency even more necessary, compilers must generate optimized code for many architectures, and the impediments to performance and scalability become even harder to diagnose and fix.  
+%
+Development tools provide essential insight into these performance challenges and code transformation and support capabilities that help software teams generate efficient code, utilize new memory systems and more.
 
 \textbf{\mathlibs:} High-performance scalable math libraries have enabled parallel execution of many applications for decades.  ECP ST is providing the next generation of these libraries to address needs for latency hiding, improved vectorization, threading and strong scaling.  In addition, we are addressing new demands for system-wide scalability including improved support for coupled systems and ensemble calculations.  The math libraries teams are also spearheading the software development kit (SDK) initiative that is a pillar of the ECP ST software delivery strategy (Section~\ref{subsubsect:sdks}).
 
