@@ -4,24 +4,30 @@
 \paragraph{Overview}
 
 The ALExa project ({\sl Accelerated Libraries for Exascale}) focuses on
-preparing the DTK, Tasmanian and ForTrilinos libraries for exascale platforms and
-integrating these libraries into ECP applications.  These libraries deliver
-capabilities identified as needs of ECP applications: (1) the ability to
-transfer computed solutions between grids with differing layouts on parallel
-accelerated architectures, enabling multiphysics projects to seamlessly
-combine results from different computational grids to perform their required
-simulations (DTK);
+preparing the ArborX, DTK, Tasmanian, and ForTrilinos libraries for exascale
+platforms and integrating these libraries into ECP applications.
+These libraries deliver capabilities identified as needs of ECP applications:
 %
-(2) the ability to construct fast and memory efficient surrogates to large
+(1) the ability the perform performance portable spatial searches between
+arbitrary sets of distributed geometric objects (ArborX);
+%
+(2) the ability to transfer computed
+solutions between grids with differing layouts on parallel accelerated
+architectures, enabling multiphysics projects to seamlessly combine results
+from different computational grids to perform their required simulations
+(DTK); and
+%
+(3) the ability to construct fast and memory efficient surrogates to large
 scale engineering models with multiple inputs and large number of outputs,
 enabling uncertainty quantification (both forward and inverse) as well as
 optimization and efficient multi-physics simulations in projects such as
 ExaStar (Tasmanian); and
 %
-(3) the ability to interface large and complex Fortran-based codes to the
+(4) the ability to interface large and complex Fortran-based codes to the
 growing collection of Trilinos advanced solver capabilities that can
 utilize next-generation platforms, the interface is done without C/C++
-interface code.
+interface code (ForTrilinos).
+
 
 These capabilities are being developed through ongoing interactions with our
 ECP application project collaborators to ensure they will satisfy requirements
@@ -31,6 +37,26 @@ Kokkos and SLATE.  The final outcome of the ECP project will be a set of
 libraries deployed to facilities and also made broadly available as part of
 the xSDK4ECP project.
 
+
+{\bf ArborX}
+
+{\it Purpose:} ArborX is an open-source library designed to provide
+performance portable algorithms for geometric search.
+
+{\it Significance:} General geometric search capabilities are needed in a wide
+variety of applications including the generation of neighbor lists in
+particle-based applications (e.g. molecular dynamics or general N-body
+dynamics simulations) and mesh-mesh interactions including contact in
+computational mechanics and solution transfer in multiphysics simulations.
+
+{\it Performance portable search capabilities:} Shared memory and GPU
+implementations of spatial tree construction; shared memory and GPU
+implementations of various spatial tree queries; MPI front-end for
+coordinating distributed spatial searches between sets of geometric objects
+with different decompositions; communication plan generation based on spatial
+search results.
+
+{\it URL:} https://github.com/arborx/ArborX
 
 {\bf DTK} (Data Transfer Kit)
 
@@ -47,13 +73,6 @@ functions; nearest-neighbor and moving least square implementations; support
 for standard finite-element shape functions and user-defined interpolants;
 common applications include conjugate heat transfer, fluid structure
 interaction, and mesh deformation.
-
-{\it Performance portable search capabilities:} shared memory and GPU
-implementations of spatial tree construction; shared memory and GPU
-implementations of various spatial tree queries; MPI front-end for
-coordinating distributed spatial searches between sets of geometric objects
-with different decompositions; communication plan generation based on spatial
-search results.
 
 {\it URL:} https://github.com/ORNL-CEES/DataTransferKit
 
@@ -116,14 +135,16 @@ to access Trilinos on next-generation computing systems will be provided.
 
 \indent
 
+{\bf ArborX:} Search procedures to locate neighboring points, mesh cells, or
+other geometric objects require tree search methods difficult to optimize on
+modern accelerated architectures due to vector lane or thread divergence.
+
 {\bf DTK:} General data transfer between grids of unrelated applications
 requires many-to-many communication which is increasingly challenging as
 communication to computation ratios are decreasing on successive HPC systems.
-Search procedures to locate neighboring points and mesh cells require tree
-search methods difficult to optimize on modern accelerated architectures due
-to vector lane or thread divergence. Maintaining high accuracy for the
-transfer requires careful attention to the mathematical properties of the
-interpolation methods and is highly application-specific.
+Maintaining high accuracy for the transfer requires careful attention to the
+mathematical properties of the interpolation methods and is highly
+application-specific.
 
 {\bf Tasmanian:} Complex models usually have significant variability in
 execution time for different model inputs, which leads to massive down-time
@@ -149,6 +170,13 @@ update the interfaces with changes in the library.
 
 
 \indent
+
+{\bf ArborX:} ArborX builds on a Kokkos+MPI programming model to deploy to all
+DOE HPC architectures. Extensive performance engineering has yielded
+implementations that are both as performant in serial as state-of-the-art
+libraries while also expanding on the capability provided by other libraries
+by demonstrating thread scalability on both GPU and multi-core CPU
+architectures..
 
 {\bf DTK:} State-of-the-art, mathematically rigorous methods are used in DTK
 to preserve accuracy of interpolated solutions.  Algorithms are implemented in
@@ -180,15 +208,27 @@ Trilinos packages.
 
 \indent
 
-{\bf DTK:} Extensive optimization work has yielded significant performance
-improvements on accelerated and heterogeneous architectures. Work with partner
-application ExaAM (WBS 2.2.1.05) created a preliminary multiphysics driver
-capability for additive manufacturing simulations.
+{\bf ArborX:} Extensive optimization work has yielded significant performance
+improvements on accelerated and heterogeneous architectures. Recent results on
+Summit show effective use of the Power9 hyperthreading capability as well as
+excellent performance on the V100 GPU.
 
 \begin{figure}[htb]
-        \centering
-        \includegraphics[width=3.0in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/dtk-gpu}
-        \caption{\label{fig:dtk-gpu}DTK search performance relative to Boost with Intel Xeon E5-2698 and Nvidia P100. 10M points randomly distributed in a unit cube, 1M queries. The time is in seconds. Speedup in bold.}
+        \centering \includegraphics[width=3.0in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/arborx_summit.png} \caption{\label{fig:arborx-gpu}
+        ArborX search performance on a single Summit node. One V100 GPU gives
+        similar performance as the entire Power9 CPU performance on a node.}
+\end{figure}
+
+{\bf DTK:} Work with partner application ExaAM (WBS 2.2.1.05) created a
+preliminary multiphysics driver capability for additive manufacturing
+simulations using a parallel-in-time coupling strategy.
+
+\begin{figure}[htb]
+        \centering \includegraphics[width=3.0in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/dtk_exaam_pit.png} \caption{\label{fig:dtk-exaam-pit}
+        New ExaAM parallel-in-time coupling. Each arrow represents a DTK
+        transfer between different grids at different time points. Thousands
+        of DTK maps will be used to interpolate and communicate information
+        between steps. Image courtesy of Matt Bement (ExaAM Team) }
 \end{figure}
 
 {\bf Tasmanian:} The infrastructure of Tasmanian has been upgraded to support
@@ -233,9 +273,12 @@ C++ or SWIG.
 
 \indent
 
-{\bf DTK:} DTK search and communication capabilities will deployed in a new,
-lightweight library, ArborX, to provide these ECP investments to a broader
-user base.
+{\bf ArborX:} Continue performance engineering campaign and extend to
+distributed search capabilities and communication and deploy in a variety of
+applications.
+
+{\bf DTK:} Support parallel-in-time coupling in the ExaAM project for
+simulations of metal powder bed additive manufacturing.
 
 {\bf Tasmanian:} Work will continue with the development of mixed precision
 algorithms for fast surrogate evaluations and integratinv the capability within
