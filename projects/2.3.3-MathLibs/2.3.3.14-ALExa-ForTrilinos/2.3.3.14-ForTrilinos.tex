@@ -2,13 +2,36 @@
 
 \paragraph{Overview}
 
-The Exascale Computing Project (ECP) requires the successful transformation and porting of many Fortran application codes in preparation for ECP platforms. A significant number of these codes rely upon the scalable solution of linear and nonlinear equations. The Trilinos Project contains a large and growing collection of solver capabilities that can utilize next-generation platforms, in particular scalable multicore, manycore, accelerator and heterogeneous systems. Trilinos is primarily written in C++, including its user interfaces. While C++ is advantageous for gaining access to the latest programming environments, it limits Trilinos usage via Fortran. Several ad hoc translation interfaces exist to enable Fortran usage of Trilinos, but none of these interfaces is general-purpose or written for reusable and sustainable external use.
+The Exascale Computing Project (ECP) requires the successful transformation and
+porting of many Fortran application codes in preparation for ECP platforms. A
+significant number of these codes rely upon the scalable solution of linear and
+nonlinear equations. The Trilinos Project contains a large and growing
+collection of solver capabilities that can utilize next-generation platforms, in
+particular scalable multicore, manycore, accelerator and heterogeneous systems.
+Since Trilinos is written primarily in C++, its capabilities are not available
+to other programming languages. ForTrilinos bridges the gap between the
+needs of Fortran app developers and the capabilities of Trilinos. Furthermore,
+the technology used to generate the Fortran--C++ bindings in ForTrilinos is
+capable of exposing any number of C++ libraries to Fortran exascale app
+developers.
 
 ForTrilinos provides a seamless pathway for large and complex Fortran-based
 codes to access Trilinos without C/C++ interface code. This access includes
 Fortran versions of Kokkos abstractions for code execution and data management.
-The project uses an interface generator, SWIG, which the project is extending,
-to create the object-oriented Fortran wrapper code that users can access directly. This language translation will occur in both directions; ForTrilinos will provide an inversion of control functionality that enables custom extensions of the Trilinos solvers that are Fortran-based. Once the ForTrilinos project is complete, a functional, extensible suite of capabilities to access Trilinos on next-generation computing systems will be provided. Several examples of this technology will be demonstrated within ECP codes with the aim of meeting their simulation goals and illustrate the technology to other Fortran-based ECP codes. As a second benefit to ECP from this effort, the ForTrilinos approach of using SWIG to generate interfaces could be extended to other C/C++ based tools and software within the ECP stable.
+To provide this functionality, this project developed a Fortran-targeted
+extension to the SWIG (Simplified Wrapper and Interface Generator) tool.
+Applied to Trilinos, it generates object-oriented Fortran 2003 interface code
+that closely mirrors the Trilinos C++ API.
+
+ForTrilinos provides an inversion of control functionality that enables custom
+extensions of the Trilinos solvers implemented in downstream Fortran apps.
+Although this capability is not yet comprehensive, the goal of this project is
+to provide functional and extensible access Trilinos on next-generation
+computing systems. Several examples of ForTrilinos are being demonstrated within
+Fortran-based ECP codes to help them meet simulation goals and illustrate the
+technology to other Fortran-based ECP codes. Additionally, the SWIG technology
+underpinning ForTrilinos is being applied to other C++-based ECP ST subprojects
+to expose their capabilities to Fortran apps.
 
 \paragraph{Key Challenges}
 
