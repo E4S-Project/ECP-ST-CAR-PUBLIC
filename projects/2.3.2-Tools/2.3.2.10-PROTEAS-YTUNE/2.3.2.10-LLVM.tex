@@ -1,0 +1,49 @@
+\subsubsection{\stid{2.10} PROTEAS-TUNE: LLVM} 
+
+\paragraph{Overview}
+
+LLVM, winner of the 2012 ACM Software System Award, has become an integral part of the software-development ecosystem for optimizing compilers, dynamic-language execution engines, source-code analysis and transformation tools, debuggers and linkers, and a whole host of programming-language and toolchain-related components. Now heavily used in both academia and industry, where it allows for rapid development of production-quality tools, LLVM is increasingly used in work targeted at high-performance computing. LLVM components are integral parts of the programming environments on our upcoming Exascale systems, and smaller-scale systems as well, being not only popular open-source dependencies, but are critical parts of the commercial toolchains provided by essentially all relevant vendors.
+
+\paragraph{Key Challenges}
+
+LLVM is well suited to the compilation of code from C++ and other languages on CPU hardware, and for some models, GPU hardware, but lacks the kind of high-level optimizations necessary to enable performance-portable programming across future architectures.
+\begin{itemize}
+\item LLVM lacks the ability to understand and optimize parallelism constructs within parallel programs.
+\item LLVM lacks the ability to perform high-level loop transformations to take advantage of complex memory hierarchies and parallel-execution capabilities.
+\end{itemize}
+
+Without these abilities, code compiled well for LLVM must be presented to the compiler in a form already tuned for a specific architecture, including expressions of parallelism suited for the particular characteristics of the target machine. It is, however, unfeasible to tune our entire workload of applications in this way for multiple target architectures. Autotuning helps this problem by allowing dynamic analysis to supplement static cost modeling, which is always fundamentally limited, but without the ability to perform complex transformations, both the parallel and serial execution speed of the resulting programs will be suboptimal.
+
+There are two remaining challenges that we are addressing: The first is that deploying autotuning relying on source-to-source transformations is difficult because maintaining these separate source kernel versions is practically difficult. The second is that, as a general matter, performance improvements can be obtained by specializing code and runtime as opposed to limiting ourselves to ahead-of-time code generation.
+
+\paragraph{Solution Strategy}
+We are developing two significant enhancements to LLVM's core infrastructure, and many other LLVM components. These enhancements are grouped into two categories:
+\begin{itemize}
+\item Enhancements to LLVM's inter-procedural analysis, and an improved representation of parallelism constructs, to allow LLVM to propagate information across boundaries otherwise imposed by parallelism constructs, and to allow LLVM to transform the parallelism constructs themselves.
+\item Enhancements to LLVM's loop-optimization infrastructure to allow the direction of a sequence of loop transformations to loop nests, exposing these features to users through Clang pragmas (in addition to being available at an API level to tools such as autotuners), enabling those transformations to execute as specified, and otherwise enhancing the loop-optimization infrastructure.
+\end{itemize}
+
+As part of this project, we're investigating both fundamental IR-level enhancements (as part of the Kitsune development), as well as the T-Region mechanism which uses optimizer-understandable runtime calls to represent parallelism constructs. The T-Region mechanism is being implemented upstream, while the Kitsune work is, at present, more exploratory.
+
+To address autotuning and the need for code specialization, we are developing a just-in-time compilation technology with integrates naturally with the C++ language.
+
+\paragraph{Recent Progress}
+For parallelism, we have implemented several new features in LLVM:
+\begin{itemize}
+\item A new inter-procedural-analysis framework, and associated transformations, called the Attributor (see~\cite{doerfert2018compiler} for parallelism optimizations). Most of this core infrastructure is now part of the upstream LLVM implementation.
+\item A new parallel representations, known as T-Regions, and an associated set of parallelism~\cite{doerfert2019tregion}.
+\end{itemize}
+
+These efforts have also been featured in many talks, tutorials, and so on at LLVM developers' meetings over the last couple of years.
+
+For loop optimizations, we have implemented several new features in LLVM and Clang, and have describe these enhancements in papers (~\cite{kruse2018user,kruse2018loop} and in several forums directly to the LLVM community (including talks at the LLVM developers' meetings, on the LLVM mailing lists)).
+
+We have developed a prototype C++ compiler, based on Clang, supporting an extension that enables just-in-time compilation~\cite{finkel2019clangjit}. This work has been the subject of a presentation at CppCon 2019 and a keynote talk at the 2019 LLVM developers' meeting. This work is also the basis of a proposal to the C++ standards committee~\cite{P1609R0}.
+
+\paragraph{Next Steps}
+We will continue to develop and upstream the implementations of the developed technologies.
+
+For the C++ JIT technology, we will also continue to pursue standardization at the C++ standards committee. In addition, we are implementing autotuning technology based on a combination of the JIT, the loop transformation improvements, and other improvements developed by this project. This will enable an easy-to-use autotuning capability for applications on Exascale systems.
+
+
+%\end{document}
