@@ -50,6 +50,11 @@
   doi       = {10.1145/2535571.2535591},
 }
 
+% This reference is also included in the ALPINE project description
+% BibTeX seems to like to refuse to acknowledge that anything looking like a
+% reference inside of a comment is actually a comment. So invalidate the entry
+% by leaving out the 'at' symbol. Oddly, this seems like the easiest way to
+% get BibTeX to ignore the entry without additional warnings.
 Article{Moreland2016:VTKm,
 author  = {Kenneth Moreland and Christopher Sewell and William Usher and Li-ta Lo and Jeremy Meredith and David Pugmire and James Kress and Hendrik Schroots and Kwan-Liu Ma and Hank Childs and Matthew Larsen and Chun-Ming Chen and Robert Maynard and Berk Geveci},
 title   = {VTK-m: Accelerating the Visualization Toolkit for Massively Threaded Architectures},
@@ -169,6 +174,28 @@ note      = {{ISBN}~978-0-596-51480-8},
   doi       = {10.1109/LDAV.2017.8231845},
 }
 
-@Comment{jabref-meta: databaseType:bibtex;}
+@InProceedings{Pugmire2018,
+  author    = {David Pugmire and Abhishek Yenpure and Mark Kim and James Kress and Robert Maynard and Hank Childs and Bernd Hentschel},
+  title     = {Performance-Portable Particle Advection with {VTK-m}},
+  booktitle = {Eurographics Symposium on Parallel Graphics and Visualization (EGPGV)},
+  year      = {2018},
+  pages     = {45--55},
+  month     = jun,
+  doi       = {10.2312/pgv.20181094},
+  url       = {http://cdux.cs.uoregon.edu/pubs/PugmireEGPGV.pdf
+},
+}
 
-# Put your BibTeX entries in this file.
+@InProceedings{Yenpure2019,
+  author    = {Abhishek Yenpure and Hank Childs and Kenneth Moreland},
+  title     = {Efficient Point Merging Using Data Parallel Techniques},
+  booktitle = {Eurographics Symposium on Parallel Graphics and VIsualization (EGPGV)},
+  year      = {2019},
+  month     = jun,
+  abstract  = {We study the problem of merging three-dimensional points that are nearby or coincident. We introduce a fast, efficient approach that uses data parallel techniques for execution in various shared-memory environments. Our technique incorporates a heuristic for efficiently clustering spatially close points together, which is one reason our method performs well against other methods. We then compare our approach against methods of a widely-used scientific visualization library accompanied by a performance study that shows our approach works well with different kinds of parallel hardware (many-core CPUs and NVIDIA GPUs) and data sets of various sizes.},
+  comment   = {A highly parallel algorithm for grouping points by position in 3-space.},
+  doi       = {10.2312/pgv.20191112},
+  url       = {http://www.kennethmoreland.com/topology-threading#EGPGV2019},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}
