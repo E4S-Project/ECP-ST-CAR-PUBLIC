@@ -9,13 +9,13 @@ implementations and integrated into the ECP software ecosystem
 as part of the Trilinos~\footnote{\url{https://trilinos.org/}} and the  
 Ginkgo~\footnote{\url{https://github.com/ginkgo-project/ginkgo}} software 
 stacks. 
-With the PEEKS project focus being on algorithm development an software design 
-and leading developers of the Trilinos and Ginkgo software packages being 
-involved in the PEEKS project, a strong focus is on software interoperability 
-and software sustainability. In consequence, there exists a strong link to the 
-other ECP math libraries and the xSDK4ECP project coordinating the ECP 
-mathematical library interoperability efforts. All technology developed in 
-PEEKS is available and disseminated via the xSDK software stack.
+%With the PEEKS project focus being on algorithm development an software design 
+%and leading developers of the Trilinos and Ginkgo software packages being 
+%involved in the PEEKS project, a strong focus is on software interoperability 
+%and software sustainability. In consequence, there exists a strong link to the 
+%other ECP math libraries and the xSDK4ECP project coordinating the ECP 
+%mathematical library interoperability efforts. All technology developed in 
+%PEEKS is available and disseminated via the xSDK software stack.
 
 
 \paragraph{Key  Challenges}
@@ -58,11 +58,12 @@ formats for parts of the computations or memory access was extensively
 investigated in literature~\cite{carson1,carson2,doi:10.1002/cpe.4460}, 
 while production-ready implementations are still a scarce resource. 
 
-In the PEEKS project we address the challenge of turning prototype 
-implementations into production-ready functionality by improving robustness and 
-safeguarding against numerical breakdown, developing application- and 
-architecture-specific optimizations, and integrating into ECP application 
-projects and into a sustainable and extensible mathematical software stack.
+%In the PEEKS project we address the challenge of turning prototype 
+%implementations into production-ready functionality by improving robustness 
+%and 
+%safeguarding against numerical breakdown, developing application- and 
+%architecture-specific optimizations, and integrating into ECP application 
+%projects and into a sustainable and extensible mathematical software stack.
 
 \paragraph{Solution Strategy}
 
@@ -126,12 +127,14 @@ We deployed ParILUT, the first production-ready manycore-parallel algorithm for
 generating threshold-based incomplete factorization preconditioner and 
 demonstrated significant speedups over state-of-the-art 
 algorithms~\cite{ipdps_anzt} (see Figure~\ref{fig:ParILUTperf}).
-\item
-We released a production-ready adaptive precision block-Jacobi preconditioner 
-in the Ginkgo software library. This preconditioner separates the memory format 
-from the computation format, adapts the memory format to the numerical 
-properties, and reduces the runtime cost on high-end GPUs by about 20\% without 
-impacting the preconditioner quality~\cite{toms_anzt}.
+%\item
+%We released a production-ready adaptive precision block-Jacobi preconditioner 
+%in the Ginkgo software library. This preconditioner separates the memory 
+%format 
+%from the computation format, adapts the memory format to the numerical 
+%properties, and reduces the runtime cost on high-end GPUs by about 20\% 
+%without 
+%impacting the preconditioner quality~\cite{toms_anzt}.
 \end{enumerate}
 
 \begin{figure}[htb]
@@ -159,18 +162,18 @@ Our next efforts are:
 	inverse approximation for incomplete factorization preconditioners, and 
 	extend the scope to novel hardware architectures featuring attractive 
 	performance in the low-precision regimes.
-	\item \textbf{Get-set usage of software-defined events:} Together with the 
-	Exa-PAPI team, deployed software-defined events (SDE) in the Ginkgo sparse 
-	linear algebra library. These provide the user with access to 
-	domain-specific events like, e.g., preconditioner invocations, 
-	synchronizations, precision format changes. With building blocks differing 
-	in the resource usage, we investigate the possibility of instant power and 
-	frequency scaling for reducing the power and energy footprint.
-	\item \textbf{Graph analytics kernels:} Preconditioning techniques like 
-	block Jacobi have a strong need for efficient and low-overhead graph 
-	analytics tools identifying strongly-connected components. We deploy GPU 
-	kernels providing this functionality while introducing only negligible 
-	overhead to the preconditioner generation.
+%	\item \textbf{Get-set usage of software-defined events:} Together with the 
+%	Exa-PAPI team, deployed software-defined events (SDE) in the Ginkgo sparse 
+%	linear algebra library. These provide the user with access to 
+%	domain-specific events like, e.g., preconditioner invocations, 
+%	synchronizations, precision format changes. With building blocks differing 
+%	in the resource usage, we investigate the possibility of instant power and 
+%%	frequency scaling for reducing the power and energy footprint.
+%	\item \textbf{Graph analytics kernels:} Preconditioning techniques like 
+%	block Jacobi have a strong need for efficient and low-overhead graph 
+%	analytics tools identifying strongly-connected components. We deploy GPU 
+%	kernels providing this functionality while introducing only negligible 
+%	overhead to the preconditioner generation.
 	\item \textbf{Multiprecision sparse matrix formats:} Operations with sparse 
 	matrices are memory-bound on virtually all architectures. We investigate 
 	how splitting the matrix int several operators stored in value-optimized 
