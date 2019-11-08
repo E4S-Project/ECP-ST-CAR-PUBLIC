@@ -16,11 +16,11 @@ systems as well as provide scalability to the Exascale.
 The availability of systems with over 100 times the processing power of today's machines compels the utilization 
 of these systems not just for a single ``forward solve'' simulation (as discussed above) but rather within a 
 tight loop of optimization, sensitivity analysis (SA), and uncertain quantification (UQ). This requires the 
-implementation of a new, scalable library for managing a dynamic hierarchical collection of running scalable simulations, where the simulations directly feed results into the optimization, SA, and UQ solvers.  This library, 
+implementation of a new, scalable library for managing a dynamic hierarchical collection of running scalable 
+simulations, where the simulations directly feed results into the optimization, SA, and UQ solvers.  This library, 
 which we call libEnsemble, directs the multiple concurrent ``function evaluations'' through the tight coupling 
 and feedback described above. This work consist of two parts: (1) the development of libEnsemble and (2) the 
-extension of TAO~\cite{tao-man} (our PETSc-based scalable optimization library) with new algorithms and 
-software to utilize libEnsemble.
+development of algorithms and software to utilize libEnsemble.
 
 \paragraph{Key Challenges}
 
@@ -58,37 +58,62 @@ needed by optimization, SA, and UQ solvers.
 
 \paragraph{Recent Progress}
 
-In the past year, we have released PETSc 3.10 (available at \url{http://www.mcs.anl.gov/petsc})
-that features enhanced GPU support.  In particular, PETSc’s algebraic multigrid (AMG) consists 
-of two main components: the setup (coarsening) phase which has both GPU and CPU intensive 
-portions and the solve stage which can run largely or completely on the GPU. A key 
-requirement is minimizing the amount of communication needed between the CPU 
-and GPU during both phases of the computation.  In the PETSc~3.10 release, we 
-completed porting key AMG kernels for both phases to GPUs via CUDA, enabling
-this code to run on a combination of the CPU and GPU.
+In the past year, we have released PETSc/TAO 3.12 (available at \url{http://www.mcs.anl.gov/petsc})
+that features enhanced GPU support.  Perhaps the most important is the support for CUDA-aware 
+MPI, which allows direct communication of data between Summit GPUs, bypassing the previously 
+needed step of first copying the data to the CPU memory. This enhancement reduces the latency 
+of the communication and improves bandwidth. For example, on Summit for sparse matrix-vector 
+products, this led to a speedup of 33\% on one node and a speedup of 13\% on on four nodes 
+for the same size problem. Another important addition is the ability to efficiently read 
+in large meshes on thousands of nodes along with support for collect use of HDF5 calls. 
+With these additions, the algebraic multigrid solver GAMG is up to 12x faster at scale 
+on all of Summit when using the GPUs compared to using just the CPUs.
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\textwidth]{projects/2.3.3-MathLibs/2.3.3.06-PETSc-TAO/lib_ensemble}
-\caption{The libEnsemble control flow showing a manager coordinating workers executing 
-calculations of either simulation functions or generation functions.}
+\includegraphics[width=0.5\textwidth]{projects/2.3.3-MathLibs/2.3.3.06-PETSc-TAO/petsc_profile}
+\caption{Profile information on the effect of vector size on vector operations compared with 
+memory throughput (one MPI rank per GPU) for PETSc/TAO 3.12. Note the log scale.}
 \label{fig:petsc-tao-fig}
 \end{figure}
 
-We have also developed the libEnsemble API, implemented it in Python, released 
-version 0.4 (available at \url{https://github.com/Libensemble/libensemble}),
-and provided a Spack installation.
+We have also release libEnsemble 0.5.2 (available at \url{https://github.com/Libensemble/libensemble}).
+Notably, this release includes several changes in progressing toward xSDK compliance had have added
+support for testing on MacOS to support more applications.  We also have improved I/O, logging, 
+profiling, as well as resource detection on Summit.
 
 \paragraph{Next Steps}
 
 Our next efforts are:
 \begin{enumerate}
-  \item \textbf{Release libEnsemble with active management capabilities}: Add active management 
-    capabilities into libEnsemble to set precision of the simulation and to store information 
-    from simulations to evaluate objectives as they evolve. Work with application teams to 
-    determine requirements on libEnsemble and provide assistance in its usage.
-  \item \textbf{Release PETSc/TAO with optimized support for LCF machines and ECP applications}:
-    Work with application teams to provide assistance in PETSc/Tao usage. Provide optimizations 
-    based on application profiling.
+  \item \textbf{Enhanced application integration and performance optimization and benchmarking}:
+  Refresh the AMReX/PETSc interface and ensure that the PETSc linear solvers can be used with AMReX.
+  Consolidate the two MPI communication modules (VecScatter and PetscSF) to share the same code base 
+  and implement two important communication optimizations in the unified code base: internode node-message 
+  aggregation optimization, which is critical for scalability of GAMG, and intranode shared memory 
+  optimization.  
+  Ensure that libEnsemble satisfies eight of the xSDK requirements.
+  Continue to produce benchmark results on Summit.
+  Engage with ECP applications and co-design centers to identify new capabilities that can result in 
+  FY2021-2023 application integration activities.
+  \item \textbf{Harmonization, performance optimization, and software release}:
+  Harmonize the quasi-Newton and line search modules between SNES and TAO to improve maintainability.
+  Implement GPU optimizations of the quasi-Newton methods.
+  Ensure that libEnsemble satisfies all but one of the xSDK requirements.
+  Continue to produce benchmark results on Summit.
+  Continue to engage with ECP applications and co-design centers.
+  Release a new version of PETSc/TAO.
+  \item \textbf{Enhanced application support and software release}:
+  Implement and optimize the ability to use libCEED under PETSc.
+  Continue to produce benchmark results on Summit.
+  Continue to engage with ECP applications and co-design centers.
+  Release a new version of libEnsemble that is compatible with the xSDK community policy requirements and included in the xSDK.
+  \item \textbf{Benchmarking, performance optimization and software release}:
+  Demonstrate new libEnsemble functionality by having libEnsemble serve as the driver/outer process that 
+  invokes another xSDK tool.
+  Complete benchmarking one or more of the PETSc based applications on Summit at scale including GAMG support 
+  on the GPUs and identify performance bottlenecks.
+  Incorporate new desired capabilities resulting from our engagement with ECP applications and co-design centers into our FY2021 plans.
+  Release a new version of PETSc/TAO.
 \end{enumerate}
 

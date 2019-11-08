@@ -53,9 +53,9 @@ LANL staff work on co-design and integration of the Legion programming system in
 \textbf{Legion.} 
 One of the strengths of Legion is that it executes asynchronous tasks as if they were executed in the sequence they occur in the program. This provides the programmer with a mental model of the computation that is easy to reason about. However, the top-level task in this tree-of-tasks model can often become a sequential bottleneck, as it is responsible for the initial distribution of many subtasks across large machines. In earlier work NVIDIA developed the initial implementation of control replication, which allows the programmer to write tasks with sequential semantics that can be  transparently replicated many times, as directed by the Legion mapper interface, and run in a scalable manner across many nodes.
 Dynamic control replication is an important capability for LANL's ATDM effort, allowing our application teams to write applications with apparently sequential semantics while enabling scalability to Exascale architectures. This approach will improve understandability of application code, productivity, and composability of software and ease the burden of optimization and porting to new architectures. 
+New dynamic tracing ability has been added to Legion to allow debugging and insight in to peformance optimization activites.
 
-
-\textbf{FleCSI Legion Integration.} A key component of LANL's Advanced Technology  Development and Mitigation effort is the development of a flexible computational science infrastructure (FleCSI) to support a breadth of application use cases for our Next Generation Code. FleCSI has been co-designed with the Legion programing system in order to enable our Next Generation Code to be performance portable and scalable to future Exascale systems. Legion provides the underlying distributed and node-level runtime environment required for FleCSI to leverage task and data parallelism, data dependent execution, and runtime analysis of task dependencies to expose parallelism that would be tedious and error prone to expose at the application or middleware level. We completed an evaluation of the initial implementation of FleCSI on Legion using the FleCSALE hydrodynamics application. 
+\textbf{FleCSI Legion Integration.} A key component of LANL's Advanced Technology  Development and Mitigation effort is the development of a flexible computational science infrastructure (FleCSI) to support a breadth of application use cases for our Next Generation Code. FleCSI has been co-designed with the Legion programing system in order to enable our Next Generation Code to be performance portable and scalable to future Exascale systems. Legion provides the underlying distributed and node-level runtime environment required for FleCSI to leverage task and data parallelism, data dependent execution, and runtime analysis of task dependencies to expose parallelism. We completed testing of Legion on Sierra with a Visco-Plastic Self-Consistent, VSCP, application to investigate initial performance on GPU systesm.
 
 
 
@@ -64,5 +64,5 @@ Dynamic control replication is an important capability for LANL's ATDM effort, a
 
 \textbf{Legion.} Focus on hardening and scalability of Legion's Dynamic Control Replication and development of Dynamic Tracing for application use-cases. 
 
-\textbf{FleCSI Legion Integration.} Demonstrate the integration of Dynamic Control Replication and other new Legion features within FleCSI. Our goal is to demonstrate a multi-scale application on the Advanced Technology System, Sierra using our latest advances in the Legion and FleCSI systems. 
+\textbf{FleCSI Legion Integration.} Support the Ristra Application milestone to run on Sierra and Trinity.
 

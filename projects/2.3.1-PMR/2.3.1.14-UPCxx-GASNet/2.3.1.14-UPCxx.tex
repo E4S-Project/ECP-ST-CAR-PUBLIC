@@ -2,10 +2,11 @@
 \paragraph{Overview} 
 The UPC++ project~\cite{upcxx-site} at LBNL is developing a C++ library
 that supports Partitioned Global Address Space (PGAS) programming~\cite{Bachan:paw17,upcxx-spec}.
+The current ECP-funded version of
 UPC++ is markedly different from an earlier prototype designated V0.1 \cite{zheng:ipdps14}.  
 First, all communication is \emph{asynchronous}, to allow the overlap of computation and
 communication, and to encourage programmers to avoid global synchronization. Second, all communication
-is \emph{explicit}, to encourage programmers to consider the costs of communication. Third,
+is \emph{syntactically explicit}, to encourage programmers to consider the costs of communication. Third,
 UPC++ encourages the use of \emph{scalable data-structures}
 and avoids non-scalable library features.
 %such as symmetric heaps. % this is too strong, inflammatory and not supported
@@ -48,14 +49,12 @@ focus their effort on optimizing performance-critical communication.
 \paragraph{Key  Challenges}
 
 As a result of technological trends, the cost of data motion is steadily increasing relative to that of computation.  To reduce communication costs we need to 
-either reduce the software overheads or hide  communication behind available computation. UPC++ addresses both strategies.
+reduce the software overheads and hide communication latency behind available computation. UPC++ addresses both strategies.
 To reduce software overheads, UPC++ takes advantage of the GASNet-EX~\cite{gasnet-lcpc18,gasnet-site}
 communication library's 
 low-overhead communication as well as access to any special hardware
-(see the accompanying report on GASNet-EX, which is being co-designed).
-UPC++ supports asynchronous communication via classic one-sided communication
-(i.e. puts and gets) and remote procedure calls.
-%, to support communication hiding.
+(see Section~\ref{subsubsect:gasnet-ex} on GASNet-EX, which is being co-designed).
+UPC++ supports asynchronous communication via one-sided RMA and RPC.
 
 
 % A challenge in the ECP-ST effort is to maintain interoperability among run times,
@@ -82,14 +81,14 @@ asynchrony.
 
 \end{enumerate}
 
-The PGAS one-sided communication employed by UPC++ (get/put)
+The PGAS one-sided RMA communication employed by UPC++
 benefits application  performance by mapping tightly onto the RDMA mechanisms
 supported by the network hardware. GASNet-EX provides the
 thin middleware
 needed to enable this model to run at close to hardware speeds, across platforms ranging from laptops to supercomputers.
 One-sided communication also has another benefit:
 it decouples synchronization from data motion,
-avoiding the fine-grained synchronization overheads of two-sided message-passing communication.
+avoiding the fine-grained synchronization overheads of two-sided message-passing.
 
 UPC++'s Remote Procedure Call (RPC)
 %, which is built on GASNet Active Messages,
@@ -100,43 +99,36 @@ RPC is useful in managing access to complicated irregular data structures,
 and in expressing asynchronous task execution, where communication patterns
 are data-dependent and hence difficult to predict.
 
-UPC++ addresses productivity via one-sided data motion, remote procedure calls,
-and future-based management of asynchrony.
-Futures enable the programmer
-to capture data readiness state,
-which is useful in making scheduling decisions,
-and to attach handlers that 
-execute asynchronously as dependencies become
-satisfied. Futures may also be conjoined, to aggregate
-completion processing. The outcome is to avoid explicit synchronization of completion at a fine granularity.
+%UPC++ addresses productivity via one-sided data motion, remote procedure calls,
+%and future-based management of asynchrony.
+%Futures enable the programmer
+%to capture data readiness state,
+%which is useful in making scheduling decisions,
+%and to attach handlers that 
+%execute asynchronously as dependencies become
+%satisfied. Futures may also be conjoined, to aggregate
+%completion processing. The outcome is to avoid explicit synchronization of completion at a fine granularity.
 
-
-
-\paragraph{Recent Progress}
-
-We have implemented a distributed hash table,
-which is used by the Exabiome Project (2.2.4.04), that scales to efficiency
-to large number of processors. RPC was observed to simplify the implementation
+As one example of how our approach is applicable to real problems
+we have implemented a distributed hash table, which serves as a proxy
+for a key phase in the HipMer application of the Exabiome Project (WBS~2.2.4.04).
+This implementation scales efficiently
+to a large number of processors. RPC was observed to simplify the implementation
 considerably, by avoiding data hazards without the need for locking.
 Figure~\ref{fig:dht} illustrates the benefits of the UPC++ model 
-in a weak scaling study on the KNL partition of NERSC's Cori.
-
-
-%\newlength{\dhtsz}
+in a weak scaling study up to 34,816 processes on the KNL partition of NERSC's Cori.
 
 
 \begin{figure}[htb]
 \centering
-%  \subfloat[Cori Haswell\label{fig:dht-haswell-wait}]{ \includegraphics{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/all-cori-haswell-out-inserts-wait.png} }
-%  \subfloat[Cori KNL\label{fig:dht-knl-wait}]{}
-      \includegraphics{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/all-cori-knl-out-inserts-wait.png}
+      \includegraphics[scale=0.75]{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/all-cori-knl-out-inserts-wait.png}
   \caption{Weak scaling of distributed hash table insertion on the KNL partition of NERSC's Cori platform. The dotted line represents the processes in one node.}
   \label{fig:dht}
 \end{figure}
 
 
 
-\paragraph{Next Steps}
+\paragraph{Recent Progress}
 
 \begin{enumerate}
 \item \textbf{Memory Kinds.}
@@ -144,9 +136,37 @@ Unified abstractions for
 transferring data back and forth between device (e.g. GPU) and host memory, possibly remote.
 By unifying the means of expressing data transfer among the collective memories of a heterogeneous system with different memory kinds,
 the abstractions enable ECP applications to utilize accelerators, which are necessary to attain peak performance on ECP platforms.
-The design and abstraction enables eventual hardware offload (such as to GPUDirect) of device data transfers, support for which will be provided by future work in GASNet-EX.
+The design and abstraction enables eventual hardware offload (such as to GPUDirect) of device data transfers, support for which will be provided in the near future by GASNet-EX.
 
-\item \textbf{Sustainability.}
-Ensure that UPC++ remains viable as new compiler versions are released into the ECP software stack. UPC++ benefits to productivity rely heavily on template meta-programming, using features added in C+11.  However not all currently available compilers comply sufficiently with the C+11 standard.
+\item \textbf{Portability and Sustainability.}
+%Ensure that UPC++ remains viable as new compiler versions are released into the ECP software stack. 
+UPC++ benefits to productivity rely heavily on template meta-programming, using features added in C++11.
+However not all relevant C++ compilers comply sufficiently with the C++11 standard, 
+necessitating deployment of various work-arounds within the UPC++ implementation.
+The past year has seen the addition of UPC++ support for seven new CPU/compiler pairs.
+A UPC++ Spack package has also been added to the E4S PMR SDK (Section~\ref{subsubsect:e4s}).
+
+\end{enumerate}
+
+\paragraph{Next Steps}
+
+\begin{enumerate}
+\item \textbf{Performance.}
+With the help of our stakeholders, we are identifying portions of the UPC++
+implementation where performance tuning is most needed and/or beneficial.
+A recent example is deployment of an optimized implementation for
+RMA puts using target-side completion notification.
+
+\item \textbf{Productivity.}
+With the core API specification and implementation of UPC++ nearly complete, we
+are shifting focus toward some productivity-oriented features.  These include
+UPC++ serialization of non-trivial user types and a distributed array facility
+for UPC++.
+
+\item \textbf{Outreach.}
+We have begun activities designed to strengthen collaboration with our
+stakeholders (both current ones, and potential future ones).  This includes
+holding training events for users of UPC++ and circulating working group
+drafts of productivity features (above) to solicit feedback.
 
 \end{enumerate}
