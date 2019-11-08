@@ -1,8 +1,8 @@
-\subsubsection{\stid{1.14} GASNet-EX}
+\subsubsection{\stid{1.14} GASNet-EX}\label{subsubsect:gasnet-ex}
 \paragraph{Overview} 
 
 The Lightweight Communication and Global Address Space Support project (Pagoda)
-is developing GASNet-EX, a portable high-performance communication layer
+is developing GASNet-EX~\cite{gasnet-site}, a portable high-performance communication layer
 supporting multiple implementations of the Partitioned Global Address Space
 (PGAS) model.
 GASNet-EX clients include Pagoda's PGAS programming interface UPC++~\cite{Bachan:paw17,upcxx-site}
@@ -54,10 +54,10 @@ challenges and is critical in building other ECP programming systems,
 libraries, and applications.  We use the term {\em PGAS} for models that support
 one-sided communication, 
 including contiguous and non-contiguous remote memory access (RMA) operations such as put/get
-and atomic updates). Some of these models also include support for remote function invocation.
-GASNet-EX is a communications library that provides the foundation for implementing
+and atomic updates. Some of these models also include support for remote function invocation.
+GASNet-EX~\cite{gasnet-lcpc18} is a communications library that provides the foundation for implementing
 PGAS models, and is the successor to the widely-deployed GASNet library.
-We are building on 15 years of experience with the GASNet~\cite{gasnet-spec,gasnet-site}
+We are building on over 15 years of experience with the GASNet~\cite{gasnet-spec,gasnet-site}
 communication layer to provide production-quality implementations that include
 improvements motivated by
 technology trends and application experience.  
@@ -67,65 +67,30 @@ communication layer for Exascale and pre-Exascale systems, addressing the challe
 identified above.
 GASNet-EX provides interfaces that efficiently match the RDMA capabilities of modern
 inter-node network hardware and intra-node communication between distinct address spaces.
-Interfaces for atomics and collectives are being developed to enable offload to current
+New interfaces for atomics and collectives have enabled offload to current
 and future network hardware with corresponding capabilities.
 These design choices and their implementations supply the low-overhead communications
 mechanisms required to address the requirements of Exascale applications.
-
-
-\paragraph{Recent Progress}
-
-Work on GASNet-EX to date has consisted of introducing new capabilities and
-selective performance tuning of those capabilities. 
-
-Two new capabilities, ``Collectives'' and ``Non-Contiguous RMA
-(VIS)'', update and formalize features which existed as experimental
-extensions to GASNet-1.  Updates to the Collectives APIs relative to the
-GASNet-1 design enable offload to appropriate network hardware.  Updates to the
-Non-Contiguous RMA APIs include the ability to express transposes and
-reflections, as well as a ``Dependent Operations'' capability to execute a
-``Peer Completion Handler'' at the end of a transfer.
-
-Capabilities entirely new to GASNet-EX include ``Negotiated-Payload Active
-Messages'', ``Immediate Operations'', ``Local Completion'' and ``Remote
-Atomics''.  GASNet-EX contains ``reference'' implementations of these features
-in terms of the pre-existing GASNet-EX functionality, available on all
-networks.  While these reference implementations are correct and functionally
-complete, they do not take advantage of network-specific mechanisms.
-Network-specific implementations (``specializations'') of these features for
-the Cray Aries network (used in Cray XC-series systems) have shown significant
-performance gains over the reference implementations ~\cite{gasnet-aries}.
-%
-Most notably, offload of atomics to the Aries NIC yields a 1.7x latency improvement
-and greatly benefits scalability in a many-to-one atomics hot-spot
-test.
-
-The addition of ``Subset Teams'' support to all GASNet-EX communications APIs
-provides the means to name communication peers using subset-scoped ranks and
-enables the use of Collectives over subsets.
-
 
 \begin{figure}[htb]
   \centering
   \subfloat[8-byte RMA Latencies\label{fig:rma-lat-bars}]{
      \includegraphics[width=0.432\textwidth]{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/latency_bars.pdf}
   }
-  \subfloat[Aries Flood Bandwidth\label{fig:cori1-bw}]{
-     \includegraphics[width=0.504\textwidth]{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/CoriHSW-slide-BW.pdf}
+  \subfloat[Summit Flood Bandwidth\label{fig:summit-bw}]{
+     \includegraphics[width=0.504\textwidth]{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/Summit-slide-BW.pdf}
   }
   \caption{\label{fig:gasnet-ex-rma} Selected GASNet-EX vs. MPI RMA Performance Results}
 \end{figure}
 
-The addition of new capabilities to GASNet-EX has not come at the expense of
-performance.
 Figure~\ref{fig:gasnet-ex-rma} shows representative results from a
-recent paper~\cite{gasnet-lcpc18} comparing
+paper~\cite{gasnet-lcpc18} comparing
 the RMA performance of GASNet-EX with MPI on multiple systems including
-NERSC's Cori and OLCF's Summitdev%
+NERSC's Cori and OLCF's Summit%
 \footnote{The paper's results from Summitdev
-have been replaced by more recent (Nov 8, 2018) results from OLCF's newer Summit system.  The authors
-gratefully acknowledge the assistance of Geoffroy Vall\'ee of ORNL, who
-collected the results on Summit.}.
+have been replaced by more recent (June 2019) results from OLCF's newer Summit system.}.
+These results demonstrate the ability of a PGAS-centric runtime to
+deliver performance as good as MPI, and often better.
 %
 The paper presents experimental methodology and system descriptions, which are
 also available online~\cite{gasnet-site}, along with results for additional
@@ -138,27 +103,60 @@ implementations.
 GASNet-EX's latency is 6\% to 55\% better than MPI's on Put and 5\% to 45\%
 better on Get.
 %
-Algorithms sensitive to small-transfer latency become practical in PGAS
+Algorithms sensitive to small-transfer latency may become practical in PGAS
 programming models due to these improvements relative to MPI.
 
-Figure~\ref{fig:cori1-bw} shows flood bandwidth of RMA Put and Get on Cori
-Phase~I.  GASNet-EX's bandwidth is seen to rise to saturation at smaller
-transfer sizes than Cray MPI, with the most pronounced differences
-appearing in the 512 to 8192 byte range.
+Figure~\ref{fig:summit-bw} shows flood bandwidth of RMA Put and Get over the
+dual-rail InfiniBand network of OLCF's Summit.
+GASNet-EX's bandwidth is seen to rise to saturation at smaller
+transfer sizes than IBM Spectrum MPI, with the most pronounced differences
+appearing between 4KiB and 32KiB.
 %
-Comparison to the bandwidth of MPI message-passing (green series) illustrates the
+Comparison to the bandwidth of MPI message-passing (dashed green series) illustrates the
 benefits of one-sided communication, a major feature of PGAS models.
+
+
+\paragraph{Recent Progress}
+
+Work on GASNet-EX in the past year has covered several distinct areas.
+
+Co-design work is on-going with the UPC++, Legion and Chapel developers.  These
+interactions are bi-directional, guiding design and implementation decisions
+made in GASNet-EX as well as in the client runtimes.
+%
+Recent work~\cite{gasnet-reassembly} for the Cray Aries network has yielded
+significant performance improvement on systems of importance to UPC++ and Legion.
+Specifically, implementation of a new target-side reassembly protocol improved
+AM Long end-to-end latency by up to 33\%, and the effective bandwidth by up to
+49\%, while also enabling asynchronous source completion that drastically reduces
+injection overheads.
+
+We have begun work to improve interoperability of GASNet-EX and MPI within the
+same executable.  Together with the Exascale MPI project (WBS~2.3.1.07) we have
+developed an initial implementation of a small library to manage cooperative
+progress of multiple communications runtimes.  We have demonstrated the ability
+of this library, with suitable calls added to GASNet-EX and MPICH, to resolve
+two canonical examples of the class of deadlock it is meant to prevent.
+
+We have completed work to leverage features of the InfiniBand network
+present in OLCF's Summit.  One such development is modifications to fully
+utilize the multiple InfiniBand network ports (a.k.a ``rails'') in a Summit
+node.  Another is use of Mellanox's ``ODP'' (On-Demand Paging) to provide
+efficient and robust RDMA transfers to and from memory in a processes' stack
+and dynamic heap.
 
 \paragraph{Next Steps}
 
 Our next efforts include:
 \begin{enumerate}
 
-\item \textbf{Multiple Endpoints and Segments}.  Support for multiple
-communications endpoints and multiple memory segments will provide immediate
-benefit to multi-threaded runtimes by reducing contention for shared resources.
-Additionally, these features enable future work on hardware offload of
+\item \textbf{Device (GPU) Memory Support}.
+GASNet-EX's RMA APIs have been designed to enable hardware offload of
 transfers to and from GPU memories (\textit{e.g.} use of GPUDirect).
+Near-future work includes implementation of this capability for OLCF's
+Summit.  This work includes adding support for multiple
+communications endpoints and multiple memory segments, which also provide
+benefit to multi-threaded runtimes by reducing contention for shared resources.
 
 \item \textbf{Specialization for InfiniBand}.  Network-specific implementations
 of new GASNet-EX features for the InfiniBand network will provide performance
@@ -166,7 +164,8 @@ benefits on systems such as OLCF's Summit.  The benefits of such specialization
 for the Cray Aries network has been demonstrated previously~\cite{gasnet-aries}.
 
 \item \textbf{Client-Driven Tuning}.  In collaboration with authors of client
-runtimes using GASNet-EX (most notably UPC++ and Legion), any significant
-bottlenecks or performance anomalies will be identified and addressed.
+runtimes using GASNet-EX (most notably UPC++ and Legion) and their users (such
+as ExaBiome), we will continue to identify and address any significant
+bottlenecks or performance anomalies which are discovered.
 
 \end{enumerate}

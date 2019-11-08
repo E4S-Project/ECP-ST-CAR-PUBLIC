@@ -1,6 +1,10 @@
 # Put your BibTeX entries in this file.
 
-@InCollection{VisIt,
+%%%%%%%%%%%%%%%
+% VisIt/LibSim
+%%%%%%%%%%%%%%%
+
+@InCollection{alpine:VisIt,
   author = {Hank Childs and Eric Brugger and Brad Whitlock and Jeremy Meredith and Sean Ahern and David Pugmire and Kathleen Biagas and Mark Miller and Cyrus Harrison and Gunther H. Weber and Hari Krishnan and Thomas Fogal and Allen Sanderson and Christoph Garth and E. Wes Bethel and David Camp and Oliver R\"{u}bel and Marc Durant and Jean M. Favre  and Paul Navr\'{a}til},
   title = {{VisIt: An End-User Tool For Visualizing and Analyzing Very Large Data}},
    year =      "2012",
@@ -10,7 +14,20 @@
   publisher = {CRC Press/Francis--Taylor Group},
 }
 
-@inproceedings{ASCENT,
+
+@inproceedings{alpine:LibSim,
+	title={Parallel in situ coupling of simulation with a fully featured visualization system},
+	author={Whitlock, Brad and Favre, Jean and Meredith, Jeremy},
+	booktitle={Proceedings of the 11th Eurographics Conference on Parallel Graphics and Visualization (EGPGV)},
+	year={2011}
+}
+
+
+%%%%%%%%%%%%%%%
+% Ascent 
+%%%%%%%%%%%%%%%
+
+@inproceedings{alpine:Ascent,
         author = {Larsen, Matthew and Ahrens, James and Ayachit, Utkarsh and Brugger, Eric and Childs, Hank and Geveci, Berk and Harrison, Cyrus},
         title = {{The ALPINE In Situ Infrastructure: Ascending from the Ashes of Strawman}},
         booktitle = {Proceedings of the Third Workshop of In Situ Infrastructures for Enabling Extreme-Scale Analysis and Visualization (ISAV), held in conjunction with SC17},
@@ -19,28 +36,37 @@
         address = {Denver, CO, USA},
 }
 
+@inproceedings{alpine:Larsen:ISAV18,
+	author = {Larsen, Matthew and Woods, Amy and Marsaglia, Nicole and Biswas, Ayan and Dutta, Soumya and Harrison, Cyrus and Childs, Hank},
+	title = {{A Flexible System for In Situ Triggers}},
+	booktitle = {Proceedings of the Workshop on In Situ Infrastructures for Enabling Extreme-Scale Analysis and Visualization (ISAV18)},
+	year = {2018},
+	isbn = {978-1-4503-6579-6},
+	address = {Dallas, TX},
+	pages = {1--6},
+	month = nov,
+	numpages = {6},
+}
 
-@misc{paraview1,
+
+%%%%%%%%%%%%%%%
+% ParaView/Catalyst
+%%%%%%%%%%%%%%%
+
+@misc{alpine:Paraview1,
   title={{The ParaView guide: a parallel visualization application}},
   author={Ayachit, Utkarsh},
   year={2015},
   publisher={Kitware, Inc.}
 }
 
-@article{paraview2,
+@article{alpine:Paraview2,
   title={{ParaView: An end-user tool for large-data visualization}},
   author={Ahrens, James and Geveci, Berk and Law, Charles},
   journal={The visualization handbook},
   year={2005},
 }
 
-
-@inproceedings{LibSim,
-  title={Parallel in situ coupling of simulation with a fully featured visualization system},
-  author={Whitlock, Brad and Favre, Jean and Meredith, Jeremy},
-  booktitle={Proceedings of the 11th Eurographics Conference on Parallel Graphics and Visualization (EGPGV)},
-  year={2011}
-}
 
 inproceedings{Catalyst,
 title={Paraview catalyst: Enabling in situ data analysis and visualization},
@@ -50,3 +76,203 @@ pages={25--29},
 year={2015},
 organization={ACM}
 }
+
+%%%%%%%%%%%%%%%
+% Lagrangian
+%%%%%%%%%%%%%%%
+
+@inproceedings{alpine:Binyahib:LDAV19,
+	booktitle = {IEEE Symposium on Large Data Analysis and Visualization (LDAV)},
+	title={{A Lifeline-Based Approach for Work Requesting and Parallel Particle Advection}},
+	author={Roba Binyahib and David Pugmire and Boyana Norris and Hank Childs},
+	year = {2019},
+	month = oct,
+	address = { Vancouver, Canada },
+}
+
+@inproceedings{alpine:Sane:EGPGV19,
+	booktitle = {Eurographics Symposium on Parallel Graphics and Visualization (EGPGV)},
+	title = {{An Interpolation Scheme for VDVP Lagrangian Basis Flows}},
+	author = { Sudhanshu Sane and Hank Childs and Roxana Bujack },
+	year = {2019},
+	month = jun,
+	pages = { 109--118 },
+	address = { Porto, Portugal },
+}
+
+@inproceedings {alpine:Sane:EGPGV18,
+	booktitle = {Eurographics Symposium on Parallel Graphics and Visualization},
+	editor = {Hank Childs and Fernando Cucchietti},
+	title = {{Revisiting the Evaluation of In Situ Lagrangian Analysis}},
+	author = {Sane, Sudhanshu and Bujack, Roxana and Childs, Hank},
+	year = {2018},
+	publisher = {The Eurographics Association},
+	ISSN = {1727-348X},
+	ISBN = {978-3-03868-054-3},
+	DOI = {10.2312/pgv.20181096}
+}
+
+%%%%%%%%%%%%%%%
+% Moments
+%%%%%%%%%%%%%%%
+
+@inproceedings{alpine:Bujack:WSCG17,
+	title={Flexible Moment Invariant Bases for 2D Scalar and Vector Fields},
+	author={Roxana Bujack and Jan Flusser},
+	booktitle={Proceedings of International Conference in Central Europe on Computer Graphics, Visualization and Computer Vision (WSCG)},
+	pages = {11--20},
+	year={2017}
+}
+
+@article{alpine:Yang:PR17,
+	title = {{Rotation Invariants of Vector Fields from Orthogonal Moments}},
+	journal = {Pattern Recognition},
+	vol = {74},
+	pages = {110-121},
+	year = {2018},
+	author = {Bo Yang and Jitka Kostkova and Jan Flusser and Tomas Suk and Roxana Bujack}
+}
+
+@CONFERENCE{alpine:Yang:ICIP17,
+	title = {{Recognition of Patterns in Vector Fields by Gaussian-Hermite Invariants}},
+	booktitle = {2017 IEEE International Conference on Image Processing, ICIP, Beijing, China},
+	year = {2017},
+	note = {Poster Session},
+	author = {Bo Yang and Jitka Kostkova and Jan Flusser and Tomas Suk and Roxana Bujack},
+}
+
+
+@inproceedings{alpine:Wang:TopoVis17,
+	title={Interpreting Galilean Invariant Vector Field Analysis via Extended Robustness},
+	author={Bei Wang and Roxana Bujack and Paul Rosen, Primoz Skraba, Harsh Bhatia and Hans Hagen},
+	booktitle={Topology-Based Methods in Visualization (TopoInVis 2017) Tokyo, Japan},
+	year={2017}
+}
+
+
+
+%%%%%%%%%%%%%%%
+% Contour Tree
+%%%%%%%%%%%%%%%
+
+@Article{alpine:Carr:TVCG19,
+	author = "Hamish A. Carr and Gunther H. Weber and Christopher M. Sewell and Oliver R{\"u}bel and Patricia Fasel and James P. Ahrens",
+	title = "Scalable Contour Tree Computation by Data Parallel Peak Pruning",
+	journal = "Transactions on Visualization and Computer Graphics",
+	year = "2019",
+	note = "In press",
+}
+
+%%%%%%%%%%%%%%%
+% Sampling
+%%%%%%%%%%%%%%%
+
+@INPROCEEDINGS {alpine:Liu:SC19poster,
+	author={Qun Liu and Subhashis Hazarika and John M. Patchett and James P. Ahrens and Ayan Biswas },
+	booktitle={SC '19: Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis},
+	title={Poster: Deep Learning-Based Feature-Aware Data Modeling for Complex Physics Simulations},
+	year={2019},
+	month={11},
+	volume={},
+	pages={},
+	note = {To Appear in SC '19},
+}
+
+@article{alpine:Biswas:ISAV18,
+	title={In Situ Data-driven Adaptive Sampling for Large-scale Simulation Data Summarization},
+	author={Biswas, A and Dutta, S and Pulido, J and Ahrens, J},
+	journal={In Situ Infrastructures for Enabling Extreme-Scale Analysis and Visualization,  ISAV},
+	pages={13--18},
+	year={2018},
+	publisher={https://doi.org/10.1145/3281464.3281467},
+}
+
+@article{alpine:Dutta:Entropy19,
+	title={Multivariate Pointwise Information-Driven Data Sampling and Visualization},
+	author={Dutta, Soumya and Biswas, Ayan and Ahrens, James},
+	journal={Entropy},
+	volume={21},
+	number={7},
+	pages={1--25},
+	year={2019},
+	publisher={https://doi.org/10.3390/e21070699},
+}
+
+
+%%%%%%%%%%%%%%%
+% Tutorials 
+%%%%%%%%%%%%%%%
+
+@misc{-ecp2019-tutorial-ascent,
+	title = {In Situ Visualization and Analysis with Ascent}, 
+	author = {Hank Childs and Matthew Larsen and Cyrus Harrison and Kenneth Moreland and David Rogers},
+	howpublished = {Exascale Computing Project Annual Meeting},
+	year = {2019},
+	month = {01},
+	address = {Houston, TX},
+}
+
+@misc{-ecp2018-tutorial-datavis,
+	title = {ECP Data Analytics & Viz Tools: ALPINE & VTK-m}, 
+	author = {Hank Childs and Matthew Larsen and Cyrus Harrison and Kenneth Moreland and David Rogers},
+	howpublished = {Exascale Computing Project Annual Meeting},
+	year = {2018},
+	month = {02},
+	address = {Knoxville, TN},
+}
+
+@misc{-sc2018-tutorial-insitu,
+	title = {In Situ Analysis and Visualization with SENSEI and Ascent}, 
+	author = {Hank Childs and 	Cyrus Harrison and 	Matthew Larsen and 	Burlen Loring and 	Silvio Rizzi and 	Brad Whitlock and 	David Rogers and 	David Thompson},
+	howpublished = {Supercomputing 2019},
+	year = {2019},
+	month = {11},
+	address = {Denver, CO},
+}
+
+%%%%%%%%%%%%%%%
+% Feature Abstraction
+%%%%%%%%%%%%%%% 
+
+@INPROCEEDINGS{Petruzza:IPDPS18,
+	author={S. {Petruzza} and S. {Treichler} and V. {Pascucci} and P. {Bremer}},
+	booktitle={2018 IEEE International Parallel and Distributed Processing Symposium (IPDPS)},
+	title={BabelFlow: An Embedded Domain Specific Language for Parallel Analysis and Visualization},
+	year={2018},
+	volume={},
+	number={},
+	pages={463-473},
+	doi={10.1109/IPDPS.2018.00056},
+	ISSN={},
+	month={May},
+}
+
+%%%%%%%%%%%%%%%
+% Misc ALPINE Papers
+%%%%%%%%%%%%%%%
+
+
+@inproceedings{Marsaglia:EGPGV19,
+	booktitle = {Eurographics Symposium on Parallel Graphics and Visualization (EGPGV)},
+	title = {{Dynamic I/O Budget Reallocation For In Situ Wavelet Compression}},
+	author = { Nicole Marsaglia and Shaomeng Li and Kristi Belcher and Matthew Larsen and Hank Childs },
+	year = {2019},
+	month = jun,
+	pages = { 1--6 },
+	address = { Porto, Portugal },
+}
+
+@inproceedings{Li:ISAV17,
+	author = {Li, Shaomeng and Larsen, Matthew and Clyne, John and Childs, Hank},
+	title = {Performance Impacts of In Situ Wavelet Compression on Scientific Simulations},
+	booktitle = {Proceedings of the In Situ Infrastructures for Enabling Extreme-Scale Analysis and Visualization Workshop},
+	series = {ISAV2017},
+	year = {2017},
+	isbn = {978-1-4503-5139-3/17/11},
+	location = {Denver, CO, USA},
+	doi = {10.1145/3144769.3144773},
+	publisher = {ACM},
+	address = {New York, NY, USA},
+}
+
+
