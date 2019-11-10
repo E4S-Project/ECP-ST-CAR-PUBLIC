@@ -149,16 +149,36 @@ Our next efforts include:
 \item {\bf Expand Umpire Capabilities:} Explore potential collaboration with
   relevant ECP efforts, such as SICM project.
 \end{enumerate}
-\subsubsection{\stid{1.10} Kokkos Support} 
+\subsubsection{\stid{1.18} Kokkos} 
 
 \paragraph{Overview} 
-Kokkos Support provides documentation, training and community building support for the Kokkos programming model. 
-To that end, the project develops programming guides, API references and tutorial material for Kokkos which is presented both as independent events and at conferences such as Supercomputing.
-Kokkos Support is also responsible for setting up community interaction channels such as the Slack channels now used for user communication and fostering the GitHub interactions between Kokkos developers and users.
-Finally, the project supports engagement with the C++ standard in order to further the adoption of successful Kokkos concepts into the core language. 
 
+The Kokkos C++ Performance Portability Ecosystem is a production-level solution for writing modern C++ applications in an hardware-agnostic way.
+Started by Sandia National Laboratories, it is now supported by developers at the Argonne, Berkeley, Oak Ridge, Los Alamos and Sandia National Laboratories as well as the Swiss National Supercomputing (Centre).
+It is now used by more than a hundred HPC projects, and Kokkos-based codes are running regularly at-scale on half of the top ten supercomputers in the world. 
+The EcoSystem consists of multiple libraries addressing the primary concerns for developing and maintaining applications in a portable way.
+The three main components are the Kokkos Core Programming Model, the Kokkos Kernels Math Libraries and the Kokkos Tools.
+Additionally, the Kokkos team is participating in the ISO C++ standard development process, to get successful concepts from the Kokkos EcoSystem incorporated into the standard. 
+Its development is largely funded as part of the Exascale Computing Project, with a mix of NNSA ATDM and Office of Science sources. 
+
+ 
 \paragraph{Key Challenges}
-For a new programming model to be successful, a comprehensive support and training infrastructure is absolutely critical. 
+
+One of the biggest challenges for the ExaScale supercomputing era is the proliferation of different computer architectures, and their associated mechanisms to program them.
+Vendors have an incentive to develop their own models in order to have maximum freedom of exposing special hardware capabilities, and potentially achieve "vendor-lock-in".
+This poses the problem for applications that they may need to write different variants of their code for different machines - an effort which can be simply not feasible for many of the larger application and library projects.
+
+The Kokkos project aims at solving this issue by providing a programming solution which provides a common interface build upon the vendor specific software stacks.
+There are a number of technical challenges associated with that. 
+First an abstraction must be designed which is restricted enough to allow mapping to a wide range of architectures while allowing exploitation of all the hardware capabilities provided by new architectures. 
+Secondly, the development of support for a new architecture may take significant resources. In order to provide a timely solution for applications in line with the availability of the machine, CoDesign collaborations with the vendors are critical.
+At the same time software robustness, quality and interface stability is of utmost importance. 
+In contrast to libraries such as the BLAS, programming models permeate the entire code base of an application, and are not isolated to simple call sites. 
+API changes thus would require a lot of work inside of the users code base. 
+A fourth challenge is that in order to debug and optimize the code base tools are required to gain insights into the application. 
+
+Besides the technical challenges, 
+a comprehensive support and training infrastructure is absolutely critical for a new programming model to be successful.
 Prospective users must learn how to use the programming model, current users must be able to bring up issues with the development team and access detailed documentation, and the development team of the model must be able to continue technical efforts without being completely saturated with support tasks. 
 The latter point became a significant concern for the Kokkos team with the expected growth of the user base through ECP.  
 Already before the launch of ECP, there were multiple application or library teams starting to use Kokkos for each developer on the core team -- a level not sustainable into the future without a more scalable support infrastructure. 
@@ -166,31 +186,67 @@ This issue was compounded by the fact that Kokkos development was funded through
 
 \paragraph{Solution Strategy}
 
-Kokkos Support addresses these challenges through a number of ways. 
-First and foremost, it provides explicit means for supporting all DOE ECP applications. 
-A main component of that is funding for local Kokkos experts at the Sandia, Oak Ridge and Los Alamos laboratories which can serve as direct contacts for local applications and, in Oak Ridge's case, for users of the Oak Ridge Leadership Computing Facility. 
-Secondly, the project develops a reusable support infrastructure, which makes supporting more users scalable and cost effective. 
+To address the challenges the Kokkos team is developing a set of libraries and tools which allow application developers to implement, optimize and maintain performance portable codes. 
+At its heart the EcoSystem provides the Kokkos Core Programming Model.
+Kokkos Core is a programming model for parallel algorithms that use many-core chips and share memory among those cores.
+The programming model includes abstractions for frequently used parallel execution patterns, policies that provide details for how those patterns are executed, and execution spaces that denote on which execution agents the parallel computation is performed. 
+Kokkos Core also provides fundamental data structures with policies that provide details for how those data structures are laid out in memory, memory spaces that denote in which memory the data reside, and data access traits conveying special data access semantics.
+The model works by requiring that application development teams implement their algorithms in terms of Kokkos’ patterns, policies, and spaces. 
+Kokkos Core can then map these algorithms onto the target architecture according to architecture-specific rules necessary to achieve best performance.
 
-The support infrastructure consists of GitHub wiki pages for the programming guide and an API reference, GitHub issues to track feature requests and bug reports, a Slack channel for direct user-to-user and user-to-developer communication, and tutorial presentations and cloud-based Kokkos hands-on exercises. 
+Kokkos Kernels is a software library of linear algebra and graph algorithms used across many HPC applications to achieve best (not just good) performance on every architecture. The baseline version of this library is written using the Kokkos Core programming model for portability and good performance. The library has architecture-specific optimizations or uses vendor-specific versions of these mathematical algorithms where needed. This reduces the amount of architecture-specific software that an application team potentially needs to develop, thus further reducing their modification cost to achieve “best in class” performance. 
+
+Kokkos Tools is an innovative “plug in” software interface and a growing set of performance measurement and debugging tools that plug into that interface for application development teams to analyze the execution and memory performance of their software. Teams use this performance profiling and debugging information to determine how well they have designed and implemented their algorithms and to identify portions of their software that should be improved. Kokkos Tools interfaces  leverage the Kokkos Core programming model interface to improve an application developer’s experience dramatically, by forwarding application specific information and their context within the Kokkos Core programming model to the tools.
+
+Kokkos Support addresses the challenges of establishing, growing and maintaining the user community.
+First and foremost, it provides explicit means for supporting all DOE ECP applications. 
+A main component of that is funding for local Kokkos experts at the Sandia, Oak Ridge, Argonne, Berkeley and Los Alamos laboratories which can serve as direct contacts for local applications and the users of the leadership computing facilities. 
+Secondly, the project develops and maintains a reusable support infrastructure, which makes supporting more users scalable and cost effective. 
+
+The support infrastructure consists of GitHub wiki pages for the programming guide and API reference, GitHub issues to track feature requests and bug reports, a Slack channel for direct user-to-user and user-to-developer communication, and tutorial presentations and cloud-based Kokkos hands-on exercises. 
+
+The Kokkos Team is also actively engaging the ISO C++ Committee, where it provides about a third of the members interested in HPC.
+This strong engagement enables the team to lead or contribute to numerous proposals.
+Among those proposals the team leads are abstractions for multi dimensional arrays based on Kokkos View, atomic operations on generic types and linear algebra algorithms based on Kokkos Kernels, which cover not only the classic Fortran BLAS capabilities, but also batched BLAS and mixed precision linear algebra.
+The team also has a central role in the primary proposal introducing heterogeneous computing into the C++ standard via the executors concept.
 
 \paragraph{Recent Progress}
 
-Kokkos Support has successfully run multiple Kokkos bootcamps for DOE applications as well as organized a number of single day tutorials. 
-At the most recent tutorial during the DOE ECP All Hands meeting, the new cloud-based hands-on infrastructure was used for the first time, allowing tutorial attendees to use GPUs on remote servers without the hassle of temporary user account administration at DOE computing facilities. 
-The project also improved existing documentation and transferred it to GitHub wiki pages which are tailored for software documentation and more maintainable. 
-The Slack channels usage is growing, which have seen participation from users across the DOE and Kokkos community. 
-There are also more interactions on GitHub issues, including a number of pull requests volunteered from external users as a result of these interactions to improve small parts of the Kokkos implementation. 
-These latter two points are a sign that the community is growing and more actively participating in advancing Kokkos, a necessary step for a more sustainable future where users may answer other users questions, and the community begins to provide new features and solutions to problems. 
- 
+The Kokkos project now consists of an integrated developers team spanning five DOE National Laboratories.
+In particular both NNSA and Office of Science funded developers are working based off the same task and code management system, use a shared slack channel, and attend a common weekly team meeting.
+This ensures that no duplication of effort happens, and makes Kokkos a true inter laboratory project.
+
+Kokkos is now used by many applications in production across the entire spectrum of DOE's super computers.
+Support for current production platforms is mature and stable.
+Work on supporting the upcoming ExaScale platforms has begun and initial capabilities for AMD GPUs and Intels GPUs are working.
+On the AMD side this is despite the fact that full support was previously available, but had to be removed due to the deprecation of the underlying programming model by AMD.
+
+Three Kokkos specific multi-day boot camps were organized with a total attendance on the order of 60 developers.
+Additionally the team provided single day tutorials at numerous venues with several hundred attendees in aggregate.
+The slack channel now sees daily questions from numerous users, and has attracted even vendor representatives who help answer machine specific questions.
+The team finished developing a full API documentation as well as adding use case descriptions for common patterns found in applications.
+
+At the C++ committee, the MDSpan proposal is now in wording review - meaning that the technical design is approved. 
+MDSpan will be able to provide all the core capabilities of Kokkos\:\:View.
+This includes compile and runtime extents, customizable layouts, and data access traits.
+The extension to heterogeneous memory can be achieved by trivial extensions. 
+Furthermore, the atomic\_ref proposal was voted into C++20.
+This capability will provide atomic operations on generic allocations as powerful as Kokkos' atomic operations.
+In particular it allows atomic operations on types independent of their size, and not just the ones native in the hardware.
+A very recent development, is the proposal for linear algebra functions.
+It entails functionality covering all of BLAS 1, 2, and 3, but extends it to any scalar types (including mixing of scalar types) and batched operations.
+The proposal was approved by the relevant study groups, as well as the library evolution incubator group.
+The Kokkos team was also able to gain co-authors from NVIDIA, Intel and AMD - providing significant support from the leading hardware vendors.
+
 \paragraph{Next Steps}
 
-There are two main thrusts of development underway: the writing of a Kokkos API Reference and the development of more advanced tutorials. 
-While the Kokkos Programming Guide and the Tutorial Presentations are well received, more advanced users often only want to look up the API of Kokkos features. 
-Such an API reference is not yet available. Its development is under way, and we hope to have it cover the majority of Kokkos features by the end of Summer 2018. 
+The most pressing next task is to complete and then mature support for the upcoming ExaScale architectures.
+Most of Kokkos's functionality is expected to be available by the end of FY20 for those systems, which will provide another year of time to mature the support before the first platforms will be delivered.
 
-For tutorials, feedback provided by attendees indicate that some of the material covered in the standard tutorial is a bit too advanced for an introduction to Kokkos. On the other hand, as the number of users who have had previous exposure to Kokkos is growing, they are asking for more of the advanced features to be covered. To support both types of attendees, it is clear that splitting the tutorial into beginner and advanced sections, as well as extending the advanced section beyond what is currently covered is necessary. 
+On the programming model evolution side, more explicit asynchronous capabilities including the creation of graphs of kernel launches is a high priority.
 
-Finally, we would like to improve the accessibility of all of the resources that are being developed to support Kokkos and increase its adoption. 
-Currently, all documentation, tutorials, references, and support channels are in various locations that are best suited to their differing format requirements. 
-However, having a one-stop landing page where new encounters can learn about the project and current users can find the location of all available resources would increase usage of the various materials and communication channels within the community, among both developers and users.
+At the plumbing level, the team will start to replace some of the implementation level of Kokkos by the ISO C++ capabilities such as atomic\_ref and mdspan.
 
+For Kokkos tools an upcoming capability will be the addition of autotuning tools. This will help with the increasingly difficult task of coming up with heuristics to determine good runtime settings for kernels on all the different architectures.
+
+And last but not least, the team will work on getting the proposed new ISO C++ capabilities into the C++23 draft standard, so that they will be available to our users as a vendor provided capability during the lifetime of the first ExaScale platforms.
