@@ -22,7 +22,7 @@ provides Spack packaging assistance for ST users and ECP facilities, and
 it develops new capabilities for Spack that enable automated deployments
 of software at ECP facilities, in containerized environments, and as part
 of continuous integration.  Concurrently, the ``Supercontainers''
-sub-project is investigating and develoing technologies and best
+sub-project is investigating and developing technologies and best
 practices that enable containers to be used effectively at ECP
 facilities. Supercontainers will ensure that HPC container runtimes will
 be scalable, interoperable, and integrated into Exascale supercomputing
@@ -39,7 +39,7 @@ it still requires that users {\it build} software.  Spack needs
 modifications to enable it to understand complex microarchitecture
 details, ABI constraints, and runtime details of exascale machines.  This
 project will enable binary packaging, and it will develop new
-technologies that enable the same binary packags to to be used within
+technologies that enable the same binary packages to to be used within
 containers {\it or} in bare metal deployments on exascale hardware.
 
 The Supercontainer effort faces similar challenges to deploying
@@ -58,7 +58,7 @@ are isolated from the host network, filesystem, and GPU hardware, and
 that binaries within a container are unoptimized and can run on any chip
 generation from a particular architecture. These go against the
 multi-user, multi-tenant user environment of most HPC centers, and
-optimized containers may not be portable across systems at all.
+optimized containers may not be portable across systems.
 
 \paragraph{Solution Strategy}
 
@@ -76,28 +76,28 @@ on an HPC system or in a container.
 
 The Supercontainer project seeks to document current practice and to
 leverage existing container runtimes, but also to develop new enabling
-technologies where necessary to allow container to run on HPC machines.
+technologies where necessary to allow containers to run on HPC machines.
 Several HPC container runtimes (Shifter, Charliecloud, and Singularity)
 already exist, and this diversity enables wide exploration of the HPC
 container design space, and the Supercontainers project will work with
 their developers to address HPC-specific needs, including container and
 job launch, resource manager integration, distribution of images at
 scale, use of system hardware (storage systems, network and MPI
-libraries, GPUs and other accelerators, and usability concerns around
-interfaacing between the host and container OS (e.g., bind-mounting,
+libraries, GPUs and other accelerators), and usability concerns around
+interfacing between the host and container OS (e.g., bind-mounting,
 etc. required for hardware support).
 
 The project will document best practices and produce a technical report
 to help educate new users and developers to the advantages of containers,
 as well as a best-practices report to help ensure efficient container
-utilization within supercomputing. Both of these will be living
+utilization on supercomputers. Both of these will be living
 documents, periodically updated in response to lessons learned and
 feedback.  In addition, we will identify gaps, and implement changes and
 automation in one of the three existing runtimes, as needed.  The project
 will also interface with the E4S and SDK teams, as well as AD teams
 interested in containerizing their applications. We will work to enable
 these teams to deploy reproducible, minimally-sized container images that
-support a multiple of AD software ecosystems.
+support multiple AD software ecosystems.
 
 \paragraph{Recent Progress}
 
@@ -115,9 +115,9 @@ support a multiple of AD software ecosystems.
       Five teams were able to set up and deploy Spack pipelines.
 
 \item Produced the first revision of our best practices document for
-      efficient container utilization: "Containers in HPC: Best practices
-      and pitfalls for users", hosted on
-      GitLab pages~\footnote{https://reidpr.gitlab.io/best-practices/}.
+      efficient container utilization: ``Containers in HPC: Best practices
+      and pitfalls for users,'' hosted on
+      GitLab page.s~\footnote{https://reidpr.gitlab.io/best-practices/}
 
 \item Developed an enhanced tutorial session which introduces the context
       of using containers in HPC systems, with a demo on NERSC's Cori system.
@@ -136,9 +136,9 @@ support a multiple of AD software ecosystems.
       Support ST teams' Spack usage.
 
 \item Produced the first revision of our best practices document for
-      efficient container utilization: "Containers in HPC: Best practices
-      and pitfalls for users", hosted on GitLab
-      pages~\footnote{https://reidpr.gitlab.io/best-practices/}.
+      efficient container utilization: ``Containers in HPC: Best practices
+      and pitfalls for users,'' hosted on GitLab
+      pages.~\footnote{https://reidpr.gitlab.io/best-practices/}
 
 \item Investigate container scalability and optimization strategies, both
       at the container image layers and also within container runtimes.
