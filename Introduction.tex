@@ -5,10 +5,11 @@ The ECP ST portfolio has established a set of interdependent projects that will 
 \begin{table}
 	\begin{tabular}{|>{\columncolor[gray]{0.8}}p{0.10\linewidth}|>{\columncolor[rgb]{0.88,1,1}}p{0.15\linewidth}|p{0.6\linewidth}|}\hline
 	    \vfill WBS 2.3.1\vfill & \vfill \centering{Programming Models and Runtimes} \vfill & \vfill Cross-platform, production-ready programming infrastructure to support development and scaling of mission-critical software at both the node and full-system levels.\vfill \\\hline
-		\vfill WBS 2.3.2 \vfill & \vfill \centering{Development Tools} \vfill & \vfill A suite of tools and supporting unified infrastructure aimed at improving developer productivity across the software stack. This scope includes debuggers, profilers, and the supporting compiler infrastructure.\vfill \\\hline
+		\vfill WBS 2.3.2 \vfill & \vfill \centering{Development Tools} \vfill & \vfill A suite of tools and supporting unified infrastructure aimed at improving developer productivity across the software stack. This scope includes debuggers, profilers, and the supporting compiler infrastructure, with a particular emphasis on LLVM~\cite{LLVM:2018} as a delivery and deployment vehicle. \vfill \\\hline
 		\vfill WBS 2.3.3 \vfill & \vfill \centering{Mathematical Libraries} \vfill & \vfill Mathematical libraries and frameworks that (i) interoperate with the ECP software stack; (ii) are incorporated into ECP applications; and (iii) provide scalable, resilient numerical algorithms that facilitate efficient simulations on Exascale computers.\vfill \\\hline
 		\vfill WBS 2.3.4 \vfill & \vfill \centering{Data and Visualization} \vfill & \vfill Production infrastructure necessary to manage, share, and facilitate analysis and visualization of data in support of mission-critical codes. Data analytics and visualization software that supports scientific discovery and understanding, despite changes in hardware architecture and the size, scale, and complexity of simulation and performance data produced by Exascale platforms. \vfill \\\hline
-		\vfill WBS 2.3.5 \vfill & \vfill \centering{Software Ecosystem and Delivery} \vfill & \vfill A unified set of robust, lower-level software libraries as well as end-user tools that help address the complexities of developing higher-level software and leveraging and utilizing Exascale system components and resources. Programming tools, libraries, and system support for incorporating resilience into application codes that enables them to run successfully and efficiently in the presence of faults experienced on the system. Oversight of development across software technology to ensure the teams are communicating and coordinating, other focus areas are included in the execution, interfaces are agreed upon and standardized where necessary, and interdependencies across projects are effectively managed.\vfill \\\hline
+		\vfill WBS 2.3.5 \vfill & \vfill \centering{Software Ecosystem and Delivery} \vfill & \vfill Development and coordination of Software Development Kits (SDKs), the Extreme-scale Scientific Software Stack (E4S) across all of ECP ST projects.  Development of capabilities in Spack~\cite{gamblin+:sc15} in collaboration with NNSA's primary sponsorship.  Development of SuperContainers~\cite{Supercontainers} and coordination of container-based workflows across DOE computing faciities.\vfill \\\hline
+		\vfill WBS 2.3.6 \vfill & \vfill \centering{NNSA ST} \vfill & \vfill Development and enhancement of open source software capabilities that are primarily developed at Lawrence Livermore, Los Alamos and Sandia National Laboratories.  Funds for engaging open science application and software teams in the use and enhancement of these products.\vfill \\\hline
 	\end{tabular}
 	\caption{\label{table:wbs} ECP ST Work Breakdown Structure (WBS), Technical Area, and description of scope.}
 \end{table}
@@ -24,8 +25,8 @@ Since the initial selection process, ECP ST has reorganized efforts as described
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.9\linewidth]{ECP20}
-	\caption{The ECP Work Breakdown Structure through Level 3 (L3).}
+	\includegraphics[width=0.9\linewidth]{ECP21}
+	\caption{The ECP Work Breakdown Structure through Level 3 (L3). Under Software Technology, WBS 2.3.6 consolidates ATDM contributions to ECP into a new L3 area.}
 	\label{fig:ecp2}
 \end{figure}
 
@@ -110,7 +111,7 @@ Each ECP ST L3 (five of them) has funds for an SDK project from which we have id
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=6.5in]{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/SDKdefinition1}
+	\includegraphics[width=6.5in]{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/SDKdefinition2}
 	\caption{\label{fig:sdk-definition1-0}The above graphic shows the breakdown of ECP ST products into 6 SDKs ( the first six columns).  The rightmost column lists products that are not part of an SDK, but are part of Ecosystem group that will also be delivered as part of E4S. The colors denoted in the key map all of the ST products to the ST technical area they are part of.  For example, the xSDK consists of products that are in the Math Libraries Technical area, plus TuckerMPI which is in the Ecosystem and Delivery technical area.  Section~\ref{subsubsect:ecosystem-sdk} provides an update on the progress in defining SDK groupings.}
 \end{figure}
 
@@ -159,7 +160,7 @@ Users access ECP ST products using these basic mechanisms (see Figure~\ref{fig:p
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{SoftwareStack}
-	\caption{\textbf{The ECP ST software stack is delivered to the user community through several channels.} Key channels are via source code, increasing using SDKs, direct to Facilities in collaboration with ECP HI, via binary distributions, in particular the OpenHPC project and via HPC vendors.  The SDK leadership team includes  ECP ST team members with decades of experience delivering scientific software products.}
+	\caption{\textbf{The ECP ST software stack is delivered to the user community through several channels.} Key channels are via source code, increasingly using SDKs, direct to Facilities in collaboration with ECP HI, via binary distributions, in particular the OpenHPC project and via HPC vendors.  The SDK leadership team includes  ECP ST team members with decades of experience delivering scientific software products.}
 	\label{fig:softwarestack}
 \end{figure}
 
@@ -167,50 +168,43 @@ Users access ECP ST products using these basic mechanisms (see Figure~\ref{fig:p
 
 The initial organization of ECP ST was based on discussions that occurred over several years of Exascale planning within DOE, especially the DOE Office of Advanced Scientific Computing Research (ASCR).  Figure~\ref{fig:ecpstv1} shows the conceptual diagram of this first phase.  The 66 ECP ST projects were mapped into 8 technical areas, in some cases arbitrating where a project should go based on its primary type of work, even if other work was present in the project.  In November 2017, ECP ST was reorganized into 5 technical areas, primarily through merging a few smaller areas, and the number of projects was reduced to 56 (presently 55 due to further merging in \ecosystem).  Figure~\ref{fig:ecpstv2} shows the diagram of the second phase of ECP ST.  With the CAR V2.0, we will describe the next phase of organization refinement needed to best position ECP ST for success in the CD-2 phase of the project.
 
-\begin{table}
-\begin{tabular}{|L{1in}|L{1in}|L{1.0in}|L{2.5in}|}\hline
-\textbf{WBS} & \textbf{Role/Area} & \textbf{Leader} & \textbf{Transition} \\\hline
-1.3 & ECP ST Director & Rajeev Thakur & Renumbered to 2.3.  Thakur left director role, continues as lead of 2.3.1 \pmr. Mike Heroux new director. \\\hline
-1.3 & ECP ST Deputy Director & Pat McCormick & McCormick left deputy role, continued as PI of 2.3.1.08 Legion project. Jonathan Carter new deputy director.\\\hline
-1.3.1 & Programming Models \& Runtimes & Rajeev Thakur& Renumbered to 2.3.1, renamed to \pmr, otherwise unchanged. \\\hline
-1.3.2 & Tools & Jeffrey Vetter
-& Renumbered to 2.3.2, renamed to \tools, otherwise unchanged. \\\hline
-1.3.3 & Math/Scientific Libs & Mike Heroux & New leader Lois Curfman McInnes, renamed Mathematical Libraries, new number 2.3.3. \\\hline
-1.3.4 & Data Management \& Workflows & Rob Ross & Combined with 1.3.5 to create 2.3.4. Jim Ahrens leader. \\\hline
-1.3.5 & Data Analytics \& Visualization & Jim Ahrens
-& Combined with 1.3.4 to create 2.3.4. Jim Ahrens leader.\\\hline
-1.3.6 & System Software & Martin Schulz& Combined with 1.3.7 and 1.3.8 into 2.3.5. Rob Neely leader.\\\hline
-1.3.7 & Resilience & Al Geist & Combined with 1.3.6 and 1.3.8 into 2.3.5. Rob Neely leader. \\\hline
-1.3.8 & Integration & Rob Neely & 
-Combined with 1.3.6 and 1.3.7 into 2.3.5. Rob Neely leader. \\\hline
-\end{tabular}
-	\caption{\label{fig:wbs-transition}ECP ST technical areas were reduced from 8 to 5 in November 2017.  This figure shows how areas were remapped and merged.  In addition, the ECP ST Director and Deputy Director changed from Rajeev Thakur (who continues as the \pmr\ lead) and Pat McCormick to Mike Heroux and Jonathan Carter, respectively.}
-\end{table}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{STFY20WBS}
+	\caption{\label{fig:wbs-FY20} The FY20 ECP ST WBS structure includes a new L3 (2.3.6) and better balances L4 subprojects in the first four L3 technical areas.  Technical area 2.3.5 has only two projects, which are focused on meta-product development in SDKs, E4S, Spack and SuperContainers.}
+\end{figure}
 
 \begin{figure}
 \begin{mdframed}
 \begin{itemize}
-\item Phase 1: 66 total projects
+\item Phase 1: 66 total L4 subprojects
 \begin{itemize}
 \item 35 projects funded by the DOE Office of Science that were selected in late 2016 via an RFI and RFP process, considering prioritized requirements of applications and DOE facilities. 
 These projects started work in January–March 2017 depending on when the contracts were awarded.
 \item 31 ongoing DOE NNSA funded projects that are part of the Advanced Technology Development and Mitigation (ATDM) program. The ATDM program started in FY14.  These projects are focused on longer term research to address the shift in computing technology to extreme, heterogeneous architectures and to advance the capabilities of NNSA simulation codes.
 \end{itemize}
-\item Phase 2: 56 total projects
-(now 55 after further merging in 2.3.5)
+\item Phase 2: 55 total L4 subprojects
 \begin{itemize}
 \item 41 ASCR-funded projects.  Added  2 \ecosystem\ projects and 4 SDK projects.
 \item 15 ATDM projects: Combined the previous 31 ATDM projects into one project per technical area per lab.  ATDM projects are generally more vertically integrated and would not perfectly mapped to any proposed ECP ST technical structure.  Minimizing the number of ATDM projects within the ECP WBS structure reduces complexity of ATDM to ECP coordination and gives ATDM flexibility in revising its portfolio without disruption to the ECP-ATDM mapping.
 \end{itemize}
-\item Phase 3: Fewer, larger and more uniform-sized projects
+\item Phase 3: 33 total L4 subprojects.  Fewer, larger and more uniform-sized projects
 \begin{itemize}
-	\item Starting with FY2020, ECP ST will further consolidate L4 projects to foster additional synergies and amortize project overheads as ECP heads into Critical Decision Phase 2~\cite{413.3B}, where more rigor in planning and execution are needed.
-	\item Details of this plan are available to project stakeholders in the CAR V1.5 appendix and will be in the public portion of the CAR V2.0 in July 2019.
+	\item Starting with FY2020, ECP ST has further consolidated L4 projects to foster additional synergies and amortize project overheads as ECP heads into Critical Decision Phase 2~\cite{413.3B}, where more rigor in planning and execution are needed.
+	\item 5 L3s to 6: New NNSA ST L3
+	\item 40 ST SC-funded L4 subprojects to 30.
+	\begin{itemize}
+	\item \pmr – 13 to 9, \tools - 6 to 6, \mathlibs - 7 to 6, \dataviz - 10 to 7, \ecosystem - 4 to 3.
+	\item Includes 2 new L4 subprojects in SW Ecosystem.
+	\end{itemize}
+	\item 15 ST NNSA-funded projects transferred to new NNSA ST L3. Consolidated from 15 to 3 L4 subprojects.
+	\item No more small subprojects.
+	\item Figure~\ref{fig:wbs-FY20} show the overall structure.
 \end{itemize}
 \end{itemize}
 \end{mdframed}
 
-\caption{\label{fig:project-remapping}Project remapping summary from Phase 1 (through November 2017) to Phase 2 (After November 2017) to Phase 3 (After October 1, 2019)}
+\caption{\label{fig:project-remapping}Project remapping summary from Phase 1 (through November 2017) to Phase 2 (November 2017 -- September 30, 2019) to Phase 3 (After October 1, 2019)}
 \end{figure}
 
 
@@ -228,8 +222,13 @@ These projects started work in January–March 2017 depending on when the contra
 \end{figure}
 \begin{figure}
 	\centering
+	\includegraphics[width=0.9\linewidth]{ECPSTV3}
+	\caption{ECP ST after October 2019 reorganization.  This diagram reflects the further consolidation of NNSA open source contributions to enable more flexible management of NNSA ST contributions.}
+\end{figure}
+\begin{figure}
+	\centering
 	\includegraphics[width=0.9\linewidth]{ECP-ST-Leads}
-	\caption{ECP ST Leadership Team as of November 2017.}
+	\caption{ECP ST Leadership Team as of October 2019.}
 	\label{fig:ecpstleads}
 \end{figure}
 
