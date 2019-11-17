@@ -31,14 +31,14 @@ FFTs are used in many applications such as molecular dynamics,
 spectrum estimation, fast convolution and correlation, signal 
 modulation and many wireless multimedia applications. The 
 distributed 3D FFT is one of the most important kernels involved 
-in Molecular Dynamics (MD) computations and its performance can 
-affect MD scalability at large scale. MD requires to solve 3D FFTs 
+in molecular dynamics (MD) computations, and its performance can 
+affect MD scalability; MD requires solving 3D FFTs 
 of medium size ($10^6-10^8$ points). The performance of the first 
 principles calculations strongly depends on the performance of the 
 FFT solver that performs many FFTs of size $\approx 10^7$ points in 
-a calculation that we call batched FFT. Moreover, many Poisson PDE 
-type of equations arising from many engineering areas such as PLASMA 
-simulation, density field, etc., need to solve FFT of size above $10^9$. 
+a calculation that we call batched FFT. Moreover, Poisson PDE-type 
+equations arising from many engineering areas, such as plasma
+simulation and density fields, need to solve FFTs of size larger than $10^9$. 
 
 We found that more than dozen of ECP applications use FFT in their codes.
 ECP applications that require FFT-based solvers suffer from the lack of 
@@ -48,14 +48,14 @@ To address these needs, FFT functionalities will first be delivered
 to the LAMMPS (molecular dynamics) and HACC (Hardware Accelerated
 Cosmology Code) ECP applications. 
 LAMMPS and HACC use their own FFTMPI and SWFFT FFT libraries, respectively.
-FFT-ECP provided recently GPU-acceleration to these libraries.
-Software release was made under the {\it Highly Efficient FFTs for Exascale}
+FFT-ECP recently provided GPU-acceleration to these libraries.
+The software release was made under the {\it Highly Efficient FFTs for Exascale}
 ({\bf heFFTe}) library~\cite{thasd19}.
 
-The heFFTe software stack is illustrated on Figure~\ref{fig:fft-ecp-pipeline}, Left,
-and the main components in the heFFTe framework are illustrated in 
-Figure~\ref{fig:fft-ecp-pipeline}, Right. The first and last step address the need 
-for flexible FFT API to take application specific input and output (bricks/pencils), 
+The heFFTe software stack is illustrated in the left-hand side of Figure~\ref{fig:fft-ecp-pipeline}, 
+while the main components of the heFFTe framework are illustrated in the right-hand side of
+Figure~\ref{fig:fft-ecp-pipeline}. The first and last step address the need 
+for a flexible FFT API to take application-specific input and output (bricks/pencils), 
 including arbitrary initial decompositions. Currently, heFFTe provides efficient
 GPU support for all communication primitives and features in FFTMPI and SWFFT.
  
@@ -65,7 +65,7 @@ GPU support for all communication primitives and features in FFTMPI and SWFFT.
     \raisebox{.4\height}{\includegraphics[width=0.56\textwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/ffttransormations}}
     \caption{\label{fig:fft-ecp-pipeline}
     {\bf Left}: the heFFTe software stack. {\bf Right}: 3D FFT computational pipeline in heFFTe with:~
-      1) Flexible API for application specific input and output,
+      1) Flexible API for application-specific input and output,
          including bricks/pencils/etc.;~
       2) Efficient packing/unpacking and MPI communication
          routines;~
@@ -129,8 +129,8 @@ for important LA kernels~\cite{Nath2010,Kurzak2012gemmfermi}.
 \end{enumerate}
 
 \paragraph{Recent Progress}
-The FFT-ECP team completed implementation optimizations and features phase~\cite{thasd19}
-and released the heFFTe v0.1 library~\cite{sc19}. heFFTe features very good strong 
+The FFT-ECP team completed a phase of implementating optimizations and features~\cite{thasd19}
+and released the heFFTe v0.1 library~\cite{sc19}. heFFTe demonstrates very good strong 
 scalability and performance that is close to 90\% of the roofline peak 
 (see Figure~\ref{fig:fft-ecp-progress})~\cite{sc19,eurompi19}.
 
@@ -150,7 +150,7 @@ scalability and performance that is close to 90\% of the roofline peak
 
 
 \paragraph{Next Steps}
-Use heFFTe in applications, generalize the APIs to fit application use,
-add new APIs as needed, develop a benchmarking framework for MPI FFT 
-communications, and MPI-based optimizations for Summit. 
-Next step is also the development of HIP heFFTe to support AMD GPUs. 
+Next steps of work are using heFFTe in applications, generalizing the APIs to fit application use,
+adding new APIs as needed, developing a benchmarking framework for MPI FFT 
+communications, and implementing MPI-based optimizations for Summit. 
+Another aspect of work is the development of HIP heFFTe to support AMD GPUs. 

@@ -38,25 +38,26 @@ useful for general purpose scientific computing.
 \end{enumerate}
 
 All challenges require the redesign of existing iterative solvers with respect 
-to higher parallelism within all building blocks, a reduced number of 
+to higher parallelism, % within all building blocks
+a reduced number of 
 communication and synchronization points, favoring computations over 
 communication, and adopting multiprecision algorithms for efficient hardware 
 utilization. 
 In the last few decades, numerous efforts 
 have investigated the potential of communication-avoiding (CA) and pipelined 
-Krylov solvers~\cite{yamazakiipdps2014,Cornelis2018TheCC}; however, the 
-implementations usually 
-remained in prototype status and rarely made it into production code. 
-Similarly, significant effort was put into developing new preconditioning 
+Krylov solvers~\cite{yamazakiipdps2014,Cornelis2018TheCC},
+% ; however, the implementations usually remained in prototype status and rarely made it into production code. 
+% Similarly, significant effort was put into developing 
+as well as new preconditioning 
 techniques that allow for the efficient parallelization of the preconditioner 
 setup and the preconditioner 
 application~\cite{chowisc2015,anzteuropa2015,ANZT20181}. 
-Again, most implementations were experimental and rarely adopted by application 
+However, most implementations were experimental and rarely adopted by application 
 code.
 Also the concept of accelerating iterative methods by using lower precision 
 formats for parts of the computations or memory access was extensively 
 investigated in literature~\cite{carson1,carson2,doi:10.1002/cpe.4460}, 
-while production-ready implementations are still a scarce resource. 
+while production-ready implementations are still scarce.
 
 %In the PEEKS project we address the challenge of turning prototype 
 %implementations into production-ready functionality by improving robustness 
@@ -70,11 +71,11 @@ while production-ready implementations are still a scarce resource.
 The primary thrusts of the PEEKS project are:
 \begin{enumerate}
     \item \textbf{Architecture-portable software design:}
-	In the Ginkgo C++ software effort, we design and develop a next-generation 
+	In the Ginkgo C++ software, we design and develop a next-generation 
 	sparse linear algebra library able to run on multi- and manycore 
-	architectures. The library design is guided by radically decoupling the 
-	algorithm implementation from the hardware-specific kernel implementations, 
-	therewith allowing for ecosystem extensibility while allowing for heavy, 
+	architectures. The library design decouples
+	algorithm implementations from hardware-specific kernel implementations, 
+	thereby allowing extensibility as well as 
 	architecture-specific kernel optimization. 
    \item \textbf{Sustainability efforts:}
 	The Ginkgo software development cycle adheres the Better Scientific 
@@ -99,7 +100,9 @@ The primary thrusts of the PEEKS project are:
 	without impacting the preconditioner quality~\cite{toms_anzt}. 
    \item \textbf{Software-defined events (SDE):}  We team up with the ECP 
     Exa-PAPI project to design and realize an ecosystem for software-defined 
-    events. The idea is to provide application scientists with easy access 
+    events. The idea is to provide 
+% application scientists with 
+    easy access 
     to library-, domain- and solver-specific metrics via the PAPI interface. 
     This avoids cumbersome code instrumentation and library recompilation for 
     debugging algorithm behavior or identifying performance 
@@ -113,8 +116,8 @@ For improving the Ginkgo software quality and performance reproducibility, we
 realized a continuous benchmarking system permanently evaluating the 
 performance of central building blocks and archiving the data~\cite{pasc_anzt}. 
 We 
-also realized a web-based Ginkgo Performance Explorer that allows to 
-interactively explore archived performance 
+also realized a web-based Ginkgo Performance Explorer that allows 
+interactively exploration of archived performance 
 data~\cite{gpewebpage}.
 \item
 We implemented and released five variations of communication-avoiding
@@ -139,7 +142,7 @@ algorithms~\cite{ipdps_anzt} (see Figure~\ref{fig:ParILUTperf}).
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=6in]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/parilutspeedup}
+	\includegraphics[width=5in]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/parilutspeedup}
 	\caption{\label{fig:ParILUTperf}Speedup of the ParILUT over conventional 
 	threshold-ILU generation on different manycore architectures. Test problems 
 	are taken from the Suite Sparse Matrix Collection.}
@@ -177,12 +180,12 @@ Our next efforts are:
 	\item \textbf{Multiprecision sparse matrix formats:} Operations with sparse 
 	matrices are memory-bound on virtually all architectures. We investigate 
 	how splitting the matrix int several operators stored in value-optimized 
-	less complex floating point precision formats can help improving the 
-	performance of ECP applications.
+	less complex floating point precision formats can help improving
+	performance.
 	\item \textbf{Polynomial preconditioners:} The communication cost of 
 	numerical preconditions is high. In particular for communication-avoiding 
 	pipelined Krylov methods, the synchronization necessary by standard 
 	preconditioning can become a bottleneck. We will deliver a new
-        polynomial preconditioner in Trilinos (Belos). We will investigate the effectiveness 
-	and efficiency of polynomial preconditioners for ECP applications.
+        polynomial preconditioner in Trilinos (Belos) and investigate their effectiveness 
+	for ECP applications.
 \end{enumerate}
