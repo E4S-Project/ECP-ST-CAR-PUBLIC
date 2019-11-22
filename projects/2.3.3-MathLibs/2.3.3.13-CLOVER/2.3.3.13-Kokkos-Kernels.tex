@@ -1,8 +1,8 @@
 \subsubsection{\stid{3.13}CLOVER Sub-project Kokkos Kernels} 
 \paragraph{Overview} 
-The Kokkos Kernels~\footnote{https://github.com/kokkos/kokkos-kernels} subproject is primarily focused on performance portable kernels
-for sparse/dense linear algebra, graph and machine learning kernels. The
-focus of this project has been on kernels that are key to the performance of
+The Kokkos Kernels~\footnote{https://github.com/kokkos/kokkos-kernels} subproject primarily focuses on performance portable kernels
+for sparse/dense linear algebra, graphs, and machine learning, with emphasis on
+kernels that are key to the performance of
 several ECP applications. We work closely with ECP applications to identify the
 performance-critical kernels and develop portable algorithms for these kernels.
 The primary focus of this subproject is to support ECP application needs, develop new
@@ -13,7 +13,7 @@ NNSA's Center for Excellence efforts. These collaborations will  enable vendor s
 that are targeted towards ECP application needs.
 
 \paragraph{Key  Challenges}
-There are several challenges in allowing ECP applications move to the hardware architetures
+There are several challenges in allowing ECP applications move to the hardware architectures
 announced in the next few years. We highlight the four primary challenges here:
 \begin{enumerate}
 \item 
@@ -22,45 +22,45 @@ three different accelerators from AMD, Intel and NVIDIA. While we have been expe
 different architectures in such a short timeframe adds pressure on the portability
 solutions such as Kokkos Kernels to optimize and support the kernels on all the platforms.
 \item
-The design of several ECP applications and software stack that relies on a component based
-approach that results in extremely high number of kernel launches on the accelerators which
+The design of several ECP applications and a software stack that rely on a component-based
+approach results in an extremely high number of kernel launches on the accelerators, which
 results in the latency costs becoming the primary bottleneck in scaling the applications.
 \item
-The change in the needs of the applications from a device level kernels to smaller team level kernels. Vendor
+The change in the needs of applications from device-level kernels to smaller team-level kernels. Vendor
 libraries are not ready for such a drastic change in software design.
 \item 
 The reliance of ECP applications on certain kernels that do not port well to the  accelerator architectures.
 \end{enumerate}
 
-These challenges require a collaborative effort to allow to explore new algorithmic choices,
-working with the vendors to incorporate ECP needs into their libraries plans, develop
-portable kernels from scratch and deploying them in a robust software ecosystem. Kokkos
+These challenges require a collaborative effort to explore new algorithmic choices,
+working with the vendors to incorporate ECP needs into their library plans, to develop
+portable kernels from scratch, and to deploy them in a robust software ecosystem. The Kokkos
 Kernels project will pursue all of these choices in an effort to address these challenges.
 
 \paragraph{Solution Strategy}
 
 Our primary solution strategy to address these challenges are:
 \begin{enumerate}
-    \item \textbf{Codesign Portable Kernels with Vendors and Applications:}
+    \item \textbf{Codesign portable kernels with vendors and applications:}
     We rely on codesign of Kokkos Kernels implementations for
     specializations that are key to the performance of ECP applications. This
     requires tuning kernels even up to the problem sizes that are of interest
     to our users. Once we have developed a version, we provide these
     to all the vendors so their teams can optimize these kernels even
-    further in vedor provided math libraries.
-   \item \textbf{Emphasis on Software Support and Usability:}
-	Kokkos Kernels project devotes considerable amount of time working with
+    further in vendor-provided math libraries.
+   \item \textbf{Emphasis on software support and usability:}
+	The Kokkos Kernels project devotes a considerable amount of time working with
 	ECP applications, integrating the kernels into application codes, tuning
-	for the application needs, tutorials and user support. We invest
+	for application needs, and providing tutorials and user support. We invest
 	in delivering a robust software ecosystem that serves the
 	needs of diverse ECP applications on all platforms of interest.
-   \item \textbf{Invest in Algorithmic research to reduce latency costs and new accelerator focused approaches:} 
-   Kokkos Kernels team is considering several solutions from the computer science
-   aspects and the applied mathematics, algorithm design aspects to resolve the latency cost issues.
-   For example, from the computer science perspective we are focusing on the
+   \item \textbf{Invest in algorithmic research to reduce latency costs and new accelerator focused approaches:} 
+   To resolve latency cost issues, the Kokkos Kernels team is considering several solutions from computer science
+   perspectives and also from algorithmic applied mathematics perspectives. 
+   For example, from a computer science perspective, we are focusing on the
    use of streams or other latency reducing techniques such as cuda graphs. From
    the applied mathematics perspective we are developing new algorithms such
-   as cluster-based approaches for preconditioners such as Gauss-Seidel precondtioners
+   as cluster-based approaches for preconditioners, such as Gauss-Seidel precondtioners,
    to reduce the number of kernel launches. 
 \end{enumerate}
 
