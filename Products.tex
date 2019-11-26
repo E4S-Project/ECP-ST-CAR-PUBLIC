@@ -1,5 +1,5 @@
-\subsection{ECP ST Products}\label{subsect:products}
- ECP ST efforts contribute to 91 software products in five technical areas (Table~\ref{table:wbs}). 34 of the 91 products are broadly used in the HPC community and require substantial investment and transformation in preparation for Exascale architectures.  An additional 25 are important to some existing applications and typically represent new capabilities that enable new usage models for realizing the potential that Exascale platforms promise.  The remaining products are in early development phases, addressing emerging challenges and opportunities that Exascale platforms present.
+\subsection{ECP ST Development Projects}\label{subsect:projects}
+ ECP ST efforts support development in the following software projects in five technical areas (Table~\ref{table:wbs}). In each table is a list of related projects, a URL (if available) and a estimate of deployment scope.
 
 \begin{table}
 	\begin{tabular}{|l|l|l|}\hline
@@ -10,13 +10,9 @@
 		MPICH & \url{http://www.mpich.org} & Broad\\\hline
 		OpenMPI & \url{https://www.open-mpi.org} & Broad\\\hline
 		RAJA & \url{https://github.com/LLNL/RAJA} & Broad\\\hline
-		ROSE & \url{https://github.com/rose-compiler} & Broad\\\hline
 
 		CHAI & \url{https://github.com/LLNL/CHAI} & Moderate\\\hline
-		Global Arrays & \url{http://hpc.pnl.gov/globalarrays} & Moderate\\\hline
 		Legion & \url{http://legion.stanford.edu} & Moderate\\\hline
-		LLVM OpenMP compiler & \url{https://github.com/SOLLVE} & Moderate\\\hline
-		OpenMP V \& V Suite & \url{https://bitbucket.org/crpl_cisc/sollve_vv/src} & Moderate \\\hline
 		Qthreads & \url{https://github.com/Qthreads} & Moderate\\\hline
 		Umpire & \url{https://github.com/LLNL/Umpire} & Moderate\\\hline
 		UPC++ & \url{http://upcxx.lbl.gov} & Moderate\\\hline
@@ -29,7 +25,7 @@
 		AML & \url{https://xgitlab.cels.anl.gov/argo/aml} & Experimental\\\hline
 		PowerSlurm & \url{https://github.com/tpatki/power-slurm} & Experimental\\\hline
 	\end{tabular}
-\caption{\label{table:pmr-products} Programming Models and Runtimes Products (18 total).}
+\caption{\label{table:pmr-products} Programming Models and Runtimes Projects (17 total).}
 \end{table}
 
 \begin{table}
@@ -39,6 +35,7 @@
 
 		Caliper & \url{https://github.com/llnl/caliper} & Broad\\\hline
 		Dyninst Binary Tools Suite & \url{http://www.paradyn.org} & Broad\\\hline
+	 	Flang/LLVM Fortran compiler & \url{http://www.flang-compiler.org} & Broad\\\hline
 		HPCToolkit & \url{http://hpctoolkit.org} & Broad\\\hline
 		LLVM & \url{http://llvm.org/} & Broad\\\hline
 		PAPI & \url{http://icl.utk.edu/exa-papi} & Broad\\\hline
@@ -46,6 +43,8 @@
 	    STAT & \url{https://github.com/LLNL/STAT} & Broad\\\hline
 		Tau & \url{http://www.cs.uoregon.edu/research/tau} & Broad\\\hline
 
+		LLVM OpenMP compiler & \url{https://github.com/SOLLVE} & Moderate\\\hline
+		OpenMP V \& V Suite & \url{https://bitbucket.org/crpl_cisc/sollve_vv/src} & Moderate \\\hline
 		mpiFileUtils & \url{https://github.com/hpc/mpifileutils} & Moderate\\\hline
 		openarc & \url{https://ft.ornl.gov/research/openarc} & Moderate\\\hline
 		Papyrus & \url{https://csmd.ornl.gov/project/papyrus} & Moderate\\\hline
@@ -53,15 +52,13 @@
 	    PRUNERS Toolset & \url{https://github.com/PRUNERS/PRUNERS-Toolset} & Moderate\\\hline
 		TriBITS & \url{https://tribits.org} & Moderate\\\hline
 
-		CHiLL Compiler & & Experimental\\\hline
-		Exascale Code Gen Toolkit & & Experimental\\\hline
 		Gotcha & \url{http://github.com/llnl/gotcha} & Experimental\\\hline
 		Kitsune & \url{https://github.com/lanl/kitsune} & Experimental\\\hline
 		QUO & \url{https://github.com/lanl/libquo} & Experimental\\\hline
 		SICM & & Experimental \\\hline
 		SuRF  & & Experimental\\\hline
 \end{tabular}
-\caption{\label{table:tools-products} Development Tools Products (21 total).}
+\caption{\label{table:tools-products} Development Tools Projects (22 total).}
 \end{table}
 
 
@@ -88,8 +85,9 @@
 	ForTrilinos & \url{https://trilinos.github.io/ForTrilinos} & Experimental\\\hline
 	libEnsemble & \url{https://github.com/Libensemble/libensemble} & Experimental\\\hline
 	Tasmanian & \url{http://tasmanian.ornl.gov} & Experimental\\\hline
+	ArborX & \url{https://github.com/arborx/ArborX} & Experimental\\\hline
 \end{tabular}
-\caption{\label{table:math-products} Mathematical Libraries Products (16 total).}
+\caption{\label{table:math-products} Mathematical Libraries Projects (18 total).}
 \end{table}
 
 
@@ -124,10 +122,9 @@
 	ROVER &  & Experimental\\\hline
 	Siboka &  & Experimental\\\hline
 	SZ & \url{https://github.com/disheng222/SZ} & Experimental\\\hline
-	TuckerMPI &  & Experimental\\\hline
-	UnifyCR & \url{https://github.com/LLNL/UnifyCR} & Experimental\\\hline
+	UnifyFS & \url{https://github.com/LLNL/UnifyFS} & Experimental\\\hline
 \end{tabular}
-\caption{\label{table:vizdata-products} Visualization and Data Products (26 total).}
+\caption{\label{table:vizdata-products} Visualization and Data Projects (26 total).}
 \end{table}
 
 
@@ -136,16 +133,9 @@
 \begin{tabular}{|l|l|l|}\hline
 		\rowcolor{LightCyan}
 	\textbf{Product} & \textbf{Website} & \textbf{Deployment Scope}\\\hline
-	Flang/LLVM & Fortran compiler \url{http://www.flang-compiler.org} & Broad\\\hline
 	Spack & \url{https://github.com/spack/spack} & Broad\\\hline
+	E4S & \url{https://e4s.io} & Moderate\\\hline
 
-	Flux &  \url{http://flux-framework.org} & Moderate\\\hline
-	BEE & & Experimental\\\hline
-	FSEFI & & Experimental\\\hline
-	Sonar & & Experimental\\\hline
-	Secure JupyterHub & & Experimental\\\hline
-	Kitten Lightweight Kernel & \url{https://github.com/HobbesOSR/kitten} & Experimental \\\hline
-	NRM & \url{https://xgitlab.cels.anl.gov/argo/nrm} & Experimental\\\hline
 \end{tabular}
-\caption{\label{table:eco-products} Software Delivery and Ecosystems Products (12 total).}
+\caption{\label{table:eco-products} Software Delivery and Ecosystems Projects (2 total).}
 \end{table}
