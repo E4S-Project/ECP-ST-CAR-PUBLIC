@@ -109,19 +109,21 @@
 \mainmatter
 \input{Introduction}
 
-\newpage
-\section{ECP ST Technical Areas}
-\input{projects/2.3.1-PMR/2.3.1-PMR}
-\input{projects/2.3.2-Tools/2.3.2-Tools}
-\input{projects/2.3.3-MathLibs/2.3.3-MathLibs}
-\input{projects/2.3.4-DataViz/2.3.4-DataViz}
-\input{projects/2.3.5-Ecosystem/2.3.5-Ecosystem}
-\input{projects/2.3.6-NNSA/2.3.6-NNSA}
+\input{Project-Management}
+
+%\newpage
+%\section{ECP ST Technical Areas}
+%\input{projects/2.3.1-PMR/2.3.1-PMR}
+%\input{projects/2.3.2-Tools/2.3.2-Tools}
+%\input{projects/2.3.3-MathLibs/2.3.3-MathLibs}
+%\input{projects/2.3.4-DataViz/2.3.4-DataViz}
+%\input{projects/2.3.5-Ecosystem/2.3.5-Ecosystem}
+%\input{projects/2.3.6-NNSA/2.3.6-NNSA}
 
 \newpage
 \section{ECP ST Deliverables}\label{sect:deliverables}
 \input{Deliverables-Overview}
-\input{Products}
+\input{Projects}
 \input{Standards}
 \input{Design}
 %\input{ProductDictionary}
@@ -131,12 +133,22 @@
 %\vspace{3in}
 \clearpage
 %\newpage
-\section{ECP ST Project Summaries}\label{sect:project-summaries}
+\section{ECP ST Technical Areas}\label{sect:project-summaries}
+%\section{ECP ST Project Summaries}\label{sect:project-summaries}
 
-This section of the ECP ST Capabilities Assessment Report provides two-page summaries of each funded project.  The text provides a project overview and summarizes the key challenges, solution strategy, recent progress and next steps for the project.
-\newpage
-\subsection{\pmr}
-This section presents projects in \pmr.
+ECP ST is composed of six Level-3 Technical Areas (see Figure~\ref{fig:l3-overview}).  In this section of the ECP ST Capabilities Assessment Report we provide an overview of each Level-3 Technical Area and two-page summaries of each funded project within the technical area.  For each L3 area, we discuss scope and requirements, assumptions and feasibility, objectives, plans, risks and mitigations and future trends.  For each Level-4 subproject, we provide a project overview and summarizes the key challenges, solution strategy, recent progress and next steps for the project.
+\
+\begin{figure}
+	\centering
+	\fbox{\includegraphics[width=0.9\linewidth]{L3-Overview}}
+	\caption{ECP ST is composed of 6 Level-3 Technical Areas.  The first four areas are organized around functionality development themes.  The fifth is focused on technology for packaging and delivery of capabilities.  The sixth is organized around per-lab open source development at the three DOE NNSA laboratories, LANL, LLNL and SNL.  }
+	\label{fig:l3-overview}
+\end{figure}
+
+newpage
+%\subsection{\pmr}
+%This section presents projects in \pmr.
+\input{projects/2.3.1-PMR/2.3.1-PMR}
 \newpage
 \input{projects/2.3.1-PMR/2.3.1.01-PMR-SDKs/2.3.1.01-PMR-SDKs}
 \newpage
@@ -158,8 +170,9 @@ This section presents projects in \pmr.
 \input{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/2.3.1.19-Argo-PowerSteering}
 \newpage
 
-\subsection{\tools}
-This section presents projects in \tools.
+%\subsection{\tools}
+%This section presents projects in \tools.
+\input{projects/2.3.2-Tools/2.3.2-Tools}
 \newpage
 \input{projects/2.3.2-Tools/2.3.2.01-Tools-SDKs/2.3.2.01-Tools-SDKs}
 \newpage
@@ -183,8 +196,9 @@ This section presents projects in \tools.
 \newpage
 
 
-\subsection{\mathlibs}
-This section presents projects in \mathlibs.
+%\subsection{\mathlibs}
+%This section presents projects in \mathlibs.
+\input{projects/2.3.3-MathLibs/2.3.3-MathLibs}
 \newpage
 \input{projects/2.3.3-MathLibs/2.3.3.01-xSDK/2.3.3.01-xSDK}
 \newpage
@@ -206,8 +220,9 @@ This section presents projects in \mathlibs.
 \newpage
 
 
-\subsection{\dataviz}
-This section presents projects in \dataviz.
+%\subsection{\dataviz}
+%This section presents projects in \dataviz.
+\input{projects/2.3.4-DataViz/2.3.4-DataViz}
 \newpage
 \input{projects/2.3.4-DataViz/2.3.4.01-DataViz-SDK/2.3.4.01-DataViz-SDK}
 \newpage
@@ -228,8 +243,9 @@ This section presents projects in \dataviz.
 \newpage
 
 
-\subsection{\ecosystem}
-This section presents projects in \ecosystem.
+%\subsection{\ecosystem}
+%This section presents projects in \ecosystem.
+\input{projects/2.3.5-Ecosystem/2.3.5-Ecosystem}
 \newpage
 \input{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/2.3.5.01-Ecosystem-SDK}
 \newpage
@@ -237,8 +253,9 @@ This section presents projects in \ecosystem.
 \newpage
 
 
-\subsection{\nnsa}
-This section presents projects in \nnsa.
+%\subsection{\nnsa}
+%This section presents projects in \nnsa.
+\input{projects/2.3.6-NNSA/2.3.6-NNSA}
 \newpage
 \input{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-ST}
 \newpage
