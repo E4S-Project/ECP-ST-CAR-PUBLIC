@@ -1,6 +1,6 @@
 \subsubsection{\stid{6.03} SNL ATDM Software Technologies}
 
-\paragraph{Overview}
+\paragraph{Overview} \leavevmode \\
 
 The SNL ATDM Software Technologies projects are now aggregated to include Kokkos, Kokkos kernels, VTK-m, and Operating Systems and On-Node Runtime efforts. 
 
@@ -12,7 +12,7 @@ VTK-m is a toolkit of scientific visualization algorithms for emerging processor
 
 The OS and On-Node Runtime project focuses on the design, implementation, and evaluation of operating system and runtime system (OS/R) interfaces, mechanisms, and policies supporting the efficient execution of application codes on next-generation platforms. Priorities in this area include the development of lightweight tasking techniques that integrate network communication, interfaces between the runtime and OS for management of critical resources (including multi-level memory, non-volatile memory, and network interfaces), portable interfaces for managing power and energy, and resource isolation strategies at the operating system level that maintain scalability and performance while providing a more full-featured set of system services. The OS/R technologies developed by this project will be evaluated in the context of ATDM application codes running at large-scale on ASC platforms. Through close collaboration with vendors and the broader community, the intention is to drive the technologies developed by this project into vendor-supported system software stacks and gain wide adoption throughout the HPC community.
 
-\paragraph{Key  Challenges}
+\paragraph{Key  Challenges} \leavevmode \\
 
 \subparagraph{Kokkos:} The many-core revolution in computing is characterized by:
 (1) a steady increase in the number of cores within individual computer chips;
@@ -37,7 +37,7 @@ An alternative, however, is creating software that is performance portable acros
 
 
 
-\paragraph{Solution Strategy}
+\paragraph{Solution Strategy} \leavevmode \\
 
 \subparagraph{Kokkos: } The Kokkos team developed a parallel programming model with flexible enough semantics that it can be mapped on a diverse set of HPC architectures including current multi-core CPUs and massively parallel GPUs.
 The programming model is implemented using C++ template abstractions, which allow a compile time translation to the underlying programming mechanism on each platform, using their respective primary tool chains.
@@ -67,7 +67,7 @@ them to work well across many platforms~\cite{Lo2012,Larsen2015,Moreland2015}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\paragraph{Recent Progress}
+\paragraph{Recent Progress} \leavevmode \\
 
 
 \subparagraph{Kokkos:}  Kokkos provided a production quality performance portability abstraction to applications and software technology projects under ATDM and ECP which allows them to run on all currently deployed DOE production compute platforms. Support for new platforms was generally in place on the relevant testbeds, before the production machines were delivered.   The development of a number of new features based on customer needs improved the applicability of Kokkos for a wide range of applications. These include abstractions to seamlessly switch between data replication and atomic operation for scatter-add algorithms, improved flexibility of subview, tiled layouts, and multi-dimensional loop abstractions.  Direct help with optimization work for applications, helped identify optimal algorithmic choices as well as improvements in the use of Kokkos.
@@ -80,7 +80,7 @@ them to work well across many platforms~\cite{Lo2012,Larsen2015,Moreland2015}.
 \subparagraph{OS \& ONR:} The OS \& ONR team had a number of recent accomplishments.  The KVM hypervisor was enabled on a Cray XC30 system and application performance studies were conducted to determine the overhead of running in a virtual machine versus the native OS. This is the first demonstration of a virtual cluster on a Cray system.  They enabled the use of the Singularity container system on a Cray system and compared the performance of identical containers running on Cray and Amazon EC2 hardware. They enabled the effective coordination of on-node resources between multiple OS/R environments to evaluate and improve performance isolation capabilities. They extended the LogGOPSim simulator to track MPI resource usage without perturbing applications in order to better understand the impact of MPI matching behavior to guide hardware implementation choices.  They performed a scaling study comparing a containerized version of Nalu with a native version on a CTS-1 platform, which demonstrated that the container can actually reduce runtime while consuming more memory. Made contributions to the ongoing activities of the MPI Forum and the OpenMP Language Committee. Key efforts include: MPI persistent collectives, MPI sessions, MPI finepoints, OpenMP runtime interoperability, and OpenMP multi-level memory management.
 
 
-\paragraph{Next Steps}
+\paragraph{Next Steps} \leavevmode \\
 
 
 \subparagraph{Kokkos: } The Kokkos team is working with the Path Forward vendors to enable support for their architectures.
