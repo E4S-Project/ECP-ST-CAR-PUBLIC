@@ -1,4 +1,4 @@
-\section{ECP Software Technology Planning, Execution, Tracking and Assessment}
+\section{ECP Software Technology Planning, Execution, Tracking and Assessment}\label{sect:PETA}
 During the past two years, ECP ST has introduced the Extreme-scale Scientific Software Stack (E4S), Software Development Kits (SDKs).  We have established new approaches for project planning, execution, tracking and assessment using a tailored earned value management system that enables iterative and incremental refinement to its planning process.  We have also revised our key performance parameter (KPP-3, the third of ECP's four KPPs) to be solely focused on measuring capability integration into client environments.  We have developed and used an assessment process that has led to significant changes in the number and scope of L4 subprojects.
 
 \subsection{ECP Software Technology Architecture and Design}
@@ -18,7 +18,7 @@ On November 8, 2018, ECP ST released version 0.1 of the Extreme-scale Scientific
 \begin{figure}
 		\centering
 		\fbox{\includegraphics[width=0.9\linewidth]{E4S-Build-Tree}}
-	\caption{Using Spack~\cite{gamblin+:ecp18-spack-tutorial}, E4S builds a comprehensive software stack.  As ECP ST efforts proceed, we will use E4S for continuous integration testing, providing developers with rapid feedback on regression errors and providing user facilities with a stable software base as we prepare for Exascale platforms.  This diagram shows how E4S builds ECP products via an SDK target (the math libraries SDK called xSDK in this example).  The SDK target then builds all product that are part of the SDK (see Figure~\ref{fig:sdk-definition1} for SDK groupings), first defining and building external software products. Green-labeled products are part of the SDK. The blue-label indicates expected system tools, in this case a particular version of Python.  Black-labeled products are expected to be previously installed into the environment (a common requirement and easily satisified).  Using this approach, a user who is interested in only SUNDIALS (a particular math library) can be assured that the SUNDIALS build will be possible since it is a portion of what E4S builds and tests.}
+	\caption{Using Spack~\cite{gamblin+:ecp18-spack-tutorial}, E4S builds a comprehensive software stack.  As ECP ST efforts proceed, we will use E4S for continuous integration testing, providing developers with rapid feedback on regression errors and providing user facilities with a stable software base as we prepare for Exascale platforms.  This diagram shows how E4S builds ECP products via an SDK target (the math libraries SDK called xSDK in this example).  The SDK target then builds all product that are part of the SDK (see Figure~\ref{fig:sdk-definition1} for SDK groupings), first defining and building external software products. Green-labeled products are part of the SDK. The blue-label indicates expected system tools, in this case a particular version of Python.  Black-labeled products are expected to be previously installed into the environment (a common requirement and easily satisfied).  Using this approach, a user who is interested in only SUNDIALS (a particular math library) can be assured that the SUNDIALS build will be possible since it is a portion of what E4S builds and tests.}
 	\label{fig:e4s-build-tree}
 \end{figure}
 
@@ -51,7 +51,7 @@ E4S has the following key features:
 	\centering
 	\includegraphics[width=0.9\linewidth]{E4S-AWS-public-image}
 	\caption{E4S is available as an Amazon AWS public image.  Images on Google and Microsoft Cloud environments will be available soon.}
-	\label{fig:e4s-build-cache}
+	\label{fig:e4s-aws-image}
 \end{figure}
 
 
@@ -144,6 +144,15 @@ Cost, scope and schedule for ECP ST is tracked and managed by monitoring progres
 
 ECP has four Key Performance Parameters (KPPs).  Figure~\ref{fig:kpp-definitions} shows the KPP definitions. KPP-3 is focused on a productive and sustainable software ecosystem. ECP ST is the primary owner of this KPP (along with co-design projects in ECP AD).  The focus of KPP-3 is defining and tracking capability integrations of ST products into client environment, as described in this section. 
 
+\begin{figure}
+	\centering
+	\fbox{\includegraphics[width=0.9\linewidth]{KPP-Definitions}}
+	\caption{ECP has four key performance parameters (KPPs).  ECP ST is the primary owner (with ECP AD co-design subprojects) of KPP-3.}
+	\label{fig:kpp-definitions}
+\end{figure}
+
+
+
 First, we define terms:
 \begin{itemize}
 	\item \textbf{Capability:} Any significant product functionality, including existing features adapted to the pre-exascale and exascale environments, that can be integrated into a client environment.
@@ -168,7 +177,7 @@ Integration goals are defined per product within each project.  The goal stateme
 		Complete, sustainable integration of a significant product capability into a client environment in a pre-exascale environment (tentative score) and in an exascale environment (confirmed score). &
 		Client acknowledges benefit from product capability use and considers it part of their workflow. Integration is sustainable with documentation and testing. Integration of product capability into main product repo and SDK/E4S environments is completed.\\\hline
 	\end{tabular}
-	\caption{\label{table:KPP-3-scoring} Integration Goal Scoring: A point is accrued when a client integrates and sustainably uses a product capabilities.  Scores are assessed annually.}
+	\caption{\label{table:KPP-3-scoring} Integration Goal Scoring: A point is accrued when a client integrates and sustainably uses a product's capabilities.  Scores are assessed annually.}
 \end{table}
 
 
@@ -189,6 +198,7 @@ All artifacts and evidence of progress will be captured in the Jira KPP-3 issue 
 \paragraph{Assessment process}
 While progress is recorded as it is achieved, progress assessment is done annually, including input from external subject matter experts (SMEs).  ECP leadership and SMEs will review integration score evidence, confirming or adjusting integration scores.
 Note: Assessment can result in a reduced integration score from a previous year if a client has stopped using a capability that was previously used.
+
 \paragraph{Transition from tentative to confirmed integration score}
 Each integration score is tentative until the capability is available and demonstrated to be effective in the exascale environments.  Demonstration can be achieved by a variety of means such that ECP Leadership and SMEs are reasonably certain the capability positively impacts the client in exascale environments.  At this point the integration score becomes confirmed. 
 Typically, the transition from tentative to confirmed would be a low-cost independent demonstration, or accomplished within the client’s environment as the client is conducting its own assessments. 
@@ -204,7 +214,7 @@ KPP-3 weighted scoring
 		Risk-Mitigating & 0.5 & Some KPP-3 Jira issues are associated with products that help us plan for the potential risks if high impact products don’t deliver as expected.\\\hline
 		Shared  & 0.5 & Some projects receive funding from both NNSA and SC, e.g. RAJA/Kokkos. For these projects, the score is balanced to reflect dual contributions.\\\hline
 	\end{tabular}
-	\caption{\label{table:KPP-3-values} Each integration score will have an associated weight depending on the potential impact if integration targets are not met.}
+	\caption{\label{table:KPP-3-impact} Each integration score will have an associated weight depending on the potential impact if integration targets are not met.}
 \end{table}
 
 The KPP-3 score is the weighted sum of all integration goals that have an integration score that meets or exceeds its passing value. 
@@ -224,7 +234,7 @@ Separating the concerns of delivery and deployment is essential because these ac
 \paragraph{ECP ST Delivery Strategy}
 ECP ST delivers it software products as source code, primarily in repositories found on GitHub, Gitlab installations or similar platforms. Clients such as ECP HI, OpenHPC and application developers with direct repository access then take the source and build, install and test our software. The delivery strategy is outlined in Figure~\ref{fig:softwarestack}.  
 
-Users access ECP ST products using these basic mechanisms (see Figure~\ref{fig:productsoverview} for deliverable statistics):
+Users access ECP ST products using these basic mechanisms:
 \begin{itemize}
 	\item \textbf{Build from source code:} The vast majority of ECP ST products reach at least some of their user base via direct source code download from the product repository.  In some cases, the user will download a single compressed file containing product source, then expand the file to expose the collection of source and build files.  Increasingly, users will fork a new copy of an online repository.  After obtaining the source, the user executes a configuration process that detects local compilers and libraries and then builds the product.  This kind of access can represent a barrier for some users, since the user needs to build the product and can encounter a variety of challenges in that process, such as an incompatible compiler or a missing third-party library that must first be installed.  However, building from source can be a preferred approach for users who want control over compiler settings, or want to adapt how the product is used, for example, turning on or off optional features, or creating adaptations that extend product capabilities.  For example, large library frameworks such as PETSc and Trilinos have many tunable features that can benefit from the user building from source code.  Furthermore, these frameworks support user-defined functional extensions that are easier to support when the user builds the product from source.  ECP ST is leveraging and contributing to the development of Spack~\cite{gamblin+:sc15}.  Via meta-data stored in a Spack \textit{package} defined for each product, Spack leverages a product's native build environment, along with knowledge about its dependencies, to build the product and dependencies from source.  Spack plays a central role in ECP ST software development and delivery processes by supporting turnkey builds of the ECP ST software stack for the purposes of continuous integration testing, installation and seamless multi-product builds.
 	\item \textbf{DOE computing facilities:} Each DOE computing facility (ALCF, OLCF, NERSC, LLNL and ACES [LANL/SNL]) provides pre-built versions of 17 to 20 ECP ST products (although the exact mix of products varies somewhat at each site).  Many of these products are what users would consider to be part of the core system capabilities, including compilers, e.g., Flang (Section~\ref{subsubsect:flang}) and LLVM (Section~\ref{subsubsect:sollve}), and parallel programming environments such as MPICH (Section~\ref{subsubsect:mpich}), OpenMPI (Section~\ref{subsubsect:openmpi}) and OpenMP (Section~\ref{subsubsect:bolt}).  Development tools such as PAPI (Section~\ref{subsubsect:exapapi}) and TAU (Section~\ref{subsubsect:tau}) are often part of this suite, if not already included in the vendor stack. Math and data libraries such as PETSc (Section~\ref{subsubsect:petsc}), Trilinos (Section~\ref{subsubsect:peeks}), HDF5 (Section~\ref{subsubsect:exahdf5}) and others are also available in some facilities software installations.  We anticipate and hope for increased collaboration with facilities via the ECP Hardware \& Integration (HI) Focus Area.  We are also encouraged by multi-lab efforts such as the Tri-Lab Operating System Stack (TOSS)~\cite{TOSS} that are focused on improving uniformity of software stacks across facilities.
