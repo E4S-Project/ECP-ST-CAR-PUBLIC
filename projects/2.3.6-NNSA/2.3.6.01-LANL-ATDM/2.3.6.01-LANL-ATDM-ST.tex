@@ -31,10 +31,9 @@ All these efforts include interactions across ECP as well as
 with the broader LLVM community and industry.  
 
 The LANL ATDM Data and Visualization project develops scalable
-systems software for the generation, analysis, and management of data
-produced by ECP applications. This project is essential for ECP because
-of the volume of data exascale applications will generate. It includes
-\textbf{Cinema}, \textbf{MarFS}, and \textbf{HXHIM}.
+solutions for data analysis as part of the \textbf{Cinema} project,
+which provides post-facto interactive interactions with a dataset
+using a fraction of the file storage. 
 
 The \textbf{BEE/Charliecloud} subproject is creating software tools to increase portability
 and reproducibility of scientific applications on high performance and cloud
@@ -79,7 +78,7 @@ infrastructure helps reduce many challenges here since many processor
 vendors and system providers now leverage and use LLVM for their
 commercial compilers.
 
-\subparagraph{Data+Viz:}
+\subparagraph{Cinema}
 Interfacing to a large number of ECP application with the Cinema
 software and the management of the volumous data from these
 applications. 
@@ -145,18 +144,12 @@ to fundamental data structures within the LLVM infrastructure to assist with
 and improve analysis and optimization passes. 
 
 
-\subparagraph{Data+Viz:}
-The LANL ATDM Data and Visualization ECP project is focused on delivering new
-systems software capabilities for creating, analyzing, and managing data for
-Exascale scientific applications and Exascale data centers. We have identified
-4 distinct areas that are in need of specific improvements.
+\subparagraph{Cinema:}
+The LANL Cinema project is focused on delivering new
+visualization capabilities for creating, analyzing, and managing data for
+Exascale scientific applications and Exascale data centers.
 
-MarFS is the only campaign storage system within the DOE complex and is
-also the only HPC storage system built using scale-out principles with affordable
-SMR hard drives. The LANL monitoring stack is leveraging available open source
-software to build dashboards for monitoring both the data center and
-scientific application performance. Finally, the application level software
-technologies, Cinema~\cite{cinema:Ahrens:SC14} and HXHIM, are being developed in coordination with
+Cinema~\cite{cinema:Ahrens:SC14} is being developed in coordination with
 LANL's ECP application NGC to ensure that data collected during the simulation
 execution is of appropriate frequency, resolution, and viewport for later
 analysis and visualization by scientists. Cinema is an innovative way of
@@ -164,7 +157,7 @@ capturing, storing and exploring extreme scale scientific data. Cinema is
 essential for ECP because it embodies approaches to maximize insight from
 extreme-scale simulation results while minimizing data footprint 
 
-\subparagraph{Bee/CharlieCloud}
+\subparagraph{Bee/CharlieCloud:}
 The BEE/Charliecloud project is focusing first on providing support for
 containerized production LANL scientific applications across all of the
 existing LANL production HPC systems.  The BEE/Charliecloud components required
@@ -206,43 +199,7 @@ community about general details behind parallel intermediate forms.
 
 
 
-\subparagraph{Data+Viz:}
-The MarFS file system is currently deployed as the campaign storage tier
-with over 60PB of capacity currently under management in our secure computing
-environment. Recent progress includes the development of a new highly
-resilient backend based on nested parity. We have also extended our top-level
-erasure approach to use RDMA operations for more efficient coding and data movement.
-
-The LANL monitoring stack has been successfully deployed into multiple
-computing enclaves within LANL's HPC facility, including LANL's secure
-computing environment. Our approach currently supports data ingest and
-analysis by system administrators, data analysts, and code teams with multiple
-dashboards for each role. We continue to refine our security approach to
-ensure that new monitoring monitoring dashboards comply with the requirements
-of LANL's CCB, the voting body for ensuring that all LANL deployments are
-secured appropriately. The use of our monitoring system by application teams
-(which monitor information that includes classified data) has required a
-highly granular approach to storage and access roles -- but also makes it more
-broadly useful and provides direct benefit to the code teams and users.
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=6in]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/hxhim-main}
-	\caption{\label{fig:hxhim} Relevant components of the HXHIM
-	embeddable service. The client library is provided as a set of API
-	calls while the server capability is provided by a thread running
-	within the application. Communication uses the Margo and Mercury RPC
-	layers to provide efficient support for remote key-value access.}
-\end{figure}
-
-Recent progress on HXHIM, a key-value store for HPC platforms, includes the
-integration of a new transport layer based on Margo and Mercury (projects
-under development by the ECP data libs project). The fundamental architecture
-of HXHIM now leverage new support for using a high-performance RPC package
-(Mercury) layered beneath a C++ wrapper for Margo (called Thallium). HXHIM
-provides bulk (multi-key) primitives that enable efficient use of HPC
-interconnects and typical scientific storage workloads.
-
+\subparagraph{Cinema:}
 
 Recent Cinema work has focused on development of analysis capability, Exascale workflows and working with ECP STs such as ALPINE to enable in situ and post processing production of Cinema databases.  Currently Cinema is available in situ via ParaView Catalyst and Ascent and available post hoc via ParaView and VisIt.   New capabilities provide scientists more options in analyzing and exploring the results of large simulations by providing a workflow that 1) detects features in situ, 2) captures data artifacts in Cinema databases, 3) promotes post-hoc analysis of the data, and 4) provides data viewers that allow interactive, structured exploration of the resulting artifacts. 
 %
@@ -294,7 +251,7 @@ addition to these components, we will actively begin to explore targeting
 the exascale systems (Aurora, Frontier, and El Capitan).
 
 
-\subparagraph{Data+Viz:}
+\subparagraph{Cinema:}
 Cinema is focusing on outreach to ECP applications to identify new application workflows that can be reasonably made efficient and working on new analysis methods for Cinema users.
 
 \begin{figure}[htb]
@@ -305,11 +262,6 @@ Cinema is focusing on outreach to ECP applications to identify new application w
 	\label{fig:cinema-sw4example}
 	}
 \end{figure}
-
-HXHIM, MarFS, and the monitoring infrastructure have all been descoped
-from ECP though the work will continue as part of LANL's Computational Systems
-and Software Environments effort. We do not expect this change to alter the
-trajectory of any of the descoped projects.
 
 \subparagraph{Bee/CharlieCloud}
 A refactoring of BEE to support an open standard is underway. Support for the Open Workflow standard will allow a base on a well defined workflow description language leveraged by other scientiic communities. This will then be tested on multiple systems to ensure portability.
