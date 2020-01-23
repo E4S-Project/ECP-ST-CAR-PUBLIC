@@ -33,8 +33,15 @@ Another major risk for projects in this area is the lack of low-level access to 
 \subsubsection{Future Trends}
 
 Future architectures are becoming more heterogeneous and complex~\cite{vetter:2018:extreme}. As such, the role of languages, compilers, runtime systems, and performance and debugging tools will becoming increasingly important for productivity and performance portability. 
+%
+In particular, our ECP strategy focuses on improving the open source LLVM compiler and runtime ecosystem; LLVM has gained considerable traction in the vendor software community, and it is the core of many existing heterogeneous compiler systems from NVIDIA, AMD, Intel, ARM, IBM, and others.  We foresee that this trend will continue, which is why we have organized the \tools\ technical area around LLVM-oriented projects.  
+%
+Many of our contributions to LLVM address these trends and will persist after ECP ends. 
+%
+For example, our contributions for directive-based features for heterogeneous computing (e.g., OpenMP, OpenACC) will not only provide direct capabilities to ECP applications, but it will also impact the redesign and optimization of the LLVM infrastructure to support heterogeneous computing.
+%
+In a second example, Flang (open source Fortran compiler for LLVM; [the second version is also known as F18]) will become increasingly important to the worldwide Fortran application base, as vendors find it easier to maintain and deploy to their own Fortran frontend (based on Flang).  
+%
+Furthermore, as Flang become increasingly robust, researchers and vendors developing new architectures will have immediate access to Flang, making initial Fortran support straightforward in ways similar to what we are seeing in Clang as the community C/C++ frontend.
 
-
-The LLVM software ecosystem has gained considerable traction in  vendor software plans and deliveries. We foresee that this trend will continue, which is why we have organized the \tools\ technical area around LLVM-oriented projects.  We also foresee that Flang (the second version, also known as F18) will become increasingly important to the Fortran application base, as vendors find it more difficult to dedicate staff resources to their own Fortran front end development.  It is already the case that some vendors have no internal Fortran product.  Beyond traditional HPC vendors, who already have a robust Fortran product, we see that Flang will become the community Fortran frontend.  Furthermore, as Flang become increasingly robust, even traditional vendors will likely migrate to Flang, in ways similar to the transition we are seeing toward Clang as the vendor C/C++ frontend.
-
-
+%
