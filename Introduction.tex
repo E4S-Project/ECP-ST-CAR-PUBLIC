@@ -16,7 +16,7 @@ The ECP ST portfolio has established a set of interdependent projects that will 
 
 ECP ST is developing a software stack to meet the needs of a broad set of Exascale applications. The current software portfolio covers many projects spanning the areas of programming models and runtimes, development tools, mathematical libraries and frameworks, data management, analysis and visualization, and software delivery. The ECP software stack was developed bottom up based on application requirements and the existing software stack at DOE HPC Facilities. The portfolio comprises projects selected in two different ways: 
 \begin{enumerate}
-\item Thirty projects funded by the DOE Office of Science (ASCR) that were selected in October 2016 via an RFI and RFP process, considering prioritized requirements. The initial collection of loosely coupled projects has been re-organized twice and is now in a form that should serve us well as we more to the more formal execution phases of the project.
+\item Thirty projects funded by the DOE Office of Science (ASCR).  This scope of work was selected in October 2016 via an RFI and RFP process, considering prioritized requirements. The initial collection of loosely coupled projects has been re-organized twice and is now in a form that should serve us well as we move to the more formal execution phases of the project.
 \item Three DOE NNSA/ASC funded projects that are part of the Advanced Technology Development and Mitigation (ATDM) program, which is in its sixth year (started in FY14). These projects are focused on longer term research to address the shift in computing technology to extreme, heterogeneous architectures and to advance the capabilities of NNSA/ASC simulation codes. 
 \end{enumerate}
 Since the initial selection process, ECP ST has reorganized efforts as described in Section~\ref{subsect:ProjectRestructuring}.
@@ -24,7 +24,7 @@ Since the initial selection process, ECP ST has reorganized efforts as described
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{ECP21}
-	\caption{The ECP Work Breakdown Structure through Level 3 (L3). Under Software Technology, WBS 2.3.6 consolidates ATDM contributions to ECP into a new L3 area.}
+	\caption{The ECP Work Breakdown Structure through Level 3 (L3) as of December 5, 2019. Under Software Technology, WBS 2.3.6 consolidates ATDM contributions to ECP into a new L3 area.}
 	\label{fig:ecp2}
 \end{figure}
 
@@ -35,7 +35,7 @@ Mathematical libraries and tools for supercomputers have traditionally been deve
  
 Programming paradigms and the associated programming environments that include compilers, debuggers, message passing, and associated runtimes have traditionally been developed by vendors, DOE laboratories, and universities. The same can be said for file system and storage software. An observation is that the vendor is ultimately responsible for providing a programming environment and file system with the supercomputer, but there is often a struggle to get the vendors to support software developed by others or to invest in new ideas that have few or no users yet. Another observation is that file-system software plays a key role in overall system resilience, and the difficulty of making the file-system software resilient has grown non-linearly with the scale and complexity of the supercomputers.
  
-In addition to the lessons learned from the traditional approaches, Exascale computers pose unique software challenges including the following.
+In addition to the lessons learned from traditional approaches, Exascale computers pose unique software challenges including the following.
 \begin{itemize}
 \item \textbf{Extreme parallelism:} Experience has shown that software breaks at each shift in scale. Exascale systems are predicted to have a billion-way concurrency almost exclusively from discrete accelerator devices, similar to today's GPUs. Because clock speeds have essentially stalled, the 1000-fold increase in potential performance going from Petascale to Exascale is entirely from concurrency improvements.
 \item \textbf{Data movement in a deep memory hierarchy: }Data movement has been identified as a key impediment to performance and power consumption. Exascale system designs are increasing the types and layers of memory, which further challenges the software to increase data locality and reuse, while reducing data movement.
@@ -54,12 +54,12 @@ The next section describes the approach employed by ECP ST to address the Exasca
 
 \subsection{ECP ST Project Restructuring}\label{subsect:ProjectRestructuring}
 
-The initial organization of ECP ST was based on discussions that occurred over several years of Exascale planning within DOE, especially the DOE Office of Advanced Scientific Computing Research (ASCR).  Figure~\ref{fig:ecpstv1} shows the conceptual diagram of this first phase.  The 66 ECP ST projects were mapped into 8 technical areas, in some cases arbitrating where a project should go based on its primary type of work, even if other work was present in the project.  In November 2017, ECP ST was reorganized into 5 technical areas, primarily through merging a few smaller areas, and the number of projects was reduced to 56 (then 55 due to further merging in \ecosystem).  Figure~\ref{fig:ecpstv2} shows the diagram of the second phase of ECP ST.  With the CAR V2.0, we will describe the next phase of organization refinement needed to best position ECP ST for success in the CD-2 phase of the project.
+The initial organization of ECP ST was based on discussions that occurred over several years of Exascale planning within DOE, especially the DOE Office of Advanced Scientific Computing Research (ASCR).  Figure~\ref{fig:ecpstv1} shows the conceptual diagram of this first phase.  The 66 ECP ST projects were mapped into 8 technical areas, in some cases arbitrating where a project should go based on its primary type of work, even if other work was present in the project.  In November 2017, ECP ST was reorganized into 5 technical areas, primarily through merging a few smaller areas, and the number of projects was reduced to 56 (then 55 due to further merging in \ecosystem).  Figure~\ref{fig:ecpstv2} shows the diagram of the second phase of ECP ST.  In Section~\ref{sect:PETA}, we describe the organization, planning, execution, tracking and assessment processes that will put ECP ST in a good position for success in the CD-2 phase of the project.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{STFY20WBS}
-	\caption{\label{fig:wbs-FY20} The FY20 ECP ST WBS structure includes a new L3 (2.3.6) and better balances L4 subprojects in the first four L3 technical areas.  Technical area 2.3.5 has only two projects, which are focused on meta-product development in SDKs, E4S, Spack and SuperContainers.}
+	\caption{\label{fig:wbs-FY20} The FY20 ECP ST WBS structure as of December 5, 2019, includes a new L3 (2.3.6) and better balances L4 subprojects in the first four L3 technical areas.  Technical area 2.3.5 has only two projects, which are focused on meta-product development in SDKs, E4S, Spack and SuperContainers.}
 \end{figure}
 
 \begin{figure}
@@ -120,27 +120,3 @@ These projects started work in January–March 2017 depending on when the contra
 	\label{fig:ecpstleads}
 \end{figure}
 
-%\subsection{New Project Efforts}
-%ECP ST is preparing several strategic changes for the FY2020 restructuring (Phase 3).   These changes will be reported in the CAR V2.0.  No other significant changes have been made since the CAR V1.0.
-
-
-%\subsubsection{FFTs}\label{subsubsect:ffts}
-%ECP ST has initiated two new efforts in Fast Fourier Transforms (FFTs).  FFTs provide an essential mathematical tool to many application areas.  From the very beginning of HPC, vendors have provided optimized FFT libraries for their users.  The advent of FFTW~\cite{FFTW05}, a tunable high-performance library with a well-designed interface, enabled a \textit{de facto} standardization of FFT interfaces, and an effective source base for vendor libraries, which adapted FFTW source for their platforms.
-%
-%There is some concern in the community that FFTW is no longer actively developed, nor well prepared for emerging platforms.  Furthermore, FFTW's strong copylefting license (which forces its users to make their own software open source in the same way) has always been a challenge to users.  While vendors are still committed to providing optimized FFT libraries, whether or not FFTW is available, we believe it is prudent to explore a new software stack and have funded a short-term project to explore this possibility.  The new library will also explore problem formulations that could significantly reduce the computational cost of FFTs.  This new effort, called FFTX, will be led by Lawrence Berkeley National Lab, under the existing math libraries project (Section~\ref{subsubsect:strumpack}).
-%
-%A second FFT project will address a consensus opportunity to provide a sustainable 3D FFT library built from established but \textit{ad hoc} software tools that have traditionally been part of application codes, but not extracted as independent, supported libraries.  These 3D FFTs rely on third-party 1D FFTs, either from FFTW or from vendor libraries.
-%
-%The goal of this second project, FFT-ECP, led by the University of Tennessee and integrated into one of its existing projects (Section~\ref{subsubsect:slate}) is to:
-%\begin{itemize}
-%\item Collect existing FFT capabilities recently made available from ECP application teams (LAMMPS/fftMPI and HACC/SWFFT). 
-%\item Assess gaps and make available as a sustainable math library.
-%\item Explore opportunities to build 3D FFT libraries on vendor 1D and 2D kernels, especially leveraging on-node concurrency from 2D and batched 1D formulations.
-%\item Focus on capabilities for Exascale platforms.
-%\item Emphasize leverage of vendor capabilities and addressing vendor deficiencies over creation of new and independent software stack.
-%\end{itemize}
-%
-%This effort, while not addressing the concerns about FFTW directly, is essential to providing a new and sustainable FFT software stack that leverages the large investment by the broader HPC community in FFT software.  The payoff from this effort is almost guaranteed.  Also, should the FFTX project also go forward, it will provide an FFTW-compatible interface that would allow FFT-ECP to use FFTX as one option, in addition to external FFT libraries.
-%
-%\subsubsection{LLNL Math Libraries}\label{subsubsect:llnl-math-libs}
-%When ECP ST started, some important capabilities were not part of the original portfolio, even though their engagement is essential for ECP application success.  This is true of the LLNL math library \textit{hypre}~\cite{hypre}.  This library is widely used to provide scalable multigrid preconditioners across several ECP applications.  Funding to support adaptation of \textit{hypre}  in preparation for Exascale platforms at science lab facilities, e.g., Argonne, and for ECP science applications was not part of the original ECP ST portfolio.  We have added funding for this effort, starting in June 2018.  In addition, we provided new funding for another LLNL math library, MFEM~\cite{mfem:homepage}, so that the MFEM team can participate in SDK efforts for math libraries.
