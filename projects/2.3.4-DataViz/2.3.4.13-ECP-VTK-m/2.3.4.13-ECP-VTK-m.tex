@@ -18,7 +18,7 @@ VTK-m supports the fine-grained concurrency for data analysis and visualization 
 The ECP/VTK-m project is building up the VTK-m codebase with the necessary visualization algorithm implementations that run across the varied hardware platforms to be leveraged at the Exascale.
 We will be working with other ECP projects, such as ALPINE, to integrate the new VTK-m code into production software to enable visualization on our HPC systems.
 
-\paragraph{Key  Challenges}
+\paragraph{Key Challenges}
 The scientific visualization research community has been building scalable HPC algorithms for over 15 years, and today there are multiple production tools that provide excellent scalability.
 However, our current visualization tools are based on a message-passing programming model.
 More to the point, they rely on a coarse decomposition with ghost regions to isolate parallel execution \cite{Ahrens2001,Childs2010}.
@@ -41,6 +41,7 @@ VTK-m has a software framework that provides the following critical features.
   VTK-m uses the notion of an abstract device adapter, which allows algorithms written once in VTK-m to run well on many computing architectures.
   The device adapter is constructed from a small but versatile set of data parallel primitives, which can be optimized for each platform \cite{Blelloch1990}.
   It has been shown that this approach not only simplifies parallel implementations, but also allows them to work well across many platforms \cite{Lo2012,Larsen2015,Moreland2015}.
+  Within the device adapter we are leveraging Kokkos \cite{Edwards2011} to rapidly port to ECP hardware.
 \item \textbf{Flexible integration:}
   VTK-m is designed to integrate well with other software.
   This is achieved with flexible data models to capture the structure of applications' data \cite{Meredith2012} and array wrappers that can adapt to target memory layouts \cite{Moreland2012:PDAC}.
@@ -52,73 +53,63 @@ Our approach is to incrementally add features to VTK-m and expose them in tools 
 
 \begin{figure}[t]
   \centering
-  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-Clip}\quad
-  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-Bubbles-Density}
-  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-Bubbles-Components}\quad
-  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-Streamlines}
-  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-FTLE}
+  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-flying-edges}\quad
+  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-contour-cell-types}\quad
+  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-extruded-cell-set}\quad
   \caption{
-    Examples of recent progress in VTK-m include (from left to right) clipping to form an interval volume, connected components to identify bubbles of low density, advection of particles through time, and a generated FTLE field to identify Lagrangian coherent surfaces.
+    Examples of recent progress in VTK-m include (from left to right) optimized structured grid contouring, contouring of extended cell types, and representation of an extruded cell set.
   }
   \label{fig:VTKmRecent}
 \end{figure}
 
 \paragraph{Recent Progress}
 The VTK-m project is organized into many implementation activities.
-The following features have been completed in the FY19 fiscal year.
+The following features have been completed in the FY20 fiscal year.
 
 \begin{itemize}
 \item \textbf{VTK-m Releases:}
-  VTK-m 1.3 was released in November 2018.
-  VTK-m 1.4 was released in June 2019.
   VTK-m 1.5 was released in October 2019.
-\item \textbf{ZFP}
-  Working in collaboration with the ZFP project (now part of WBS 2.3.4.16), the ZFP compression algorithm \cite{zfp-jsm2017} is implemented in VTK-m.
-  This implementation ports across ECP platforms.
-\item \textbf{Clipping:}
-  A common visualization operation for extracting regions of interest, clipping provides mesh cutaways and interval volumes as demonstrated in Figure \ref{fig:VTKmRecent}.
-%% \item \textbf{Ghost Cells:}
-%%   Provided support for defining and stripping ghost cell information.
-\item \textbf{Merge Points:}
-  It is often necessary to collect together positions in 3-space that are nearby \cite{Yenpure2019}.
-\item \textbf{Connected Components:}
-  It can be physically significant to identify groups of elements that are mutually connected by either topology or common field attributes as demonstrated in Figure \ref{fig:VTKmRecent}.
-\item \textbf{Particle Advection:}
-  Many flow visualization algorithms depend on computing the movement of weightless particles in a flow vector field, which may change over time \cite{Pugmire2018}.
-  These include stream lines, path lines, Lagrangian coherent structures, and stream surfaces as demonstrated in Figure \ref{fig:VTKmRecent}.
-  We have also added tube geometry to improve rendering representation.
-%% \item \textbf{Mesh Warping:}
-%%   Simulations often represent Lagrangian movements in terms of displacements, which have to be applied to geometry to be properly visualized.
-%% \item \textbf{Contouring:}
-%%   All 3D cell shapes are now supported in our contouring algorithm.
-\item \textbf{Mesh Quality:}
-  Cell metrics provide important physical and meta information about a geometry.
-\item \textbf{Surface Normals:}
-  Surface normals are an important feature for proper representation in rendering.
-  Ensuring consistent ordering is important to avoid rendering artifacts.
-\item \textbf{Lightweight Cell Library:}
-  To help consolidate common code between VTK-m and other software, the code for cell management has been extracted into its own lightweight library.
-%% \item \textbf{Extruded Cell Sets:}
-%%   ECP's XGC simulation code uses an extrusion of a surface mesh for its data representation.
-%%   A similar representation is added to VTK-m for zero-copy data ingestion.
+\item \textbf{Kokkos:}
+  Device adapters in VTK-m can now leverage the Kokkos programming model to more rapidly port to ECP hardware.
+\item \textbf{Improved Contouring:}
+  VTK-m now implements the Flying Edges implementation of structured grid contouring \cite{Schroeder2015}.
+  The contouring in VTK-m, demonstrated in Figure \ref{fig:VTKmRecent}, is now measured as one of the fastest implementations in existence.
+  VTK-m has also contour support for expanded cell types to support more mesh types, also demonstrated in Figure \ref{fig:VTKmRecent}.
+\item \textbf{Data Control Thread Safety:}
+  The initial implementation of VTK-m assumed that all control would be on a single thread and all parallelism would be handled internally.
+  However, several VTK-m customers need to launch GPU algorithms from multiple different threads.
+  The internal management of array data has been redesigned to safely manage data from multiple control threads.
+\item \textbf{Spack Package:}
+  Spack \cite{Gamblin2015} is the package manager used to distribute the ECP ST software to the ECP platforms.
+  The VTK-m package in Spack has been updated to the latest version of VTK-m.
+\item \textbf{Random Numbers:}
+  Many algorithms rely on pseudo-random numbers.
+  VTK-m now uses Salmon, et al's algorithm \cite{Salmon2011} to provide ``random'' arrays that allow algorithms to use numbers with random properties that are correct both within a thread and across threads of execution.
+\item \textbf{Extruded Cell Sets:}
+  ECP's XGC simulation code uses an extrusion of a surface mesh for its data representation as demonstrated in Figure \ref{fig:VTKmRecent}.
+  A similar representation is added to VTK-m for zero-copy data ingestion.
 \end{itemize}
 
 \paragraph{Next Steps}
 Our next efforts include:
 
 \begin{itemize}
-%% \item \textbf{Structured Grid Contouring:}
-%%   There are several optimizations that can be made for contouring in structured grids.
-\item \textbf{Performance Regression Testing:}
-  It is important to ensure that in addition to being correct, the performance of VTK-m code does not regress.
-\item \textbf{Kokkos Devices:}
-  We will explore the feasibility of using the Kokkos libraries to implement the device porting layer.
-%% \item \textbf{Improved Testing:}
-%%   We plan to improve the testing layer by supporting image comparison and data files.
-\item \textbf{Higher Order Meshes:}
-  Many ECP simulations use high order interpolation techniques on their meshes.
+\item \textbf{Demonstrate VTK-m on Pre-Exascale Hardware:}
+  With pre-exascale hardware available for O21 (Tulip) and A21 (Iris), VTK-m will be demonstrated on these platforms.
+  For FY21 we expect to be able to compile the VTK-m source, run the regression tests, and use the benchmarking code to compare performance.
+\item \textbf{Support New Compiler Types:}
+  VTK-m uses CMake to support cross-platform compilation.
+  Using CMake with compilers that are not directly supported can be challenging.
+  CMake will be updated for new compiler types as necessary, and VTK-m's build system will be similarly updated.
+%% \item \textbf{Better Support for Dynamic Types:}
+%%   VTK-m (and GPU's in general) prefer knowing static types.
+%%   However, it is often not possible to know for sure what specific type data are.
+%%   VTK-m's handling of dynmaic types will be improved.
+\item \textbf{Resource Management:}
+  Add general mechanisms to VTK-m that allow resource management (such as selecting which GPU to use when multiple GPUs are available on a node).
+  Providing a general interface prevents code using VTK-m from having to use device-specific API's to control the resource.
 \end{itemize}
 
 \noindent
-{\tiny Sandia National Laboratories is a multimission laboratory managed and operated by National Technology \& Engineering Solutions of Sandia, LLC, a wholly owned subsidiary of Honeywell International Inc., for the U.S. Department of Energy's National Nuclear Security Administration under contract DE-NA0003525. \hfill SAND~2019-13411~R
+{\tiny Sandia National Laboratories is a multimission laboratory managed and operated by National Technology \& Engineering Solutions of Sandia, LLC, a wholly owned subsidiary of Honeywell International Inc., for the U.S. Department of Energy's National Nuclear Security Administration under contract DE-NA0003525. \hfill SAND~2020-????~R
 \par}
