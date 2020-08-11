@@ -52,10 +52,20 @@ Our approach is to incrementally add features to VTK-m and expose them in tools 
 
 
 \begin{figure}[t]
+  % Throwing this up here because it seems least likely to overflow the page.
+  \setlength{\intextsep}{0in}
+  \noindent
+  \begin{wrapfigure}[3]{r}{1.23in}
+    \includegraphics[height=0.25in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/snl-logos.png}
+  \end{wrapfigure}
+  {\tiny Sandia National Laboratories is a multimission laboratory managed and operated by National Technology \& Engineering Solutions of Sandia, LLC, a wholly owned subsidiary of Honeywell International Inc., for the U.S. Department of Energy's National Nuclear Security Administration under contract DE-NA0003525. \hfill SAND~2020-????~R
+  \par}
+  ~\\
+
   \centering
-  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-flying-edges}\quad
-  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-contour-cell-types}\quad
-  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-extruded-cell-set}\quad
+  \includegraphics[height=1.35in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-flying-edges}\quad
+  \includegraphics[height=1.35in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-contour-cell-types}\quad
+  \includegraphics[height=1.35in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-extruded-cell-set}\quad
   \caption{
     Examples of recent progress in VTK-m include (from left to right) optimized structured grid contouring, contouring of extended cell types, and representation of an extruded cell set.
   }
@@ -96,7 +106,7 @@ Our next efforts include:
 \begin{itemize}
 \item \textbf{Demonstrate VTK-m on Pre-Exascale Hardware:}
   With pre-exascale hardware available for O21 (Tulip) and A21 (Iris), VTK-m will be demonstrated on these platforms.
-  For FY21 we expect to be able to compile the VTK-m source, run the regression tests, and use the benchmarking code to compare performance.
+  For FY21 we expect to be able to compile VTK-m, run the regression tests, and use the benchmarking code to compare performance.
 \item \textbf{Support New Compiler Types:}
   VTK-m uses CMake to support cross-platform compilation.
   Using CMake with compilers that are not directly supported can be challenging.
@@ -109,7 +119,3 @@ Our next efforts include:
   Add general mechanisms to VTK-m that allow resource management (such as selecting which GPU to use when multiple GPUs are available on a node).
   Providing a general interface prevents code using VTK-m from having to use device-specific API's to control the resource.
 \end{itemize}
-
-\noindent
-{\tiny Sandia National Laboratories is a multimission laboratory managed and operated by National Technology \& Engineering Solutions of Sandia, LLC, a wholly owned subsidiary of Honeywell International Inc., for the U.S. Department of Energy's National Nuclear Security Administration under contract DE-NA0003525. \hfill SAND~2020-????~R
-\par}
