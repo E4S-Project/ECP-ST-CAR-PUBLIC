@@ -1,10 +1,6 @@
 \subsubsection{\stid{2.10} PROTEAS-TUNE - FLACC and MLIR: Creating and Maintaining OpenACC in LLVM/Flang}\label{s:flacc}
 
-\todo{NEEDS updating. this was simply copied from CLACC}
-
-
 \paragraph{Overview}
-
 Heterogeneous and manycore processors (e.g., multicore CPUs, GPUs,
 Xeon Phi, etc.) are becoming the de facto architectures for current
 HPC platforms and future Exascale platforms.  These architectures are
@@ -28,74 +24,43 @@ community to be challenging to extend and, especially within the DOE, is
 losing favor to Clang and LLVM for new compiler research and development
 efforts.
 
-\textit{Clacc}~\cite{clacc:2018:denny} is a major component of the
-PROTEAS project.  Overall, the goal is to build on Clang and LLVM to
-develop an open-source, production-quality OpenACC compiler ecosystem
-that is easily extensible and that utilizes the latest research in
-compiler technology.  Such an ecosystem is critical to the successful
-acceleration of ECP applications using modern HPC hardware.  The
-PROTEAS objectives for Clacc are:
+Recent efforts to build a Fortan counter-part to Clang in LLVM project have
+been accelerated and big chunk of the Flang have been upstreamed.
+Directive-based progamming model are heavily used in Fortran applications ported
+to accelerators. Unlike C and C++, Fortran doesn not have many alternatives.
 
-\begin{enumerate}
-
-\item Develop production-quality, standard-conforming OpenACC
-compiler and runtime support as an extension of Clang and LLVM.  Two
-compilation modes are being developed: (a) traditional mode, which
-produces a binary, and (b) source-to-source mode, which produces
-OpenMP source.
-
-\item As part of the design, leverage the Clang ecosystem to enable
-the future construction of source-level OpenACC tools, such as pretty
-printers, analyzers, lint tools, debugger extensions, and editor
-extensions.
-
-\item Throughout development, actively contribute improvements to the
-OpenACC specification, and actively contribute mutually beneficial
-improvements to the upstream Clang and LLVM infrastructure.
-
-\item As the work matures, contribute OpenACC support itself to
-upstream Clang and LLVM so that it can be used by the broader HPC and
-parallel programming communities.
-
-\end{enumerate}
+FLACC proposes to develop a prototype OpenACC 3.0 implementation in Flang based
+on MLIR to fill this gap. As the implementation of the OpenMP target offload
+feature in Flang does not have a clear path, this work will help in this regard
+by sharing code in the MLIR dialects and lowering sections with the Flang and
+SOLLVE projects.
 
 \paragraph{Key Challenges}
 
 \begin{enumerate}
 
 \item \textbf{OpenACC Support:} Developing production-quality,
-standards-conforming OpenACC compiler and runtime support is a large
-undertaking.  Complicating that undertaking further is the need for
-optimization strategies that are competitive with existing commercial
-compilers, such as PGI's, which have been developed over many years
-since before the conception of the OpenACC standard.
+      standards-conforming OpenACC compiler and runtime support is a large
+      undertaking. Complicating that undertaking further is the need for
+      optimization strategies that are competitive with existing commercial
+      compilers, such as PGI's, which have been developed over many years
+      since before the conception of the OpenACC standard.
 
-\item \textbf{Source-to-Source:} Source-to-source translation to
-OpenMP significantly reduces the effort to implement OpenACC and
-offers additional capabilities, such OpenACC support for proprietary
-OpenMP compilers.  However, a known issue with Clang is that its AST,
-the source-level representation, was designed to be immutable.
-Moreover, the AST represents the source after preprocessor expansions,
-which harm readability and can prevent compilation with other
-compilers.  Finally, sophisticated analyses and optimizations are
-critical for lowering OpenACC's descriptive language to the more
-prescriptive language of OpenMP, but these are best implemented at the
-level of LLVM IR not the Clang AST.
+\item \textbf{MLIR:} Flang and the OpenACC support for it rely on the MLIR
+      project for the intermediate representation. MLIR has been upstreamed to
+      the core LLVM project in early 2020 and it is still actively under
+      development. Flang will be the first core frontend relying on MLIR.
 
-\item \textbf{Production-Quality:} Clang and LLVM are sophisticated tools
-with a complex codebase and a large team of developers who diligently screen
-contributions to maintain a clean design and correct operation.  As for any
-production-quality compiler, developing and contributing improvements to
-Clang and LLVM can be significantly more challenging and time-consuming than
-for research-quality compilers.
+\item \textbf{Runtime:} LLVM does not include an OpenACC runtime but only one
+      for OpenMP at the moment. This runtime can be generalize to support
+      missing OpenACC features. This generalization needs to be accepted by the
+      current OpenMP community.
 
-\item \textbf{OpenMP Alternative:} We believe that OpenACC's current
-momentum as the go-to directive-based language for accelerators will
-continue into the foreseeable future.  Nevertheless, some potential OpenACC
-adopters hesitate over concerns that OpenACC will one day be replaced by
-OpenMP features.  A tool to migrate OpenACC applications to OpenMP could
-alleviate such concerns, encourage adoption of OpenACC, and thus advance
-utilization of acceleration hardware in ECP applications.
+\item \textbf{OpenMP Stability:} As we plan to generalize the OpenMP runtime to
+      support OpenACC, we will also rely on various part of the runtime that
+      are already here. There has been some concern on the stability of the
+      current OpenMP runtime implementation and especially the
+      textit{libomptarget} responsible for the target offload part.
 
 \end{enumerate}
 
@@ -104,114 +69,39 @@ utilization of acceleration hardware in ECP applications.
 ~
 \vspace{-1em}
 
-\begin{tabular}{@{\hspace{-1.5em}}p{.77\textwidth}p{.23\textwidth}@{}}
-
 \begin{enumerate}
 
-\item A key Clacc design feature is lowering OpenACC to OpenMP.
-Benefits include:
+\item Flacc design follows a similar desigb than the OpenMP implementation for
+      Flang. This design includes the following aspects:
 
 \begin{enumerate}
-
-\item By building on Clang and LLVM's OpenMP support, it reduces the
-effort necessary to construct a production-quality OpenACC
-implementation.
-
-\item It enables OpenACC support on OpenMP compilers other than Clang,
-including proprietary compilers.
-
-\item It facilitates repurposing existing OpenMP static analysis and
-debugging tools for the sake of OpenACC.
-
-\item It facilitates porting applications from OpenACC to OpenMP to
-alleviate the aforementioned concerns about developing applications in
-OpenACC.
-
+\item An OpenACC MLIR dialect part of the core MLIR project.
+\item A lowering from the Flang AST to a mix of FIR and OpenACC MLIR dialect.
+\item A progressive lowering from MLIR to LLVM IR with runtime call.
 \end{enumerate}
 
-\item To handle Clang's immutable AST, Clacc's design includes a
-TransformACCToOMP component that reuses a Clang feature called
-TreeTransform, which was originally designed for C++ template
-specializations.
-
-\item To avoid preprocessor expansions in source-to-source mode, Clacc
-includes a RewriteOpenACC component that reuses a Clang feature called
-Rewrite.
-
 \end{enumerate}
-
-&
-
-\raisebox{-\totalheight}{\includegraphics[scale=.65]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/clacc.png}}
-
-\end{tabular}
-
-\vspace{-1em}
-
-\begin{enumerate}
-
-\setcounter{enumi}{3}
-
-\item To utilize LLVM IR analyses and optimizations, we are
-investigating ongoing efforts toward a parallel LLVM IR.  Clacc could
-use such an IR as a code generation target for OpenACC, either
-directly or after translation to OpenMP extensions Clacc would
-introduce to support OpenACC's descriptive features.
-
-\item To stage our development effort, we are initially implementing
-Clacc with two simplifications: we are implementing a prescriptive
-OpenACC interpretation for correct behavior, and we are implementing
-for C.  We will then extend Clacc with necessary analyses for a
-descriptive interpretation and for C++.
-
-\item To ensure Clacc's successful implementation and eventual acceptance
-upstream, we continue design discussions with the Clang and LLVM
-communities via mailing lists and other relevant forums.
-
-\item Throughout Clacc development, we are continuously integrating the
-latest upstream Clang and LLVM changes, and we are running and
-extending the Clang and LLVM test suites to detect regressions and
-incompatibilities.  We are also investigating OpenACC
-benchmarks \cite{specAccel} and validation test
-suites \cite{openACCValidationSuite} to ensure correct OpenACC
-behavior and good performance.
-
-\end{enumerate}
-
 
 \paragraph{Recent Progress}
 
 \begin{enumerate}
-\item
-  Extended Clacc to support additional OpenACC features, including
-  NVIDIA GPU offloading, host-device data-transfer clauses, and the
-  OpenACC Profiling Interface.  Prototyped Clang and LLVM support for
-  required OMPT features, including standard OpenMP 5.0 features and
-  extensions.
-\item
-  Revamped Clacc's source-to-source mode to improve usability, and
-  addressed feedback from AMD.
-\item
-  Contributed numerous improvements to Clang and LLVM, including
-  OpenMP and LLVM testing infrastructure improvements, and to the
-  OpenACC specification, including clarifications for reductions and
-  various clause combinations.
-\item
-  Developed report about the future design of OpenACC analyses and
-  optimizations in Clacc.
-\item
-  Discussed Clacc at various ECP, HPC, and LLVM venues.
+\item OpenACC 3.0 parser is upstreamed to the Flang front-end. It covers the
+      full specification and also implment the unparsing feature of Flang.
+\item Semantic checking for OpenACC 3.0 is also upstreamed in Flang. While
+      implementing this part, a new TableGen backed for directive-based language
+      has been contributed upstreamed. This is used by OpenACC and OpenMP for
+      both Clang and Flang.
+\item Base of the OpenACC MLIR dialect has been introduced upstream. The OpenACC
+      dialect is part of the core MLIR project.
+\item Discussed Flacc at various ECP, HPC, and LLVM venues.
 \end{enumerate}
 
 
 \paragraph{Next Steps}
 
 \begin{enumerate}
-\item
-  Continue to implement Clacc support for critical OpenACC features
-  based on the needs of ECP and other HPC apps and benchmarks, and
-  pursue OpenACC optimizations and C++ support.
-\item
-  Continue contributions to upstream Clang and LLVM and to the OpenACC
-  specification.
+\item Continue the definition of the OpenACC MLIR dialect and complete the
+      lowering to it.
+\item Start working on the runtime support for OpenACC.
+\item Work on the lowering from MLIR to LLVM IR and runtime call.
 \end{enumerate}
