@@ -70,13 +70,13 @@ programmer. The UMap software architecture is shown in Figure
 
 \paragraph{Recent Progress}
 
-In recent months, we have released UMap v. 2.0, with major
-enhancements to improve load balancing and incorporate features for
-additional configurability. We have used UMap in new applications
-including a key/value store and the lrzip utility.
+In recent months, we have released UMap v2.1.0 and updated the UMap Spack package with major enhancements to improve load balancing and incorporate features for additional configurability. The new features include a SparseStore handler to optimize access to sparse, randomly accessed persistent data structures. The MetaAllocator Metall developed under the ECP SICM project has been integrated into UMap's SparseStore, enabling persistent heaps. 
 
-A paper on UMap will be presented at the Memory Centric HPC Workshop
-(MCHPC) at SC19.
+UMap now supports a new network-based handler using the ECP Mochi data service to fetch and manage memory pages from remote nodes over the network. UMap also has a new capability to provide region-centric page access profiling from the collaboration with the ECP Caliper project. 
+
+We have incorporated UMap into new applications, including the Livermore Metagenomics Toolkit (LMAT), which is being used for COVID research. We designed custom prefetching and eviction policies for LMAT.  The new solution outperforms the system solution in runtime by $5-15\%$ on realistic metagenomic queries and supports high parallelism that cannot be supported efficiently by the system solution. 
+
+A paper on the UMap network handler has been accepted and presented at the IEEE SBAC-PAD 2020 conference. An SC20 poster on the UMap SparseStore handler is to appear.
 
 \paragraph{Next Steps}
 In the coming year we plan to continue outreach to application teams
