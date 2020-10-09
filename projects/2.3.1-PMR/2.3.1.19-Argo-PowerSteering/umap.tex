@@ -80,12 +80,13 @@ A paper on the UMap network handler has been accepted and presented at the IEEE 
 
 \paragraph{Next Steps}
 In the coming year we plan to continue outreach to application teams
-within ECP and in the science/data community. We plan to implement a
-new UMap handler for the persistent memory Meta Allocator (Metall)
-which is part of SICM. Metall provides support for persistent heaps as
-an alternative to data serialization, and is being considered for use by the
-Exagraph and EXAALT code teams. We plan to add support for
-disaggregated in-system memory/storage in the core UMap handler to
-augment the existing file-backed mechanism. This will enable
-applications to access data on other nodes in the network without
-requiring explicit remote file system mount points on each node.
+within ECP and in the science/data community. This includes
+collaboration with Caliper, Mocha, Exagraph, the LMAT team, and
+with LLNL users of materials and EOS tables. The Exagraph
+collaboration will map persistent data such as binary format graphs
+and intermediate data structures through UMap using the SparseStore
+and Metall. To support the shared table use 
+case, we will implement a multi-process version of UMap to be used by
+multiple MPI processes on a node to share read-only tables stored in
+persistent memory.
+
