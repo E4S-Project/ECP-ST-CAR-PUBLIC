@@ -79,14 +79,13 @@ We have incorporated UMap into new applications, including the Livermore Metagen
 A paper on the UMap network handler has been accepted and presented at the IEEE SBAC-PAD 2020 conference. An SC20 poster on the UMap SparseStore handler is to appear.
 
 \paragraph{Next Steps}
-In the coming year we plan to continue outreach to application teams
+In the coming year, we plan to continue outreach to application teams
 within ECP and in the science/data community. This includes
-collaboration with Caliper, Mocha, Exagraph, the LMAT team, and
+collaboration with Caliper, Mochi, Exagraph, the LMAT team, and
 with LLNL users of materials and EOS tables. The Exagraph
 collaboration will map persistent data such as binary format graphs
 and intermediate data structures through UMap using the SparseStore
-and Metall. To support the shared table use 
-case, we will implement a multi-process version of UMap to be used by
+and Metall. To adapt to dynamic changes in memory resources, an adaptive buffer management will be added to monitor and react at runtime. To support the shared table use case, we will implement a multi-process version of UMap to be used by
 multiple MPI processes on a node to share read-only tables stored in
 persistent memory.
 
