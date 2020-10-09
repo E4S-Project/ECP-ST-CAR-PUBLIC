@@ -1,0 +1,96 @@
+\subsubsection{\stid{2.10} PROTEAS-TUNE: Programming Toolchain for Emerging Architectures and Systems} 
+
+\paragraph{Key  Challenges:}
+Programmer productivity and performance portability are two of the most important challenges facing users of future exascale computing platforms. Application developers targeting ECP architectures will find it increasingly difficult to meet these two challenges without integrated capabilities that allow for flexibility, composability, and interoperability across a mixture of programming, runtime, and architectural components. 
+
+\paragraph{Solution Strategy:}
+The PROTEAS-TUNE project was formed as a strategic response to this challenge. (The PROTEAS-TUNE project is the result of merger in FY20 of two previous ECP projects: PROTEAS [PROgramming Toolchain for Emerging Architectures and Systems] and Y-Tune: Autotuning for Cross-Architecture Optimization and Code Generation.) 
+This project has three high-level goals. First, PROTEAS-TUNE will provide a programming pathway to anticipated exascale architectures by addressing programmability and portability concerns of emerging technology trends seen in emerging architectures. In particular, the project focuses on improvements to LLVM and OpenACC. Additionally, the team has significant experience with CUDA, OpenCL, and other programming models that will enable ECP applications teams to explore programming options to find the most effective and productive approaches without constraining programming models or software solutions. Second, PROTEAS-TUNE will prototype an integrated programming framework strategy will deliver solutions on these emerging architectures that will be further refined for these architectural capabilities, and make sure that they transition to vendors, standards activities, applications, and facilities. Thirdly, PROTEAS-TUNE includes autotuning which makes it possible to separate a high-level C/C++/FORTRAN implementation from architecture-specific implementation (OpenMP, OpenACC, CUDA, etc.), optimization, and tuning. It also provides a flexible programming framework and integrated toolchain that will provide ECP applications the opportunity to work with programming abstractions and to evaluate solutions that address the exascale programming challenges they face. 
+
+
+Specifically, the PROTEAS-TUNE focuses on seven thrusts to improve capabilities and performance portability for applications on exascale architectures: 
+
+\begin{itemize}
+\item 
+    Improve the core-LLVM compiler ecosystem; 
+\item 
+	Design and implement the OpenACC heterogeneous programming model for LLVM (Clacc);
+\item 
+	Use performance modeling and optimization to enable code transformation and performance portability;
+\item 
+	Refine autotuning for OpenMP and OpenACC programming models in order to directly target challenges with heterogeneous architectures;
+\item 
+    Improve performance measurement and analysis tools (TAU) for the target exascale architectures and apply it to applications to improve performance;
+\item 
+    Develop and implement portable software abstractions (Papyrus) for managing persistent memory; and,
+\item 
+    Aggressively engage applications, SDK, vendor, and software teams to demonstrate and deploy.
+    
+\end{itemize}
+
+Importantly, the team’s solutions are based on significant, continuing work with LLVM, OpenACC, OpenMP, ARES HLIR, OpenARC, TAU, SuRF and CHiLL. The team has extensive experience and a demonstrated track record of accomplishment in all aspects of this proposed work including existing software deployments, interaction with application teams, vendor interaction, and participation in open source community and standards organizations. Also, the team champions its successful solutions in ECP procurements, community standards, and open-source software stacks, like LLVM, in order to improve their use.
+
+%\paragraph{Key  Challenges:}
+%Programmer productivity and performance portability are two of the most important challenges facing applications targeting future Exascale computing platforms. Application developers targeting evolving ECP architectures will find it increasingly difficult to meet these dual challenges without help from integrated capabilities that allow for flexibility, composability, and interoperability across a mixture of programming, runtime, and architectural components. In particular, an integrated programming toolchain is critical for Exascale delivery. First, it will provide a programming pathway to anticipated Exascale architectures by addressing programmability and portability concerns of emerging technology trends seen in pre-procurement machines. It will also enable ECP applications teams to explore programming options to find the most effective and productive approaches without constraining programming models or software solutions. Second, an integrated programming framework strategy will deliver solutions that will be further refined for the architecture capabilities known to be in the system procurement. This is essential for maintaining developer productivity and attaining performance portability as ECP requirements evolve.
+%
+%
+%\paragraph{Solution Strategy:}
+%The PROTEAS (\textit{PROgramming Toolchain for Emerging Architectures and Systems}) project is a strategic response to the continuous changes in architectures and hardware that are defining the landscape for emerging ECP systems. PROTEAS is a flexible programming framework and integrated toolchain that will provide ECP applications the opportunity to work with programming abstractions and to evaluate solutions that address the Exascale programming challenges they face. Specifically, the PROTEAS objectives are to
+%
+%\begin{enumerate}
+%    
+%    \item Provide productive and performance-portable programming solutions based on directive-based methodologies that support current language paradigms and flexible prototyping of interfaces specifically directed at heterogeneous and manycore processors, deep memory hierarchies, and nonvolatile memory systems (NVM);
+%    
+%    \item Provide integrated performance assessment solutions for these programming systems that will enable automatic performance analysis and performance-driven optimization;
+%    
+%    \item Provide an integrated programming toolchain that is powerful enough to prototype the above solutions, while flexible enough to extend its functionality over time;
+%    
+%    \item Refine our toolchain and solutions through engagement with ECP applications teams who will evaluate prototypes, provide feedback, promote application readiness, and facilitate use of ECP prototype and eventual production machines; and,
+%    
+%    \item Champion our successful solutions in ECP procurements, community standards (e.g., OpenACC, OpenMP), and open-source software stacks (e.g., LLVM).
+%    
+%\end{enumerate}
+%
+%Our team has started with a strong existing base of relevant technological and software capabilities. Importantly, our solutions are based on our significant, continuing work with LLVM, ARES HLIR, OpenARC, and TAU. We have extensive experience and a demonstrated track record of accomplishment in all aspects of this proposed work including existing software deployments, interaction with application teams, vendor interaction, and participation in open source community and standards organizations.
+%
+%Our strong emphasis on delivering an effective toolchain to application developers within the next few years emphasizes the importance of adopting an integrated programming solution that will be further refined for the architecture capabilities known to be in the Exascale system procurement. We will develop an integrated system (i.e. compilers, runtime systems, debuggers, and performance tools) suitable for deployment in the 2021 timeframe. The experience gained from this development will inform vendor collaborations, proposals to standards committees, and existing open source software to make key elements of our developed technology ready for ECP deployment, either from vendors, through the ECP SDKs, or directly from other open-source venues.
+%
+%While PROTEAS will be oriented towards foreseeable architectural trends, it will not lock in to specific choices that will constrain what new hardware features it can address. Rather, it is important for the programming framework to embody interoperability, open interfaces, and flexibility in the toolchain, allowing it to pursue high-value solutions as opportunities arise and thereby achieve Exascale performance potential. 
+
+\paragraph{Recent Progress:}
+
+Our recent work has focused on five topics:
+
+\begin{enumerate}
+    
+    \item OpenACC and Clacc~\cite{clacc:2018:denny}. Develop production-quality, standard-conforming OpenACC compiler and runtime support as an extension of Clang/LLVM. See \S\ref{s:clacc}.
+    
+    \item Papyrus~\cite{Kim:2017:DIP,Kim:2017:PHP} for portability across NVM architectures. 
+    Develop a portable interface to NVM architectures to provide massive, persistent data structures as required by many applications.
+    See \S\ref{s:papyrus}.
+    
+    \item Performance analysis with Tau by adding additional functionality for new architectures. 
+    Improve a widely-used performance analysis framework by adding functionality for new architectures and software systems.
+    See \S\ref{subsubsect:tau}.
+
+    \item Improving LLVM. In collaboration with numerous other ECP projects, PROTEAS is contributing improvements to the LLVM compiler infrastructure. These improvements include simple bugfixes to the existing infrastructure, monitoring Flang progress, developing Clacc (see \S\ref{s:clacc}), and contributing to the development of a new parallel intermediate representation (see \url{https://github.com/Parallel-IR/llvm-pir/wiki}).
+    
+    \item Outreach and collaboration with ECP applications teams. 
+    We have interacted with over a dozen applications teams to help prepare their applications for ECP. See \S\ref{s:clacc}, \S\ref{s:papyrus}, and \S\ref{subsubsect:tau}.
+    
+\end{enumerate}
+
+\paragraph{Next Steps:}
+
+Our next efforts are:
+
+\begin{enumerate}
+	\item Clacc. Continue developing OpenACC support by lowering OpenACC directives to use the existing LLVM OpenMP infrastructure.
+    
+	\item Papyrus. Improve support for versioning and other performance improvements.
+    
+    \item Tau. Improve performance instrumentation for deep memory hierarchies in Tau, focusing primarily on various GPUs and emerging NVM.
+    
+    \item LLVM Parallel IR. Develop a conceptual prototype for mapping LLVM Clang operations to the proposed Parallel IR, and implement a prototype.
+
+\end{enumerate}

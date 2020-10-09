@@ -1,0 +1,153 @@
+\subsubsection{\stid{5.09} Software Packaging Technologies} \label{subsubsect:sw-packaging}
+
+
+\paragraph{Overview}
+
+ECP is tasked with building the first capable exascale ecosystem, and the
+foundation of this ecosystem, per ECP's mission statement, is {\it an
+integrated software stack}.  Building and integrating software for
+supercomputers is notoriously difficult, and an integration effort for
+HPC software at this scale is unprecedented.  Moreover, the software
+deployment landscape is changing as containers and supercomputing-capable
+software package managers like Spack emerge.  Spack holds the promise to
+automate the builds of all ECP software, and to allow it to be
+distributed in new ways, including as binary packages.  Containers will
+enable entire application deployments to be packaged into reproducible
+images, and they hold the potential to accelerate development and
+continuous integration (CI) workflows.
+
+This project will build the tooling required to ensure that packaging
+technologies can meet the demands of the ECP ecosystem.  The project
+provides Spack packaging assistance for ST users and ECP facilities, and
+it develops new capabilities for Spack that enable automated deployments
+of software at ECP facilities, in containerized environments, and as part
+of continuous integration.  Concurrently, the ``Supercontainers''
+sub-project is investigating and developing technologies and best
+practices that enable containers to be used effectively at ECP
+facilities. Supercontainers will ensure that HPC container runtimes will
+be scalable, interoperable, and integrated into Exascale supercomputing
+across DOE.
+
+
+\paragraph{Key Challenges}
+
+Historically, building software to run as fast as possible on HPC
+machines has been a manual process.  Users download source code for
+packages they wish to install, and they build and tune it manually for
+high performance machines. Spack has automated much of this process, but
+it still requires that users {\it build} software.  Spack needs
+modifications to enable it to understand complex microarchitecture
+details, ABI constraints, and runtime details of exascale machines.  This
+project will enable binary packaging, and it will develop new
+technologies that enable the same binary packages to to be used within
+containers {\it or} in bare metal deployments on exascale hardware.
+
+The Supercontainer effort faces similar challenges to deploying
+containers on HPC machines. Container technology most notably enables
+users to define their own software environments, using all the facilities
+of the containerized host OS.  Users can essentially bring {\it their
+own} software stack to HPC systems, and they can snapshot an entire
+application deployment, including dependencies, within a container.
+Containers also offer the potential for portability between users and
+machines. The goal of moving an HPC application container from a laptop
+to a supercomputer with little or no modification is in reach, but there
+are a number of challenges to overcome before this is possible on
+Exascale machines.  Solutions from industry, such as Docker, assume that
+containers can be built and run with elevated privileges, that containers
+are isolated from the host network, filesystem, and GPU hardware, and
+that binaries within a container are unoptimized and can run on any chip
+generation from a particular architecture. These go against the
+multi-user, multi-tenant user environment of most HPC centers, and
+optimized containers may not be portable across systems.
+
+\paragraph{Solution Strategy}
+
+The Spack project supports ST teams by developing portable build recipes
+and additional metadata for the ECP package ecosystem.  The end goal is
+to provide a packaging solution that can deploy on bare metal, in a
+container, or be {\it rebuilt} for a new machine on demand. Spack bridges
+the portability divide with portable package recipes; specialized
+packages can be built per-site if needed, or lowest-common denominator
+packages can be built for those cases that do not need highly optimized
+performance.  Packages are relocatable and can be used outside their
+original build environment.  Moreover, Spack provides {\it environments}
+that enable a number of software packages to be deployed together either
+on an HPC system or in a container.
+
+The Supercontainer project seeks to document current practice and to
+leverage existing container runtimes, but also to develop new enabling
+technologies where necessary to allow containers to run on HPC machines.
+Several HPC container runtimes (Shifter, Charliecloud, and Singularity)
+already exist, and this diversity enables wide exploration of the HPC
+container design space, and the Supercontainers project will work with
+their developers to address HPC-specific needs, including container and
+job launch, resource manager integration, distribution of images at
+scale, use of system hardware (storage systems, network and MPI
+libraries, GPUs and other accelerators), and usability concerns around
+interfacing between the host and container OS (e.g., bind-mounting,
+etc. required for hardware support).
+
+The project will document best practices and produce a technical report
+to help educate new users and developers to the advantages of containers,
+as well as a best-practices report to help ensure efficient container
+utilization on supercomputers. Both of these will be living
+documents, periodically updated in response to lessons learned and
+feedback.  In addition, we will identify gaps, and implement changes and
+automation in one of the three existing runtimes, as needed.  The project
+will also interface with the E4S and SDK teams, as well as AD teams
+interested in containerizing their applications. We will work to enable
+these teams to deploy reproducible, minimally-sized container images that
+support multiple AD software ecosystems.
+
+\paragraph{Recent Progress}
+
+\begin{enumerate}
+\item Developed a library for labeling and comparing microarchitectures for
+      compatibility. This enables Spack to distribute optimized binaries for
+      specific target architectures, and to label containers based on what
+      machines they are compatible with.
+
+\item Worked with the E4S team to build a Spack environment-based build of
+      E4S. In contrast to prior iterations, this version is reproducible
+      and integrates with DevOps and Spack's GitLab pipeline support.
+
+\item Held a hackathon at LLNL for HI teams to get Spack pipelines working.
+      Five teams were able to set up and deploy Spack pipelines.
+
+\item Produced the first revision of our best practices document for
+      efficient container utilization: ``Containers in HPC: Best practices
+      and pitfalls for users,'' hosted on
+      GitLab pages.\footnote{https://reidpr.gitlab.io/best-practices/}
+
+\item Developed an enhanced tutorial session which introduces the context
+      of using containers in HPC systems, with a demo on NERSC's Cori system.
+      The tutorial had over 60 participants at ISC and will appear again at
+      SC19.
+\end{enumerate}
+
+\paragraph{Next Steps}
+
+\begin{enumerate}
+\item Modify Spack to support generating multi-stage container build recipes.
+      This will enable Spack to produce the Dockerfiles required to build
+      minimal application images.
+
+\item Continue working with E4S on Spack build hardening, and continue to
+      Support ST teams' Spack usage.
+
+\item Produced the first revision of our best practices document for
+      efficient container utilization: ``Containers in HPC: Best practices
+      and pitfalls for users,'' hosted on GitLab
+      pages.\footnote{https://reidpr.gitlab.io/best-practices/}
+
+\item Investigate container scalability and optimization strategies, both
+      at the container image layers and also within container runtimes.
+
+\item Build optimized container images which leverage new features in Spack to
+      generate the full E4S software stack.
+
+\item Conduct deep dives with several AD teams to aid and advance container
+      utilization strategies for application development.
+
+\item Continue tutorials and outreach activities.
+\end{enumerate}

@@ -1,10 +1,8 @@
-% -*- latex -*-
-
 \subsubsection{\stid{4.13} ECP/VTK-m}
 
 \paragraph{Overview}
 The ECP/VTK-m project is providing the core capabilities to perform scientific visualization on Exascale architectures.
-The ECP/VTK-m project fills the critical feature gap of performing visualization and analysis on processors like graphics-based processors and many integrated core.
+The ECP/VTK-m project fills the critical feature gap of performing visualization and analysis on processors like graphics-based processors.
 The results of this project will be delivered in tools like ParaView, VisIt, and Ascent as well as in stand-alone form.
 Moreover, these projects are depending on this ECP effort to be able to make effective use of ECP architectures.
 
@@ -54,62 +52,73 @@ Our approach is to incrementally add features to VTK-m and expose them in tools 
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=2in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-Multiblock}\quad
-  \includegraphics[width=2in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-Gradients}\quad
-  \includegraphics[width=2in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-FieldToColors}
+  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-Clip}\quad
+  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-Bubbles-Density}
+  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-Bubbles-Components}\quad
+  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-Streamlines}
+  \includegraphics[height=1.5in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-FTLE}
   \caption{
-    Examples of recent progress in VTK-m include (from left to right) multiblock data structures, gradient estimation, and mapping of fields to colors.
+    Examples of recent progress in VTK-m include (from left to right) clipping to form an interval volume, connected components to identify bubbles of low density, advection of particles through time, and a generated FTLE field to identify Lagrangian coherent surfaces.
   }
   \label{fig:VTKmRecent}
 \end{figure}
 
 \paragraph{Recent Progress}
 The VTK-m project is organized into many implementation activities.
-The following features have been completed in the past 12 months.
+The following features have been completed in the FY19 fiscal year.
 
 \begin{itemize}
-\item \textbf{Key Reduce Worklet:}
-  This adds a basic building block to VTK-m that is very useful in constructing algorithms that manipulate or generate topology \cite{Miller2014}.
-\item \textbf{Spatial Division:}
-  Introductory algorithms to divide space based on the distribution of geometry within it.
-  This is an important step in building spatial lookup structures.
-\item \textbf{Basic Particle Advection:}
-  Particle advection traces the path of particles in a vector field.
-  This tracing is fundamental for many flow visualization techniques.
-  Our initial implementation works on simple structures
+\item \textbf{VTK-m Releases:}
+  VTK-m 1.3 was released in November 2018.
+  VTK-m 1.4 was released in June 2019.
+  VTK-m 1.5 was released in October 2019.
+\item \textbf{ZFP}
+  Working in collaboration with the ZFP project (now part of WBS 2.3.4.16), the ZFP compression algorithm \cite{zfp-jsm2017} is implemented in VTK-m.
+  This implementation ports across ECP platforms.
+\item \textbf{Clipping:}
+  A common visualization operation for extracting regions of interest, clipping provides mesh cutaways and interval volumes as demonstrated in Figure \ref{fig:VTKmRecent}.
+%% \item \textbf{Ghost Cells:}
+%%   Provided support for defining and stripping ghost cell information.
+\item \textbf{Merge Points:}
+  It is often necessary to collect together positions in 3-space that are nearby \cite{Yenpure2019}.
+\item \textbf{Connected Components:}
+  It can be physically significant to identify groups of elements that are mutually connected by either topology or common field attributes as demonstrated in Figure \ref{fig:VTKmRecent}.
+\item \textbf{Particle Advection:}
+  Many flow visualization algorithms depend on computing the movement of weightless particles in a flow vector field, which may change over time \cite{Pugmire2018}.
+  These include stream lines, path lines, Lagrangian coherent structures, and stream surfaces as demonstrated in Figure \ref{fig:VTKmRecent}.
+  We have also added tube geometry to improve rendering representation.
+%% \item \textbf{Mesh Warping:}
+%%   Simulations often represent Lagrangian movements in terms of displacements, which have to be applied to geometry to be properly visualized.
+%% \item \textbf{Contouring:}
+%%   All 3D cell shapes are now supported in our contouring algorithm.
+\item \textbf{Mesh Quality:}
+  Cell metrics provide important physical and meta information about a geometry.
 \item \textbf{Surface Normals:}
-  Normals, unit vectors that point perpendicular to a surface, are important to provide shading of 3D surfaces while rendering.
-  These often need to be derived from the geometry itself.
-\item \textbf{Multiblock Data:}
-  Treat multiple blocks of data, such as those depicted in Figure \ref{fig:VTKmRecent} at left, as first-class data sets.
-  Direct support of multiblock data not only provides programming convenience but also allows us to improve scheduling tasks for smaller groups of data.
-\item \textbf{Gradients:}
-  Gradients, depicted in Figure \ref{fig:VTKmRecent} at center, are an important metric of fields and must often be derived using topological data.
-  Gradients are also fundamental in finding important vector field qualities like divergence, vorticity, and q-criterion.
-\item \textbf{Field to Colors:}
-  Pseudocoloring, demonstrated in Figure \ref{fig:VTKmRecent} at right, is a fundamental feature of scientific visualization, and it depends on a good mechanism of converting field data to colors.
-\item \textbf{VTK-m 1.1 Release:}
-  VTK-m 1.1 was released in December 2017.
+  Surface normals are an important feature for proper representation in rendering.
+  Ensuring consistent ordering is important to avoid rendering artifacts.
+\item \textbf{Lightweight Cell Library:}
+  To help consolidate common code between VTK-m and other software, the code for cell management has been extracted into its own lightweight library.
+%% \item \textbf{Extruded Cell Sets:}
+%%   ECP's XGC simulation code uses an extrusion of a surface mesh for its data representation.
+%%   A similar representation is added to VTK-m for zero-copy data ingestion.
 \end{itemize}
 
 \paragraph{Next Steps}
 Our next efforts include:
 
 \begin{itemize}
-\item \textbf{External Surface:}
-  Extracting the external faces of solid geometry is important for efficient solid rendering.
-\item \textbf{Location Structures:}
-  Many scientific visualization algorithms require finding points or cells based on a world location.
-\item \textbf{Dynamic Types:}
-  The initial implementation of VTK-m used templating to adjust to different data structures.
-  However, when data types are not known at compile time, which is common in applications like ParaView and VisIt, templating for all possible combinations becomes infeasible.
-  Provide mechanisms to enable runtime polymorphism.
-\item \textbf{OpenMP:}
-  Our current multicore implementation uses TBB \cite{TBB} for its multicore support.
-  However, much of the code we wish to integrate with uses OpenMP \cite{OpenMP}, and the two threading implementations can conflict with each other.
-  Thus, add a device adapter to VTK-m that uses OpenMP so this conflict will not happen.
+%% \item \textbf{Structured Grid Contouring:}
+%%   There are several optimizations that can be made for contouring in structured grids.
+\item \textbf{Performance Regression Testing:}
+  It is important to ensure that in addition to being correct, the performance of VTK-m code does not regress.
+\item \textbf{Kokkos Devices:}
+  We will explore the feasibility of using the Kokkos libraries to implement the device porting layer.
+%% \item \textbf{Improved Testing:}
+%%   We plan to improve the testing layer by supporting image comparison and data files.
+\item \textbf{Higher Order Meshes:}
+  Many ECP simulations use high order interpolation techniques on their meshes.
 \end{itemize}
 
 \noindent
-{\tiny Sandia National Laboratories is a multimission laboratory managed and operated by National Technology \& Engineering Solutions of Sandia, LLC, a wholly owned subsidiary of Honeywell International Inc., for the U.S. Department of Energy's National Nuclear Security Administration under contract DE-NA0003525. \hfill SAND~2018-4009~R
+{\tiny Sandia National Laboratories is a multimission laboratory managed and operated by National Technology \& Engineering Solutions of Sandia, LLC, a wholly owned subsidiary of Honeywell International Inc., for the U.S. Department of Energy's National Nuclear Security Administration under contract DE-NA0003525. \hfill SAND~2019-13411~R
 \par}

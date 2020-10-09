@@ -2,71 +2,141 @@
 \subsubsection{\stid{2.08} HPCToolkit} 
 \paragraph{Overview} 
 
-The HPCToolkit project is working to develop performance measurement and analysis tools to help ECP software developers understand where and why their programs do not fully exploit hardware resources within and across nodes of extreme-scale parallel systems. Key deliverables of the project are a suite of software tools that developers need to measure and analyze the performance of parallel applications as they execute on existing ECP testbeds and new technologies needed to measure and analyze performance on forthcoming Exascale systems.
+The HPCToolkit project is working to develop performance measurement
+and analysis tools to help ECP application, library, runtime, and tool
+developers understand where and why their software does not fully
+exploit hardware resources within and across nodes of extreme-scale
+parallel systems. Key deliverables of the project are a suite of
+software tools that developers need to measure and analyze the
+performance of parallel software as it executes on existing ECP
+testbeds and new technologies needed to measure and analyze
+performance on forthcoming GPU-accelerated exascale systems.
 
-To provide a foundation for performance measurement and analysis, the project team is working with community stakeholders, including standards committees, vendors, and open source developers to improve hardware and software support for measurement and attribution of application performance on extreme-scale parallel systems. The project team has been engaging vendors to improve
- hardware support for performance measurement in next generation systems and working with other software teams to design and integrate new capabilities into operating systems, runtime systems, communication libraries, and application frameworks that will enhance the ability of software tools to accurately measure and attribute code performance on extreme-scale parallel systems.  Using emerging hardware and software interfaces for monitoring code performance, the project team is working to extend capabilities to measure computation, data movement, communication, and I/O as a program executes to pinpoint scalability bottlenecks, evaluate resource consumption, and quantify inefficiencies. 
-
-
-
-
-% HPCToolkit as well as the technologies that the project is contributing to the hardware and software ecosystem is needed for ECP because no existing tools are able to measure and precisely attribute the performance of software executing on scalable parallel systems with heterogeneous node-level compute technologies. The project is working to develop tools that attribute performance of code at all levels of the software stack including the application, runtime systems, libraries, and operating systems on  traditional CPUs as  well as accelerators.
+To provide a foundation for performance measurement and analysis, the
+project team is working with community stakeholders, including
+standards committees, vendors, and open source developers to improve
+hardware and software support for measurement and attribution of
+application performance on extreme-scale parallel systems. The
+project team has been engaging vendors to improve hardware support
+for performance measurement in next-generation GPUs and working
+with other software teams to design and integrate new capabilities
+into operating systems, runtime systems, communication libraries, and
+application frameworks that will enhance the ability of software
+tools to accurately measure and attribute code performance on
+extreme-scale parallel systems.  Using emerging hardware and software
+interfaces for monitoring code performance on both CPUs and GPUs, the project team is
+working to extend capabilities to measure and analyze computation, data movement,
+communication, and I/O as a program executes to pinpoint scalability
+bottlenecks, quantify resource consumption, and assess
+inefficiencies.
 
 \paragraph{Key  Challenges}
 
-In recent years, the complexity, diversity, and the rate of change of architectures for extreme-scale parallel systems have increased dramatically. For higher efficiency, heterogeneous designs that couple multicore processors with accelerators and employ more complex memory hierarchies have been increasing in importance. In addition,  the DOE is purposefully pursuing multiple independent architectural designs for next generation parallel systems as part of risk mitigation. For performance tools, the need to support multiple diverse architectural paths significantly increases tool complexity. 
-% For instance, performance measurement and analysis methodologies for accelerators such as graphics processor units that play a central role in the emerging CORAL systems are completely different than methodologies used for measuring the performance on alternative designs in ECP testbeds based on manycore processors.
-At the same time, the complexity of applications is increasing dramatically as developers struggle to expose billion-way parallelism, map computation onto heterogeneous computing elements, and cope with the growing complexity of memory hierarchies. While application developers can employ abstractions to hide some of the complexity of emerging parallel systems, performance tools must be intimately familiar with all of the idiosyncratic features added to these systems to improve performance or efficiency, develop measurement and analysis techniques that assess how well these features are being exploited, and then relate these measurements back to software to create actionable feedback that will guide developers to improve the performance, efficiency, and scalability of their applications.
+Today's fastest supercomputers and forthcoming exascale systems all
+employ GPU-accelerated compute nodes. Almost all of the 
+computational power of GPU-accelerated compute nodes comes from GPUs rather than CPUs.
+GPU-accelerated compute nodes have complex memory hierarchies that include 
+multiple memory technologies with different bandwidth and latency characteristics. In addition, 
+GPU-accelerated compute nodes have non-uniform connections between memories and computational elements (CPUs and GPUs). 
+Furthermore, the next three DOE supercomputers (Perlmutter, Aurora, and Frontier) will feature GPUs from different vendors (NVIDIA, Intel, and AMD). 
+There are significant differences in the underlying organization of these GPUs as well as their hardware support for performance measurement. For
+performance tools, the need to support multiple CPU and GPU architectures significantly increases tool complexity.  At the same time, the
+complexity of applications is increasing dramatically as developers
+struggle to expose billion-way parallelism, map computation onto
+heterogeneous computing elements, and cope with the growing complexity
+of memory hierarchies. While application developers can employ
+abstractions to hide some of the complexity of emerging parallel
+systems, performance tools must be intimately familiar with each of
+the features added to these systems to improve performance or
+efficiency, develop measurement and analysis techniques that assess
+how well these features are being exploited, and then relate these
+measurements back to software to create actionable feedback that will
+guide developers to improve the performance, efficiency, and
+scalability of their applications.
 
 \paragraph{Solution Strategy}
 
-Development of HPCToolkit as part of ECP is focused on preparing it for production use at Exascale by enhancing it in several ways. First, the team is adding new capabilities to measure and analyze interactions between software and key hardware subsystems in extreme-scale platforms, including more complex memory hierarchies and accelerators. Second, the team is working to improve performance attribution given optimized code for complex node-level programming models used by ECP developers, including OpenMP and template-based programming models such as LLNL's RAJA and Sandia's KOKKOS. To support this effort, the project team is enhancing the Dyninst binary analysis toolkit, which is also used by other ECP tools. Third, the team is improving the scalability of HPCToolkit so that it can be used to measure and analyze extreme-scale executions. Fourth, the project team is working to improve the robustness of the tools across the range of architectures used as ECP platforms. Fifth, the team will enhance HPCToolkit's user interfaces to help analyze performance bottlenecks on extreme-scale platforms.  Finally, the project team will work other ECP teams to ensure that they benefit from HPCToolkit's capabilities to measure, analyze, attribute, and diagnose performance issues on ECP testbeds and forthcoming Exascale systems.  
+Development of HPCToolkit as part of ECP is focused on preparing it
+for production use at exascale by enhancing it in several ways. First,
+the team is adding new capabilities to measure and analyze
+interactions between software and key hardware subsystems in
+extreme-scale platforms, including GPUs and the complex memory hierarchies on GPU-accelerated compute nodes. A major focus of this effort is developing new capabilities for 
+measurement and analysis of performance on GPUs.
+Second, the team is working to improve performance
+attribution given optimized code for complex node-level programming
+models used by ECP developers, including OpenMP and template-based
+programming models such as LLNL's RAJA and Sandia's KOKKOS. To support
+this effort, the project team is enhancing the Dyninst binary analysis
+toolkit, which is also used by other ECP tools. A major focus of this effort 
+is to support analysis of GPU binaries. Third, the team is
+improving the scalability of HPCToolkit so that it can be used to
+measure and analyze extreme-scale executions. Fourth, the project team
+is working to improve the robustness of the tools across the range of
+architectures used as ECP platforms. Finally, the project team will
+work other ECP teams to ensure that they benefit from HPCToolkit's
+capabilities to measure, analyze, attribute, and diagnose performance
+issues on ECP testbeds and forthcoming exascale systems.
 
+\newpage
 \paragraph{Recent Progress}
 
-Over the last year, the HPCToolkit project has significantly enhanced the ability to measure and analyze application performance. 
-
 \begin{itemize}
+
 \item
-The project team added a new measurement substrate to HPCToolkit to measure performance using the Linux perf\_events interface. Using perf\_events enables HPCToolkit to measure operating system activity and thread blocking in addition to application execution. Figure~\ref{fig:hpctoolkit-kernel} displays a screenshot of HPCToolkit's code-centric user interface that shows how HPCToolkit reports information about kernel activity on behalf of an application as part of an application's performance. 
-%The screenshot shows that the performance of data movement occurring as part of interprocess communication in a parallel code is a function of how fast a single hardware thread can perform a copy loop within the operating system kernel.
- \item
-To accurately attribute code performance to elements of complex, parallel software frameworks that have been transformed  by optimizing compilers, HPCToolkit employs an approach that combines information recorded by compilers about line maps and the provenance of inlined code with direct analysis of machine code to recover information about a program's control flow. Over the past year, the project team has developed improved techniques for recovering control flow graphs from machine code 
- and employed them to relate application performance to inlined functions, templates, and  loops in highly optimized code on both host processors and attached accelerators. Figure~\ref{fig:hpctoolkit-perfsuite} shows the precise attribution of performance measurements to C++ templates employed as part of LLNL's RAJA portability layer.
+The project team developed a novel approach to synthesize a GPU Calling Context Tree (CCT) to report the performance of a GPU kernel that invokes multiple procedures.
+While attribution of performance metrics in the CCT is approximate, it is essential for understanding the interplay of many procedures that implement a kernel expressed using template-based programming models. Figure~\ref{fig:hpctoolkit}(a) shows a calling context that spans both CPU and GPU for a benchmark code implemented using LLNL's RAJA template-based programming model. 
+%The approximate calling context on the GPU was reconstructed by recovering the static call graph on the GPU by analyzing GPU machine instructions and using program counter samples on the GPU to guide weighted attribution of costs.   
 \item
-The project team has developed novel capabilities for measurement, analysis, and attribution of applications that employ graphics processing units (GPUs) as accelerators.  This work includes leading the design of the OMPT tool application programming interface as part of the emerging OpenMP 5.0 standard, developing a measurement infrastructure as part of {\tt libomptarget}---an open source library for offloading code onto accelerators, enhancing HPCToolkit to ingest measurement data from accelerators, and extending HPCToolkit to analyze binaries for NVIDIA's GPUs to attribute performance of offloaded code. Figure~\ref{fig:hpctoolkit-perfsuite} illustrates how HPCToolkit can attribute the performance of code offloaded onto a GPU to the host context that offloaded the computation.
+
+The project team extended HPCToolkit with prototype support for and collecting and visualizing traces of both CPU and GPU activity.
+Figure~\ref{fig:hpctoolkit}(b) shows a trace of a 6-process GPU-accelerated execution of a recent snapshot of Nyx---an adaptive mesh, compressible cosmological hydrodynamics simulation code being developed as part of the DOE ECP ExaSky project. In the figure, CPU trace lines appear as continuous multi-colored bands running the  trace lines the width of the figure. GPU trace lines show large intervals of white, indicating idleness, or red, indicating costly, excess synchronization present in the prototype code measured.
+
+\item
+The project team developed a novel approach to derive key GPU performance metrics, including GPU occupancy, by measuring a single execution of a GPU-accelerated program using program counter sampling on NVIDIA GPUs.
+
+\item To reduce the overhead of measuring GPU-accelerated applications, the project team developed a novel wait-free data structure that is employed in the implementation of  HPCToolkit's measurement subsystem.
+
 \end{itemize}
 
 \begin{figure}[t]
+\captionsetup{width=.96\textwidth}
+\begin{minipage}[t]{.48\textwidth}
 \centering
-\begin{subfloat}[HPCToolkit kernel activity performance metrics.\label{fig:hpctoolkit-kernel}]%{.48\textwidth}
-\centering
-\includegraphics[width=.48\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-kernel}
-%\caption{The December 2017 release of HPCToolkit includes support for measuring and attributing performance metrics of kernel activity on behalf of an application.}
-%\label{fig:hpctoolkit-kernel}
-\end{subfloat}
+\includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-raja-perf}
+\\(a)
+\end{minipage}
 \hfill
-\begin{subfloat}[HPCToolkit GPU offloaded performance.
-\label{fig:hpctoolkit-perfsuite}]%{.48\textwidth}
+\begin{minipage}[t]{.48\textwidth}
 \centering
-\includegraphics[width=.48\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-perfsuite}
-%\caption{HPCToolkit now measures and attributes the performance of computation offloaded to GPUs using LLNL's RAJA template-based programming model.}
-%\label{fig:hpctoolkit-perfsuite}
-\end{subfloat}
-\caption{The December 2017 HPCToolkit release supports measuring and attributing performance metrics of kernel activity on behalf of an application.  HPCToolkit now measures and attributes the performance of computation offloaded to GPUs using LLNL's RAJA template-based programming model.}
+\includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-nyx-trace}
+\\(b)
+\end{minipage}
+\caption{(a) 
+HPCToolkit's {\tt hpcviewer} showing a detailed attribution of GPU performance metrics in a 
+profile of an optimized, GPU-accelerated benchmark written using LLNL's RAJA template-based programming model.
+(b) HPCToolkit's {\tt hpctraceviewer} showing a 6-process GPU-accelerated execution trace of Nyx---an adaptive mesh, compressible cosmological hydrodynamics simulation code.}
+\label{fig:hpctoolkit}
 \end{figure}
-\vspace{-1ex}
 
 \paragraph{Next Steps}
-
-The next steps in the project are to:
 \begin{itemize}
-\setlength\itemsep{0em}
-\item Work with the OpenMP standards committee to finalize tool interfaces as part of the emerging OpenMP standard.
-\item Complete and deploy implementation of  HPCToolkit's support for measurement and analysis of code offloaded onto NVIDIA GPUs. 
-%Work to integrate GPU measurement support back into the open-source {\tt libomptarget} library.
-\item Integrate new support for task-based parallelism developed as part of the project's Dyninst binary analysis infrastructure into HPCToolkit's binary analyzer to accelerate analysis of large executables.
-\item Complete work on data-centric performance analysis capabilities that  measure and attribute data movement costs to program variables.
-\item Complete and deploy a framework for regression testing of HPCToolkit.
-\item Work with DOE and Intel on performance measurement technologies for the A21 Exascale platform.
+
+\item 
+Integrate GPU measurement and analysis capabilities into HPCToolkit's trunk for
+release.
+
+\item 
+Finish refactoring measurement support initially developed for NVIDIA GPUs into a GPU-independent monitoring substrate.
+
+\item 
+Add support for collecting new GPU performance metrics.
+
+\item 
+Work with the open source community to upstream GPU measurement support
+developed by the project team into the community version of the {\tt
+libomptarget} offloading library.
+
+\item 
+Work with DOE and platform vendors to evaluate and refine software interfaces for measuring GPU performance.
+
 \end{itemize}

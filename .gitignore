@@ -241,3 +241,17 @@ TSWLatexianTemp*
 # generated if using elsarticle.cls
 *.spl
 .DS_Store
+ECP-ST-CAR.pdf
+ECP-ST-CAR.pdf
+
+# generated file from main Makefile
+ECP-ST-CAR.aux.make
+ECP-ST-CAR.auxbbl.make
+ECP-ST-CAR.auxtarget.make
+ECP-ST-CAR.d
+ECP-ST-CAR.lof.make
+ECP-ST-CAR.lot.make
+ECP-ST-CAR.out.make
+ECP-ST-CAR.toc.make
+ECP-ST-CAR.aux.make
+ECP-ST-CAR.auxbbl.make.temp

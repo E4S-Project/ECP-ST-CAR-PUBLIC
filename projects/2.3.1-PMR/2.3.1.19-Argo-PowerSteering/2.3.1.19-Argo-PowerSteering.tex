@@ -1,0 +1,37 @@
+\subsubsection{\stid{1.19} Argo: Low-Level Resource Management for the OS and Runtime}
+
+The goal of the Argo project~\cite{perarnau2017argo} is to augment and
+optimize existing OS/R components for use in production HPC systems,
+providing portable, open source, integrated software that improves the
+performance and scalability of and that offers increased functionality to
+exascale applications and runtime systems.
+
+System resources should be managed in cooperation with applications and
+runtime systems to provide improved performance and resilience. This is
+motivated by the increasing complexity of HPC hardware and application
+software, which needs to be matched by corresponding increases in the
+capabilities of system management solutions.
+
+The Argo software is developed as a toolbox---a collection of autonomous
+components that can be freely mixed and matched to best meet the user's
+needs.
+
+Project activities focus around four products:
+\begin{itemize}
+\item AML --- a library providing explicit, application-aware memory
+management for deep memory systems,
+
+\item UMap --- a user level library incorporating NVRAM into complex memory
+hierarchy using a high performance \texttt{mmap}-like interface.
+
+\item PowerStack --- power management infrastructure optimizing performance
+of Exascale applications under power or energy constraints.
+
+\item NRM --- a daemon centralizing node management activities such as
+job management, resource management, and power management.
+\end{itemize}
+
+\input projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/aml
+\input projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/umap
+\input projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/powerstack
+\input projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/nrm
