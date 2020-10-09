@@ -53,14 +53,14 @@ device or to best take advantage of the memory hierarchy.
 \includegraphics[width=.18\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/aml-components}
 \end{wrapfigure}
 AML components are built on top of hardware drivers and system
-libraries (libnuma, hwloc, CUDA, OpenCL, SICM, UMap).
+libraries (libnuma, hwloc, accelerator libraries, other ECP products).
 The figure on the right depicts the major components of AML, including:
 \begin{itemize}
 \item Memory \emph{areas}, the location where data lives,
 \item Applications data \emph{layouts} description,
 \item \emph{DMA} engines, to move data across areas and layouts,
 \item \emph{Tiling} schemes, the meta-structures on top of data layouts,
-\item High level abstractions and helpers (\emph{scratchpad}, \emph{replicaset}).
+\item High level abstractions and helpers (\emph{replicaset}).
 \end{itemize}
 
 \paragraph{Recent Progress}
@@ -80,44 +80,50 @@ is available. It implements the \emph{preferred} allocation policy on all
 memories. These memories are ordered according to a performance
 criterion (e.g., bandwidth). Therefore, data can be allocated as long as
 some memory is available. On top of that, data will be mapped onto the best
-available memories according to the performance criterion. Furthermore,
+available memories according to a performance criterion. Furthermore,
 we updated and merged the \emph{replicaset} high level abstraction which
 is now available to users. In a nutshell, this abstraction will
 create an area per NUMA cluster on the fastest memory of the cluster.
 Then, the user can use the replicaset primitives to map data replicas
-and update the latter in these areas. We were using this trick to improve
-the performance of the
-\emph{XSBench} application (published this year). We forked the application
-repository to include our latest changes in a branch and we are looking to
-merge it back soon.
+and update the latter in these areas. We previously demonstrated the use of
+this facility to improve the performance of the
+\emph{XSBench} application (published this year). We are working with
+ExaSMR developers to offer it as an optional feature in the latest version
+of the benchmark. 
 
-Finally, the last new capability we introduced in the library is the
-use of \emph{excit} library as a submodule. Excit implements general
-purpose iterators. We aim to use it to provide custom topology object
-iterators. For instance, we want to be able to iterate memories of
-a certain type or with specific performance abilities. In the future,
-we also look to provide iterators for our \emph{tiling} abstraction.
+Finally, the last new capability we introduced in the library is a submodule
+library called \emph{excit}. Excit implements general purpose iterators, and we
+are using it provide extensive iteration interfaces to the core building blocks
+of AML, as well as custom topology object iterators. For example, we want to be
+able to iterate memories of a certain type or with specific performance
+abilities.
 
 As part of our infrastructure improvements, we bought a new machine
 with heterogeneous hardware that we are using in our CI pipeline
-to test new vendor backends. We also added a new CI stage:
-our development process implies that changes are branched off of the staging
-branch. The latter is further tested and merged into the main branch.
-Our CI pipeline now includes a step where the merge of the staging branch into
-the main branch will trigger a build and check on Theta machine.
+to test new vendor backends. We are also taking advantage of the ECP CI
+infrastructure as part of our development process. The development of the
+library is validated by our own CI before being merged into a staging
+branch. The latter is then mirrored to ECP facilities to be further tested by
+an ECP CI pipeline, before being merged into our master branch. The goal is to
+ensure that our master branch can always be stable on production systems. Our
+ECP CI pipeline runs on Theta at ALCF and we are in the process of setting it
+up at OLCF.
 
 \paragraph{Next Steps}
 
 We are looking to build on top of our success with XSBench and use it as a
-showcase of some of the AML capabilities. Our next goal is to provide an
-\emph{OpenMP mapper}-like feature. An OpenMP mapper makes it possible to
+showcase of some of the AML capabilities. Our next goal is to provide a feature
+inspired by OpenMP 5 \emph{custom mappers}. An OpenMP mapper makes it possible to
 describe which parts of a structure should be mapped onto
-accelerator devices; it is a recent addition to the standard. However, to the best
-of our knowledge, no compiler implements it yet. This capability seems to fit in the
-scope of our \emph{tiling} abstraction. It should work well with our \emph{DMA}
-abstraction to manage its transfers back and forth onto devices. This block is also a
-necessary step to be able to integrate with more complex applications such as OpenMC.
+accelerator devices. As it is a recent addition to the standard, to the best
+of our knowledge, no compiler implements it yet. Furthermore, this feature is
+limited in its ability to filter or reorganise memory during the mapping
+process. We are using our \emph{tiling} abstraction to build a more
+flexible interface for such a feature, based on the needs of the OpenMC
+application. It will be combined with our \emph{DMA} abstraction to manage
+memory transfers and might be also provided through a more straightforward
+higher-level API.
 
-Finally, we are aiming at a broad compatibility of the library with accelerator devices.
-Therefore, we are about to implement the base library abstractions on top of the \emph{OpenCL}
-backend.
+Finally, we are aiming at a broad compatibility of the library with accelerator
+devices.  Therefore, we are about to implement the base library abstractions on
+top of the \emph{OpenCL} backend.
