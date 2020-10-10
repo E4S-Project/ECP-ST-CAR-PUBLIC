@@ -18,9 +18,9 @@ Since the upcoming computer architectures are heterogeneous with accelerators, w
 Previously, we enabled the structured solvers, SMG and PFMG\cite{AsFa1996}, both setup and solve phase, to completely run on GPUs, using both CUDA or OpenMP4.5, and to not require unified memory. In addition, options to use RAJA and Kokkos are available.
 Porting the unstructured solver, BoomerAMG turned out to be far more complex. We first ported the solve phase to GPUs for select smoothers, mainly Jacobi smoothers, requiring unified memory. During the last year, we focused on enabling selected components of the setup phase to run on GPUs, specifically PMIS coarsening, direct interpolation, and the generation of the coarse grid operator, which consists of the multiplication of three sparse matrices. Figure \ref{fig:rap} shows runtime comparisons of different implementations of the coarse grid operator generation on one V-100 GPU or one Power 9, which demonstrate that the hypre GPU implementation outperforms state-of-the-art implementations such as CUSP and cuSPARSE. It is now possible to perform a complete linear system solve with BoomerAMG on GPUs using specific settings.
 
-\begin{figure}
+\begin{figure}[bth]
 \centering
-	\includegraphics[width=5in]{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/hypre-rap-1gpu.png}
+	\includegraphics[width=3.9in]{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/hypre-rap-1gpu.png}
 	\caption{\label{fig:rap} Runtimes to generate a coarse grid operator for a 7pt 3d Laplace problem matrix on 1 V-100 GPU or Power 9 CPU with up to 20 OMP threads for various implementations}
 \end{figure}
 
@@ -28,7 +28,7 @@ We also implemented a new integer datatype called HYPRE$\_$BigInt to avoid the r
 
 \begin{figure}
 \centering
-	\includegraphics[width=3in]{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/hypre-mixed-int.png}
+	\includegraphics[width=2.5in]{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/hypre-mixed-int.png}
 	\caption{\label{fig:mixed-int} Weak scaling study on LLNL Linux cluster Quartz: Total runtimes in seconds for AMG-PCG using 1M points/core for 2 different 3D diffusion problems.The new mixed-int capability performs about 20-25 percent better than the 64 bit integer version while using less memory and is capable to solve larger problems than the 32 bit integer version.}
 \end{figure}
 

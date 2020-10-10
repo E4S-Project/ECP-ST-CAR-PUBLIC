@@ -1,4 +1,4 @@
-\subsection{\stid{1}  \pmr}
+\subsection{\stid{1}  \pmr}\label{subsect:pmr}
 
 \textbf{End State:} A cross-platform, production-ready programming environment that enables and accelerates the development of mission-critical software at both the node and full-system levels.
 
@@ -23,10 +23,76 @@ Throughout the effort, the applications teams and other elements of the software
 
 
 \subsubsection{Risks and Mitigation Strategies}
-The mainstream activities of PMR focus on advancing the capabilities of the Message Passing Interface (MPI) and OpenMP. Pushing them as far as possible into the exascale era is key to supporting an evolutionary path for applications. This is the primary risk mitigation approach for both PMR and existing application codes. Extensions to MPI and OpenMP standards require research, and part of the efforts will focus on rolling these findings into existing standards, which takes time. To further address risks, PMR is exploring alternative approaches to mitigate the impact of potential limitations of the MPI and OpenMP programming models. This effort is tracked using the risk register.
+The mainstream activities of ECP in the area of programming models focus on advancing the capabilities of MPI and OpenMP. Pushing them as far as possible into the exascale era is key to supporting an evolutionary path for applications. This is the primary risk mitigation approach for existing application codes. Extensions to MPI and OpenMP standards require research, and part of the efforts will focus on rolling these findings into existing standards, which takes time. To further address risks, PMR is exploring alternative approaches to mitigate the impact of potential limitations of the MPI and OpenMP programming models. 
 
-Another risk is the failure of adoption of the software stack by the vendors, which is tracked in the risk register, and mitigated by the specific delivery focus in sub-element SW Ecosystems and Delivery. Past experience has shown that a combination of laboratory-supported open source software and vendor-optimized solutions built around standard APIs that encourage innovation across multiple platforms is a viable approach and what we are doing in PMR. We are using close interaction with the vendors early on to encourage adoption of the software stack, including well-tested practices of including support for key software products or APIs into large procurements through NRE or other contractual obligations. A mitigation strategy for this approach involves building a long-lasting open source community around projects that are supported via laboratory and university funding. This approach is being extended to other APIs and alternative models (that are being defined and eventually standardized) to allow for deeper and stack-wide introspection as well as resource sharing.
+Another risk is the failure of adoption of the software stack by the vendors, which is mitigated by the specific delivery focus in sub-element SW Ecosystem and Delivery. Past experience has shown that a combination of laboratory-supported open-source software and vendor-optimized solutions built around standard APIs that encourage innovation across multiple platforms is a viable approach and is what we are doing in PMR. We are using close interaction with the vendors early on to encourage adoption of the software stack, including well-tested practices of including support for key software products or APIs into large procurements through NRE or other contractual obligations. A mitigation strategy for this approach involves building a long-lasting open-source community around projects that are supported via laboratory and university funding. 
 
-Creating a coordinated set of software requires strong management to ensure that duplication of effort is minimized. This is recognized by ECP management, and processes are in place to ensure collaboration is effective, shortcuts are avoided unless necessary, and an agile approach to development is instituted to prevent prototypes moving directly to product. The duplication of effort specifically, and the overall integration of the software stack, are tracked in the risk register. 
+Creating a coordinated set of software requires strong management to ensure that duplication of effort is minimized. This is recognized by ECP management, and processes are in place to ensure collaboration is effective, shortcuts are avoided unless necessary, and an agile approach to development is instituted to prevent prototypes moving directly to product. 
 
 \subsubsection{Future Trends}
+Recently announced exascale system procurements have shown that the
+trend in exascale compute-node hardware is toward heterogeneity:
+Compute nodes of future systems will have a combination of regular
+CPUs and accelerators (typically GPUs). Furthermore, the GPUs will not
+be just from NVIDIA as on existing systems: One system will have Intel
+GPUs and another will have AMD GPUs. In other words, there will be a
+diversity of GPU architectures, each with their own vendor-preferred
+way of programming the GPUs. An additional complication
+is that although the HPC community has some experience in using NVIDIA
+GPUs and the associated CUDA programming model, the community has relatively
+little experience in programming Intel or AMD GPUs.  These
+issues lead to challenges for application and software teams in
+developing exascale software that is both portable and high performance. Below
+we outline trends in programming these complex systems that will help
+alleviate some of these challenges.
+
+\paragraph{Trends in Internode Programming}
+The presence of accelerator hardware on compute nodes has resulted in individual
+compute nodes becoming very powerful. As a result, millions of compute
+nodes are no longer needed to build an exascale system. This trend
+results in a lower burden on the programming system used for internode
+communication. It is widely expected that MPI will continue to serve
+the purpose of internode communication on exascale systems and is the
+least disruptive path for applications, most of which already use
+MPI. Nonetheless, improvements are needed in the MPI Standard as well
+as in MPI implementations in areas such as hybrid programming
+(integration with GPUs and GPU memory, integration with the intranode
+programming model), overall resilience and robustness, scalability,
+low-latency communication, optimized collective algorithms, optimized support
+for exascale interconnects and lower-level communication paradigms
+such as OFI and UCX, and scalable process startup and management. PGAS
+models, such as UPC++ and OpenSHMEM, are also available to be used by
+applications that rely on them and face similar
+challenges as MPI on exascale systems. These challenges are being tackled by the MPI and
+UPC++/GASNet projects in the PMR area.
+
+\paragraph{Trends in Intranode Programming}
+The main challenge for exascale is in achieving performance and portability for
+intranode programming, for which a variety of options
+exist. Vendor-supported options include CUDA and OpenACC for NVIDIA
+GPUs, SYCL/DPC++ for Intel GPUs, and HIP for AMD GPUs. OpenACC
+supports accelerator programming via compiler directives. SYCL
+provides a C++ abstraction on top of OpenCL, which itself is a
+portable, lower-level API for programming heterogeneous
+devices. Intel's DPC++ is similar to SYCL with some extensions. HIP
+from AMD is similar to CUDA; in fact, AMD provides translation tools
+to convert CUDA programs to HIP.
+
+Among portable, standard programming models, OpenMP has supported
+accelerators via the \texttt{target} directive starting with OpenMP version
+4.0 released in July 2013. Subsequent releases of OpenMP (version 4.5
+and 5.0) have further improved support for accelerators. OpenMP is
+supported by vendors on all platforms and, in theory, could serve as a
+portable intranode programming model for systems with
+accelerators. However, in practice, a lot depends on the quality of
+the implementation.
+
+Kokkos and RAJA provide another alternative for portable,
+heterogenous-node programming via C++ abstractions. They
+are designed to work on complex node architectures
+with multiple types of execution resources and multilevel memory
+hierarchies. Many ECP applications are successfully using Kokkos and
+RAJA to write portable parallel code that runs efficiently on GPUs.
+
+We believe these options (and high-quality implementations of them) will
+meet the needs of applications in the exascale timeframe. 

@@ -4,15 +4,15 @@
 
 \paragraph{Overview} 
 % \textit{Provide an overview of your project.  You might find that the introductory text from your Fall 2017 Project Summary \url{https://confluence.exascaleproject.org/display/1ST/Fall+2017+ECP+ST+Project+Summaries} useful as a starting draft.}
-In this project we will deliver factorization based sparse solvers
+This project will deliver factorization-based sparse solvers
 encompassing the two widely used algorithm variants: supernodal
-(SuperLU library: \url{https://portal.nersc.gov/project/sparse/superlu})
-and multifrontal (STRUMPACK library: \url{http://portal.nersc.gov/project/sparse/strumpacK}).
+(SuperLU: \url{https://portal.nersc.gov/project/sparse/superlu})
+and multifrontal (STRUMPACK: \url{http://portal.nersc.gov/project/sparse/strumpacK}).
 STRUMPACK is
-further enhanced with scalable preconditioning functionality using
+further enhanced with scalable preconditioning using
 hierarchical matrix algebra. Both libraries are purely algebraic,
-applicable to a large variety of application domains. We will address
-several challenges that arise in Exascale computing, with the following
+applicable to many application domains. We will address
+several Exascale challenges, with the following
 focus areas: 
 (1) Develop novel approximation algorithms that have lower
 arithmetic and communication complexity with respect to the size of the
@@ -21,31 +21,33 @@ input matrix;
 inter-process communication and expose task parallelism and vectorization
 for irregular computations involving sparse data structures to better
 use on-node resources;
-(3) Integrate our software into the higher level
+(3) Integrate our software into higher-level
 algebraic solvers such as hypre, PETSc, Trilinos, and collaborate with
-ECP application teams for application-specific and hardware-specific tuning
-of the parameters space to achieve optimal efficiency of our solvers.
+ECP teams for application-specific and hardware-specific tuning
+of the parameters space to achieve optimal efficiency.
 
-Our solver technology is essential for ECP, because many DOE simulation
-and data analysis codes expected to run on the Exascale machines need
-solutions of sparse algebraic systems, and many high fidelity simulations
+Our solver technology is essential for ECP, because many 
+% DOE simulation and data analysis 
+codes expected to run on Exascale machines need
+solutions of sparse algebraic systems, and many high-fidelity simulations
 involve large-scale multiphysics and multiscale modeling problems that
 generate highly ill-conditioned and indefinite algebraic equations,
-for which pure iterative methods such as Krylov and multigrid, albeit
-readily parallelizable on large machines, cannot converge to the solution.
-The factorization based algorithms being developed herein
+for which pure iterative methods 
+% such as Krylov and multigrid, albeit readily parallelizable on large machines, 
+cannot converge to the solution.
+The factorization-based algorithms being developed herein
 represent an important class of methods that are indispensable building
 blocks for solving those numerically challenging problems. Our software
 can often be used as a reliable standalone solver, or as a preconditioner
-for Krylov iterative methods, or as a coarse grid solver in multigrid
-methods, just to name a few.
+for Krylov methods, or as a coarse grid solver in multigrid
+methods. %, just to name a few.
 
 \paragraph{Key Challenges}
 %\textit{Describe what is hard to do, why it is challenging.}
 At Exascale we need to address several major challenges:
-decreasing amount of memory per core, larger impact of communication
-cost and load imbalance, more heterogeneous architecture.
-Our new design of algorithms and codes need to focus on
+decreasing amount of memory per core, increasing impact of communication
+cost and load imbalance, and increasing architectural heterogeneity.
+Our new design of algorithms and codes must focus on
 reducing communication and synchronization and task scheduling 
 instead of floating point operation throughput. In sparse factorization
 methods, we expect new bottlenecks in parts of the code
@@ -63,8 +65,8 @@ and high degree of data dependency.
 Compared to iterative methods, the primary bottleneck of direct solvers
 is the asymptotically higher growth in memory need and floating point
 operations, especially for problems from three-dimensional geometry.
-It is imperative to develop novel factorization methods which require
-much less memory footprint and data movement.
+It is imperative to develop new factorization methods that require
+much less memory and data movement.
 
 
 \paragraph{Solution Strategy}
@@ -95,7 +97,7 @@ The developments for STRUMPACK will focus on several areas:
     ranks in the low-rank compression routine. The goal is to use
     enough samples for stability, but not too many for efficiency;
 (2) add OpenMP support for both HSS compression and ULV factorization routines,
-    especially use OpenMP task construct to support irregular parallelism.
+    especially use OpenMP task construct to support irregular parallelism;
 (3) reduce MPI communication in all stages of the code, including HSS
     construction, ULV factorization and triangular solve;
 (4) in addition to HSS, develop codes to support other simpler low-rank
@@ -103,18 +105,18 @@ The developments for STRUMPACK will focus on several areas:
     lower complexity than HOLDR and BLR, but has a larger prefactor constant.
     We expect HSS to be more useful for large-scale problems while HOLDR
     and BLR are more useful for mid-range problems;
-(5) work with the ECP application teams to examine their specific problem
+(5) work with ECP application teams to examine their specific problem
     characteristics and develop the best clustering/ordering methods to 
     reveal low-rank structures.
 
 \paragraph{Recent Progress}
 %\textit{Describe what you have done recently.  It would be good to have some kind of figure or diagram in this section.}
-In the past six months, we focused on adding more support for GPU and
-improving on-node threading performance.  To this end, we participated
-in the 3.5 days ECP OpenMP Hackathon at NERSC in August 2019. During hackathon,
-we worked closely with the other two ECP ST teams: HPCToolkit and SOLLVE,
-as well as the OpenMP/vectorization experts from Intel.  In particular,
-using HPCToolkit helps reveal several performance bottlenecks.  We rewrote
+In the past six months, we added more support for GPUs and
+improved on-node threading performance.  To this end, we participated
+in the 3.5-day ECP OpenMP Hackathon at NERSC in August 2019,
+working closely with the HPCToolkit and SOLLVE teams,
+as well as the OpenMP/vectorization experts from Intel.  
+Using HPCToolkit revealed several performance bottlenecks.  We rewrote
 the code to remove a few inefficiencies, and identified solution strategies
 for the other bottlenecks.
 
@@ -261,15 +263,18 @@ for pivot selection~\cite{AWPM2018}. The other improvements are:
 
 \paragraph{Next Steps} Our future efforts will focus on the following areas:
 %\textit{Describe what you are working on next.}
-\begin{itemize}
-\item For STRUMPACK, Gather/Scatter operations are still on CPU. The future
+% \begin{itemize}
+% \item 
+For STRUMPACK, Gather/Scatter operations are still on CPU. The future
  solution strategy is to use CUDA kernel, or OpenMP 4.5+ target off-load feature.
-\item For SuperLU, we will develop a more scalable multi-GPU symbolic
+% \item 
+For SuperLU, we will develop a more scalable multi-GPU symbolic
   factorization code, and develop a communication strategy to 
   combine threading with one-sided communications.
-\item We will build detailed performance models and performance specific
+% \item 
+We also will build detailed performance models and performance specific
   code optimizations for the ECP applications that use our solvers.
-\end{itemize}
+% \end{itemize}
 
 %-----------
 \ignore{  %%%% from last period ....
@@ -290,17 +295,18 @@ for pivot selection~\cite{AWPM2018}. The other improvements are:
 \noindent
 
 \paragraph{Overview}
-The use of FFTs span a broad range of DOE science applications, including ones represented in the Exascale applications space. Most applications use the API from FFTW, an open-source library developed in the 1990's. FFTW is still used extensively on DOE HPC platforms, and the FFTW API has become the de-facto
+The use of FFTs spans a broad range of DOE science applications, including ones represented in the exascale applications space. Most applications use the API from FFTW, an open-source library developed in the 1990's. FFTW is still used extensively on DOE HPC platforms, and the FFTW API has become the de-facto
 standard FFT interface: vendors that provide FFT libraries implement
 (at least a subset) of that interface. Thus, FFTW both defines the 
-standard FFT library interface, as well as being a key software component
+standard FFT library interface and is a key software component
 for applications.
+
 In the FFTX project (\url{https://github.com/spiralgen/fftx}), 
-we are developing a new package for supporting FFT applications on exascale architectures. Our approach based on two ideas. The first is develop a backwards-compatible approach that builds on the FFTW interface but extends it to enable extraction of high performance on exascale machines. The second idea is to provide a toolchain that enables the
-specialization of the FFT calculation and its surrounding use case calculations (scaling, data layout transformation, marshalling/unmarshalling for communication), using code generation, symbolic analysis, automatic performance tuning, and applications-specific code generation. We will use SPIRAL, an open-source toolchain for FFT developed at CMU, as the basis for developing FFTX, and will use specific ECP applications and target ECP exascale platforms to provide a focus for this work.
+we are developing a new package for supporting FFT applications on Exascale architectures. Our approach is based on two ideas. The first is developing a backward-compatible approach that builds on the FFTW interface but extends it to enable extraction of high performance on exascale machines. The second idea is to provide a toolchain that enables the
+specialization of the FFT calculation and its surrounding use case calculations (scaling, data layout transformation, marshalling/unmarshalling for communication), using code generation, symbolic analysis, automatic performance tuning, and applications-specific code generation. We will use SPIRAL, an open-source toolchain for FFT developed at CMU, as the basis for developing FFTX, and we will use specific ECP applications and target ECP exascale platforms to provide a focus for this work.
 
 \paragraph{Key Challenges}
-The traditional approach of of applications using FFTs is to build up high-performance implementations out of calls to (usually 1D) FFT libraries (either FFTW or vendor libraries), interleaved with user-implemented code for use-case-specific operations. This approach may break down on the emerging ECP platforms, for two reasons. The first is that the node architectures have become more complex. Multiple cores and accelerators lead to multiple levels of parallelism, including threading and SIMD/SIMT. In addition, there are on-node complex memory hierarchies that are to varying extents user-controlled, and across which it is expensive to move data. This leads to more complex interleaving of the other components of multidimensional FFT-based applications with the core library FFTs in order to maximize the effective use of the floating point capabilities and minimize data movement across the memory hierarchy. Some of these are simply not expressible in the current FFTW interface; others can be expressed, but with great effort on the part of the applications programmer, and often with an outcome of not yielding the theoretically-predicted performance due to unexpected and opaque behavior of the FFT library software. A second problem is that the open-source FFTW libraries are no longer supported. The original developers have gone on to other things, and the support of FFTW, such as it is, is performed by volunteer labor. As a result, the extensions to support new node architectures are more brittle and provide less coverage. Expanding the feature set of FFTW to enable the more effective use of the new node architectures is not feasible, since it would entail significant modification and use of the back-end software system, which no one is supporting, and on which the expertise is no longer available.
+The traditional approach of applications using FFTs is to build up high-performance implementations out of calls to (usually 1D) FFT libraries (either FFTW or vendor libraries), interleaved with user-implemented code for use-case-specific operations. This approach may break down on the emerging ECP platforms, for two reasons. The first is that the node architectures have become more complex. Multiple cores and accelerators lead to multiple levels of parallelism, including threading and SIMD/SIMT. In addition, there are on-node complex memory hierarchies that are to varying extents user-controlled, and across which it is expensive to move data. This leads to more complex interleaving of the other components of multidimensional FFT-based applications with the core library FFTs in order to maximize the effective use of the floating point capabilities and minimize data movement across the memory hierarchy. Some of these are simply not expressible in the current FFTW interface; others can be expressed, but with great effort on the part of the applications programmer, and often with an outcome of not yielding the theoretically-predicted performance due to unexpected and opaque behavior of the FFT library software. A second problem is that the open-source FFTW libraries are no longer supported. The original developers have gone on to other things, and the support of FFTW, such as it is, is performed by volunteer labor. As a result, the extensions to support new node architectures are more brittle and provide less coverage. Expanding the feature set of FFTW to enable the more effective use of the new node architectures is not feasible, since it would entail significant modification and use of the back-end software system, which no one is supporting, and on which the expertise is no longer available.
 
 \paragraph{Solution Strategies} 
 There are three components to our approach to providing a new software stack for FFT applications.
@@ -310,14 +316,14 @@ There are three components to our approach to providing a new software stack for
 (1) We will design an extension of the FFTW interface that both meets the needs of the FFT use cases arising in ECP applications, and exposes the
 oppportunities for obtaining high performance on current and future 
 architectures. The FFTX interface will be 
-backwards compatible with FFTW so that legacy code using FFTW runs unmodified and gains substantially on hardware to which FFTX has been ported.
+backward compatible with FFTW so that legacy code using FFTW runs unmodified and gains substantially on hardware to which FFTX has been ported.
 To express the additional opportunities for obtaining improved performance, we will add a small number of new features beyond the FFTW interface to express algorithmic features such as futures/delayed execution,
 offloading, data placement, callback kernels, and sparsity of inputs or outputs. Such changes will have the potential to extract
 much higher performance than standard FFTW calls, since higher level operations and new hardware features can be addressed. This interface will be designed as an embedded DSL, for which we will provide a standard C/C++ reference library implementation that enables rapid assessment of the interface by applications developers.
 \item
-(2) We will develop a new code-generation back end. FFT-based application kernels implemented using the extended FFTW interface described above will be treated as specifications. This allows the extraction of the algorithm semantics from source code and known library semantics, thus providing whole-kernel semantics and whole-kernel specifications. This enables build-time source-to-source translation and advanced performance optimizations, such as
+(2) We will develop a new code-generation back end. FFT-based application kernels implemented using the extended FFTW interface described above will be treated as specifications. This approach allows the extraction of the algorithm semantics from source code and known library semantics, thus providing whole-kernel semantics and whole-kernel specifications. This strategy enables build-time source-to-source translation and advanced performance optimizations, such as
 cross-library optimization, targeting of accelerators through off-loading, and inlining of user-provided kernels.
-Our approach allows for fine control over resource expenditure during optimization. Applications can control compile-time, initialization-time, invocation time optimization resources if they need to.
+Our approach also allows for fine control over resource expenditure during optimization. Applications can control compile-time, initialization-time, invocation time optimization resources if needed.
 \item
 (3) We will develop higher-level FFT-based applications driven primarily by the requirements of ECP applications projects, with the development of interfaces between FFTX and full ECP applications part of the co-design process. The strategy of having a library implementation of the FFTX interface will enable us to use the requirements of ECP applications for the design of the expanded FFTW interface and of the SPIRAL-based toolchain; in addition, the insights provided by opening up the design / tuning space for the constituent FFTs will lead to new ways of designing the applications solvers in order to obtain high performance. We will release the resulting integrated FFT-based packages as a library, called {\em SpectralPack}.
 
@@ -330,7 +336,7 @@ The SPIRAL approach has many of the same structural components as FFTW -- a high
 
 
 \paragraph{Recent Progress}
-In the past six months, we did implementation of FFT use cases relevant to
+In the past six months, we implemented FFT use cases relevant to
  accelerator modeling and materials science using FFTX v1.0. We performed 
  initial code generation for V100 GPU-based systems and baseline performance
  measurements on Summit. We released reference implementation of FFTX v1.0

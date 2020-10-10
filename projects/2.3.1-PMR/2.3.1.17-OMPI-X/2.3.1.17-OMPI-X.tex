@@ -156,7 +156,7 @@ importance to ECP, both for correctness and performance.
 \begin{minipage}[c]{0.20\textwidth}
 \captionsetup{width=\textwidth,font=small,labelfont=bf} %% Need to override default width
 \caption{ReInit reduces the time for applications to recover from faults using checkpoints.}
-\label{fig:reinit}
+\label{fig:partitioned-communications}
 \end{minipage}
 \qquad
 \begin{minipage}[c]{0.20\textwidth}
@@ -203,7 +203,7 @@ complaints against (any) MPI implementations, a great deal of our
 recent effort has been devoted to improving this in various ways
 within Open~MPI.  We have redesigned point-to-point and remote
 memory access request management, and redesigned the progress engine
-for better performance with threads (Figure~\ref{fig:thread}).
+for better performance with threads (Figure~\ref{fig:threading-performance}).
 Moreover, the Partitioned Communications proposal, mentioned above also targets threaded execution by increasing opportunities for fine-grained overlap of computation with communication and reduced locking.  We have also improved the message matching implementation so support faster message rates and high thread counts.
 
 \begin{figure}

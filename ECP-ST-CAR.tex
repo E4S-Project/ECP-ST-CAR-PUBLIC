@@ -11,6 +11,9 @@
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 \newcolumntype{w}{>{\columncolor{white}}c}
+%%\begin{flushright}
+%%
+%%\end{flushright}
 \newcolumntype{y}{>{\columncolor{LightCyan}}c}
 
 %\usepackage{subcaption}
@@ -58,14 +61,14 @@
 \title{ECP Software Technology Capability Assessment Report--Internal}
 \fi
 %\date{\today}
-\date{November 15, 2019}
+\date{February 1, 2020}
 %\wbs{2.3}
 \ifpublic
-\id{ECP-RPT-ST-0001-2019--Public}
-\reportnum{ECP-RPT-ST-0001-2019--Public}
+\id{ECP-RPT-ST-0002-2020--Public}
+\reportnum{ECP-RPT-ST-0002-2020--Public}
 \else
-\id{ECP-RPT-ST-0001-2019--Internal}
-\reportnum{ECP-RPT-ST-0001-2019--Internal}
+\id{ECP-RPT-ST-0002-2019--Internal}
+\reportnum{ECP-RPT-ST-0002-2020--Internal}
 \fi
 \submitter{Michael A.~Heroux}
 
@@ -89,7 +92,7 @@
 
   1.0 & July 1, 2018 & \textit{ECP ST Capability Assessment Report } \\\hline
   1.5 & February 1, 2019 & \textit{Second release} \\\hline
-   2.0 & November 1, 2019 & \textit{Third release} \\\hline
+   2.0 & February 1, 2020 & \textit{Third release} \\\hline
 \end{revlog}
 
 %%---------------------------------------------------------------------------%%
@@ -109,34 +112,46 @@
 \mainmatter
 \input{Introduction}
 
-\newpage
-\section{ECP ST Technical Areas}
-\input{projects/2.3.1-PMR/2.3.1-PMR}
-\input{projects/2.3.2-Tools/2.3.2-Tools}
-\input{projects/2.3.3-MathLibs/2.3.3-MathLibs}
-\input{projects/2.3.4-DataViz/2.3.4-DataViz}
-\input{projects/2.3.5-Ecosystem/2.3.5-Ecosystem}
-\input{projects/2.3.6-NNSA/2.3.6-NNSA}
+\input{Project-Management}
+
+%\newpage
+%\section{ECP ST Technical Areas}
+%\input{projects/2.3.1-PMR/2.3.1-PMR}
+%\input{projects/2.3.2-Tools/2.3.2-Tools}
+%\input{projects/2.3.3-MathLibs/2.3.3-MathLibs}
+%\input{projects/2.3.4-DataViz/2.3.4-DataViz}
+%\input{projects/2.3.5-Ecosystem/2.3.5-Ecosystem}
+%\input{projects/2.3.6-NNSA/2.3.6-NNSA}
 
 \newpage
 \section{ECP ST Deliverables}\label{sect:deliverables}
 \input{Deliverables-Overview}
-\input{Products}
+\input{Projects}
 \input{Standards}
 \input{Design}
-\input{ProductDictionary}
+%\input{ProductDictionary}
 
 
 %%---------------------------------------------------------------------------%%
 %\vspace{3in}
 \clearpage
 %\newpage
-\section{ECP ST Project Summaries}\label{sect:project-summaries}
+\section{ECP ST Technical Areas}\label{sect:project-summaries}
+%\section{ECP ST Project Summaries}\label{sect:project-summaries}
 
-This section of the ECP ST Capabilities Assessment Report provides two-page summaries of each funded project.  The text provides a project overview and summarizes the key challenges, solution strategy, recent progress and next steps for the project.
+ECP ST is composed of six Level-3 Technical Areas (see Figure~\ref{fig:l3-overview}).  In this section of the ECP ST Capabilities Assessment Report we provide an overview of each Level-3 Technical Area and two-page summaries of each funded project within the technical area.  For each L3 area, we discuss scope and requirements, assumptions and feasibility, objectives, plans, risks and mitigations and future trends.  For each Level-4 subproject, we provide a project overview and summarizes the key challenges, solution strategy, recent progress and next steps for the project.
+\
+\begin{figure}
+	\centering
+	\fbox{\includegraphics[width=0.9\linewidth]{L3-Overview}}
+	\caption{ECP ST is composed of 6 Level-3 Technical Areas.  The first four areas are organized around functionality development themes.  The fifth is focused on technology for packaging and delivery of capabilities.  The sixth is organized around per-lab open source development at the three DOE NNSA laboratories, LANL, LLNL and SNL.  }
+	\label{fig:l3-overview}
+\end{figure}
+
 \newpage
-\subsection{\pmr}
-This section presents projects in \pmr.
+%\subsection{\pmr}
+%This section presents projects in \pmr.
+\input{projects/2.3.1-PMR/2.3.1-PMR}
 \newpage
 \input{projects/2.3.1-PMR/2.3.1.01-PMR-SDKs/2.3.1.01-PMR-SDKs}
 \newpage
@@ -158,8 +173,9 @@ This section presents projects in \pmr.
 \input{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/2.3.1.19-Argo-PowerSteering}
 \newpage
 
-\subsection{\tools}
-This section presents projects in \tools.
+%\subsection{\tools}
+%This section presents projects in \tools.
+\input{projects/2.3.2-Tools/2.3.2-Tools}
 \newpage
 \input{projects/2.3.2-Tools/2.3.2.01-Tools-SDKs/2.3.2.01-Tools-SDKs}
 \newpage
@@ -183,8 +199,9 @@ This section presents projects in \tools.
 \newpage
 
 
-\subsection{\mathlibs}
-This section presents projects in \mathlibs.
+%\subsection{\mathlibs}
+%This section presents projects in \mathlibs.
+\input{projects/2.3.3-MathLibs/2.3.3-MathLibs}
 \newpage
 \input{projects/2.3.3-MathLibs/2.3.3.01-xSDK/2.3.3.01-xSDK}
 \newpage
@@ -206,8 +223,9 @@ This section presents projects in \mathlibs.
 \newpage
 
 
-\subsection{\dataviz}
-This section presents projects in \dataviz.
+%\subsection{\dataviz}
+%This section presents projects in \dataviz.
+\input{projects/2.3.4-DataViz/2.3.4-DataViz}
 \newpage
 \input{projects/2.3.4-DataViz/2.3.4.01-DataViz-SDK/2.3.4.01-DataViz-SDK}
 \newpage
@@ -228,30 +246,23 @@ This section presents projects in \dataviz.
 \newpage
 
 
-\subsection{\ecosystem}
-This section presents projects in \ecosystem.
+%\subsection{\ecosystem}
+%This section presents projects in \ecosystem.
+\input{projects/2.3.5-Ecosystem/2.3.5-Ecosystem}
 \newpage
 \input{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/2.3.5.01-Ecosystem-SDK}
 \newpage
-\input{projects/2.3.5-Ecosystem/2.3.5.09-SW-Packaging/2.3.5.01-Ecosystem-SDK}
+\input{projects/2.3.5-Ecosystem/2.3.5.09-SW-Packaging/2.3.5.09-SW-Packaging}
 \newpage
 
 
-\subsection{\nnsa}
-This section presents projects in \nnsa.
+%\subsection{\nnsa}
+%This section presents projects in \nnsa.
+\input{projects/2.3.6-NNSA/2.3.6-NNSA}
 \newpage
-\input{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-PMR}
-\input{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-Tools}
-%%% \input{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-MathLibs}
-\input{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-DataViz}
-\input{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-Ecosystem}
+\input{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-ST}
 \newpage
-\input{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-RAJA-UMPIRE-CHAI}
-\input{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-AID}
-\input{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-Flux}
-\input{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-MFEM}
-\input{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-Spack}
-\input{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-Caliper}
+\input{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-ST}
 \newpage
 \input{projects/2.3.6-NNSA/2.3.6.03-SNL-ATDM/2.3.6.03-SNL-ATDM-ST}
 \newpage
@@ -275,7 +286,7 @@ Exascale computing imperative.
 %% References
 \newpage
 \bibliographystyle{unsrt}
-\bibliography{references,projects/2.3.1-PMR/2.3.1.01-PMR-SDKs/2.3.1.01-PMR-SDKs,projects/2.3.1-PMR/2.3.1.07-Exascale-MPI/2.3.1.07-Exascale-MPI,projects/2.3.1-PMR/2.3.1.08-Legion/2.3.1.08-Legion,projects/2.3.1-PMR/2.3.1.09-ParSEC/2.3.1.09-ParSEC,projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/2.3.1.14-GASNet-EX,projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/2.3.1.14-UPCxx,projects/2.3.1-PMR/2.3.1.16-SICM/2.3.1.16-SICM,projects/2.3.1-PMR/2.3.1.17-OMPI-X/2.3.1.17-OMPI-X,projects/2.3.1-PMR/2.3.1.18-RAJA-Kokkos/2.3.1.18-RAJA-Kokkos,projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/2.3.1.19-Argo-PowerSteering,projects/2.3.2-Tools/2.3.2.01-Tools-SDKs/2.3.2.01-Tools-SDKs,projects/2.3.2-Tools/2.3.2.06-EXA-PAPI/2.3.2.06-EXA-PAPI,projects/2.3.2-Tools/2.3.2.08-HPCToolkit/2.3.2.08-HPCToolkit,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-Autotuning,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-CLACC,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-LLVM,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-PAPYRUS,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-PROTEAS,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-TAU,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-Bricks,projects/2.3.2-Tools/2.3.2.11-SOLLVE/2.3.2.11-SOLLVE-ARGOBOTS,projects/2.3.2-Tools/2.3.2.11-SOLLVE/2.3.2.11-SOLLVE-BOLT,projects/2.3.2-Tools/2.3.2.11-SOLLVE/2.3.2.11-SOLLVE,projects/2.3.2-Tools/2.3.2.12-Flang/2.3.2.12-Flang,projects/2.3.3-MathLibs/2.3.3.01-xSDK/2.3.3.01-xSDK,projects/2.3.3-MathLibs/2.3.3.06-PETSc-TAO/2.3.3.06-PETSc-TAO,projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/2.3.3.07-STRUMPACK-SuperLU,projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/2.3.3.12-SUNDIALS,projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/2.3.3.12-hypre,projects/2.3.3-MathLibs/2.3.3.13-CLOVER/2.3.3.13-PEEKS,projects/2.3.3-MathLibs/2.3.3.13-CLOVER/2.3.3.13-SLATE,projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/2.3.3.14-ALExa,projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/2.3.3.14-ForTrilinos,projects/2.3.4-DataViz/2.3.4.01-DataViz-SDK/2.3.4.01-DataViz-SDK,projects/2.3.4-DataViz/2.3.4.09-ADIOS/2.3.4.09-ADIOS,projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/2.3.4.13-ECP-VTK-m,projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/2.3.4.14-EZ,projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/2.3.4.14-VeloC,projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyCR/2.3.4.15-UNIFYCR,projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/2.3.4.16-ALPINE,projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/2.3.4.16-ZFP,projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/2.3.5.01-Ecosystem-SDK,projects/2.3.5-Ecosystem/2.3.5.09-SW-Packaging/2.3.5.01-Ecosystem-SDK,projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-DataViz,projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-Ecosystem,projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-MathLibs,projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-PMR,projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-Tools,projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-DataViz-CognitiveComputing,projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-DataViz-ROVER,projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-DataViz-Workflow,projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-DataViz,projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-Ecosystem,projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-MathLibs,projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-PMR,projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-Tools,projects/2.3.6-NNSA/2.3.6.03-SNL-ATDM/2.3.6.03-SNL-ATDM-Data,projects/2.3.6-NNSA/2.3.6.03-SNL-ATDM/2.3.6.03-SNL-ATDM-Ecosystem,projects/2.3.6-NNSA/2.3.6.03-SNL-ATDM/2.3.6.03-SNL-ATDM-MathLibs,projects/2.3.6-NNSA/2.3.6.03-SNL-ATDM/2.3.6.03-SNL-ATDM-Tools,projects/2.3.6-NNSA/2.3.6.03-SNL-ATDM/2.3.6.03-SNL-ATDM-Viz}
+\bibliography{references,projects/2.3.1-PMR/2.3.1.01-PMR-SDKs/2.3.1.01-PMR-SDKs,projects/2.3.1-PMR/2.3.1.07-Exascale-MPI/2.3.1.07-Exascale-MPI,projects/2.3.1-PMR/2.3.1.08-Legion/2.3.1.08-Legion,projects/2.3.1-PMR/2.3.1.09-ParSEC/2.3.1.09-ParSEC,projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/2.3.1.14-GASNet-EX,projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/2.3.1.14-UPCxx,projects/2.3.1-PMR/2.3.1.16-SICM/2.3.1.16-SICM,projects/2.3.1-PMR/2.3.1.17-OMPI-X/2.3.1.17-OMPI-X,projects/2.3.1-PMR/2.3.1.18-RAJA-Kokkos/2.3.1.18-RAJA-Kokkos,projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/2.3.1.19-Argo-PowerSteering,projects/2.3.2-Tools/2.3.2.01-Tools-SDKs/2.3.2.01-Tools-SDKs,projects/2.3.2-Tools/2.3.2.06-EXA-PAPI/2.3.2.06-EXA-PAPI,projects/2.3.2-Tools/2.3.2.08-HPCToolkit/2.3.2.08-HPCToolkit,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-Autotuning,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-CLACC,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-LLVM,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-PAPYRUS,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-PROTEAS,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-TAU,projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-Bricks,projects/2.3.2-Tools/2.3.2.11-SOLLVE/2.3.2.11-SOLLVE-ARGOBOTS,projects/2.3.2-Tools/2.3.2.11-SOLLVE/2.3.2.11-SOLLVE-BOLT,projects/2.3.2-Tools/2.3.2.11-SOLLVE/2.3.2.11-SOLLVE,projects/2.3.2-Tools/2.3.2.12-Flang/2.3.2.12-Flang,projects/2.3.3-MathLibs/2.3.3.01-xSDK/2.3.3.01-xSDK,projects/2.3.3-MathLibs/2.3.3.06-PETSc-TAO/2.3.3.06-PETSc-TAO,projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/2.3.3.07-STRUMPACK-SuperLU,projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/2.3.3.12-SUNDIALS,projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/2.3.3.12-hypre,projects/2.3.3-MathLibs/2.3.3.13-CLOVER/2.3.3.13-PEEKS,projects/2.3.3-MathLibs/2.3.3.13-CLOVER/2.3.3.13-SLATE,projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/2.3.3.14-ALExa,projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/2.3.3.14-ForTrilinos,projects/2.3.4-DataViz/2.3.4.01-DataViz-SDK/2.3.4.01-DataViz-SDK,projects/2.3.4-DataViz/2.3.4.09-ADIOS/2.3.4.09-ADIOS,projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/2.3.4.13-ECP-VTK-m,projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/2.3.4.14-EZ,projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/2.3.4.14-VeloC,projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyCR/2.3.4.15-UNIFYCR,projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/2.3.4.16-ALPINE,projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/2.3.4.16-ZFP,projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/2.3.5.01-Ecosystem-SDK,projects/2.3.5-Ecosystem/2.3.5.09-SW-Packaging/2.3.5.09-SW-Packaging,projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-ST,projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-ST,projects/2.3.6-NNSA/2.3.6.03-SNL-ATDM/2.3.6.03-SNL-ATDM-ST}
 %%---------------------------------------------------------------------------%%
 %% APPENDIX
 %%---------------------------------------------------------------------------%%
