@@ -5,11 +5,11 @@ Applications and associated exascale facilities, hardened for
 production use and made available to the larger ECP community.
 
 \subsubsection{Scope and Requirements}
-The NNSA ST L3 area is new in FY20, although the projects included
-have all been part of the ECP in the past. The capabilities of these
+The NNSA ST L3 area was created in FY20, although the projects included
+have all been part of the ECP before its creation. The capabilities of these
 software products remains aligned with the other Software Technology
 L3 areas from which they were derived, but are managed separately for
-non-technical reasons out of scope for this document.
+non-technical reasons out of scope of this document.
 
 The resulting products in this L3 area 
 are open source, important or critical to the success of the NNSA
@@ -23,7 +23,7 @@ cross-cutting efforts such as the ST SDKs and E4S.
 
 \subsubsection{Objectives}
 
-The objective of these software products are to support the
+The objective of these software products is to support the
 development of new from-scratch applications within the NNSA that were
 started just prior to the founding of the ECP under the ATDM (Advanced
 Technology Development and Mitigation) program element within NNSA and
@@ -35,13 +35,13 @@ for use within the broader open source community.
 
 \subsubsection{Plan}
 
-NNSA ST products are developed along with and alongside a broader
+NNSA ST products are developed with and alongside a broader
 portfolio of ASC products in an integrated program, and are planned
 out at high level in the annual ASC Implementation Plan, and in detail
 using approved processes within the home institution/laboratory. They
 are scoped to have 
 resources sufficient for the success of the NNSA mission, as well as a
-modicum of community support (e.g. maintaining on GitHub, or answering
+modicum of community support (e.g., maintaining on GitHub, or answering
 occasional questions from the community).
 
 For ECP products not part of the NNSA portfolio that have critical
@@ -51,26 +51,45 @@ those cases, there may be additional information within this document
 on these products.
 
 
-\subsubsection{Risks and Mitigations Strategies}
+\subsubsection{Risks and Mitigation Strategies}
 
-A primary risk within this L3 area is that the 2020 ASC Level 1 milestone
-designed as a capstone for the ATDM initiative and a decision point
-for the ultimate transition of those applications into the core ASC
-porfolio, will fail due to the in adequacy of these software
-products. While not all of them are on the critical path to
-application success (instead focusing on productivity enhancements for
-end users, or analysis functionality), it is expected that first and
-foremost they will contribute to the success of that milestone, as any
-subsequent ASC milestones and decision points about the ultimate fate
-of those applications. Mitigation is to use other ASC funding to bolster these
-efforts as needed.
+%A primary risk within this L3 area is that the 2020 ASC Level 1 milestone,
+%designed as a capstone for the ATDM initiative and a decision point
+%for the ultimate transition of those applications into the core ASC
+%portfolio, will fail due to the inadequacy of these software
+%products. While not all of them are on the critical path to
+%application success (instead focusing on productivity enhancements for
+%end users, or analysis functionality), it is expected that first and
+%foremost they will contribute to the success of that milestone, as any
+%subsequent ASC milestones and decision points about the ultimate fate
+%of those applications. Mitigation is to use other ASC funding to bolster these
+%efforts as needed.
 
-A secondary risk is that others in the community will pick up these
+One risk associated with the NNSA ST projects is the programming environment
+of the El Capitan system. The programming environment on this system
+will be a departure from what the NNSA software teams have used before,
+so there is a risk that it will present challenges that cause delays
+in porting the software to the system. That said, the probability of this risk is low because 
+the programming environment of El Capitan will also be installed on DOE predecessor 
+machines so it is likely that it challenges will be identified and addressed by
+the time of El Capitan. NNSA ST projects can mitigate this risk by 
+evaluating their software on the predecessor systems to identify challenges early.
+
+Another risk associated with the NNSA ST L3 is that the projects rely
+on multiple sources of funding outside of ECP. The budget priorities of 
+those external sources may not always be aligned with those of ECP. In general,
+this risk is low because the L4 leads strive to align their project goals across 
+all funding sources. However, it is possible that funding expected to be leveraged
+to develop a feature to later be used for ECP purposes may be dropped. If this 
+occurs, the L4 leads will need to mitigate the situation according to their 
+individual project needs, perhaps by renegotiating deliverable time lines.
+
+Another risk is that others in the community will pick up these
 products as open source, and expect additional support beyond the
-scope of the primary NNSA mission. If those dependant products are within the
+scope of the primary NNSA mission. If those dependent products are within the
 ECP, the main mitigation is to use ASCR contingency funding to provide
 additional development and support - potentially through support of teams
-outside of the home institution. If those dependant products are in
+outside of the home institution. If those dependent products are in
 the broader community, mitigations are generally outside of the scope
 of the ECP - although each NNSA lab typically has some sort of project
 (or possibly even a policy) on how to deal with external demands on
