@@ -33,108 +33,83 @@ complexity by acting as a coarse-grained resource arbitrator.
 
 \paragraph{Solution Strategy}
 
-NRM uses \emph{slices} for resource management.  Physical resources on the
-compute nodes are divided into separate partitions.  Slices can be used to
-separate individual components of parallel workloads, in addition to
-cordoning off system services; this physical separation ensures an improved
-performance isolation between components.
+NRM uses an active approach to resource management. Physical and logical
+resources on the compute nodes are configured, discovered, and accounted for.
+NRM can manage compute nodes and individual components of parallel workloads,
+in the sense that it performs an active accounting of two types of interfaces
+for those workloads: sensors, and actuators. Those abstracted components are
+available through an upstream API which enables their discovery and management.
 
-Our slices can currently manage the CPU cores (hardware threads), the
-memory, and the kernel task scheduling class.  The physical
-resources are partitioned primarily by using the \texttt{cgroups} mechanism
-of the Linux kernel.  Work is underway to extend the management to 
-the partitioning of last-level CPU cache using Intel's Cache Allocation
-Technology.
+The NRM daemon supports power actuators, and sensors based on CPU counters,
+and power information. We also provide a simple API that application processes
+can use to periodically update the NRM on their progress. This gives NRM
+reliable feedback on the efficacy of its power policies, and it can also
+be used for a more robust identification of the critical path, rather than
+relying on heuristics based on performance counters.
 
-The NRM daemon maps slices to the node's hardware topology, arbitrating
-resources between applications and runtime services. Resources can be
-dynamically reconfigured at run time; interfaces are provided for use from
-applications and from global services.
-
-\begin{wrapfigure}[10]{r}{.18\textwidth}
-\vspace{-12pt}\includegraphics[width=.18\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/nrm-loop}
+\begin{wrapfigure}[12]{r}{.58\textwidth}
+  \includegraphics[width=.58\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/sensors}
 \end{wrapfigure}
-The NRM daemon also manages power at the node level.  As depicted in the
-figure on the right, it works in a closed control loop, obtaining goals
-(power limit) from the global services (GRM), acting on application
-workloads launched within slices by, for example, adjusting the CPU
-\emph{p-states} or changing the power cap via the Intel \emph{RAPL}
-mechanism, and getting feedback through the monitoring of hardware sensors
-measuring, for example, power draw, temperature, fan speed, and frequency.
+In addition to those capabilities, NRM's configuration format allows for
+the configuration of actuators and active polling sensors based on arbitrary
+executables. The figure on the right shows a reading of NRM's sensor
+outputs for two RAPL sensors along with CPU counter instrumentation. In order
+to provide those capabilities, the NRM daemon manages the launching, management
+and stopping of parallel workloads through an unified interface. Resources
+can be dynamically reconfigured at run time; those interfaces are provided
+for use from applications and from global services.
 
-We provide a simple API that application processes can use to periodically
-update the NRM on their progress.  This gives NRM reliable feedback on the
-efficacy of its power policies, and it can also be used for a more robust
-identification of the critical path, rather than relying on heuristics
-based on performance counters.
+\begin{wrapfigure}[10]{l}{.38\textwidth}
+\includegraphics[width=.38\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/cpd}
+\end{wrapfigure}
+Other than sensor and actuator accounting capabilities, NRM provides
+optional support for autonomic node management. This support is provided through
+the accounting of node-local autonomic goals and constraints, which are
+expressed in terms of available nodes and sensors. Those goals and
+constraints are inspectable by the users, the global services (GRM), and
+applications through NRM's unified interface. Inspection is achieved through
+the emission of a Control Description Format(CPD), which outlines active
+sensors, actuators, goals and constraints. This scheme is outlined by the
+figure on the left.
 
 \paragraph{Recent Progress}
 
-%We developed an API between Node Power and Node Resource Manager (NRM),
-%which in turn allows Global Resource Manager (GRM) to control and monitor
-%power and other node-local resources.  Additionally, we studied the effect
-%of power capping on different applications using the NodePower API and
-%developed power regression models required for a demand-response policy.
+The NRM daemon has undergone major improvements. In order to improve the
+software quality and overall reliability of NRM, the core business logic
+of the NRM daemon has been externalized in a shared library, written in the
+statically typed language Haskell. This NRM version is pending an upcoming
+release. Our custom CI pipeline also has been improved, with the addition
+of unit tests and enrichment of existing functional tests. We are still in
+the process of leveraging ECP testing infrastructure.
 
-%We developed the first version of the unified Node Resource Manager.  The
-%NRM provides high level of control over node resources, including initial
-%allocation at job launch and dynamic reallocation at the request of the
-%application and other services.  The initial set of managed resources
-%includes CPU cores and memory; they can be allocated to application
-%components via a container abstraction, which is used to describe
-%partitions of physical resources (to decrease interference), and more.  NRM
-%integrates dynamic power control using COOLR and libMSR, and provides
-%support for tracking and reporting of application progress.  Such
-%functionality is needed by the BSP-oriented power policy, which we are
-%currently evaluating and scaling up.  Work is also ongoing to support
-%third-party container technologies such as Docker, Singularity, and
-%Shifter.  At the job level, we enabled enclave-aware MPI facilities that
-%can be used to create inter-communicators between MPI jobs launched in
-%separate enclaves.
+NRM has recently added support for multi-armed bandit based control policies.
+In order to make this work as robust as possible, this work has been
+compartmentalized into a software library (\textit{hbandit}). \textit{hbandit}
+implements statically typed, independently tested versions of the relevant
+machine learning algorithms.
 
-NRM has reached a pre-release quality level, with the source code of
-version 0.1.0 being available on our website, and the documentation
-provided on ReadTheDocs.  We have a custom CI pipeline in place that
-ensures the stability via automated testing (we are making progress on
-leveraging the ECP CI infrastructure as well).
+NRM now offers a Python support library for upstream control. This library is
+intended for workload-specific control algorithm experiments.
 
-We created the \texttt{libnrm} library that can be linked to applications
-in order to provide reports on application progress to NRM.  We made an
-initial effort of instrumenting a set of ECP application codes and
-benchmarks: EXAALT, QMCPACK, ExaSMR, AMG, and Stream, with CANDLE underway.
+We continue supporting the \texttt{libnrm} C library that can be linked to
+applications in order to provide reports on application progress to NRM. We have
+instrumentation for EXAALT, QMCPACK, ExaSMR, AMG, Stream, and CANDLE.
 This capability gives us insight into the effect of our resource management
-policies on the run-time behavior of user codes.  Among other things, we
-studied the power/performance tradeoffs of different applications under
-varying power caps, as depicted in Fig.~\ref{fig:argo:nrm-results}.
-
-\begin{figure}
-\centering
-\includegraphics[width=.45\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/nrm-runtime}
-\includegraphics[width=.45\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/nrm-energy}
-\caption{Cumulative run time and energy for different applications and
-benchmarks running with a varying CPU power cap.}
-\label{fig:argo:nrm-results}
-\end{figure}
+policies on the run-time behavior of user codes.
 
 \paragraph{Next Steps}
 
-We are working on expanding the set of ECP applications that are
-instrumented to report their progress to NRM.  The reported data needs to
-be propagated to the rest of the stack, and a resource management policy
-needs to be created that takes advantage of this information.
-%
-We are expanding resource management to comprise of multiple policies, each
-one optimized for a particular type of workloads, such as BSP, in-situ, and
-workflows...  We are planning to provide a mechanism based on Machine
-Learning techniques to automatically choose among the available policies.
-%
-We are also planning to expand interfaces for dynamic node resource control
-in collaboration with applications, as well as adding an interface for
-OpenMP codes akin to the PMPI functionality we already have.
-%
-We want to add support for standardized, OCI-based container runtimes by
-adding a pass-through mechanism to our resource manager.
-%
-Finally, we are planning to expand the list of resources managed by NRM by
+We are working to add support for workload-specific control-theoretic
+resource management to NRM. This work is a collaboration with an external
+team, supported by our python upstream interface.
+
+We are working on a report to showcase the use of NRM's current autonomic
+resource management strategies in the context of workload energy minimization,
+through the use of RAPL control and application feedback.
+
+We are working on expanding the set of ECP applications that are instrumented
+to report their progress to NRM.
+
+We are planning to expand the list of resources managed by NRM by
 adding support for the partitioning of CPU caches and other vendor-specific
 mechanisms.
