@@ -23,27 +23,79 @@ We are developing two significant enhancements to LLVM's core infrastructure, an
 \item Enhancements to LLVM's loop-optimization infrastructure to allow the direction of a sequence of loop transformations to loop nests, exposing these features to users through Clang pragmas (in addition to being available at an API level to tools such as autotuners), enabling those transformations to execute as specified, and otherwise enhancing the loop-optimization infrastructure.
 \end{itemize}
 
-As part of this project, we're investigating both fundamental IR-level enhancements (as part of the Kitsune development), as well as the T-Region mechanism which uses optimizer-understandable runtime calls to represent parallelism constructs. The T-Region mechanism is being implemented upstream, while the Kitsune work is, at present, more exploratory.
+As part of this project, we're investigating both fundamental intermediate
+representation (IR) level enhancements (as part of the Kitsune development), as
+well as runtime call aware optimizations that deal with the classical lowering
+of parallelism into runtime calls. The latter mechanism is being implemented
+upstream as an OpenMP optimization pass, while the Kitsune work is, at present,
+more exploratory.
 
-To address autotuning and the need for code specialization, we are developing a just-in-time compilation technology with integrates naturally with the C++ language.
+To address autotuning and the need for code specialization, we are developing a just-in-time compilation technology with integrates naturally with the C++ language as well as embedding of (domain specific) languages into C/C++ programs.
 
 \paragraph{Recent Progress}
-For parallelism, we have implemented several new features in LLVM:
-\begin{itemize}
-\item A new inter-procedural-analysis framework, and associated transformations, called the Attributor (see~\cite{doerfert2018compiler} for parallelism optimizations). Most of this core infrastructure is now part of the upstream LLVM implementation.
-\item A new parallel representations, known as T-Regions, and an associated set of parallelism~\cite{doerfert2019tregion}.
-\end{itemize}
 
-These efforts have also been featured in many talks, tutorials, and so on at LLVM developers' meetings over the last couple of years.
+For parallelism, we have implemented several new features in upstream LLVM
+including an OpenMP-aware optimization pass that performs various optimizations
+specific to OpenMP code on the host and device (=GPU)~\cite{OpenMPOpt2020}. It
+is run by default with medium and high optimizations enabled (``-O2'' and
+``-O3''). In addition to transformations it will provide user feedback in form
+of optimization remarks (``-Rpass=openmp-opt'')
 
-For loop optimizations, we have implemented several new features in LLVM and Clang, and have describe these enhancements in papers (~\cite{kruse2018user,kruse2018loop} and in several forums directly to the LLVM community (including talks at the LLVM developers' meetings, on the LLVM mailing lists)).
+Extension to the Attributor inter-procedural optimization framework that
+transparently applies transformations across the  boundary between sequential
+and parallel code. This upstream work will reduce the overhead parallelism
+introduces due to missed classical optimizations~\cite{giorgis2020}.
 
-We have developed a prototype C++ compiler, based on Clang, supporting an extension that enables just-in-time compilation~\cite{finkel2019clangjit}. This work has been the subject of a presentation at CppCon 2019 and a keynote talk at the 2019 LLVM developers' meeting. This work is also the basis of a proposal to the C++ standards committee~\cite{P1609R0}.
+We prototyped heterogeneous LLVM-IR modules which allow host and device code to
+coexist in the same LLVM-IR file and therefore be optimized with a holistic
+view. Our approach was already discussed with the community and needs to be
+further refined and tested.
+
+For loop optimizations, we have implemented several new features in LLVM and
+Clang, including the OpenMP 5.1 ``tile'' directive and clang pragma syntax for
+exploration of future transformations not yet available through the OpenMP
+standard. Most of these enhancements are in papers
+(~\cite{kruse2018user,kruse2018loop} and in several forums directly to the LLVM
+community.
+
+In a more forward looking approach we prototyped a loop-hierarchical IR for
+LLVM which we also present and discuss in various LLVM community forums.
+
+To facilitate autotuning (ref. Section \ref{sec:PROTEAS_TUNE_AUTOTUNING}), we
+implemented a loop nest information extraction tool for
+LLVM-IR~\cite{kruse2020search}.
+
+We have developed a prototype C++ compiler, based on Clang, supporting an
+extension that enables programmers to embed (domain specific) languages inside
+their ``C-like'' programs~\cite{finkel2020dsl}. That is, we allow a new type of
+Clang plugin to bridge the gap between classical code, e.g., C or C++, and code
+written in a different language, e.g., a quantum or tensor domain specific
+language (DSL). The latter two examples have been successfully prototyped as
+well.
+
+All our efforts have also been featured in many talks, tutorials, and so on at
+LLVM developers' meetings over the last couple of years.
 
 \paragraph{Next Steps}
-We will continue to develop and upstream the implementations of the developed technologies.
+We will continue to prototype implementations, discuss them with the LLVM
+community, and then refine them for integration in upstream LLVM.
 
-For the C++ JIT technology, we will also continue to pursue standardization at the C++ standards committee. In addition, we are implementing autotuning technology based on a combination of the JIT, the loop transformation improvements, and other improvements developed by this project. This will enable an easy-to-use autotuning capability for applications on Exascale systems.
+For the C++ JIT technology, we will also continue to pursue standardization at
+the C++ standards committee.
+
+In addition, we are implementing autotuning technology based on the loop
+transformation improvements, and other improvements developed by this project.
+This will enable an easy-to-use autotuning capability for applications on
+Exascale systems.
+
+Parallelism specific optimizations will further be improved through Attributor
+enhancements upstream and more capabilities for the OpenMP-aware aware
+optimization pass. Generalization of the latter to other parallel models is
+planned as well.
+
+To enable optimizations across the host-device boundary we are continuing to
+work on heterogeneous LLVM-IR modules in order to integrate them into upstream
+LLVM.
 
 
 %\end{document}
