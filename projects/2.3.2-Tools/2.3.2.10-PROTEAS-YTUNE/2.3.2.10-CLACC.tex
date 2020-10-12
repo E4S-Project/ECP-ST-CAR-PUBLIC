@@ -11,7 +11,7 @@ drastically diverse in functionality, performance, programmability,
 and scalability, significantly increasing the complexity that ECP app
 developers face as they attempt to fully utilize available hardware.
 
-A key enabling technology pursued as part of PROTEAS is OpenACC.
+A key enabling technology pursued as part of PROTEAS-TUNE is OpenACC.
 While OpenMP has historically focused on shared-memory multi-core,
 OpenACC was launched in 2010 as a portable programming model for
 heterogeneous accelerators.  Championed by institutions like NVIDIA,
@@ -28,12 +28,12 @@ losing favor to Clang and LLVM for new compiler research and development
 efforts.
 
 \textit{Clacc}~\cite{clacc:2018:denny} is a major component of the
-PROTEAS project.  Overall, the goal is to build on Clang and LLVM to
-develop an open-source, production-quality OpenACC compiler ecosystem
-that is easily extensible and that utilizes the latest research in
-compiler technology.  Such an ecosystem is critical to the successful
-acceleration of ECP applications using modern HPC hardware.  The
-PROTEAS objectives for Clacc are:
+PROTEAS-TUNE project.  Overall, the goal is to build on Clang and LLVM
+to develop an open-source, production-quality OpenACC compiler
+ecosystem that is easily extensible and that utilizes the latest
+research in compiler technology.  Such an ecosystem is critical to the
+successful acceleration of ECP applications using modern HPC hardware.
+The PROTEAS-TUNE objectives for Clacc are:
 
 \begin{enumerate}
 
@@ -103,7 +103,7 @@ utilization of acceleration hardware in ECP applications.
 ~
 \vspace{-1em}
 
-\begin{tabular}{@{\hspace{-1.5em}}p{.77\textwidth}p{.23\textwidth}@{}}
+\begin{tabular}{@{\hspace{-1.5em}}p{.6\textwidth}p{.4\textwidth}@{}}
 
 \begin{enumerate}
 
@@ -128,6 +128,20 @@ OpenACC.
 
 \end{enumerate}
 
+\end{enumerate}
+
+&
+
+\raisebox{-\totalheight}{\includegraphics[scale=.3]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/clacc.png}}
+
+\end{tabular}
+
+\vspace{-1em}
+
+\begin{enumerate}
+
+\setcounter{enumi}{2}
+
 \item To handle Clang's immutable AST, Clacc's design includes a
 TransformACCToOMP component that reuses a Clang feature called
 TreeTransform, which was originally designed for C++ template
@@ -136,20 +150,6 @@ specializations.
 \item To avoid preprocessor expansions in source-to-source mode, Clacc
 includes a RewriteOpenACC component that reuses a Clang feature called
 Rewrite.
-
-\end{enumerate}
-
-&
-
-\raisebox{-\totalheight}{\includegraphics[scale=.65]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/clacc.png}}
-
-\end{tabular}
-
-\vspace{-1em}
-
-\begin{enumerate}
-
-\setcounter{enumi}{3}
 
 \item To utilize LLVM IR analyses and optimizations, we are
 investigating ongoing efforts toward a parallel LLVM IR.  Clacc could
@@ -182,24 +182,21 @@ behavior and good performance.
 
 \begin{enumerate}
 \item
-  Extended Clacc to support additional OpenACC features, including
-  NVIDIA GPU offloading, host-device data-transfer clauses, and the
-  OpenACC Profiling Interface.  Prototyped Clang and LLVM support for
-  required OMPT features, including standard OpenMP 5.0 features and
-  extensions.
+  Extended Clacc to support additional features, including various
+  OpenACC directives and clauses related to data motion and OpenACC
+  Profiling Interface features motivated by integration with TAU.
 \item
-  Revamped Clacc's source-to-source mode to improve usability, and
-  addressed feedback from AMD.
+  Designed and prototyped various OpenMP extensions to support the
+  above, including OMPT extensions.
+\item
+  Developed Gitlab CI config for x86\_64, ppc64le, and nvptx64,
+  including a Summit node, on ORNL's ExCL cluster.
+\item
+  Performed preliminary GPU evaluation using SPEC ACCEL benchmarks.
 \item
   Contributed numerous improvements to Clang and LLVM, including
   OpenMP and LLVM testing infrastructure improvements, and to the
-  OpenACC specification, including clarifications for reductions and
-  various clause combinations.
-\item
-  Developed report about the future design of OpenACC analyses and
-  optimizations in Clacc.
-\item
-  Discussed Clacc at various ECP, HPC, and LLVM venues.
+  OpenACC specification.
 \end{enumerate}
 
 
