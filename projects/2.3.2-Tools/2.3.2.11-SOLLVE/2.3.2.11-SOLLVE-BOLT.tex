@@ -10,8 +10,9 @@ massive and fine-grained concurrency expected at the Exascale level.
 These runtimes rely on heavy-handed OS-level threading strategies that
 incur significant overheads at fine-grained levels and exacerbate
 interoperability issues between OpenMP and internode programming
-systems, such as MPI and OpenSHMEM.  Our solution is a production
-quality OpenMP runtime (called BOLT) that leverages user-level threads
+systems, such as MPI and OpenSHMEM.  BOLT is a production quality
+OpenMP runtime (called BOLT) which has been developed within the
+SOLLVE project to address this issue by leveraging user-level threads
 instead of OS-level threads (e.g., Pthreads).  Due to their
 lightweight nature, managing and scheduling user-level threads incurs
 significantly less overheads.  Furthermore, interoperability between
@@ -68,72 +69,65 @@ as its underlying threading layer.  OpenMP threads and tasks are
 spawned as Argobots work units and nested parallel regions are managed
 through an efficient work-stealing scheduler.  Furthermore, new
 compiler hints and runtime optimizations have been developed to allow
-reducing thread management overheads even further~\cite{iwasaki2018}.
-Interoperability improvements have also been demonstrated by having
-BOLT interoperate with an MPI library (MPICH) through the Argobots
-threading layer rather than OS-level threads.  Results showed that
-this approach allows better communication progress and outperforms the
-traditional Pthreads-level interaction~\cite{seo2018}.
+reducing thread management overheads even further~\cite{iwasaki2018,
+iwasaki2020}. Interoperability improvements have also been
+demonstrated by having BOLT interoperate with an MPI libraries through
+the Argobots threading layer rather than OS-level threads.  Results
+showed that this approach allows better communication progress and
+outperforms the traditional Pthreads-level interaction~\cite{seo2018}.
 
 \paragraph{Recent Progress}
-
-Our recent development of BOLT mainly focuses on efficient OpenMP
-thread scheduling and management~\cite{BOLT}. BOLT takes substantial
-advantage of its base implementation of LLVM OpenMP in terms of ABI
-compatibility and coverage of functionalities, while we found the
-necessity of further performance optimizations to fully exploit
-fine-grained OpenMP parallel regions. After simple replacement of
-Pthreads call sites with Argobots functions, we adopted several
-resource management optimizations to reduce contentions and promote
-reuse of resources. Thanks to low-level scheduling functions exposed
-by Argobots, BOLT could implement OpenMP affinity tailored to a
-ULT-based runtime. Our study also  the importance of a thread
-coordination algorithm: it determines how to synchronize with other
-threads (e.g., busy wait or suspension). To get the optimal
-performance, existing runtime systems need to tune the wait policy
-parameter based on the level of oversubscription, while our advanced
-thread coordination algorithm in BOLT transparently keeps good
-performance regardless of the degree of thread oversubscription. As
-shown in Figure~\ref{fig:sollve-bolt}, BOLT achieves similar
-performance compared with leading state-of-the-art OpenMP runtimes
-under flat parallelism, while outperforming all the existing runtimes
-under nested parallelism.
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.9\columnwidth]{projects/2.3.2-Tools/2.3.2.11-SOLLVE/SOLLVE-BOLT.pdf}
 
-  \caption{\label{fig:sollve-bolt}Performance of parallel regions on a
-two-socket Intel Skylake machine (56 cores in total). GNU OpenMP 8.0
-and Intel OpenMP 17.2.174 are used. The flat benchmark creates 56
-OpenMP threads while the nested 56 OpenMP threads each of which opens
-an inner parallel region with 56 threads. We changed the wait policy
-for GNU and Intel OpenMP. See the paper \cite{BOLT} for details.}
-
+  \caption{\label{fig:sollve-bolt} MPI+Threads interoperability of
+  BOLT.  OpenMP threads and tasks in BOLT interact MPI implementations
+  via the Argobots layer.}
 \end{figure}
 
-We note that design and implementation of BOLT are highly regarded in
-the HPC community. The most significant achievement is the Best Paper
-Award at PACT '19; our paper on BOLT, titled ``BOLT: Optimizing OpenMP
-Parallel Regions with User-Level Threads''~\cite{BOLT} won a Best
-Paper Award at the 28th international conference on Parallel
-Architectures and Compilation Techniques (PACT '19), which is
-considered to be a top tier venue in this field.
+We improved the interoperability of BOLT with various MPI systems via
+lightweight threads, Argobots.  Since most MPI runtimes including
+MPICH, Open~MPI, and production MPI implementations that are derived
+from either MPICH or Open~MPI assume OS-level threads as ``Thread'' in
+MPI+Thread, lightweight OpenMP runtimes based on lightweight threads
+failed to interoperate well with existing MPI systems.  To address
+this issue, we have implemented an abstracted threading layer for
+lightweight threads in these MPI runtimes so that users can choose
+OpenMP threads and tasks of BOLT as ``Thread''.
 
-The latest BOLT 1.0rc2 has been upgraded to be compatible with LLVM
-OpenMP 9.0, which further improves performance and functionalities
-especially for GPU offloading. We also created a development branch
-that keeps reflecting the latest changes in the LLVM OpenMP's master
-branch so that BOLT users can try the up-to-date features with ULT
-support. Interaction and integration are a critical piece for the BOLT
-project. Our effort in the SOLLVE Spack package, which was one of the
-SOLLVE milestones, aims at a tighter integration with the other
-components of the SOLLVE project. Our efforts include interaction and
-evaluation with (1) ECP applications that have fine-grained
-parallelism such as nested parallel regions and tasking (e.g., ECP
-SLATE) and (2) runtime systems via the Argobots layer (for example,
-MPICH and Open MPI) that can take advantage of ULT's lightweight
-synchronization for resource management.
+Specifically, we focused on the MPI interoperability with the most
+widely used open-source MPI implementations: MPICH and Open~MPI.  For
+MPICH, we fixed a few bugs regarding synchronization mechanisms, which
+will be included in the MPICH 3.4 release.  In collaboration with the Open MPI
+researchers and the Qthreads researchers at Sandia and Los Alamos
+National Laboratories, we implemented a new thread abstraction layer
+for generic threading runtime support in Open~MPI using the Opal
+Modular Component Architecture.  This highly abstracted threading
+layer has been implemented carefully to minimize the additional
+overheads.  Furthermore, this Opal architecture partly allows the
+programmer to choose an underlying threading library at compile- or
+run-time to provide flexibility.  The performance trade-off has
+been discussed in our work~\cite{ExaMPI20MCAThreads}.  This Open MPI
+interoperability improvement will be included in the Open~MPI 5.0
+release. To ensure availability, we employed a weekly CI testing
+infrastructure for those MPI systems.
+
+Our latest BOLT 1.0 release contains a large upgrade to be compatible
+with LLVM OpenMP 10.0, which further improves performance and
+functionalities especially for GPU offloading and new OpenMP 5.0
+features.  This release also contains scheduler improvement in BOLT
+and an upgrade of the Argobots package, which allows further
+lightweight fine-grained OpenMP threading and tasking.  Interaction
+and integration are a critical piece for the BOLT project.  We
+continue working on the SOLLVE Spack package so that this BOLT system
+is available on our target HPC systems and users can utilize BOLT for
+(1) ECP applications that have fine-grained parallelism such as nested
+parallel regions and tasking (e.g., ECP SLATE) and (2) runtime systems
+via the Argobots layer (such as MPICH and Open MPI we mentioned) that
+can take advantage of ULT's lightweight synchronization for resource
+management.
 
 \paragraph{Next Steps}
 
@@ -143,25 +137,19 @@ thanks to Argobots. The following list includes our next plans:
 
 \begin{enumerate}
 
-\item Investigates opportunities of utilizing lightweight threads for
-other optimizations in the context of OpenMP. BOLT successfully
-enhanced performance of OpenMP threads, while it remains unexplored
-how BOLT could elevate performance of other parallel units (e.g.,
-data-dependent tasking and GPU offloading). We are planning to
-investigate room for optimizations and implement them with
-evaluation.
+\item Explores opportunities for utilizing lightweight threads for
+other optimizations in the context of OpenMP.  The main focus of BOLT
+has been the performance of fine-grained OpenMP threads, so we have
+not fully explored how BOLT could elevate the performance of other
+parallel units (e.g., data-dependent tasking and GPU offloading). We
+are planning to investigate room for optimizations and implement them
+with evaluation.
 
-\item Improves the interoperability with MPI runtimes. Although the
-basic scheme is provided via the Argobots layer, its optimization is
-premature. In addition to improvement of the interoperability between
-MPI and Argobots, we will investigate an OpenMP-specific
-interoperability issue if exists.
-
-\item Collaborates with more applications and users. BOLT has gained
-the attention of the HPC community, but its reach and impact remain
-limited. In order to find potential room for optimizations and
-evaluate the performance of BOLT in real workloads, we further
-investigate other applications, including ECP ones, that BOLT can
-benefit.
+\item Investigates the performance with large-scale applications.
+In order to find potential room for optimizations and evaluate the
+performance of BOLT in real large-scale workloads, we further
+investigate other SOLLVE components and ECP applications that can benefit from BOLT.  Since most distributed systems rely on MPI for internode
+communication, we will also work on tighter integration with MPI to
+optimize the performance with MPI runtimes over BOLT.
 
 \end{enumerate}
