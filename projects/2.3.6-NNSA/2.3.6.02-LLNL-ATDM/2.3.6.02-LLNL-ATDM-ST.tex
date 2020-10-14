@@ -13,7 +13,7 @@ enables complex applications to be assembled from components, lowers
 barriers to reuse, and allows builds to be reproduced easily.
 
 The \textbf{MFEM} library
-\cite{MFEM} is focused on providing high-performance mathematical algorithms
+\cite{MFEM,mfem_paper_2020} is focused on providing high-performance mathematical algorithms
 and finite element discretizations to next-gen high-order ECP/ATDM
 applications. A main component of these efforts is the development of
 ATDM-specific physics enhancements in the finite element algorithms in
@@ -304,7 +304,7 @@ other efforts available through CEED.
 
 To reach its many customers and partners in NNSA, DOE Office of Science,
 academia and industry, the MFEM team delivers regular releases on GitHub
-(e.g. mfem-3.3 in 2017, mfem-3.4 in 2018, mfem-4.0 in 2019) that include
+(e.g., mfem-4.0 in 2019 and mfem-4.1 in 2020) that include
 detailed documentation and many example codes.  Code quality is ensured
 by smoke tests with Travis CI on Linux, Mac, Windows and nightly
 regression testing at LLNL.
@@ -392,30 +392,11 @@ between different parts of the code.
 
 
 \begin{itemize}
-\item Spack won a 2019 R\&D 100 award as well as a Special Recognition
-      as a Silver Medalist for being a ``Market Disruptor''.
-
-\item Completed the implementation of {\it Spack Stacks}: an extension of Spack
-      Environments that enable large combinatorial facility deployments to
-      be specified in a single file.
-
-\item Integrated Spack Environments and Spack Stacks with GitLab CI.  This
-      allows hundreds of builds to be farmed out to runners at facilities and
-      in the cloud.  Five organizations (NERSC, ANL, ORNL, NMC and the E4S team)
-      were able to get pipelines working at their sites to automate builds.
-
-\item Implemented a new prototype {\it concretizer} for Spack.  This version
-      targets the NP-hard dependency resolution problem with an {\it
-      Answer Set Programming} (ASP) based solver.  Preliminary results
-      show that solves of complex Spack stacks can be completed in
-      seconds and that this tool can handle complex backtracking cases
-      and optimization of package criteria that the existing greedy
-      concretizer cannot.
-
-\item Spack has been selected as the package manager for Fugaku, Japan's
-      flagship pre-exascale platform, and the team has been collaborating
-      with RIKEN, Fujitsu, and SNL's Astra team to support the ARM
-      platform.
+\item Produced two major software releases: Spack 0.14.0, 0.15.0, as well as multiple bug-fix releases.
+\item Developed a new Spack containerize command, which can automatically generate multi-stage container build recipes from a Spack environment.
+\item Completed 100\% file system lock-based parallel build capability for Spack. This capability handles both parallel build use case and on-node synchronization.
+\item Worked with the tri-lab Computing Environment 2 (TCE2) team and code teams to provide Spack support and to add features for these environments. Notable achievements included hardening for Cray platforms, new features in Spack stacks, and GitLab pipeline automation for LC.
+\item Deployed pull request build testing on GitHub for the first time; the entire E4S stack is now built and tested when GitHub pull requests modify parts of it.
 \end{itemize}
 
 \subparagraph{MFEM:}
@@ -429,59 +410,10 @@ between different parts of the code.
 
 Selected recent highlights:
 \begin{itemize}
-\item
-Developed ALE discretization methods that support {\it completely lossless}
-high order to low order transformations, and vice versa.
-\item
-Delivered MFEM 4.0 release, with initial GPU support for many linear
-algebra and finite elementn operations.
-\item
-Developed a new formulation for discretizing problems with 1D spherical symmetry
-in BLAST. Extended BLAST to the 3T-model (separate equations for the electron
-and ion internal energies). Added support for changing masses during the
-Lagrangian phase.
-\item
-Completed the delivery of discretization support for the FY18 MARBL ATDM L2
-milestone, including new 3T radiation-diffusion algorithms, and a simulation
-capability for problems with spherical and cylindrical symmetry via weight
-adjustments.
-%With this and other support from the MFEM team, the MARBL team
-%successfully defended its ATDM L2 milestone.
-\item
-Worked on high-order ALE algorithms in BLAST: developed remap step for density
-component masses, various code improvements and bugs fixes related to L2
-milestone.
-%% \item
-%% MFEM version 3.4 was released with many new features including: significantly
-%% improved non-conforming unstructured AMR scalability; integration with PUMI;
-%% block nonlinear operators and variable order NURBS; Conduit mesh blueprint
-%% support; general high-order-to-low-order refined field transfer; new specialized
-%% time integrators and 12 new examples and miniapps.
-%% \item
-%% Implemented an initial draft of MFEM’s ``engine'' interface extension to support
-%% GPUs and other accelerators. Performed tests with the new ``engine'' extension
-%% on Sierra. Explored its use in the Laghos miniapp and BLAST.
-%% \item
-%% Improvements in AMR interpolation matrix for better construction of
-%% communication groups and performance monitoring in the Laghos miniapp.
-%% \item
-%% Several AMR improvements, including better local conforming tetrahedral
-%% refinement (collaborating with a GitHub user), fix for boundary coefficient
-%% projection, and general communication groups on for non-conforming AMR
-%% supporting the AMR integration in BLAST.
-%% \item
-%% With summer student made progress on matrix-free algorithms for high-order field
-%% monotonicity, targeting performance improvements in the remap phase of
-%% MARBL/BLAST.
-%% \item
-%% GLVis version 3.4 was released with several new features including: 10 new color
-%% palettes, better multi-screen window manager support, capability to show element
-%% and vertex numbering in 2D, use of X.509 certificates in secure sockets, and a
-%% new CMake build system.
-%% \item
-%% Developed a new version of the hogtess high order experimental visualization
-%% tool based on modern OpenGL 4.3 compute shaders that does correct cutting of
-%% high order meshes in 3D.
+\item Completed major software releases: Laghos-3.0, Remhos-1.0, MFEM-4.0, and MFEM-4.1. 
+\item Actively engaged with GPUs and advanced partial assembly algorithms work in MARBL. Demonstrated large-scale GPU performance in ALE hydro in MFEM benchmarks, Laghos, and BLAST on Lassen. 
+\item Implemented ALE discretization improvements for compressible flow in BLAST, including significant improvements in mesh optimization methods, dynamic Adaptive Mesh Refinement (AMR), and transfer between high-order and low-order-refined simulations. 
+
 \end{itemize}
 
 \subparagraph{RAJA/Umpire/CHAI:}
@@ -493,31 +425,12 @@ Status of RAJA, Umpire, and CHAI support for exascale platforms.
 }
 \end{figure}
 
-{\bf RAJA}
 \begin{itemize}
-\item Comprehensive support for Sierra (Power9/Volta),
-      including multi-dimensional kernel dispatch.
-\item enabled first full-system run on Sierra (16k GPUs, 97B elements)
-\item Added support for atomic operations on GPU devices.
-\item Integrated with GEOS, SW4, SUNDIALS, DevilRay, and LLNL ATDM.
-\end{itemize}
-
-{\bf Umpire}
-\begin{itemize}
-\item Developed support for Sierra (Power9 + Volta) systems, incl. allocation
-      on CPU, GPU, unified, and “pinned” memory resources; copying bt/w any
-      resources; fast memory pools; CUDA ``memory advice''.
-\item Completed integration with multiple LLNL ASC applications and libraries,
-      SW4, GEOS, and DevilRay. Began integration with LLNL ATDM application.
-\end{itemize}
-
-{\bf CHAI}
-\begin{itemize}
-\item Developed Umpire-based backend for CHAI which adds additional flexibility
-      and capability.
-\item Add option to pass specific Umpire objects (like pooled allocators) to
-      CHAI arrays to improve application performance.
-\item Integrated with GEOS (ECP App Subsurface) application.
+\item Developed and released support for AMD GPUs (via the HIP programming model) with RAJA, CHAI, and Umpire in preparation for El Capitan. 
+\item Continued to support integration of Umpire into multiple ASC application codes.
+\item Developed and delivered new capabilities to ASC applications in support of ASC milestones and user needs. 
+\item Developed prototype of fully overlapped asynchronous GPU kernel execution and data transfer to optimize application performance.
+\item Developed novel memory pool algorithms in Umpire to handle very large allocation counts.
 \end{itemize}
 
 \subparagraph{Flux:}
@@ -528,49 +441,23 @@ Status of RAJA, Umpire, and CHAI support for exascale platforms.
 
 \begin{itemize}
 
-\item Extended graph-based resource model to support multi-user systems. This
-      enables Flux to be used as a full-system resource manager, with security
-      and isolation among usres
+\item Developed hierarchical scheduling tools within Flux via co-design with UQ Pipeline, demonstrating improvements across the entire lifecycle of simulation campaigns; and demonstrated that DYAD can optimize ML workflows by automatically transferring data files using Flux. 
+\item Demonstrated that Fluxion, our graph-based scheduler, can uniquely enable key use cases of multitiered storage on El Capitan, driving co-design with HPE; tested AMD GPU scheduling by enabling COVID-19 workflows on Corona; demonstrated the viability of power management within Flux using Variorum, a platform-independent power library; and released MPIBIND-2. 
 
-\item Demonstrated end-to-end capability of DYAD data movement subsystem for LBANN.
-
-\item Completed definition of workflow exception/error handling model.
-
-\item Enabled two major scientific workflows to complete their calculations on
-      LLNL’s Sierra pre-exascale systems.
-
-\item Released flux-core 0.11 and flux-sched 0.7 that contain all of the
-      functionalities used by these workflows.
-
-\item Started to broaden outreach and collaboration across ECP (e.g., scheduler
-      integration working group), DOE complexes (e.g., ORNL, SNL and LANL),
-      universities (e.g., UTK) and vendors (e.g., IBM T.J. Watson).
 
 \end{itemize}
 
 \subparagraph{AID:}
 \begin{itemize}
 
-\item Completed the port of STAT, Archer, FLiT, ReMPI/NINJA for Sierra,
-    deployed them on these systems, and assisted users with these tools for
-    debugging and testing.
+\item Demonstrated that our new correctness tools (FLiT and FPChecker) can analyze large LLNL code, discovering previously unknown issues in LLNL code; and facilitated tools co-design via the El Capitan tools working group. 
 
-\item Isolated many elusive bugs for applications running on these systems,
-    which includes large-scale code hangs due to NVIDIA GPU for a major ASC code.
-
-\item Archer and ReMPI have been integrated and/or tested with major ASC codes
-    and have been running with their verification runs.
-
-\item Started to co-design and harden floating-point correctness checking tools
-    (i.e., FLiT and FPChecker) with a large ASC code.
 
 \end{itemize}
 
 \subparagraph{Caliper:}
 \begin{itemize}
-\item Caliper has been integrated with ASC codes such as ARES and ARDRA.
-\item Caliper has been integrated with LLNL's SPOT performance tracking tool,
-      which provides code teams with nightly performance data.
+\item Integrated the Caliper performance analysis tools into key LLNL applications. Supported existing integration with MARBL via improvements to performance visualizations and analysis capabilities.
 \end{itemize}
 
 
@@ -578,68 +465,44 @@ Status of RAJA, Umpire, and CHAI support for exascale platforms.
 \paragraph{Next Steps} \leavevmode \\
 
 \subparagraph{Spack:}
-In FY20, the team will focus on:
+In FY21, the team will focus on:
 
 \begin{itemize}
-    \item Enhancing Spack's dependency model to treat compilers as
-    dependencies, so that we can better model ABI compatibility in our
-    stacks.
-
-    \item Parallel builds for Spack: enable Spack to run inside a SLURM
-    allocation to efficiently install a large number of packages at once.
-
-    \item Better detection and integration with external dependencies.
-
-    \item Continued support of LLNL ATDM, other labs' ATDM teams, and
-          facilities.
+    \item Work with MARBL and other code teams to improve developer workflows support for Spack as a development tool.
+    \item Improve integration testing for LLNL code teams by enabling testing for pull requests on platforms of interest to LC.
+    \item Improve Spack support for GPUs, programming models, and exascale architectures.
 \end{itemize}
 
 \subparagraph{MFEM:}
-The MFEM team will next demonstrate the use of our HO/LO mappings on
-general unstructured meshes in ATDM application at scale.  This includes
-new discretization enhancements and new algorithms for ALE multi-physics
-applications, in particular in support of the MARBL appliaction's L2
-milestone, especially with respect to the transition to exascale
-hardware.  We will have MFEM running on early access machines as soon as
-they become available, and will support production runs on exascale platforms.
+\begin{itemize}
+\item Develop adaptive discretizations for high-order finite element ATDM applications, including algorithms such as dynamic AMR, mesh optimization, and hp-adaptivity. 
+\item Support MFEM-based ATDM applications in their transition to exascale hardware.  
+\item Continue engagement with ATDM application work, develop mini-apps, and provide support.
+\end{itemize}
 
 \subparagraph{RAJA/Umpire/CHAI:}
 
-Work in FY20–FY23 will focus on supporting El Capitan and other
-exascale-class systems available during this time frame. Additional work
-will support ASC and ATDM applications performance production runs on
-Sierra and integrating Umpire into additional LLNL WSC software
-components like Sidre, a simulation data store supported under the Axom
-project in the LLNL national security application project.
 
 \begin{itemize}
-\item Support LLNL ASC and ATDM applications with Sierra production runs
-\item Add El Capitan support to RAJA, CHAI, and Umpire
-\item Integrate Umpire with Sidre
-\item Support LLNL ASC and ATDM applications with transition to exascale
-      systems
+\item Develop and deliver new RAJA capabilities to LLNL codes to support ASC milestone and user requirements, including expanding support for overlapping kernel execution and data transfer and optimized AMD support.
+\item Continue to develop and deliver Umpire capabilities to applications in support of ASC milestone and user requirements, including interprocess shared memory to support shared on-node data and expanding functionality available inside GPU kernels. 
+\item Continue interactions with El Capitan Center of Excellence (COE) partners to resolve performance and correctness issues identified as application users begin testing on early access hardware. 
+
 \end{itemize}
 
 \subparagraph{Flux:}
 
 \begin{itemize}
-\item Deeper integration wtih Cancer Moonshot Pilot2 code, and LLNL ML initiative.
-\item Deeper LLNL UQ Pipeline integration.
-\item Testing of LLNL MARBL code with Flux on the SNL Astra system.
+\item Demonstrate the scalable end-to-end support within Flux for: 1) smart multitiered storage scheduling and management, 2) CTI-based tool launching, 3) Variorum-enabled power monitoring/capping, 4) more versatile UQ/V\&V/ML workflow scheduling, and 5) DYAD-enabled workflow data scheduling on El Capitan early access systems. 
 \end{itemize}
-.
 
 \subparagraph{AID:}
-In FY20–FY23, the gap analysis will be completed, and the team will
-closely work with the hardware vendors to fill these gaps for El Capitan
-and other systems.
+\begin{itemize}
+\item Implement, evaluate and harden a multilevel general-purpose graphics processing unit (GPGPU) debugging/code-correctness tool suite on early applications running on Collaboration of Oak Ridge, Argonne, and Livermore (CORAL)-2 early access systems. 
+\end{itemize}
 
 \subparagraph{Caliper:}
-LLNL's ProTools continues to add Caliper into more and more ASC/ATDM
-codes so that all codes report their performance to a central dashboard.
-A large number of ATDM codes and libraries have asked for Caliper
-support, and the team's goal in the coming year is to satisfy all of
-these demands.  The end result of this is to have application users
-running codes, producing behind-the-scenes performance data, and then
-application developers browsing and analyzing the performance data with
-analytic frameworks and novel visualizations.
+\begin{itemize}
+\item Continue SPOT and Caliper application integrations in LLNL applications. Expand tools with more GPU and MPI measurement capabilities.
+\item Continue support, porting, and deployment of Caliper.
+\end{itemize}
