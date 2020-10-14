@@ -3,8 +3,8 @@
 \paragraph{Overview}
 
 Argo Node Resource Manager (NRM) is a daemon running on the compute
-nodes. It centralizes node management activities such as job management,
-resource management, and power management.
+nodes. It centralizes node management activities such as local application
+launching, resource management, and power management.
 
 NRM interacts with both global resource management services (e.g., job
 scheduler) and with application components and runtime services running on
@@ -66,9 +66,9 @@ Other than sensor and actuator accounting capabilities, NRM provides
 optional support for autonomic node management. This support is provided through
 the accounting of node-local autonomic goals and constraints, which are
 expressed in terms of available nodes and sensors. Those goals and
-constraints are inspectable by the users, the global services (GRM), and
+constraints can be inspected by the users, the global services (GRM), and
 applications through NRM's unified interface. Inspection is achieved through
-the emission of a Control Description Format(CPD), which outlines active
+the emission of a Control Problem Description (CPD), which outlines active
 sensors, actuators, goals and constraints. This scheme is outlined by the
 figure on the left.
 
@@ -99,17 +99,15 @@ policies on the run-time behavior of user codes.
 
 \paragraph{Next Steps}
 
-We are working to add support for workload-specific control-theoretic
-resource management to NRM. This work is a collaboration with an external
-team, supported by our python upstream interface.
-
 We are working on a report to showcase the use of NRM's current autonomic
 resource management strategies in the context of workload energy minimization,
 through the use of RAPL control and application feedback.
 
-We are working on expanding the set of ECP applications that are instrumented
-to report their progress to NRM.
+We are also working on expanding the set of ECP applications that are
+instrumented to report their progress to NRM, as well as validation of the
+infrastructure on multiple ECP platforms.
 
 We are planning to expand the list of resources managed by NRM by
-adding support for the partitioning of CPU caches and other vendor-specific
-mechanisms.
+adding support for other vendor-specific mechanisms, as well as better
+integration with other ECP system software (job schedulers, application
+tracing, power interfaces).
