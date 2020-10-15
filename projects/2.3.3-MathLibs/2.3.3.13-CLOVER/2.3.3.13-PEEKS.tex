@@ -57,16 +57,16 @@ The primary thrusts of the PEEKS project are:
 	thereby acknowledging the importance of platform portability and allowing 
 	for extensibility as well as architecture-specific kernel optimization. 
    \item \textbf{Sustainability efforts:}
-	The Ginkgo software development cycle adheres the Better Scientific 
+	The Ginkgo and Trilinos software development adheres the Better Scientific 
 	Software (BSSw) design principles~\cite{betterscientificsoftware} that 
 	ensure production-quality code by featuring unit testing, automated 
 	configuration and installation, Doxygen code documentation, as well as a 
 	continuous integration and continuous benchmarking 
-	framework~\cite{pasc_anzt}. Ginkgo is an 
-	open source effort licensed under BSD 3-clause and included the xSDK and 
+	framework~\cite{pasc_anzt}. Ginkgo and Trilinos are 
+	open source effort licensed under BSD 3-clause and included in the xSDK and 
 	I4S software packages.
    \item \textbf{Pipelined and CA Krylov methods:} 
-    We realize pipelined and 
+    	We realize pipelined and 
 	communication-avoiding Krylov methods in production-quality code, and 
 	we are actively collaborating with the ECP ExaWind project to integrate 
         our new features into their application~\cite{Yamazaki-lowsynch}. 
@@ -104,9 +104,13 @@ architectures~\cite{anzt2020load}.
 We implemented and released five variations of communication-avoiding
 and pipelined Krylov solvers in the Belos Trilinos package.
 \item
-We demonstrated the efficient use of communication-avoiding Krylov methods in Trilinos
-inside wind turbine simulations of the ECP ExaWind 
+We demonstrated the efficient use of communication-avoiding Krylov methods in Trilinos inside wind turbine simulations of the ECP ExaWind 
 project~\cite{Yamazaki-lowsynch}.
+\item
+We are currently developing low-synchronization orthogonalization methods 
+for Trilinos in collaboration with CU Denver (Bielich,Langou)
+\item
+We developed an initial implementation of a new polynomial preconditioner based on the GMRES polynomial \cite{LoeBomanThornquist}.
 \end{enumerate}
 
 \begin{figure}[htb]
@@ -165,10 +169,5 @@ Our next efforts are:
 	how splitting the matrix int several operators stored in value-optimized 
 	less complex floating point precision formats can help improving
 	performance.
-	\item \textbf{Polynomial preconditioners:} The communication cost of 
-	numerical preconditions is high. In particular for communication-avoiding 
-	pipelined Krylov methods, the synchronization necessary by standard 
-	preconditioning can become a bottleneck. We will deliver a new
-        polynomial preconditioner in Trilinos (Belos) and investigate their effectiveness 
-	for ECP applications.
+	\item \textbf{Polynomial preconditioners:} Polynomial preconditioning is an old idea, but has had limited popularity since it is hard to find good polynomials in the general case. We believe using the GMRES polynomial addresses this issue. Polynomials are also cheap to apply and save communication by reducing the number of inner products. We plan to implement a version using Kokkos that runs on GPU and exascale systems.
 \end{enumerate}
