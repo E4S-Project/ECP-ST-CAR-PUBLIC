@@ -52,64 +52,78 @@ device or to best take advantage of the memory hierarchy.
 %\vspace{-12pt}%
 \includegraphics[width=.18\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/aml-components}
 \end{wrapfigure}
+AML components are built on top of hardware drivers and system
+libraries (libnuma, hwloc, accelerator libraries, other ECP products).
 The figure on the right depicts the major components of AML, including:
 \begin{itemize}
-\item Topology and hardware management (dependent on NUMA, hwloc, and SICM)
-\item Data layout descriptions (application-specific)
-\item Tiling schemes (including ghost areas)
-\item Data movement facilities (currently primarily \texttt{memcpy})
-\item Pipelining helpers (scratchpad, asynchronous requests)
+\item Memory \emph{areas}, the location where data lives,
+\item Applications data \emph{layouts} description,
+\item \emph{DMA} engines, to move data across areas and layouts,
+\item \emph{Tiling} schemes, the meta-structures on top of data layouts,
+\item High level abstractions and helpers (\emph{replicaset}).
 \end{itemize}
 
 \paragraph{Recent Progress}
 
-%We developed AML, a memory library for explicit management of deep memory
-%architectures.  Its main feature is a flexible and composable API, allowing
-%applications to implement algorithms similar to out-of-core for deep
-%memory.  We provided multiple optimized versions of memory migration
-%facilities, ranging from a regular copy to a transparent move of memory
-%pages, using synchronous and asynchronous interfaces and single- and
-%multithreaded backends.  We validated the initial implementation on Intel's
-%Knights Landing using a pipelining scheme for stencil applications.  We
-%also identified interaction points between UMap and AML.  Further
-%performance and capability improvements are underway.  In particular, we
-%performed exhaustive studies comparing performance of various approaches
-%for block-based DGEMM and task-based Cholesky decomposition.
+This year AML contributions are distributed across new features,
+infrastructure improvements, and a new collaboration project.
 
-AML development reached its first stable release recently.  We have a custom CI
-pipeline in place that ensures this stability via automated testing (we are
-making progress on leveraging the ECP CI infrastructure as well).  The
-source code of version 0.1.0 is available on our website; we also provide
-documentation on ReadTheDocs.  AML can also be installed via Spack.
+As part of our effort to improve application locality, we merged
+features on top of the \emph{hwloc backend}. The hwloc library exposes the machine
+topology and its objects attributes. As a result, AML is able
+to process the relationship between processing units and memories in
+terms of latency, bandwidth, and hop distance. Additionally, AML is
+able to make use of user-provided distances. Hence, it becomes
+possible to enhance available performance data with benchmarked metrics.
+From AML user's perspective, a new \emph{area} base block implementation
+is available. It implements the \emph{preferred} allocation policy on all
+memories. These memories are ordered according to a performance
+criterion (e.g., bandwidth). Therefore, data can be allocated as long as
+some memory is available. On top of that, data will be mapped onto the best
+available memories according to a performance criterion. Furthermore,
+we updated and merged the \emph{replicaset} high level abstraction which
+is now available to users. In a nutshell, this abstraction will
+create an area per NUMA cluster on the fastest memory of the cluster.
+Then, the user can use the replicaset primitives to map data replicas
+and update the latter in these areas. We previously demonstrated the use of
+this facility to improve the performance of the
+\emph{XSBench} application (published this year). We are working with
+ExaSMR developers to offer it as an optional feature in the latest version
+of the benchmark. 
 
-We have been collaborating with the ExaSMR project on improving the
-performance of the XSBench and RSBench proxy apps.  We applied the
-topology-aware data replication facilities of AML in order to replicate
-read-only and latency-sensitive data on low-latency memory nodes, improving
-the code's behavior on NUMA architectures.  We found the effort to have a
-limited impact on the application code, provided that the data is correctly
-structured.  Performance was tested on four x86 architectures: Intel's
-Knights Landing, Skylake, and Haswell, as well as AMD's Epyc.
-Figure \ref{fig:argo:aml-results} outlines the results of these
-experiments.
+Finally, the last new capability we introduced in the library is a submodule
+library called \emph{excit}. Excit implements general-purpose iterators, and we
+are using it to provide extensive iteration interfaces to the core building blocks
+of AML, as well as custom topology object iterators. For example, we want to be
+able to iterate memories of a certain type or with specific performance
+abilities.
 
-\begin{figure}
-\centering
-\includegraphics[width=.8\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/aml-results}
-\caption{Impact of the memory management policy used on the performance of
-proxy apps.}
-\label{fig:argo:aml-results}
-\end{figure}
-
+As part of our infrastructure improvements, we purchased a new machine
+with heterogeneous hardware that we are using in our CI pipeline
+to test new vendor backends. We are also taking advantage of the ECP CI
+infrastructure as part of our development process. The development of the
+library is validated by our own CI before being merged into a staging
+branch. The latter is then mirrored to ECP facilities to be further tested by
+an ECP CI pipeline, before being merged into our master branch. The goal is to
+ensure that our master branch can always be stable on production systems. Our
+ECP CI pipeline runs on Theta at ALCF and we are in the process of setting it
+up at OLCF.
 
 \paragraph{Next Steps}
 
-We want to add support for more types of memory through the integration
-with UMap and with other projects such as SICM.  We are planning to
-significantly increase the topology-awareness of our interface through the
-integration with Hwloc, by providing support for GPUs and other
-accelerators and their topologies, and by extending the interface with
-performance-oriented topology queries.  We are engaged in Aurora co-design
-effort to ensure suitable hardware support on that platform.  Our
-positive early results with ExaSMR proxy apps will be expanded to cover
-the actual OpenMC application.
+We are looking to build on top of our success with XSBench and use it as a
+showcase of some of the AML capabilities. Our next goal is to provide a feature
+inspired by OpenMP 5 \emph{custom mappers}. An OpenMP mapper makes it possible to
+describe which parts of a structure should be mapped onto
+accelerator devices. As it is a recent addition to the standard, to the best
+of our knowledge no compiler implements it yet. Furthermore, this feature is
+limited in its ability to filter or reorganize memory during the mapping
+process. We are using our \emph{tiling} abstraction to build a more
+flexible interface for such a feature, based on the needs of the OpenMC
+application. It will be combined with our \emph{DMA} abstraction to manage
+memory transfers and might be also provided through a more straightforward
+higher-level API.
+
+Finally, we are aiming at a broad compatibility of the library with accelerator
+devices.  Therefore, we are about to implement the base library abstractions on
+top of the \emph{OpenCL} backend.
