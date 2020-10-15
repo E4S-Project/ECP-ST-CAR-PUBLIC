@@ -92,13 +92,13 @@ ExaSMR developers to offer it as an optional feature in the latest version
 of the benchmark. 
 
 Finally, the last new capability we introduced in the library is a submodule
-library called \emph{excit}. Excit implements general purpose iterators, and we
-are using it provide extensive iteration interfaces to the core building blocks
+library called \emph{excit}. Excit implements general-purpose iterators, and we
+are using it to provide extensive iteration interfaces to the core building blocks
 of AML, as well as custom topology object iterators. For example, we want to be
 able to iterate memories of a certain type or with specific performance
 abilities.
 
-As part of our infrastructure improvements, we bought a new machine
+As part of our infrastructure improvements, we purchased a new machine
 with heterogeneous hardware that we are using in our CI pipeline
 to test new vendor backends. We are also taking advantage of the ECP CI
 infrastructure as part of our development process. The development of the
@@ -116,8 +116,8 @@ showcase of some of the AML capabilities. Our next goal is to provide a feature
 inspired by OpenMP 5 \emph{custom mappers}. An OpenMP mapper makes it possible to
 describe which parts of a structure should be mapped onto
 accelerator devices. As it is a recent addition to the standard, to the best
-of our knowledge, no compiler implements it yet. Furthermore, this feature is
-limited in its ability to filter or reorganise memory during the mapping
+of our knowledge no compiler implements it yet. Furthermore, this feature is
+limited in its ability to filter or reorganize memory during the mapping
 process. We are using our \emph{tiling} abstraction to build a more
 flexible interface for such a feature, based on the needs of the OpenMC
 application. It will be combined with our \emph{DMA} abstraction to manage

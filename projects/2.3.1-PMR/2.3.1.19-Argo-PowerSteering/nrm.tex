@@ -9,7 +9,7 @@ launching, resource management, and power management.
 NRM interacts with both global resource management services (e.g., job
 scheduler) and with application components and runtime services running on
 the node. It acts as a control infrastructure to enable custom resource
-management policies at the node level.  Applications can influence those
+management policies at the node level.  Applications can influence these
 mechanisms, both directly (through explicit API calls used, e.g., to
 request additional resources on the node) and indirectly (by having their
 run-time behavior monitored by NRM).
@@ -37,10 +37,10 @@ NRM uses an active approach to resource management. Physical and logical
 resources on the compute nodes are configured, discovered, and accounted for.
 NRM can manage compute nodes and individual components of parallel workloads,
 in the sense that it performs an active accounting of two types of interfaces
-for those workloads: sensors, and actuators. Those abstracted components are
+for those workloads: sensors and actuators. These abstracted components are
 available through an upstream API which enables their discovery and management.
 
-The NRM daemon supports power actuators, and sensors based on CPU counters,
+The NRM daemon supports power actuators, as well as` sensors based on CPU counters
 and power information. We also provide a simple API that application processes
 can use to periodically update the NRM on their progress. This gives NRM
 reliable feedback on the efficacy of its power policies, and it can also
@@ -54,9 +54,9 @@ In addition to those capabilities, NRM's configuration format allows for
 the configuration of actuators and active polling sensors based on arbitrary
 executables. The figure on the right shows a reading of NRM's sensor
 outputs for two RAPL sensors along with CPU counter instrumentation. In order
-to provide those capabilities, the NRM daemon manages the launching, management
+to provide these capabilities, the NRM daemon manages the launching, management,
 and stopping of parallel workloads through an unified interface. Resources
-can be dynamically reconfigured at run time; those interfaces are provided
+can be dynamically reconfigured at run time; these interfaces are provided
 for use from applications and from global services.
 
 \begin{wrapfigure}[10]{l}{.38\textwidth}
@@ -65,11 +65,11 @@ for use from applications and from global services.
 Other than sensor and actuator accounting capabilities, NRM provides
 optional support for autonomic node management. This support is provided through
 the accounting of node-local autonomic goals and constraints, which are
-expressed in terms of available nodes and sensors. Those goals and
-constraints can be inspected by the users, the global services (GRM), and
+expressed in terms of available nodes and sensors. These goals and
+constraints can be inspected by the users, global services (GRM), and
 applications through NRM's unified interface. Inspection is achieved through
 the emission of a Control Problem Description (CPD), which outlines active
-sensors, actuators, goals and constraints. This scheme is outlined by the
+sensors, actuators, goals, and constraints. This scheme is outlined in the
 figure on the left.
 
 \paragraph{Recent Progress}
@@ -83,7 +83,7 @@ of unit tests and enrichment of existing functional tests. We are still in
 the process of leveraging ECP testing infrastructure.
 
 NRM has recently added support for multi-armed bandit based control policies.
-In order to make this work as robust as possible, this work has been
+In order to make this work as robust as possible, it has been
 compartmentalized into a software library (\textit{hbandit}). \textit{hbandit}
 implements statically typed, independently tested versions of the relevant
 machine learning algorithms.
@@ -110,4 +110,4 @@ infrastructure on multiple ECP platforms.
 We are planning to expand the list of resources managed by NRM by
 adding support for other vendor-specific mechanisms, as well as better
 integration with other ECP system software (job schedulers, application
-tracing, power interfaces).
+tracing, and power interfaces).
