@@ -17,7 +17,7 @@ architectures, enabling multiphysics projects to seamlessly combine results
 from different computational grids to perform their required simulations
 (DTK); and
 %
-(3) the ability to construct fast and memory efficient surrogates to 
+(3) the ability to construct fast and memory efficient surrogates to
 large-scale engineering models with multiple inputs and many outputs,
 enabling uncertainty quantification (both forward and inverse) as well as
 optimization and efficient multi-physics simulations in projects such as
@@ -146,12 +146,14 @@ Maintaining high accuracy for the transfer requires careful attention to the
 mathematical properties of the interpolation methods and is highly
 application-specific.
 
-{\bf Tasmanian:} Complex models usually have significant variability in
-execution time for different model inputs, which leads to massive down-time
-when employing the standard fork-join adaptive sparse grid algorithms.  After
-the surrogate has been constructed, collecting the samples for statistical
-analysis (or multi-physics simulations) requires a massive number of basis
-evaluations and many sparse and dense linear operations.
+{\bf Tasmanian:} Extracting statistical information from a Tasmanian surrogate
+(or using the surrogate in a multi-physics simulation) requires the collection
+of a large number of samples, which is not feasible without GPU acceleration.
+The GPU accelerated surrogate evaluations require both custom kernels
+corresponding to the different types of basis functions as well as both
+sparse and dense linear algebra methods (BLAS level 2 and 3).
+Porting the capabilities and optimizing the performance across different
+divergent architectures is challenging.
 
 {\bf ForTrilinos:} Developing the interfaces to the C++ libraries that provide
 access to cutting-edge research, such as Trilinos,  is of significant benefit
@@ -184,12 +186,13 @@ a C++ code base with extensive unit testing on multiple platforms.  Trilinos
 packages are used to support interpolation methods.  Kokkos is used to achieve
 performance portability across accelerated platforms.
 
-{\bf Tasmanian:} Implement asynchronous DAG-based sparse grids construction
-methods that preserve the convergence properties of the fork-join algorithms
-but are insensitive to fluctuations in model simulation time.  Port the basis
-evaluations and linear algebra to the GPU accelerators, and leverage the
-SLATE/MAGMA capabilities to ensure performance portability across relevant
-platforms.
+{\bf Tasmanian:} The C++ kernels within Tasmanian (currently tuned for Nvidia
+Volta architecture) are templated exposing numerous performance tweaks and
+tuning parameters that can be adjusted to perform well on a corresponding AMD
+system.
+The kernels also need to be ported to DPC++/SYCL to allow for the utilization
+of Intel GPUs. Tasmanian requires a general GPU-BLAS interface that can
+utilize any of the accelerated backends, e.g., cuBlas, rocBlas, MKL and MAGMA.
 
 {\bf ForTrilinos:} Develop a Fortran module for the Simplified Wrapper
 Interface Generator (SWIG) utility~\cite{beazley1996swig}. SWIG is used to parse
@@ -231,16 +234,21 @@ simulations using a parallel-in-time coupling strategy.
         between steps. Image courtesy of Matt Bement (ExaAM Team) }
 \end{figure}
 
-{\bf Tasmanian:} The infrastructure of Tasmanian has been upgraded to support
-the broader ECP focus of the work.  GPU acceleration of sparse grid surrogates
-has been implemented.  Tasmanian recently enabled the ExaStar project to
-reduce the size of a large-memory table of neutrino opacities by 10X while
-still preserving accuracy.
+{\bf Tasmanian:} Work with partner application ExaStar (2.2.3.01) created a
+reduced representation of neutrino opacities used by the Thornado simulation
+software. The classical representation uses dense tables that do not fit in
+GPU memory and lead to unnecessary and expensive data movement for each time-step.
+The reduced representation by Tasmanian preserved the accuracy of the simulations
+and dramatically reduces the memory footprint by removing redundancies
+and exploiting smoothness in the data.
 
 \begin{figure}[htb]
         \centering
-        \includegraphics[width=1.5in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/tasmanian-gpu}
-        \caption{\label{fig:tasmanian-gpu}Tasmanian approximation (right) of neutrino capacities (left).}
+        \includegraphics[width=2.5in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/tasmanian_exastar}
+\caption{\label{fig:tasmanian-exastar}
+		The resulting neutrino and antineutrino distributions in a deleptonization
+		wave simulation using sparse grid opacities, which require only 6\% of
+		the memory used in the dense approach, with relative $L^2$ error less than 1\%.}
 \end{figure}
 
 {\bf ForTrilinos:} ForTrilinos was updated to support nonlinear solvers. The
@@ -260,9 +268,9 @@ applications.
 {\bf DTK:} Support parallel-in-time coupling in the ExaAM project for
 simulations of metal powder bed additive manufacturing.
 
-{\bf Tasmanian:} Work will continue with the development of mixed precision
-algorithms for fast surrogate evaluations and integratinv the capability within
-the ExaStar project.
+{\bf Tasmanian:} Port the surrogate evaluation kernels to AMD and Intel
+GPUs and optimize the performance on the next generation architectures
+(including next generation Nvidia GPUs).
 
 {\bf ForTrilinos:} the next efforts will include
 \begin{enumerate}
