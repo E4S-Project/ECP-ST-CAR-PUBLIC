@@ -1,4 +1,4 @@
-\newcommand{\zfpmilestone}[1]{~(STDM13-#1)}
+\newcommand{\zfpmilestone}[1]{~(STDM16-#1)}
 
 \subsubsection{\stid{4.16} ZFP: Compressed Floating-Point Arrays}
 
@@ -33,7 +33,7 @@ with a variety of ECP applications, I/O libraries, and visualization and data
 analysis tools.
 
 
-\paragraph{Key  Challenges}
+\paragraph{Key Challenges}
 
 There are several challenges to overcome on this project with respect
 to implementing compressed floating-point arrays:
@@ -118,21 +118,24 @@ substituted for uncompressed arrays.
 
 \paragraph{Recent Progress}
 
-Work on Fortran and Python bindings to {\zfp}'s high-level compression API has been completed\zfpmilestone{16}.  We have extended {\zfp} to support lossless compression\zfpmilestone{15} and have continued to explore \emph{preconditioning} approaches to use with particle and unstructured data\zfpmilestone{24}.  {\zfp} relies on spatial correlation in structured data for compression and expanding its use beyond structured data requires strategies to make the data amenable to compression.  We experimented with local sorting approaches but found them largely ineffective.  A more successful preconditioner is to pass structured data through a wavelet transform, which we found to improve accuracy by as much as an order of magnitude for the same storage cost.  We will continue to explore ways to expand {\zfp}'s usability for particles and unstructured datasets.  Finally, we have implemented data-dependent variable-length storage arrays (Figure~\ref{fig:zfp-result}) that support random access\zfpmilestone{34} and are finishing up related efforts on read-only arrays\zfpmilestone{33}.
+Recent work has focused on extending the capabilities of {\zfp}'s compressed-array C++ classes.  We have refactored these classes to reduce code redundancy between the fixed- and variable-rate representations, added support for 4D arrays, and provided new C and Python language bindings to these classes.  This refactoring effort has also decoupled concepts such as array, cache, compression codec, and data store, enabling a more modular design that allows incorporating new codecs and mixed-precision representations under the same array interface.  In addition, mutable and immutable proxy references, pointers, and iterators are now available, both for arrays and views into arrays.  We have further made progress on parallel decompression of variable-rate streams~\cite{zfp-pdp2020} and released {\zfp} version 0.5.5~\cite{zfp-code} as Conda and PIP Python packages.
+In addition to ST integrations with \textsc{adios}, \textsc{hdf5}, \textsc{strumpack}, and \textsc{vtk-m}, we are integrating {\zfp} with \textsc{ceed}, \textsc{eqsim} (Figure~\ref{fig:zfp-result}), \textsc{qmcpack}, and \textsc{warpx}.
 
-The results of our R\&D efforts have been documented through publications~\cite{zfp-isc2017,zfp-jsm2017,zfp-sisc2019,zfp-drbsd2019}, and significant efforts have been made to reach out to customers and the HPC community at large through one-on-one interactions and tutorials, both at ECP meetings and conferences~\cite{zfp-isc2017-tut,zfp-sc2017-tut,zfp-ep2018-tut,zfp-sc2018-tut,zfp-isc2019-tut}.  We have an upcoming tutorial at SC19 with SZ~\cite{zfp-sc2019-tut}.  Lastly, {\zfp} version 0.5.5 has been released~\cite{zfp-code}.
+The results of our R\&D efforts have been documented through publications~\cite{zfp-isc2017,zfp-jsm2017,zfp-sisc2019,zfp-drbsd2019,zfp-pdp2020,zfp-vis2020}, and significant efforts have been made to reach out to customers and the HPC community at large through one-on-one interactions and tutorials, both at ECP meetings and conferences~\cite{zfp-isc2017-tut,zfp-sc2017-tut,zfp-ep2018-tut,zfp-sc2018-tut,zfp-isc2019-tut,zfp-sc2019-tut}.  Together with the \textsc{sz} team, we will be giving a tutorial and panel at SC20~\cite{zfp-sc2020-tut,zfp-sc2020-pan}.
 
 \noindent
-\begin{minipage}[t]{2.625in}
-\paragraph{Next Steps}
-
-The next year will focus on two primary efforts: (1) refactoring our compressed-array code to reduce redundancy, improve robustness, and facilitate further development; and (2) filling gaps in a large and sparsely populated feature space, including missing language bindings.  We will continue outreach to ECP applications and ECP software technologies.  
-\end{minipage}
-\hspace*{0.125in}%
-\begin{minipage}[t]{3.75in}
+\begin{minipage}[t]{\textwidth}
 \vspace{0pt}%
-\includegraphics[width=\columnwidth]{projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/zfp-adaptive.pdf}%
+\centering%
+\includegraphics[width=4in]{projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/zfp-sw4}%
 \vspace{-2ex}%
-\captionof{figure}{{\zfp} variable-rate arrays spatially adapt bit allocation.}%
+\captionsetup{width=\linewidth}%
+\captionof{figure}{112:1 {\zfp} compression of \textsc{sw4} seismic displacement data to $80\mu\text{m}$ accuracy.}%
 \label{fig:zfp-result}%
 \end{minipage}
+
+\paragraph{Next Steps}
+
+Next year's effort will focus on (1)~extending {\zfp} to support parallel (de)compression of variable-rate streams,
+and (2)~readying {\zfp} for Frontier by porting our CUDA implementation to HIP.
+We will also continue our integration efforts with ECP applications and ECP software technologies.
