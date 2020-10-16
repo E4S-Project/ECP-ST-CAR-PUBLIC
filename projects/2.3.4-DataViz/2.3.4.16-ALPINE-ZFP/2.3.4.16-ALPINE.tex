@@ -45,9 +45,9 @@ We are also developing an additional  in situ framework, Ascent.  Ascent is a ``
 Our solution strategy is two-fold, in response to our two major challenges: infrastructure and algorithms.
 
 For infrastructure, we have developed a layer on top of the VTK-m library for ALPINE algorithms.
-This layer is where all ALPINE algorithms will be implemented, and it is deployed in ParaView, VisIt, and Ascent.
+This layer is where all ALPINE algorithms will be implemented, and it is deployed in ParaView/Catalyst, VisIt, and Ascent.
 Thus all development effort by ALPINE will be available in all of our tools.
-Further, by leveraging VTK-m, we will be addressing issues with many-core architectures.
+Further, by leveraging VTK-m, we will be addressing issues with many-core architectures.  
 Figure~\ref{fig:alpine_infrastructure} illustrates our software strategy.
 
 \begin{figure}[htb]
@@ -56,14 +56,17 @@ Figure~\ref{fig:alpine_infrastructure} illustrates our software strategy.
 	\caption{\label{fig:alpine_infrastructure}ALPINE's strategy for delivering and developing software.  We are making use of existing software (ParaView, VisIt), but making sure all new development is shared in all of our tools.  The dotted lines represent ongoing work, specifically that the Ascent API will work with ParaView and VisIt.}
 \end{figure}
 
-ALPINE is developing a suite of in situ  algorithms designed to address in I/O and data output constraints.   We have four mature algorithms.  
+ALPINE is developing a suite of in situ  algorithms designed to address in I/O and data output constraints.   These algorithms include:.  
 \begin{description}  
 	\setlength{\itemsep}{1pt}
     \setlength{\parskip}{0pt}
     \setlength{\parsep}{0pt}
 	\item [Lagrangian analysis] of vector flow allows more efficient and complete tracking of flow.  It can save vector field data with higher accuracy and less storage than the traditional approaches~\cite{alpine:Sane:EGPGV18,alpine:Sane:EGPGV19,alpine:Binyahib:LDAV19}.
 	\item [Topological analysis] can be used to detect features in the data and adaptively steer visualizations with no human in the loop.  For example, contour trees can identify the most significant isosurfaces in complex simulations and then the resulting visualizations can use these isosurfaces~\cite{alpine:Carr:TVCG19}.
-	\item [Adaptive sampling]   can be used to guide visualizations and extracts to the most important parts of the simulation, significantly reducing I/O.  Figure~\ref{fig:alpine-sampling-example} shows an adaptive sampling technique based on importance to preserve  features in the data~\cite{alpine:Biswas:ISAV18,alpine:Dutta:Entropy19,alpine:Liu:SC19poster}.
+	\item [Adaptive sampling]  can be used to guide visualizations and extracts to the most important parts of the simulation, significantly reducing I/O.  Figure~\ref{fig:alpine-sampling-example} shows an adaptive sampling technique based on importance to preserve  features in the data~\cite{alpine:Biswas:ISAV18,alpine:Dutta:Entropy19,alpine:Liu:SC19poster}.
+	\item [Statistical Feature Detection] This emerging algorithm models data using distribution-based approaches and statistical similarity measures to identify and isolate features of interest. Significant data reduction is possible by only saving the statistical representations of the data.  
+	\item [Task-Based Feature Detection] This emerging approach uses BabelFlow, enabling the development of analysis algorithms that can be executed on different runtimes (e.g., MPI, Charm++, and Legion).
+	\item [Optimal Viewpoint] Optimal viewpoint metrics are used to automate visualization decisions while running in situ.  This initial development will choose the best camera placement for a scene.  
 	\item [Moments-based pattern detection] can be used to find rotation-invariant patterns~\cite{alpine:Bujack:WSCG17,alpine:Yang:PR17,alpine:Wang:TopoVis17}. 
 \end{description}
 

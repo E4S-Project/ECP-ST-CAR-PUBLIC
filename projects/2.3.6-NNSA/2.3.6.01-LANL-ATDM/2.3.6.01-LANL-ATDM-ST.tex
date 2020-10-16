@@ -30,10 +30,8 @@ is now an official sub-project within the overall LLVM infrastructure.
 All these efforts include interactions across ECP as well as
 with the broader LLVM community and industry.  
 
-The LANL ATDM Data and Visualization project develops scalable
-solutions for data analysis as part of the \textbf{Cinema} project,
-which provides post-facto interactive interactions with a dataset
-using a fraction of the file storage. 
+The LANL ATDM \textbf{Cinema} project  develops scalable 
+solutions for data analysis as part of the Data and Visualization software stack.  Cinema is a novel database approach to saving data extracts in situ which are then available for post hoc interactive exploration.  These data extract can include metadata, parameters, data visualizations, small meshes, output plots, etc..  Cinema workflows enable flexible data analysis using a fraction of the file storage. 
 
 The \textbf{BEE/Charliecloud} subproject is creating software tools to increase portability
 and reproducibility of scientific applications on high performance and cloud
@@ -79,8 +77,8 @@ vendors and system providers now leverage and use LLVM for their
 commercial compilers.
 
 \subparagraph{Cinema}
-Interfacing to a large number of ECP application with the Cinema
-software and the management of the volumous data from these
+Interfacing to a large number of ECP applications with the Cinema
+software and the management of the voluminous data from these
 applications. 
 
 \subparagraph{Bee/CharlieCloud}
@@ -201,9 +199,12 @@ community about general details behind parallel intermediate forms.
 
 \subparagraph{Cinema:}
 
-Recent Cinema work has focused on development of analysis capability, Exascale workflows and working with ECP STs such as ALPINE to enable in situ and post processing production of Cinema databases.  Currently Cinema is available in situ via ParaView Catalyst and Ascent and available post hoc via ParaView and VisIt.   New capabilities provide scientists more options in analyzing and exploring the results of large simulations by providing a workflow that 1) detects features in situ, 2) captures data artifacts in Cinema databases, 3) promotes post-hoc analysis of the data, and 4) provides data viewers that allow interactive, structured exploration of the resulting artifacts. 
+Recent Cinema progress has focused on development of exascale workflows, development of python-based Cinema functionality, and supporting Cinema export capabilities through ALPINE's exascale-capable infrastructure.  ParaView's v5.9 release includes a significant rewrite to create \textit{extract generators} to output images and other extracts.  The creation of Cinema databases is part of the extract generator workflow both in post hoc ParaView usage or via the in situ Catalyst library.  Cinema export is also available via ALPINE's Ascent infrastructure and through VisIt.    
+Cinema capabilities provide scientists more options in analyzing and exploring the results of large simulations by providing a workflow that 1) detects features in situ, 2) captures data artifacts in Cinema databases, 3) promotes post-hoc analysis of the data, and 4) provides data viewers that allow interactive, structured exploration of the resulting artifacts. 
 %
-In our most recent milestone, we ran two end-to-end simulation pipelines with ECP applications at scale to generate Cinema databases and ran Cinema-based workflows with Cinema algorithms to produce secondary set of artifacts.  We ran (1) Nyx integrated with Ascent, running the ALPINE adaptive sampling algorithm; and (2) SW4 integrated with Ascent, running a VTK-m isocontour algorithm.  
+In our milestones during FY20, we extended two end-to-end reproducible simulation pipelines with ECP applications at scale to generate Cinema databases and ran Cinema-based workflows with Cinema algorithms to produce secondary set of artifacts.  We ran (1) Nyx integrated with Ascent, running an ALPINE adaptive sampling algorithm; and (2) SW4 integrated with Ascent, running a VTK-m isocontour algorithm.   We ran scaling and performance testing for typical ECP-based Cinema use cases.  Lastly we did the annual release of the Cinema toolkit.  Based on user feedback, we  changed the toolkit from a set of viewers and a command line tool to a single Python module that includes current Cinema toolkit components such as viewers, database classes, preliminary Composable Image Sets classes, Jupyter notebook classes, and a small web server to provide a new way to view databases with the existing viewers.  The Cinema Python module is included in ParaView v5.9.
+
+
 
 \subparagraph{Bee/CharlieCloud}
 % previous recent progress
@@ -252,7 +253,8 @@ the exascale systems (Aurora, Frontier, and El Capitan).
 
 
 \subparagraph{Cinema:}
-Cinema is focusing on outreach to ECP applications to identify new application workflows that can be reasonably made efficient and working on new analysis methods for Cinema users.
+In FY21, Cinema will be hardening the Composable Image Sets format to meet user requests and adding functionality to the Python-based components, demonstrating these capabilities with ATDM/ECP data and applications.  Cinema is focusing on outreach to ECP applications to identify new application workflows that can be reasonably made efficient and working on new analysis methods for Cinema users.
+
 
 \begin{figure}[htb]
 	\centering
