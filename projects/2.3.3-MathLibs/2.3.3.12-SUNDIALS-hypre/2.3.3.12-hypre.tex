@@ -1,8 +1,7 @@
-\subsubsection{\stid{3.01} hypre} 
+\subsubsection{\stid{3.12} Sub-project: hypre}
 
-
-\paragraph{Overview} 
-The {\sl hypre} software library \cite{hypre:homepage,hypre_design_impl_2006} provides high performance preconditioners and solvers for the solution of large sparse linear systems on massively parallel computers, with particular focus on algebraic multigrid solvers. One of {\sl hypre}’s unique features is the provision of a (semi)-structured interface, in addition to a traditional linear-algebra based interface. The semi-structured interface is appropriate for applications whose grids are mostly structured, but with some unstructured features. Examples include block-structured grids, composite grids in structured adaptive mesh refinement (AMR) applications, and overset grids. These interfaces give application users a more natural means for describing their linear systems, and provide access to methods such as structured multigrid solvers, which can take advantage of the additional information beyond just the matrix. Since current architecture trends are favoring regular compute patterns to achieve high performance, the ability to express structure has become much more important. The {\sl hypre} library provides both unstructured and structured multigrid solvers, which have shown excellent scalability on a variety of high performance computers, e.g Blue Gene systems (unstructured solver BoomerAMG has scaled up to 1.25 million MPI cores with a total of 4.5 million hardware threads). It is used by many ECP application teams, including ExaAM, Subsurface, ExaWind, CEED, and more. It requires a C compiler and an MPI implementation, but it also runs in an OpenMP environment. It has some GPU capabilities.
+\paragraph{Overview}
+The {\sl hypre} software library \cite{hypre:homepage,hypre_design_impl_2006} provides high performance preconditioners and solvers for the solution of large sparse linear systems on massively parallel computers, with particular focus on algebraic multigrid solvers. One of {\sl hypre}’s unique features is the provision of a (semi)-structured interface, in addition to a traditional linear-algebra based interface. The semi-structured interface is appropriate for applications whose grids are mostly structured, but with some unstructured features. Examples include block-structured grids, composite grids in structured adaptive mesh refinement (AMR) applications, and overset grids. These interfaces give application users a more natural means for describing their linear systems, and provide access to methods such as structured multigrid solvers, which can take advantage of the additional information beyond just the matrix. Since current architecture trends are favoring regular compute patterns to achieve high performance, the ability to express structure has become much more important. The {\sl hypre} library provides both unstructured and structured multigrid solvers, which have shown excellent scalability on a variety of high performance computers, e.g Blue Gene systems (unstructured solver BoomerAMG has scaled up to 1.25 million MPI cores with a total of 4.5 million hardware threads). It is used by many ECP application teams, including ExaAM, Subsurface, ExaWind, CEED, and more. It requires a C compiler and an MPI implementation, but it also runs in an OpenMP environment. It also has GPU capabilities.
 
 \paragraph{Key  Challenges}
 
@@ -11,25 +10,25 @@ While {\sl hypre}'s solvers contain much parallelism, their main focus is the so
 \paragraph{Solution Strategy}
 
 Since computer architectures continue to change rapidly, it was important to come up with strategies that will facilitate future porting of the software. Therefore we developed and implemented a new memory model that addresses the use of different memory locations.
-Since the upcoming computer architectures are heterogeneous with accelerators, we focus on enabling {\sl hypre} for GPUs. We have looked into various options, such as the use of CUDA, OpenMP 4.5, as well as RAJA and Kokkos. We limited the latter two options to the structured interface and solvers which are more natural candidates for such an approach due to their use of macros, called BoxLoops, for loops. We will also investigate the use of HIP and SYCL for AMD and Intel accelerators that will be available on future exascale computers.
+Since the upcoming computer architectures are heterogeneous with accelerators, we focus on enabling {\sl hypre} for GPUs. We have looked into various options, such as the use of CUDA, OpenMP 4.5, as well as RAJA and Kokkos. We limited the latter three options to the structured interface and solvers which are more natural candidates for such an approach due to their use of macros, called BoxLoops, for loops. We adopted a modular approach for the unstructured interface, which relies on the restructuring the solver components to use smaller kernels that are and/or will be implemented in CUDA for Nvidia GPUs. We will investigate the use of vendor conversion tools from CUDA to HIP and SYCL to port the unstructured solvers to upcoming exascale computers.
 
 \paragraph{Recent Progress}
 
-Previously, we enabled the structured solvers, SMG and PFMG\cite{AsFa1996}, both setup and solve phase, to completely run on GPUs, using both CUDA or OpenMP4.5, and to not require unified memory. In addition, options to use RAJA and Kokkos are available.
-Porting the unstructured solver, BoomerAMG turned out to be far more complex. We first ported the solve phase to GPUs for select smoothers, mainly Jacobi smoothers, requiring unified memory. During the last year, we focused on enabling selected components of the setup phase to run on GPUs, specifically PMIS coarsening, direct interpolation, and the generation of the coarse grid operator, which consists of the multiplication of three sparse matrices. Figure \ref{fig:rap} shows runtime comparisons of different implementations of the coarse grid operator generation on one V-100 GPU or one Power 9, which demonstrate that the hypre GPU implementation outperforms state-of-the-art implementations such as CUSP and cuSPARSE. It is now possible to perform a complete linear system solve with BoomerAMG on GPUs using specific settings.
+Previously, we enabled the structured solvers, SMG and PFMG\cite{AsFa1996}, both setup and solve phase, to completely run on GPUs, using both CUDA or OpenMP4.5, or use optional RAJA and Kokkos.
+For our unstructured AMG solver BoomerAMG, we had implemented suitable CUDA kernels for setup and solve phase, which allowed AMG to run on GPUs for specific settings, but did not include our best interpolation operators. Recently, we added CUDA capabilities to create and assemble IJ matrices and vectors. Since our best interpolation operators are not suitable for GPU implementation, we designed a new class of interpolation operators based on sparse matrix operations\cite{LiSY2020} and implemented it on GPUs. We also ported aggressive coarsening to the GPU, which leads to decreased memory complexities and can also reduce overall run times. This included the implementation of a second strength matrix, required to get even coarser grids, and several two-stage interpolation operators also based on matrix-matrix operations and capable to deal with grid points that are further apart. Figure \ref{fig:27pt} and Figure \ref{fig:syslap} show two weak scaling studies comparing GPU and CPU implementations of AMG-PCG on Lassen, using 4 MPI tasks per node with 1 GPU per MPI task for the GPU version and 10 OpenMP threads per MPI task for the CPU version.
 
 \begin{figure}[bth]
 \centering
-	\includegraphics[width=3.9in]{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/hypre-rap-1gpu.png}
-	\caption{\label{fig:rap} Runtimes to generate a coarse grid operator for a 7pt 3d Laplace problem matrix on 1 V-100 GPU or Power 9 CPU with up to 20 OMP threads for various implementations}
+	\includegraphics[width=3.9in]{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/mm-exti-27pt-200.png}
+	%\includegraphics[width=3in]{mm-exti-27pt-200.png}
+	\caption{\label{fig:27pt} Weak scaling study for AMG-PCG applied to a 3D 27pt diffusion problem on Lassen with 8M grid points per node comparing total run times (setup and solve) on GPUs with the new mm-ext+i interpolation (GPU), and on CPUs using ext+i interpolation (CPU), and adding aggressive coarsening with multipass interpolation on the first level (opt-CPU)}
 \end{figure}
 
-We also implemented a new integer datatype called HYPRE$\_$BigInt to avoid the requirement that all integers need to be converted to 64 bit integers when solving linear systems greater than 2 billions using the unstructured solvers. The new datatype allows to only convert variables that need to be 64 bit integers and improves memory usage and performance, as illustrated in Figure \ref{fig:mixed-int}.
-
-\begin{figure}
+\begin{figure}[bth]
 \centering
-	\includegraphics[width=2.5in]{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/hypre-mixed-int.png}
-	\caption{\label{fig:mixed-int} Weak scaling study on LLNL Linux cluster Quartz: Total runtimes in seconds for AMG-PCG using 1M points/core for 2 different 3D diffusion problems.The new mixed-int capability performs about 20-25 percent better than the 64 bit integer version while using less memory and is capable to solve larger problems than the 32 bit integer version.}
+	\includegraphics[width=2.5in]{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/a1-sysLap.png}
+	%\includegraphics[width=3in]{a1-sysLap.png}
+	\caption{\label{fig:syslap} Weak scaling study for AMG-PCG applied to a system of coupled Poisson problems with 3 variables per grid point on Lassen with 8M grid points (24M dofs) per node comparing CPU (dashed) and GPU (solid) total run times with (red) and without (blue) aggressive coarsening on the first level. Here CPU and GPU runs use mm-ext+e interpolation and two-stage mm-ext+e interpolation when using aggressive coarsening.}
 \end{figure}
 
 \paragraph{Next Steps}
@@ -37,9 +36,7 @@ We also implemented a new integer datatype called HYPRE$\_$BigInt to avoid the r
 We will pursue the following tasks:
 
 \begin{itemize}
-\item We will continue to add new GPU capabilities to {\sl hypre}. This includes converting various components that are currently running only on the CPU to be usable on the GPU using CUDA or OpenMP 4.5. We will particularly focus on additional setup components, such as interpolation operators, to achieve better convergence.
-\item We also plan on improving the efficiency of interfacing applications with {\sl hypre}'s solvers.
+\item We will continue to add new GPU capabilities to {\sl hypre} and improve the performance of current capabilities. We will thoroughly investigate the performance on Nvidia GPUs and begin porting to AMD GPUs.
+\item We also investigate and improve the performance of other unstructured solvers in {\sl hypre}, such as AMS and ILU and port components to GPUs where needed.
 \end{itemize}
-In addition, we will work with ECP application teams who are using {\sl hypre}, such as ExaWind, or would like to use it, to achieve best performance by tuning the solvers for them and potentially implementing suitable algorithmic changes. 
-
-
+In addition, we will work with ECP application teams who are using {\sl hypre}, such as ExaWind, or would like to use it, to achieve best performance by tuning the solvers for them and potentially implementing suitable algorithmic changes.
