@@ -2,3 +2,56 @@
 
 \paragraph{Overview} 
 The \dataviz\ SDK effort is focused on identifying meaningful aggregations of products in this technical area.  SDK efforts are in the early stages of planning and execution.  Most of the work on SDKs has been driven from the \ecosystem\ technical area.  A description of the SDK effort can be found in Section~\ref{subsubsect:ecosystem-sdk}.
+\paragraph{HDF5}
+\paragraph{Overview}
+\paragraph{}
+HDF5 is a data model, I/O library, and file format for storing and managing data. It supports an unlimited variety of datatypes, and is designed for flexible and efficient I/O and for high volume and complex data. HDF5 is portable and is extensible, allowing applications to evolve in their use of HDF5. The HDF5 software suite includes tools and applications for managing, manipulating, viewing, and analyzing data in the HDF5 format. Numerous ECP applications use HDF5 or high-level libraries built on top of HDF5 (for example, netCDF-4, H5Part) for managing application's data. Therefore, HDF5 is a critical part of the Data & Visualization SDK. It is developed and maintained by a nonprofit organization The HDF Group.
+
+Under the Data & Visualization SDK effort The HDF Group releases HDF5 new features that enhance workflow, productivity and performance of ECP applications. Such features, for example, include ExaHDF5 productized Virtual Object Layer Architecture (VOL) and HDF5 VOL connectors which allow ECP applications to access data on different storage devices including Tiered Memory and to access data in various file formats. 
+In this activity we focus on:
+\begin{itemize}
+    \item Identifying and prioritizing components of SDK that could benefit from current underutilized HDF5 features and newly released features and recommending changes to the identified components.
+    \item Assisting other Data & Visualization SDK team, ADIOS, ExaIO and DataLib teams, in requirements gathering for integration with HDF5 APIs.
+    \item Assuring that the latest released HDF5 software and non-integrated features developed under ExaIO (e.g., Async I/O VOL), are part of CI testing on the ECP platforms, including integrating HDF5 into the SDK CI testing framework (GitLab).
+    \item Addressing any HDF5 related CI testing issues, in addition to any HDF5 bug or deficiently affecting parallel I/O performance, sustainability, and/or utility on ECP platforms. 
+\end{itemize}
+The HDF Group is performing outreach activities as described here:
+\begin{itemize}
+    \item Reaching out to the ECP science application teams that use or intend to use HDF5 and assess applications’ usage of HDF5 or I/O needs, recommend best practices and existing HDF5 features to achieve scalable performance and to avoid I/O bottlenecks when using SDK components.
+    \item Identifying necessary improvements to data organization in HDF5, to the usage of HDF5 library features, and to the HDF5 libraries proper and assisting applications to implement identified improvements.
+    \item Integrate ECP supported ZFP and SZ compression library with the HDF5 maintenance releases.
+    \item Series of HDF5 Tutorials for new and advanced HDF5 users, and seminars for the HDF5 applications developers on the HDF5 best practices and performance.
+\end{itemize}
+
+\paragraph{Key  Challenges}
+\paragraph{}
+
+HDF5 is a complex software used not only to perform I/O but also to manage complex data in one HDF5 file. Very often developers of HDF5 applications are challenged to find the right balance between optimum I/O performance and data organization in HDF5 file for further processing and sharing. It is unreasonable to expect from the scientists to go over more than 500 HDF5 C functions to find the right tuning knobs. As a result, some application teams continue using home-grown \texttt{ASCII} and binary formats and not taking advantage of HDF5 features and especially the features developed for ECP.    
+
+\paragraph{Solution Strategy}
+\paragraph{}
+To lower the barrier for adopting HDF5 by ECP applications The HDF Group has to provide quality HDF5 software that works on ECP platforms, integrate newly developed features into mainstream HDF5 and make them available to ECP applications in a timely manner, educate HDF5 users on major HDF5 features, tuning tools and tuning techniques, and work closely with ECP applications teams on application tuning.
+
+\paragraph{Recent Progress}
+\paragraph{}
+During 2020 HDF5 develop branch and HDF5 1.12.0 and 1.10.7 maintenance releases were fully integrated with Spack and ECP CI testing using Gitlab. 
+
+We studied I/O access patterns of several ECP applications including HACC and summarized our findings in the white paper \href{http://portal.hdfgroup.org/display/HDF5/Parallel+HDF5} {\emph{"An I/O Study of ECP Applications"}}. 
+We summarize below the observations and some unexpected behaviours we found for each application along with the suggestions on how to fix them. Detailed results and analysis can be found in the paper. 
+\begin{itemize}
+    \item \textbf{FLASH}: Unnecessary HDF5 metadata operations \texttt{H5Acreate()}, \texttt{H5Aopen()} and \texttt{H5Aclose()} are used during every checkpointing step. Those operations can be expensive especially when running a large number of iterations. This can be easily fixed at the price of losing some code modularity. 
+    \item \textbf{NWChem}: File-per-process patterns are found for writing local temporary files. This is undesired and will cause a lot of pressures on parallel file systems for large scale runs. Conflicting patterns are found for the runtime database file, which can lead to consistency issues when running on non-POSIX file systems.
+    \item \textbf{Chombo}: The Same file-per-process pattern is observed for Chombo too. Moreover, Chombo by default uses independent I/O to write the final result to a shared HDF5 file. Depending on the problem scale and underlying file system configurations, collective I/O can be enabled to further optimize the I/O performance.
+    \item \textbf{QMCPack}: One unexpected pattern is found for checkpoint files. QMCPACK overwrites the same checkpoint file for each computation section. This can lead to an unrecoverable state if a failure occurred during the checkpointing step.
+    \item \textbf{HACC-IO}: HDF5 can use different data layout to achieve similar MPI-IO access patterns. Stripe settings of the parallel file system has a big impact on the write performance. Also the default metadata header can greatly slow down the write performance. However, carefully setting the alignment or metadata data block size, HDF5 can deliver a similar performance as the pure MPI-IO implementation. 
+\end{itemize}
+
+We hold several Webinars and Tutorials for HDF5 users. The recordings and corresponding materials are available from \href{http://https://www.hdfgroup.org/category/webinar} {The HDF Group Website}. Our goal was to introduce new and experienced HDF5 applications developers to HDF5 tuning techniques and tools such as Darshan and Recorder to identify I/O performance bottlenecks. One of the \href{https://www.hdfgroup.org/2020/08/a-study-of-hacc-io-benchmarks/}{Webinars} was devoted to show how HACC can achieve highly scalable performance when using HDF5. Setting right HDF5 metadata block size and Lustre or GPFS file system parameters allowed to match native HACC's MPI I/O approach when writing to shared HDF5 file.
+Along with giving the \href{https://www.hdfgroup.org/2020/06/webinar-an-introduction-to-hdf5-in-hpc-environments-supporting-materials/}{Webinar: An Introduction to HDF5 in HPC Environemnts} we created hands-on materials for the HDF5 Parallel Tutorial that are available from the \href{https://github.com/HDFGroup/Tutorial/tree/main/Parallel-hands-on-tutorial}{GitHub repository}. The Tutorial provides quick start with parallel HDF5 and shows major techniques to get a good performance. We also created a hands-on \href{https://github.com/HDFGroup/Tutorial/tree/main/HDF5-troubleshooting}{Tutorial on how troubleshoot HDF5 performance}. Both Tutorials were presented at the second \href{https://www.hdfgroup.org/hug/2020-hug/hdf5-users-group-2020-agenda/}HDF User Group Meeting} on October 13-16, 2020. 
+\paragraph{Next Steps}
+\paragraph{}
+The HDF Group activities will continue in two areas: productization of the HDF5 features developed for ECP applications and outreach.
+
+The HDF Group will continue working with the ExaIO, ADIOS and DataLib teams enhancing HDF5 library and bringing HDF5 VOL connectors developed for ECP applications to production quality. We will also continue integrating developed features into HDF5 maintenance releases and CI testing. ZFP and SZ HDF5 compression filters will be made more visible through HDF5 filter packages that will be added to Spack and integrated with CI testing on the ECP systems. We plan to release HDF5 1.12.1 and integrate it with Spack and ECP CI testing. The release will address the issues in the HDF5 library discovered by the ExaIO team during development of Asynchronous HDF5 VOL connector and by the DataLib team when developing HDF5 logging VOL connector. We will also integrate a subfiling feature developed by the ExaIO team into the HDF5 maintenance releases.
+
+We will continue working with the ECP HDF5 applications teams on I/O performance and we will give Tutorials and Webinars, and create additional documentation on efficient usage of HDF5 in ECP HPC environment.
