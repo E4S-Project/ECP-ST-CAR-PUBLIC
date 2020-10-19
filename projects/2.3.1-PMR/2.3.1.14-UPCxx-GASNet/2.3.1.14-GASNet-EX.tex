@@ -12,12 +12,14 @@ System~\cite{bauer2012legion,legion-site} (WBS~2.3.1.08).
 GASNet-EX's low-overhead communication mechanisms are designed to maximize
 injection rate and network utilization, tolerate latency through
 overlap, streamline unpredictable communication events, minimize
-synchronization, and efficiently support small- to medium-sized
+synchronization,
+leverage hardware support for communication involving accelerator memory,
+and efficiently support small- to medium-sized
 messages arising in ECP applications.  GASNet-EX enables the ECP
 software stack to exploit the best-available communication mechanisms,
 including novel features still under development by vendors.  The
 GASNet-EX communications library and the PGAS models built upon it
-offer a complementary, yet interoperable, approach to MPI with OpenMP,
+offer a complementary, yet interoperable, approach to ``MPI + X'',
 enabling developers to focus their effort on optimizing
 performance-critical communication.
 
@@ -31,8 +33,11 @@ Exascale systems will deliver exponential growth in on-chip parallelism and
 reduced memory capacity per core, 
 increasing the importance of strong
 scaling and finer-grained communication events.  
+The pervasive use of accelerators introduces heterogeneous systems in which
+the engines providing the majority of the compute capability are not well
+suited to other tasks.
 Success at Exascale demands that
-software needs to minimize the work performed by lightweight cores and avoid the
+software minimize the work performed by lightweight cores and accelerators and avoid the
 overhead of long, branchy serial code paths; 
 this motivates a requirement for efficient
 fine-grained communication.
@@ -43,6 +48,7 @@ All of these characteristics favor the use of
 low-overhead communication mechanisms that
 can maximize injection rate and network utilization, tolerate latency through
 overlap, accommodate unpredictable communication events, minimize synchronization,
+leverage hardware support for communication involving accelerator memory,
 and efficiently support small- to medium-sized messages. The ECP software stack
 needs to expose the best-available communication mechanisms, including novel
 features being developed by the vendor community.
@@ -118,54 +124,41 @@ benefits of one-sided communication, a major feature of PGAS models.
 
 \paragraph{Recent Progress}
 
-Work on GASNet-EX in the past year has covered several distinct areas.
+The most notable work on GASNet-EX in the past year has been in two areas:
 
-Co-design work is on-going with the UPC++, Legion and Chapel developers.  These
-interactions are bi-directional, guiding design and implementation decisions
-made in GASNet-EX as well as in the client runtimes.
-%
-Recent work~\cite{gasnet-reassembly} for the Cray Aries network has yielded
-significant performance improvement on systems of importance to UPC++ and Legion.
-Specifically, implementation of a new target-side reassembly protocol improved
-AM Long end-to-end latency by up to 33\%, and the effective bandwidth by up to
-49\%, while also enabling asynchronous source completion that drastically reduces
-injection overheads.
+\textbf{Device (GPU) Memory Support}.
+``Memory kinds'' is the GASNet-EX term for support for communication involving
+memory other than host memory, and in the context of ECP refers primarily to
+accelerator devices such GPUs.
+The GASNet-EX APIs for memory kinds have been co-designed with the developers
+of UPC++ and the Realm runtime layer of the Legion Programming System
+(WBS~2.3.1.08).  In the October 2020 release of a memory kinds prototype for
+use by those stakeholders, GASNet-EX can now leverage the GPUDirect RDMA (GDR)
+capabilities of modern NVIDA GPUs and Mellanox network adapters (such as those
+on Summit) to perform one-sided communication to and from GPU memory without
+the overheads of staging through intermediate copies in and out of host memory.
 
-We have begun work to improve interoperability of GASNet-EX and MPI within the
-same executable.  Together with the Exascale MPI project (WBS~2.3.1.07) we have
-developed an initial implementation of a small library to manage cooperative
-progress of multiple communications runtimes.  We have demonstrated the ability
-of this library, with suitable calls added to GASNet-EX and MPICH, to resolve
-two canonical examples of the class of deadlock it is meant to prevent.
-
-We have completed work to leverage features of the InfiniBand network
-present in OLCF's Summit.  One such development is modifications to fully
-utilize the multiple InfiniBand network ports (a.k.a ``rails'') in a Summit
-node.  Another is use of Mellanox's ``ODP'' (On-Demand Paging) to provide
-efficient and robust RDMA transfers to and from memory in a processes' stack
-and dynamic heap.
+\textbf{Scalability}.
+We have devoted effort in the past year to reducing the memory footprint of the
+GASNet runtime as the job size grows.  This has included efforts in
+collaboration with the ExaBiome (WBS~2.2.4.04) team to run their applications
+at previously unattainable scales on Summit at the OCLF and on Cori at NERSC.
 
 \paragraph{Next Steps}
 
 Our next efforts include:
-\begin{enumerate}
 
-\item \textbf{Device (GPU) Memory Support}.
-GASNet-EX's RMA APIs have been designed to enable hardware offload of
-transfers to and from GPU memories (\textit{e.g.} use of GPUDirect).
-Near-future work includes implementation of this capability for OLCF's
-Summit.  This work includes adding support for multiple
-communications endpoints and multiple memory segments, which also provide
-benefit to multi-threaded runtimes by reducing contention for shared resources.
+\textbf{Device (GPU) Memory Support}.
+We will continue work in the area of GASNet-EX memory kinds, including the
+hardening and tuning of the implementation featured in the October 2020
+release.  As access to other ECP-relevant systems is secured, we plan to extend
+support to accelerators from additional vendors, including those from AMD and
+Intel which are scheduled to appear in early Exascale systems.
 
-\item \textbf{Specialization for InfiniBand}.  Network-specific implementations
-of new GASNet-EX features for the InfiniBand network will provide performance
-benefits on systems such as OLCF's Summit.  The benefits of such specialization
-for the Cray Aries network has been demonstrated previously~\cite{gasnet-aries}.
+\textbf{Client-Driven Tuning}.
+In collaboration with authors of client runtimes using GASNet-EX (most notably
+UPC++ and Legion) and their users (such as ExaBiome), we will continue to
+identify and address any significant scalability issues or performance
+anomalies which are discovered.
 
-\item \textbf{Client-Driven Tuning}.  In collaboration with authors of client
-runtimes using GASNet-EX (most notably UPC++ and Legion) and their users (such
-as ExaBiome), we will continue to identify and address any significant
-bottlenecks or performance anomalies which are discovered.
-
-\end{enumerate}
+\clearpage
