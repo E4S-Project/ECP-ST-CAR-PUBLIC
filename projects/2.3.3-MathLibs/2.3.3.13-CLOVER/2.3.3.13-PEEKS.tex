@@ -27,14 +27,9 @@ architecture:
 Fine-grained parallelism in a single node that has to be exploited efficiently 
 by the iterative solver and the preconditioner.
 \item
-Rising communication and synchronization cost.
-\item
-Computational power growing much faster than memory power, resulting on 
+Rising communication and synchronization cost as the
+computational power is growing much faster than memory power, resulting in 
 increased pressure on the bandwidth of all cache/memory levels.
-\item 
-Low-precision special function units like Tensor cores that are increasingly 
-adopted by hardware architectures require sophisticated numerical schemes to be 
-useful for general purpose scientific computing.
 \end{enumerate}
 
 All challenges require the redesign of existing iterative solvers with respect 
@@ -70,10 +65,6 @@ The primary thrusts of the PEEKS project are:
 	communication-avoiding Krylov methods in production-quality code, and 
 	we are actively collaborating with the ECP ExaWind project to integrate 
         our new features into their application~\cite{Yamazaki-lowsynch}. 
-	\item \textbf{Incomplete Factorization Preconditioning on GPUs:}  We are 
-	spearheading the manycore-parallel computation of incomplete factorization 
-	preconditioners and their application in iterative solution 
-	processes~\cite{sisc_anzt,ipdps_anzt,anzt2020preparing}. 
 	\item \textbf{Memory Precision Decoupling:}  In collaboration with the ECP 
 	xSDK multiprecision effort, we are working on sparse linear algebra 
 	iterative methods and preconditioners that reduce runtime by compressing 
@@ -88,27 +79,17 @@ The primary thrusts of the PEEKS project are:
 The Ginkgo library realized full native support for NVIDIA GPUs (via CUDA) and 
 AMD GPUs (via HIP) and became a role model for platform 
 portability~\cite{tsai2020preparing}.
-\item
-We evaluated the performance of mixed precision iterative triangular solves for 
-approximate incomplete factorization 
-preconditioning~\cite{goebel2020multiprecision}.
 \item 
 The production-ready implementation of the first parallel threshold ILU 
 preconditioner (ParILUT~\cite{ipdps_anzt}) compensates via algorithmic 
 improvement for 5 years of hardware development (see 
 Figure~\ref{fig:ParILUTperf}).
-\item 
-We developed and deployed new sparse matrix vector product kernels for GPU 
-architectures~\cite{anzt2020load}.
 \item
 We implemented and released five variations of communication-avoiding
 and pipelined Krylov solvers in the Belos Trilinos package.
 \item
 We demonstrated the efficient use of communication-avoiding Krylov methods in Trilinos inside wind turbine simulations of the ECP ExaWind 
 project~\cite{Yamazaki-lowsynch}.
-\item
-We are currently developing low-synchronization orthogonalization methods 
-for Trilinos in collaboration with CU Denver (Bielich,Langou)
 \item
 We developed an initial implementation of a new polynomial preconditioner based on the GMRES polynomial \cite{LoeThornquistBoman20}.
 \end{enumerate}
@@ -164,10 +145,5 @@ Our next efforts are:
 %	analytics tools identifying strongly-connected components. We deploy GPU 
 %	kernels providing this functionality while introducing only negligible 
 %	overhead to the preconditioner generation.
-	\item \textbf{Multiprecision sparse matrix formats:} Operations with sparse 
-	matrices are memory-bound on virtually all architectures. We investigate 
-	how splitting the matrix int several operators stored in value-optimized 
-	less complex floating point precision formats can help improving
-	performance.
 	\item \textbf{Polynomial preconditioners:} Polynomial preconditioning is an old idea, but has had limited popularity since it is hard to find good polynomials in the general case. We believe using the GMRES polynomial addresses this issue. Polynomials are also cheap to apply and save communication by reducing the number of inner products. We plan to implement a version using Kokkos that runs on GPU and exascale systems.
 \end{enumerate}
