@@ -45,7 +45,8 @@ performance portable algorithms for geometric search.
 {\it Significance:} General geometric search capabilities are needed in a wide
 variety of applications, including the generation of neighbor lists in
 particle-based applications (e.g., molecular dynamics or general N-body
-dynamics simulations) and mesh-mesh interactions such as contact in
+dynamics simulations), density-based clustering analysis (e.g., halo finding
+or DBSCAN in cosmology) and mesh-mesh interactions such as contact in
 computational mechanics and solution transfer in multiphysics simulations.
 
 {\it Performance portable search capabilities:} Shared memory and GPU
@@ -53,7 +54,7 @@ implementations of spatial tree construction; shared memory and GPU
 implementations of various spatial tree queries; MPI front-end for
 coordinating distributed spatial searches between sets of geometric objects
 with different decompositions; communication plan generation based on spatial
-search results.
+search results; density-based clustering algorithms (DBSCAN).
 
 {\it URL:} https://github.com/arborx/ArborX
 
@@ -137,7 +138,10 @@ provided.
 
 {\bf ArborX:} Search procedures to locate neighboring points, mesh cells, or
 other geometric objects require tree search methods difficult to optimize on
-modern accelerated architectures due to vector lane or thread divergence.
+modern accelerated architectures due to vector lane or thread divergence. A
+flexible interface for calling user kernels on a positive match as well as
+modifying traversal algorithms in a task-specific manner are crucial to
+achieving the best performance.
 
 {\bf DTK:} General data transfer between grids of unrelated applications
 requires many-to-many communication which is increasingly challenging as
@@ -173,12 +177,13 @@ update the interfaces with changes in the library.
 
 \indent
 
-{\bf ArborX:} ArborX builds on a Kokkos+MPI programming model to deploy to all
+{\bf ArborX:} ArborX builds on a MPI+Kokkos programming model to deploy to all
 DOE HPC architectures. Extensive performance engineering has yielded
 implementations that are both as performant in serial as state-of-the-art
-libraries while also expanding on the capability provided by other libraries
-by demonstrating thread scalability on both GPU and multi-core CPU
-architectures..
+libraries while also expanding on the capability provided by other libraries by
+demonstrating thread scalability on both GPU and multi-core CPU architectures.
+Working with both synthetic as well as real data from applications (e.g., HACC)
+ensures wide performance testing coverage.
 
 {\bf DTK:} State-of-the-art, mathematically rigorous methods are used in DTK
 to preserve accuracy of interpolated solutions.  Algorithms are implemented in
@@ -211,15 +216,17 @@ Trilinos packages.
 
 \indent
 
-{\bf ArborX:} Extensive optimization work has yielded significant performance
-improvements on accelerated and heterogeneous architectures. Recent results on
-Summit show effective use of the Power9 hyperthreading capability as well as
-excellent performance on the V100 GPU.
+{\bf ArborX:} Collaboration with partner application ExaSky (WBS 2.2.3.02)
+resulted in significant advances for the in-situ density-based clustering
+algorithm (halo finding) using Nvidia GPUs.
 
 \begin{figure}[htb]
-        \centering \includegraphics[width=3.0in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/arborx_summit.png} \caption{\label{fig:arborx-gpu}
-        ArborX search performance on a single Summit node. One V100 GPU gives
-        similar performance as the entire Power9 CPU performance on a node.}
+        \centering \includegraphics[width=4.0in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/arborx_hacc_progress.png} \caption{\label{fig:arborx-hacc}
+        ArborX progress on halo finding algorithm on Nvidia Volta. The baseline
+        is a serial implementation of CosmoTools. Numbers indicate speedup
+        compared to the baseline. The solid lines show improvements that were
+        already merged. Dashed lines show improvements that are in active
+        development. }
 \end{figure}
 
 {\bf DTK:} Work with partner application ExaAM (WBS 2.2.1.05) created a
@@ -261,9 +268,10 @@ OpenMP and CUDA. A thorough unit testing suite was added.
 
 \indent
 
-{\bf ArborX:} Continue performance engineering campaign and extend to
-distributed search capabilities and communication and deploy in a variety of
-applications.
+{\bf ArborX:} Incorporate non axis-aligned bounding volumes to accomodate
+stretched inclined geometries such as those coming from wind turbine
+simulations from ExaWind (WBS 2.2.2.01). Further improve performance of
+density-based algorithms.
 
 {\bf DTK:} Support parallel-in-time coupling in the ExaAM project for
 simulations of metal powder bed additive manufacturing.
