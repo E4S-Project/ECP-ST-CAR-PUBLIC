@@ -4,12 +4,11 @@
 \paragraph{Overview}
 
 The FFT-ECP project provides sustainable high-performance multidimensional
-Fast Fourier Transforms (FFTs) for Exascale platforms. 
-FFT-ECP leverages established but {\it ad hoc} 
+Fast Fourier Transforms (FFTs) for Exascale platforms though the
+the {\it Highly Efficient FFTs for Exascale} ({\bf heFFTe}) library~\cite{thasd19}.
+HeFFTe leverages established but {\it ad hoc} 
 software tools that have traditionally been part of application 
 codes, but not extracted as independent, supported libraries. 
-These multidimensional FFTs rely on third-party 1D FFTs, either from FFTW or 
-from vendor libraries.
 
 The main objective of the FFT-ECP project is to:
 \begin{itemize}
@@ -17,47 +16,39 @@ The main objective of the FFT-ECP project is to:
       application teams;
 \item Assess gaps, extend, and make available various FFT
       capabilities as a sustainable math library;
-\item Explore opportunities to build multidimensional FFT libraries based 
-      on vendor 1D FFT kernels and leveraging on-node concurrency from 
+\item Explore opportunities to build multidimensional FFTs
+      while leveraging on-node concurrency from 
       batched FFT formulations;
-\item Focus on capabilities for Exascale platforms;
-\item Emphasize leverage of vendor capabilities 
-      and the large investment by the broader HPC community in FFT
-      software, and addressing their 
-      deficiencies over creation of new and independent software stack.
+\item Focus on capabilities for Exascale platforms.
 \end{itemize}
 
-FFTs are used in many applications such as molecular dynamics, 
+FFTs are used in many applications including molecular dynamics, 
 spectrum estimation, fast convolution and correlation, signal 
 modulation and many wireless multimedia applications. The 
-distributed 3D FFT is one of the most important kernels involved 
+distributed 3D FFT is one of the most important routines used 
 in molecular dynamics (MD) computations, and its performance can 
-affect MD scalability; MD requires solving 3D FFTs 
-of medium size ($10^6-10^8$ points). The performance of the first 
+affect MD scalability. The performance of the first 
 principles calculations strongly depends on the performance of the 
 FFT solver that performs many FFTs of size $\approx 10^7$ points in 
 a calculation that we call batched FFT. Moreover, Poisson PDE-type 
 equations arising from many engineering areas, such as plasma
 simulation and density fields, need to solve FFTs of size larger than $10^9$. 
-
-We found that more than dozen of ECP applications use FFT in their codes.
+%
+More than a dozen ECP applications use FFT in their codes.
 ECP applications that require FFT-based solvers suffer from the lack of 
 fast and scalable 3D FFT routines for distributed-heterogeneous parallel 
 systems as the ones projected for the upcoming exascale computing systems. 
-To address these needs, FFT functionalities will first be delivered 
-to the LAMMPS (molecular dynamics) and HACC (Hardware Accelerated
-Cosmology Code) ECP applications. 
-LAMMPS and HACC use their own FFTMPI and SWFFT FFT libraries, respectively.
-FFT-ECP recently provided GPU-acceleration to these libraries.
-The software release was made under the {\it Highly Efficient FFTs for Exascale}
-({\bf heFFTe}) library~\cite{thasd19}.
+To address these needs, heFFTe functionalities are first delivered 
+to CoPA projects using LAMMPS (molecular dynamics) and HACC (Hardware Accelerated
+Cosmology Code).
 
 The heFFTe software stack is illustrated in the left-hand side of Figure~\ref{fig:fft-ecp-pipeline}, 
 while the main components of the heFFTe framework are illustrated in the right-hand side of
 Figure~\ref{fig:fft-ecp-pipeline}. The first and last step address the need 
 for a flexible FFT API to take application-specific input and output (bricks/pencils), 
-including arbitrary initial decompositions. Currently, heFFTe provides efficient
-GPU support for all communication primitives and features in FFTMPI and SWFFT.
+including arbitrary initial decompositions. 
+% Currently, heFFTe provides efficient
+% GPU support for all communication primitives and features in FFTMPI and SWFFT.
  
 \begin{figure}[htb]
     \centering
@@ -69,7 +60,7 @@ GPU support for all communication primitives and features in FFTMPI and SWFFT.
          including bricks/pencils/etc.;~
       2) Efficient packing/unpacking and MPI communication
          routines;~
-      3) Efficient 1D/2D FFTs on the node.}
+      3) Efficient 1D/2D/3D FFTs on the node.}
 \end{figure}
 
 \paragraph{Key  Challenges}
@@ -86,7 +77,7 @@ high compute capabilities), sub-optimal accelerator-aware MPI communications,
 and encountered performance degradations in MPI implementations.
 
 \item
-\textbf{Appplication specifics:}
+\textbf{Application specifics:}
 ECP applications that require FFT-based solvers suffer from the lack of fast 
 and scalable FFTs for distributed-heterogeneous parallel systems 
 as the ones projected for the upcoming exascale computing systems. Also, ECP 
@@ -109,7 +100,7 @@ hardware-specific FFT versions needed.
 \item
 \textbf{Communications and GPU optimizations:}
 FFTs are communication bound and a main focus in heFFTe is on algorithmic
-design to minimize communication and efficient GPU implementations~\cite{eurompi19}.
+design to minimize communication and efficient GPU implementations~\cite{sc19,eurompi19}.
 Other strategies include the use of mixed-precision calculations~\cite{Haidar2018,tcfft18}
 and data compression for reduced communications (including lossy, e.g., using ZFP compression).
 \item
@@ -118,7 +109,7 @@ heFFTe is designed to support the fftMPI and SWFFT functionalities,
 which are already integrated in ECP applications. Thus, heFFTe benefits
 directly these applications and provides integrated solutions. 
 More functionalities and application-specific optimizations will be added 
-at a second step to support other ECP applications. 
+to support various ECP applications. 
 \item
 \textbf{Autotuning:}
 Performance portability will be addressed through use of standards (like 1D FFTs 
@@ -129,28 +120,35 @@ for important LA kernels~\cite{Nath2010,Kurzak2012gemmfermi}.
 \end{enumerate}
 
 \paragraph{Recent Progress}
-The FFT-ECP team completed a phase of implementating optimizations and features~\cite{thasd19}
-and released the heFFTe v0.1 library~\cite{sc19}. heFFTe demonstrates very good strong 
-scalability and performance that is close to 90\% of the roofline peak 
-(see Figure~\ref{fig:fft-ecp-progress})~\cite{sc19,eurompi19}.
+The FFT-ECP team completed two main milestones invloving software releases adding 
+numerous stability, performance, and scalability enhancements, as well as new functionalities. 
+HeFFTE 0.2 was released in January 2020~\cite{heffte0.2}, and heFFTe 2.0 was released in September 
+2020. HeFFTe 2.0 added support for AMD GPUs and bindings for C, Fortran, and Python.
+HeFFTe now can be installed through {\it spack} and is compatible with the xSDK community 
+policies, and will be part of the next xSDK release. HeFFTe is also integrated in
+CoPA projects using LAMMPS and HACC. HeFFTe 2.0 demonstrates very good strong 
+scalability and performance that is close to 90\% of the roofline peak~\cite{heffte-iccs20}. 
+(see Figure~\ref{fig:fft-ecp-progress}).
 
 
 \begin{figure}[htb]
    \centering
    \includegraphics[width=0.55\textwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/heFFTeAcceleration}~~~
-   \includegraphics[width=0.38\textwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/heFFTeScalability}
+   \includegraphics[width=0.38\textwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/heFFTeStrongScalability}
     \caption{\label{fig:fft-ecp-progress}
     {\bf Left}: heFFTe acceleration of $1024^3$ FFT on 4 Summit nodes.
                 Note: nodal computations are accelerated $43\times$. 
     {\bf Right}: heFFTe strong scalability on $1024^3$ 
-                FFT on up to 1024 nodes ($\times 6$ V100 GPUs;
+                FFT on up to 256 nodes ($\times 6$ V100 GPUs;
                 double complex arithmetic; starting and ending with bricks; 
                 performance assumes $5 N^3 log_2 N^3$ flops).}
 \end{figure}
 
 
 \paragraph{Next Steps}
-Next steps of work are using heFFTe in applications, generalizing the APIs to fit application use,
-adding new APIs as needed, developing a benchmarking framework for MPI FFT 
-communications, and implementing MPI-based optimizations for Summit. 
-Another aspect of work is the development of HIP heFFTe to support AMD GPUs. 
+Next steps of work are adding multidimensional FFTs and optimizations for 
+real data. This will include the development of R2C and C2R DFTs and their 
+integration and specific optimizations in ECP applications.
+Further integration and use will be added to CoPA applications and the ExaAM project.
+Optimizations will be done for AMD GPUs and support added for Intel GPUs.
+
