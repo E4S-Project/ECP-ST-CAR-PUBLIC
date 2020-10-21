@@ -229,17 +229,10 @@ algorithm (halo finding) using Nvidia GPUs.
         development. }
 \end{figure}
 
-{\bf DTK:} Work with partner application ExaAM (WBS 2.2.1.05) created a
-preliminary multiphysics driver capability for additive manufacturing
-simulations using a parallel-in-time coupling strategy.
-
-\begin{figure}[htb]
-        \centering \includegraphics[width=3.0in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/dtk_exaam_pit.png} \caption{\label{fig:dtk-exaam-pit}
-        New ExaAM parallel-in-time coupling. Each arrow represents a DTK
-        transfer between different grids at different time points. Thousands
-        of DTK maps will be used to interpolate and communicate information
-        between steps. Image courtesy of Matt Bement (ExaAM Team) }
-\end{figure}
+{\bf DTK:} DTK's build system has been rewritten. DTK now depends on Trilinos
+instead of being built as an external package. DTK is now a separate package in
+spack. In the future this will allow a decoupling between Trilinos version and
+DTK version. A new spline interpolation method has been added.
 
 {\bf Tasmanian:} Work with partner application ExaStar (2.2.3.01) created a
 reduced representation of neutrino opacities used by the Thornado simulation
@@ -268,13 +261,13 @@ OpenMP and CUDA. A thorough unit testing suite was added.
 
 \indent
 
-{\bf ArborX:} Incorporate non axis-aligned bounding volumes to accomodate
+{\bf ArborX:} Incorporate non axis-aligned bounding volumes to accommodate
 stretched inclined geometries such as those coming from wind turbine
 simulations from ExaWind (WBS 2.2.2.01). Further improve performance of
 density-based algorithms.
 
-{\bf DTK:} Support parallel-in-time coupling in the ExaAM project for
-simulations of metal powder bed additive manufacturing.
+{\bf DTK:} Continue performance engineering campaign and deploy in a variety of
+applications.
 
 {\bf Tasmanian:} Port the surrogate evaluation kernels to AMD and Intel
 GPUs and optimize the performance on the next generation architectures
