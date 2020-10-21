@@ -1,20 +1,29 @@
-\subsubsection{\stid{2.12} Flang}\label{subsubsect:flang}
+\documentclass[10pt]{article}
+\usepackage[usenames]{color} %used for font color
+\usepackage{amssymb} %maths
+\usepackage{amsmath} %maths
+\usepackage[utf8]{inputenc} %useful to type directly diacritic characters
+\begin{document}
+\[\subsubsection{\stid{2.12} Flang}\label{subsubsect:flang}
 
 \paragraph{Overview}
 
 The Flang project provides an open source Fortran
 \cite{iso-fortran-2004} \cite{iso-fortran-2010} \cite{iso-fortran-2018}
-compiler.  The project was recently formally accepted as a component
-of the LLVM Compiler Infrastructure (see \url{http://llvm.org})~\cite{llvm:homepage}.
-Leveraging LLVM, Flang will provide a cross-platform Fortran solution available to
-ECP and the broad, international LLVM community. The goals of the project include
-extending support to GPU accelerators and target Exascale systems, and supporting
-LLVM-based software and tools R\&D of interest to a large deployed
-base of Fortran applications.
+compiler.  The project was formally accepted as a component of the LLVM 
+Compiler Infrastructure last year (see \url{http://llvm.org})~\cite{llvm:homepage} 
+and has merged its codebase into the main 
+LLVM repository as of April. Leveraging LLVM, Flang will provide a 
+cross-platform Fortran solution available to ECP and the broad, 
+international LLVM community. The goals of the project include
+extending support to GPU accelerators and target Exascale systems, and 
+supporting LLVM-based software and tools R\&D of interest to a large 
+deployed base of Fortran applications.
 
 LLVM's growing popularity and wide adoption within the
-broader HPC community make it an integral part of the modern software ecosystem.
-This project provides the foundation for a Fortran solution that will complement and interoperate with the
+broader HPC community make it an integral part of the modern software 
+ecosystem. This project provides the foundation for a Fortran solution 
+that will complement and interoperate with the
 Clang/LLVM C++ compiler.  We aim to allow Fortran to grow into a
 modernized open source form that is stable, has an active footprint
 within the LLVM community, and will meet the needs of a broad
@@ -33,47 +42,51 @@ the maturity, features, and performance of proprietary solutions with
 the cross-platform capability of GNU compilers, and which is licensed
 and coded in a style that will be embraced by the LLVM community.
 Additional challenges come from robustly supporting all Fortran
-language features, programming models, and scalability required for effective use on Exascale systems. 
+language features, programming models, and scalability required for 
+effective use on Exascale systems. 
 
 \paragraph{Solution Strategy}
 
-With the adoption of Flang into the LLVM community as an official subproject,
-our strategy focuses on development and delivery of a solid, alternative Fortran
-compiler for DOE's Exascale platforms.  In addition, we must be good shepherds
-within the LLVM community to establish and grow a vibrant community of our own. This is
-in the best interest of ECP as well as the long-term success of Fortran in the
-LLVM community and the many industry and academic projects that rely upon it. 
+With the adoption of Flang into the LLVM community as an official 
+subproject, our strategy focuses on development and delivery of a solid, 
+alternative Fortran compiler for DOE's Exascale platforms.  In addition, 
+we must be good shepherds within the LLVM community to establish and grow 
+a vibrant community of our own. This is in the best interest of ECP as 
+well as the long-term success of Fortran in the LLVM community and the 
+many industry and academic projects that rely upon it. 
 
 Our path to success will rely on significant testing across not only
-the various facilities but also across a very broad and diverse set of applications.
-Given the relatively early development stage of Flang, this testing will be paramount 
-in the delivery of a robust infrastructure to ECP and the broader community. 
+the various facilities but also across a very broad and diverse set of 
+applications. Given the relatively early development stage of Flang, this 
+testing will be paramount in the delivery of a robust infrastructure to 
+ECP and the broader community. 
 
 \paragraph{Recent Progress}
 
-After several years of effort and support from NNSA, Flang was successfully ``adopted''
-by the LLVM community and is currently in the process of making a transition from a
-stand-alone git repository to an LLVM hosted project.  This represents a significant
-result and the current code is available as ``F18'' via GitHub:
+After several years of effort and support from NNSA, Flang was 
+successfully ``adopted'' by the LLVM community and has transitioned 
+from a stand-alone git repository to an LLVM hosted project.  This 
+represents a significant result and the current code is available via GitHub:
 
 \begin{center}
-\url{https://github.com/flang-compiler/f18}
+\url{https://github.com/llvm/llvm-project/tree/master/flang}
 \end{center}
 
-When it officially completes the move to LLVM's repository it will be renamed ``Flang''. 
-
-The current capabilities of ``F18'' include the full Fortran 2018
+The current capabilities of flang include the full Fortran 2018
 standard and OpenMP 5.X syntax and semantics.  As part of the
 development of the parsing and semantic analysis portions of the
 front-end, over five million lines of Fortran code has been
-successfully processed. We will continue and expand this level of
-testing as we near the completion of the first full (sequential)
-compiler early in the 2020 calendar year.  This effort includes the
-use of a Fortran-centric intermediate representation (Fortran IR --
-``FIR'') that leverages recent activities within Google
-on \href{Multi-Level Intermediate Representations}
+successfully processed. Beyond parsing and semantics, we have been
+focusing our efforts on creating a Fortran-centric intermediate 
+representation (Fortran IR -- ``FIR'') that leverages recent activities 
+within Google on 
+\href{Multi-Level Intermediate Representations} 
 {https://www.blog.google/technology/ai/mlir-accelerating-ai-open-source-infrastructure/}
 (MLIR) for use with the implementation of FIR.
+With the development of FIR progressing, we are approaching completion of 
+the first full (sequential) compiler with the full set of F77 
+capabilities, and implementations of later standards are expected to 
+follow naturally after that.
 
 \paragraph{Next Steps}
 Our short-term priorities are focused on the completion of the
@@ -90,3 +103,5 @@ compiler for ECP.  Additional work will focus on features that would
 benefit Fortran within the LLVM infrastructure as well as general and
 targeted optimization and analysis capabilities.
 
+\]
+\end{document}
