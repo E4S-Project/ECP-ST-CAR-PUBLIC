@@ -5,7 +5,7 @@ The Lightweight Communication and Global Address Space Support project (Pagoda)
 is developing GASNet-EX~\cite{gasnet-site}, a portable high-performance communication layer
 supporting multiple implementations of the Partitioned Global Address Space
 (PGAS) model.
-GASNet-EX clients include Pagoda's PGAS programming interface UPC++~\cite{Bachan:paw17,upcxx-site}
+GASNet-EX clients include Pagoda's PGAS programming interface UPC++~\cite{upcxx-ipdps19,upcxx-site}
  and the Legion Programming
 System~\cite{bauer2012legion,legion-site} (WBS~2.3.1.08).
 
@@ -36,9 +36,9 @@ scaling and finer-grained communication events.
 The pervasive use of accelerators introduces heterogeneous systems in which
 the engines providing the majority of the compute capability are not well
 suited to other tasks.
-Success at Exascale demands that
-software minimize the work performed by lightweight cores and accelerators and avoid the
-overhead of long, branchy serial code paths; 
+Success at exascale demands that
+software minimize the overheads incurred upon lightweight cores and accelerators,
+especially avoiding long, branchy serial code paths; 
 this motivates a requirement for efficient
 fine-grained communication.
 These problems are exacerbated by application trends; many of the ECP applications require
@@ -63,20 +63,20 @@ including contiguous and non-contiguous remote memory access (RMA) operations su
 and atomic updates. Some of these models also include support for remote function invocation.
 GASNet-EX~\cite{gasnet-lcpc18} is a communications library that provides the foundation for implementing
 PGAS models, and is the successor to the widely-deployed GASNet library.
-We are building on over 15 years of experience with the GASNet~\cite{gasnet-spec,gasnet-site}
+We are building on over 15 years of experience with the GASNet~\cite{gasnet-site,gasnet-spec}
 communication layer to provide production-quality implementations that include
 improvements motivated by
 technology trends and application experience.  
 
-The goal of the GASNet-EX work is to provide a portable, high-performance GAS
-communication layer for Exascale and pre-Exascale systems, addressing the challenges
+The goal of the GASNet-EX team is to provide a portable, high-performance PGAS
+communication layer for exascale and pre-exascale systems, addressing the challenges
 identified above.
 GASNet-EX provides interfaces that efficiently match the RDMA capabilities of modern
 inter-node network hardware and intra-node communication between distinct address spaces.
 New interfaces for atomics and collectives have enabled offload to current
 and future network hardware with corresponding capabilities.
-These design choices and their implementations supply the low-overhead communications
-mechanisms required to address the requirements of Exascale applications.
+These design choices and their implementations supply the low-overhead communication
+mechanisms required to address the requirements of exascale applications.
 
 \begin{figure}[htb]
   \centering
@@ -91,7 +91,7 @@ mechanisms required to address the requirements of Exascale applications.
 
 Figure~\ref{fig:gasnet-ex-rma} shows representative results from a
 paper~\cite{gasnet-lcpc18} comparing
-the RMA performance of GASNet-EX with MPI on multiple systems including
+the RMA performance of GASNet-EX against MPI on multiple systems including
 NERSC's Cori and OLCF's Summit%
 \footnote{The paper's results from Summitdev
 have been replaced by more recent (June 2019) results from OLCF's newer Summit system.}.
@@ -103,7 +103,7 @@ also available online~\cite{gasnet-site}, along with results for additional
 systems.
 
 Figure~\ref{fig:rma-lat-bars} shows the latency of 8-byte RMA Put and Get operations on
-four systems, including two distinct networks and three distinct MPI
+four systems, including two distinct network types and three distinct MPI
 implementations.
 %
 GASNet-EX's latency is 6\% to 55\% better than MPI's on Put and 5\% to 45\%
@@ -132,11 +132,11 @@ memory other than host memory, and in the context of ECP refers primarily to
 accelerator devices such GPUs.
 The GASNet-EX APIs for memory kinds have been co-designed with the developers
 of UPC++ and the Realm runtime layer of the Legion Programming System
-(WBS~2.3.1.08).  In the October 2020 release of a memory kinds prototype for
-use by those stakeholders, GASNet-EX can now leverage the GPUDirect RDMA (GDR)
-capabilities of modern NVIDA GPUs and Mellanox network adapters (such as those
-on Summit) to perform one-sided communication to and from GPU memory without
-the overheads of staging through intermediate copies in and out of host memory.
+(WBS~2.3.1.08).  
+Starting in October 2020, GASNet-EX can now leverage the GPUDirect RDMA (GDR)
+capabilities of modern NVIDIA GPUs and Mellanox network adapters (such as those
+on Summit) to perform one-sided RMA involving GPU memory without
+the overheads of staging through intermediate buffers in host memory.
 
 \textbf{Scalability}.
 We have devoted effort in the past year to reducing the memory footprint of the
@@ -153,7 +153,7 @@ We will continue work in the area of GASNet-EX memory kinds, including the
 hardening and tuning of the implementation featured in the October 2020
 release.  As access to other ECP-relevant systems is secured, we plan to extend
 support to accelerators from additional vendors, including those from AMD and
-Intel which are scheduled to appear in early Exascale systems.
+Intel which are scheduled to appear in early exascale systems.
 
 \textbf{Client-Driven Tuning}.
 In collaboration with authors of client runtimes using GASNet-EX (most notably
