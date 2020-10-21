@@ -2,7 +2,7 @@
 \paragraph{Overview} 
 The Lightweight Communication and Global Address Space Support project (Pagoda)
 is developing UPC++~\cite{upcxx-site}, a C++ library
-supporting Partitioned Global Address Space (PGAS) programming~\cite{Bachan:paw17,upcxx-spec}.
+supporting Partitioned Global Address Space (PGAS) programming~\cite{upcxx-ipdps19,upcxx-spec}.
 The current UPC++ v1.0 (distinct from an earlier prototype designated V0.1
 \cite{zheng:ipdps14}) is distinguished by three guiding principles.
 First, all communication is \emph{asynchronous}, allowing overlap of computation and
@@ -51,7 +51,7 @@ focus their effort on optimizing performance-critical communication.
 As a result of technological trends, the cost of data motion is steadily increasing relative to that of computation.  To reduce communication costs we need to 
 reduce the software overheads and hide communication latency behind available computation. UPC++ addresses both strategies.
 UPC++ avoids the software overheads associated with MPI, 
-instead relying on the GASNet-EX~\cite{gasnet-lcpc18,gasnet-site}
+instead relying on the GASNet-EX~\cite{gasnet-site,gasnet-lcpc18}
 communication library which is specifically designed and tuned
 for native PGAS communication using the best-available hardware
 mechanisms on each network
@@ -162,5 +162,5 @@ and/or beneficial.  Similarly, we will continue to work with stakeholders to
 identify and implement features which improve productivity.
 
 \textbf{3. Outreach.}
-We will continue to hold training events for users of UPC++ and circulating
+We will continue to hold training events for users of UPC++ and circulate
 working group drafts of productivity features (above) to solicit feedback.
