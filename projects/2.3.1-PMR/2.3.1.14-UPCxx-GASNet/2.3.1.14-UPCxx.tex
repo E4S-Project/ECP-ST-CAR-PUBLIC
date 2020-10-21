@@ -99,15 +99,16 @@ Figure~\ref{fig:dht} illustrates the benefits of the UPC++ model
 in a weak scaling study up to 34,816 processes on the KNL partition of NERSC's Cori.
 
 
-\begin{figure}[htb]
-\centering
+\begin{wrapfigure}[17]{L}{.44\linewidth}
+  \vspace{-1.5em}
+  \centering
       \includegraphics[scale=0.70]{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/all-cori-knl-out-inserts-wait.png}
-  \caption{Weak scaling of distributed hash table insertion on the KNL partition of NERSC's Cori platform. The dotted line represents the processes in one node.}
+  \caption{Weak scaling of distributed hash table insertion on the KNL partition of NERSC's Cori platform. The dotted line represents one node.}
   \label{fig:dht}
-\end{figure}
+\end{wrapfigure}
 
 
-
+\vspace{-2em}
 \paragraph{Recent Progress}
 
 The most notable work in the past year has been in three areas:
@@ -137,10 +138,10 @@ been valuable to both the UPC++ team and our stakeholders to agree upon design
 in advance of implementation.
 
 \textbf{3. Productivity and Performance.}
-With the core API specification and implementation of UPC++ complete, we have
+Having completed the core specification and implementation of UPC++, we have
 shifted focus toward addressing improvements to productivity and performance,
-especially in response to feedback from our stakeholders.  The most significant
-example of this is addition of support for non-trivial serialization of
+especially in response to stakeholder feedback.  The most significant
+example is addition of support for non-trivial serialization of
 user-defined types, providing concise syntax for the common cases and
 robust, extensible mechanisms for more complex ones.
 
@@ -157,7 +158,7 @@ by leveraging the parallel efforts in GASNet-EX.
 
 \textbf{2. Productivity and Performance.}
 With the help of our stakeholders, we will continue to identify and address
-portions of the UPC++ implementation where performance tuning is most needed
+portions of UPC++ where performance tuning is most needed
 and/or beneficial.  Similarly, we will continue to work with stakeholders to
 identify and implement features which improve productivity.
 
