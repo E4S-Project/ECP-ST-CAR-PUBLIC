@@ -1,3 +1,5 @@
+%!TEX root = ../../../ECP-ST-CAR.tex 
+
 \subsubsection{\stid{5.10} ExaWorks} \label{subsubsect:exaworks}
 
 % ECP ST Project Overviews: A significant portion of this report includes 2-page synopses of each
@@ -5,21 +7,21 @@
 
 \paragraph{Overview} Exascale computing capacity reinforces the need for workflows and also creates
 a slew of new workflow challenges. Most notably, the increasing scale and
-hardware heterogeneity demands higher level programming environments,
-such as workflows, to enable a broad range of scientists, students, and
-developers to describe complex computational procedures and mange their
-execution at enormous scales in intuitive and productive ways. Further, in
-addition to the changing system architectures, application patterns are also
-changing: no longer is research conducted with a single invocation of a 
-lone executable, instead it typically requires orchestration of many 
-applications and scripts, executed at various scale across many different
-resource types, and often reliant on machine learning algorithms for guidance.
-As a result, exascale WMSs will need to support high performance execution of
-enormous numbers of short-duration tasks (e.g., inference tasks), efficient
-scheduling of tasks with varying resource (e.g., single core, multiple nodes,
-and accelerators) and time-sensitive (e.g., coupling data analysis with
-simulations) constraints, and flexible coordination and communication patterns between
-many concurrent jobs and/or tasks.
+hardware heterogeneity demands higher level programming environments, such as
+workflows, to enable a broad range of scientists, students, and developers to
+describe complex computational procedures and mange their execution at
+enormous scales in intuitive and productive ways. Further, in addition to the
+changing system architectures, application patterns are also changing: no
+longer is research conducted with a single invocation of a lone executable,
+instead it typically requires orchestration of many applications and scripts,
+executed at various scale across many different resource types, and often
+reliant on machine learning algorithms for guidance. As a result, exascale
+Workflow Management Systems (WMSs) will need to support high performance
+execution of significant numbers of short-duration tasks (e.g., inference
+tasks), efficient scheduling of tasks with varying resource (e.g., single
+core, multiple nodes, and accelerators) and time-sensitive (e.g., coupling
+data analysis with simulations) constraints, and flexible coordination and
+communication patterns between many concurrent jobs and/or tasks.
 
 % Exascale workflows represent a new mode of computing: a heterogeneous combination of applications, models, and ``glue'' code, running on heterogeneous compute nodes with machine learning in the middle, and a scalable workflow infrastructure orchestrating the entire process.
 % At extreme scale, these workflows require specialized workflow management software which is within the reach of only large and specialized inter-disciplinary teams.
@@ -29,18 +31,16 @@ many concurrent jobs and/or tasks.
 
 
 \paragraph{Key Challenges}
-Emerging exascale workflows pose significant
-challenges to the creation of portable, repeatable, and performant workflows
-%management
-%systems (WMSs). 
-These
-challenges are both technical and non-technical. On the technical side, WMSs
-are currently incapable of supporting the needs of heterogeneous co-scheduled
-and high-throughput workflows, as well as enabling communication between fine
+Emerging exascale workflows pose significant challenges to the creation of
+portable, repeatable, and performant workflows These challenges are both
+technical and non-technical. On the technical side, WMSs are currently
+incapable of supporting the needs of heterogeneous co-scheduled and
+high-throughput workflows, as well as enabling communication between fine
 grain tasks in dynamic workflows. On the non-technical side, the myriad WMSs
-that exist, and the lack of clear user guidance when selecting a WMS has resulted
-in a disjoint workflows community that tends towards building ad hoc or
-bespoke solutions rather than adopting and extending existing solutions. 
+that exist, lack of reusable WMS components, and the lack of clear user
+guidance when selecting a WMS has resulted in a disjoint workflows community
+that tends towards building ad hoc or bespoke solutions rather than adopting
+and extending existing solutions.
 
 % KC: not sure we need this much detial. Figure someone can delete if they wish.
 Specific challenges include: 
@@ -55,14 +55,16 @@ Specific challenges include:
 \end{enumerate}
 
 \paragraph{Solution Strategy}
-The phase one ExaWorks project will lay the foundation for 
-an inherently \textit{new approach} to workflows: establishing the ExaWorks toolkit 
-(see Figure~\ref{fig:arch}) by assembling shared components from existing workflow projects. 
-The ExaWorks toolkit will provide a robust, well-tested, documented, and scalable set of components 
-that can be combined to enable diverse teams to produce scalable and portable workflows for a wide range of exascale applications.  
-Importantly, the project will not create a new workflow system nor does
-it aim not to replace the many workflow solutions already deployed and used by scientists, 
-but rather it will provide well-defined and scalable components which can be leveraged by new and existing workflows.
+The phase one ExaWorks project will lay the foundation for an inherently
+\textit{new approach} to workflows: establishing the ExaWorks toolkit (see
+Figure~\ref{fig:arch}) by assembling shared components from existing workflow
+projects. The ExaWorks toolkit will provide a robust, well-tested, documented,
+and scalable set of components that can be combined to enable diverse teams to
+produce scalable and portable workflows for a wide range of exascale
+applications. Importantly, the project will not create a new workflow system
+nor does it aim not to replace the many workflow solutions already deployed
+and used by scientists, but rather it will provide well engineered and
+scalable components which can be leveraged by new and existing workflows.
 
 
 \begin{wrapfigure}[15]{r}{0.5\textwidth}
