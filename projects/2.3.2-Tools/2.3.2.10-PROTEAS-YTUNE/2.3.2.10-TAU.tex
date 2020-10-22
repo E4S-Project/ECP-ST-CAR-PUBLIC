@@ -10,50 +10,58 @@ Scalable Heterogeneous Computing (SHC) platforms are gaining popularity, but it 
 
 \begin{figure}[htb]
 \centering
-\includegraphics[width=6in]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/tau-papyruskv}
-\caption{
-  Instrumentation of PapyrusKV library provides insight into asynchronous threaded library details when benchmarking 16 MPI ranks, 10k iterations with 16B keys, 1MB values on Summit using local NVM burst buffers.}
+\includegraphics[width=6in]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/miniFE_openmp_tau.png}
+\caption{TAU was used to collect profiles and traces of ECP proxy applications like miniFE (shown), observing OpenMP parallel regions, loops and synchronization without application instrumentation.}
+\label{figure:tau}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=6in]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/clacc_tau.png}
+\caption{TAU was used to collect profiles and traces of OpenACC benchmarks (303.stencil shown), observing OpenACC regions and device offload events without application instrumentation.}
 \label{figure:tau}
 \end{figure}
 
 \paragraph{Recent Progress}
 \begin{enumerate}
-\item \textbf{CANDLE} Extended TAU to enhance performance evaluation of multi-threaded Python3 and CUDA and applied it to evaluate the performance of the CANDLE ECP Benchmarks. TAU was extended to provide support for sampling with Python and CUDA. 
+\item \textbf{Updated CUDA support} Added preliminary support in TAU for NVIDIA A100 GPUs with support for CUDA 11.
 
-\item \textbf{Improved CUDA and OpenMP support} Updated support for CUDA and OpenCL measurement, organizing data around streams and command queues for robust multithreaded support.  Further updated the OpenMP Tools Interface support in TAU, to support the now released 5.0 standard. This OMPT v5.0 standard is currently supported in Intel v19 and Clang v8 compilers. 
+\item \textbf{Updated OpenMP support} Updated OMPT support to OpenMP 5.0, tested with ECP Proxy applications miniFE and miniQMC.
 
-\item \textbf{Flang Instrumentation} TAU support for the Flang Fortran compiler was added.  PDT- and Compiler-based instrumentation support for Flang was implemented and tested on x86\_64 Linux platforms.
+\item \textbf{Clacc support} Implemented/updated profiling support for OpenACC events provided by the Clacc compiler.
 
-\item \textbf{AMReX} TAU OpenACC measurement was demonstrated on the AMReX library.
+\item \textbf{HIP} Added support for AMD GPUs with ROCm 3.3.
 
-\item \textbf{HIP} TAU's measurement library was extended to support the AMD GPU architecture. Specifically, TAU was extended to support HIP, ROCTracer, and ROCProfiler APIs under ROCm.
+\item \textbf{CODAR} Updated TAU plugin for streaming profile and trace output to ADIOS2 for realtime application monitoring.  Integrated with Chimbuko framework for runtime trace analysis, demonstrated with XGC on Summit using 768 MPI ranks. (publication accepted to ISAV Workshop @SC20)
 
-\item \textbf{CODAR} TAU plugin for streaming profile and trace output to ADIOS2 for realtime application monitoring.  Integrated with Chimbuko framework for runtime trace analysis, demonstrated with NWChem on Summit using 2000+ MPI ranks.
+\item \textbf{E4S} Integrated TAU in E4S to support AMD GPUs. Both Docker and Singularity images posted on E4S.io website include TAU with support for NVIDIA and AMD GPUs.
 
-\item \textbf{NVM Measurement} Instrumented the PapyrusKV library and benchmarked performance of the library while using NVM resources on Summit.
+\item \textbf{Kokkos} Updated support for Kokkos profiling interface in TAU (publication accepted to ProTools Workshop @SC20).
+
+\item \textbf{LLVM Instrumentation} Implemented an LLVM module for selective instrumentation of C/C++ using TAU, tested with LLVM versions 6 through 12 and Clacc.
+
+\item \textbf{CCAMP} Extended OpenACC and OpenMP interoperable framework, (publication to be presented at SC20).
 \end{enumerate}
 
 \paragraph{Next Steps}
 \begin{enumerate}
 \item \textbf{CUDA Enhancements} 
-Implement new Profiling API and Perfworks Metrics API for CUDA/CUPTI 10+ to replace deprecated support for Event API and Metric API.
+Implement new Profiling API and Perfworks Metrics API for CUDA/CUPTI 10+.
 
 \item \textbf{OpenMP and OpenACC Enhancements} 
 Explore and implement prototype measurement for OpenMP and OpenACC regions executed on target devices.
 
-\item \textbf{NVM instrumentation} 
-Design and implement support for supporting deep memory hierarchies in TAU for supporting MCDRAM based systems. Hardware performance counter measurements were enabled using PAPI and LIKWID toolkits.
-
-\item \textbf{NVM Measurement} 
-Added profiling and tracing support for NVM architectures.
-
-\item \textbf{PHIRE} 
-Improved LLVM IR-based selective instrumentation in TAU at the routine level using PHIRE using a TAU plugin.
+\item \textbf{New Architectures} 
+We plan to support Intel OneAPI with Level Zero and the HPE Cray platform with AMD GPUs.
 
 \item \textbf{Outreach}
 Continued outreach activities to demonstrate comprehensive performance evaluation support in TAU for OpenARC, OpenACC, LLVM compiler-based instrumentation, CUDA, Kokkos, ROCm, and NVM based programming frameworks for SHC platforms. 
 
 \item \textbf{E4S} 
-Improved integration of TAU in the E4S. 
+Continued integration of TAU and PROTEAS-TUNE projects in the E4S. 
+
+\item \textbf{LLVM Instrumentation} Add Fortran support for LLVM selective instrumentation module, add OpenACC profiling support for F18.
+
+\item \textbf{TAU Instrumentation} Modernize TAU source-to-source auto-instrumentation support in TAU for C++ by replacing current parser front-end with LLVM based solution.
 
 \end{enumerate}

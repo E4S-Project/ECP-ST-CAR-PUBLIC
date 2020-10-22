@@ -19,7 +19,7 @@ We describe our key goals for Papyrus: high performance, scalability, portabilit
 
 \paragraph{Recent Progress}
 
-Meraculous~\cite{Georganas:2014:PDB} is a state-of-the-art de novo assembler written in UPC. Its parallel algorithm for de Bruijn graph construction and traversal leverages the one-sided communication in UPC to facilitate the requisite random access pattern in the global de Bruijn graph. The de Bruijn graph is implemented as a distributed hash table with an overlapping substring of length {\it k}, referred to as a {\it k-mer}, as key and a two-letter code [ACGT][ACGT] as value as shown in \autoref{fig:papyrus-meraculous}(a). A hash function is used to define the affinities between UPC threads and hash table entries. We ported the distributed hash table written in UPC to a PapyrusKV database. The keys in the database are k-mers and the values are two-letter codes. The PapyrusKV runtime calls the same hash function in the UPC application to determine the owners of key-value pairs in the database by specifying the custom hash function when the database is created. Thus, the thread-data affinities in UPC and PapyrusKV are the same as shown in \autoref{fig:papyrus-meraculous}(a). PapyrusKV requires fewer lines of source code than UPC because it calls standard put and get API functions without implementing an application-specific algorithm for the distributed hash table construction and traversal. \autoref{fig:papyrus-meraculous-eval}(b) shows the performance comparison between PapyrusKV and UPC of Meraculous on Cori. Both versions are built and run using Berkeley UPC, an MPI-interoperable UPC implementation. We measured the total execution time on 32, 64, 128, 256, and 512 UPC threads (32 UPC threads per node). UPC shows better performance than PapyrusKV due to its RDMA capability and built-in remote atomic operations during the graph traversal. The performance gap between UPC and PapyrusKV decreases as the number of UPC threads increases. On 512 UPC threads, PapyrusKV runs 1.5 times slower than UPC. This is mainly because of the asynchronous migration in PapyrusKV during the graph construction.
+%Meraculous~\cite{Georganas:2014:PDB} is a state-of-the-art de novo assembler written in UPC. Its parallel algorithm for de Bruijn graph construction and traversal leverages the one-sided communication in UPC to facilitate the requisite random access pattern in the global de Bruijn graph. The de Bruijn graph is implemented as a distributed hash table with an overlapping substring of length {\it k}, referred to as a {\it k-mer}, as key and a two-letter code [ACGT][ACGT] as value as shown in \autoref{fig:papyrus-meraculous}(a). A hash function is used to define the affinities between UPC threads and hash table entries. We ported the distributed hash table written in UPC to a PapyrusKV database. The keys in the database are k-mers and the values are two-letter codes. The PapyrusKV runtime calls the same hash function in the UPC application to determine the owners of key-value pairs in the database by specifying the custom hash function when the database is created. Thus, the thread-data affinities in UPC and PapyrusKV are the same as shown in \autoref{fig:papyrus-meraculous}(a). PapyrusKV requires fewer lines of source code than UPC because it calls standard put and get API functions without implementing an application-specific algorithm for the distributed hash table construction and traversal. \autoref{fig:papyrus-meraculous-eval}(b) shows the performance comparison between PapyrusKV and UPC of Meraculous on Cori. Both versions are built and run using Berkeley UPC, an MPI-interoperable UPC implementation. We measured the total execution time on 32, 64, 128, 256, and 512 UPC threads (32 UPC threads per node). UPC shows better performance than PapyrusKV due to its RDMA capability and built-in remote atomic operations during the graph traversal. The performance gap between UPC and PapyrusKV decreases as the number of UPC threads increases. On 512 UPC threads, PapyrusKV runs 1.5 times slower than UPC. This is mainly because of the asynchronous migration in PapyrusKV during the graph construction.
 
 %\begin{figure}[htb]
 %\centering
@@ -36,23 +36,23 @@ Meraculous~\cite{Georganas:2014:PDB} is a state-of-the-art de novo assembler wri
 %\end{figure}
 
 
-\begin{figure}[t]
-    \centering
-    \begin{minipage}[t]{.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/papyrus-meraculous}
-        \\(a)
-    \end{minipage}
-    \hfill
-    \begin{minipage}[t]{.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/papyrus-meraculous-eval}
-        \\(b)
-    \end{minipage}
-    \caption{Using PapyrusKV for Meraculous.
-    (a) K-mer distributed hash table implementations in UPC and PapyrusKV.\label{fig:papyrus-meraculous}
-    (b) Meraculous performance comparison between PapyrusKV (PKV) and UPC on Cori.\label{fig:papyrus-meraculous-eval}}
-\end{figure}
+%\begin{figure}[t]
+%    \centering
+%    \begin{minipage}[t]{.48\textwidth}
+%        \centering
+%        \includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/papyrus-meraculous}
+%        \\(a)
+%    \end{minipage}
+%    \hfill
+%    \begin{minipage}[t]{.48\textwidth}
+%        \centering
+%        \includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/papyrus-meraculous-eval}
+%        \\(b)
+%    \end{minipage}
+%    \caption{Using PapyrusKV for Meraculous.
+%    (a) K-mer distributed hash table implementations in UPC and PapyrusKV.\label{fig:papyrus-meraculous}
+%    (b) Meraculous performance comparison between PapyrusKV (PKV) and UPC on Cori.\label{fig:papyrus-meraculous-eval}}
+%\end{figure}
 
 %\begin{figure}[t]
 %    \centering
@@ -70,17 +70,25 @@ Meraculous~\cite{Georganas:2014:PDB} is a state-of-the-art de novo assembler wri
 %    \caption{Using PapyrusKV for Meraculous.}
 %\end{figure}
 
-
-This past year, we have added data compression and encryption to Papyrus. For data compression, the overhead of data access and movement becomes a serious bottleneck compared to compute overhead in large-scale HPC systems. We integrated data compression methods into Papyrus to achieve storage reduction and performance improvement.
-For data encryption, we need to protect sensitive data (e.g., health records, DNA data) that is being used in distributed infrastructures, and users need practical methods to secure their data throughout its lifecycle. We will introduce data encryption in Papyrus to add an extra layer of security in the complex scientific workflows.
-
-
-\paragraph{Next Steps}
-Our next efforts are:
+%This past year, we have added data compression and encryption to Papyrus. For data compression, the overhead of data access and movement becomes a serious bottleneck compared to compute overhead in large-scale HPC systems. We integrated data compression methods into Papyrus to achieve storage reduction and performance improvement.
+%For data encryption, we need to protect sensitive data (e.g., health records, DNA data) that is being used in distributed infrastructures, and users need practical methods to secure their data throughout its lifecycle. We will introduce data encryption in Papyrus to add an extra layer of security in the complex scientific workflows.
 
 \begin{enumerate}
-\item \textbf{Versioning: } Versioning can be used to provide new levels of reliability and performance optimization. We will design and implement versioning in Papyrus.
+\item \textbf{Data compression and encryption}
+  Added data compression and encryption to Papyrus~\cite{Kim:2019:IED}.
+  Our compression technique exploits deep memory hierarchy in an HPC system to achieve both storage reduction and performance improvement.
+  Our encryption technique provides a practical level of security and enables sharing of sensitive data securely in complex scientific workflows with nearly imperceptible cost.
+\item \textbf{Redesign}
+  Redesigned and optimized Papyrus to support multidimensional tables.
+\item \textbf{Summit}
+  Performed preliminary evaluation on OLCF's Summit supercomputer.
+\end{enumerate}
 
-\item \textbf{Performance optimization:} New APIs and hardware support is being developed for NVM technologies; we are implementing optimizations in Papyrus to take advantage of these advances.
+\paragraph{Next Steps}
+
+\begin{enumerate}
+\item \textbf{Versioning} Versioning can be used to provide new levels of reliability and performance optimization. We will design and implement versioning in Papyrus.
+
+\item \textbf{Performance optimization} New APIs and hardware support is being developed for NVM technologies; we are implementing optimizations in Papyrus to take advantage of these advances.
 
 \end{enumerate}
