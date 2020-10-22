@@ -12,22 +12,22 @@ The Flang project provides an open source Fortran
 \cite{iso-fortran-2004} \cite{iso-fortran-2010} \cite{iso-fortran-2018}
 compiler.  The project was formally accepted as a component of the LLVM 
 Compiler Infrastructure last year (see \url{http://llvm.org})~\cite{llvm:homepage} 
-and has merged its codebase into the main 
-LLVM repository as of April. Leveraging LLVM, Flang will provide a 
-cross-platform Fortran solution available to ECP and the broad, 
+and has merged portions of its initial codebase into the main 
+LLVM repository as of April 2020. Leveraging LLVM, Flang will provide a 
+cross-platform Fortran solution available to ECP and the broader 
 international LLVM community. The goals of the project include
 extending support to GPU accelerators and target Exascale systems, and 
 supporting LLVM-based software and tools R\&D of interest to a large 
 deployed base of Fortran applications.
 
-LLVM's growing popularity and wide adoption within the
-broader HPC community make it an integral part of the modern software 
-ecosystem. This project provides the foundation for a Fortran solution 
-that will complement and interoperate with the
-Clang/LLVM C++ compiler.  We aim to allow Fortran to grow into a
-modernized open source form that is stable, has an active footprint
-within the LLVM community, and will meet the needs of a broad
-scientific computing community.
+LLVM's growing popularity and wide adoption make it an integral part
+of the modern software ecosystem. This project provides the foundation
+for a Fortran solution that will complement and interoperate with the
+Clang C/C++ compiler and other tools within the LLVM infrastructure.
+We aim to provide a modern, open-source Fortran implementation that is
+stable, has an active footprint within the LLVM community, and will
+meet the specific needs of ECP as well as the broader scientific
+computing community.
 
 \paragraph{Key Challenges}
 Today there are several commercially-supported Fortran compilers,
@@ -47,25 +47,26 @@ effective use on Exascale systems.
 
 \paragraph{Solution Strategy}
 
-With the adoption of Flang into the LLVM community as an official 
-subproject, our strategy focuses on development and delivery of a solid, 
-alternative Fortran compiler for DOE's Exascale platforms.  In addition, 
-we must be good shepherds within the LLVM community to establish and grow 
-a vibrant community of our own. This is in the best interest of ECP as 
-well as the long-term success of Fortran in the LLVM community and the 
-many industry and academic projects that rely upon it. 
+With the adoption of Flang into the LLVM community, our strategy
+focuses on building a strong community around it and the development
+and delivery of a solid, alternative Fortran compiler for DOE's
+Exascale platforms.  It is critical that we be good shepherds within
+the broad LLVM community to successfully establish and grow a vibrant
+community for Flang. This external engagement is in the best interest
+of ECP as well as the long-term success of Fortran in the LLVM
+community and the many industry products that rely upon it.
 
 Our path to success will rely on significant testing across not only
-the various facilities but also across a very broad and diverse set of 
-applications. Given the relatively early development stage of Flang, this 
-testing will be paramount in the delivery of a robust infrastructure to 
-ECP and the broader community. 
+the various facilities but also across a very broad and diverse set of
+applications. Given the early development stage of Flang, this testing
+will be paramount in the delivery of a robust infrastructure to ECP
+and the broader community.
 
 \paragraph{Recent Progress}
 
 After several years of effort and support from NNSA, Flang was 
-successfully ``adopted'' by the LLVM community and has transitioned 
-from a stand-alone git repository to an LLVM hosted project.  This 
+successfully \emph{``adopted''} by the LLVM community and has transitioned 
+from a stand-alone git repository to one hosted by the main LLVM project.  This 
 represents a significant result and the current code is available via GitHub:
 
 \begin{center}
