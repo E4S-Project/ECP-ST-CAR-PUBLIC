@@ -13,17 +13,32 @@ workflows. Burst buffers are implemented as compute-node local storage
 buffer nodes).
 
 Because burst buffers present an additional complexity to effectively
-using supercomputers, we are developing UnifyFS, a user-level file system, 
+using supercomputers, we developed UnifyFS, a user-level file system, 
 highly-specialized for shared file access on HPC systems with distributed 
-burst buffers.  UnifyFS will address a major usability 
-factor of current and future systems, because it will enable 
+burst buffers.  UnifyFS addresses a major usability 
+factor of current and future systems, because it enables
 applications to gain the performance advantages from distributed burst buffers 
 while providing ease of use similar to that of a parallel file system.
+To use UnifyFS from within an MPI application, one only needs to change 
+the paths for files that the application uses from the parallel file system 
+to the mount point for UnifyFS, \texttt{/unifyfs}. Then the application
+performs I/O as it normally would, using POSIX I/O or a high level I/O library, e.g.,
+HDF5 or MPI-IO. The UnifyFS library intercepts all I/O operations and 
+manages the file data locally on the compute nodes with high performance.
+
+\begin{figure}[htb]
+        \centering
+        \includegraphics[width=3.5in]{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyCR/usingUnifyFS}
+        \caption{\label{fig:usingUnifyFS} \textbf{Using UnifyFS} 
+Using UnifyFS from an MPI application is as easy as using the parallel file system. 
+Simply change the file path to point to the UnifyFS mount point \texttt{/unifyfs}, and
+then perform I/O as normal.} 
+\end{figure}
 
 
 \paragraph{Key  Challenges}
 
-The hierarchical storage for future HPC systems will include compute-node
+The hierarchical storage of current and future HPC systems includes compute-node
 local SSDs as burst buffers. This distributed burst buffer design promises
 fast, scalable I/O performance because burst buffer bandwidth and capacity
 will automatically scale with the compute resources used by jobs and
@@ -48,16 +63,17 @@ will have major difficulties utilizing these resources.
 
 \begin{figure}[htb]
         \centering
+        %\includegraphics[width=3.5in]{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyFS/UnifyFS-overview}
         \includegraphics[width=3.5in]{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyCR/UnifyFS-overview}
-        \caption{\label{fig:UnifyFS-overview} \textbf{UnifyFS Overview.} Users will be able to give commands in their batch scripts to launch UnifyFS within
-their allocation. UnifyFS will work with POSIX I/O, common I/O libraries, and
-VeloC. Once file operations are transparently intercepted by UnifyFS, they
-will be handled with specialized optimizations to ensure high performance.}
+        \caption{\label{fig:UnifyFS-overview} \textbf{UnifyFS Overview.} Users can give commands in their batch scripts to launch UnifyFS within
+their allocation. UnifyFS works transparently with POSIX I/O, common I/O libraries, and
+VeloC. Once file operations are intercepted by UnifyFS, they
+are handled with specialized optimizations to ensure high performance.}
 \end{figure}
 
 \paragraph{Solution Strategy}
 
-To address this concern, we are developing UnifyFS, a user-level file system,
+To address this concern, we have developed UnifyFS, a user-level file system,
 highly-specialized for shared file access on HPC systems with distributed
 burst buffers. In Figure \ref{fig:UnifyFS-overview}, we show a high
 level schematic of how UnifyFS works. Users load UnifyFS into
@@ -70,7 +86,7 @@ that will deliver high I/O performance.
 Because bulk-synchronous I/O dominates the 
 I/O traffic most HPC systems, we target our approach at
 those workloads. Examples of bulk-synchronous I/O include checkpoint/restart
-and periodic output dumps by appliations. Thus, UnifyFS  addresses a major usability
+and periodic output dumps by applications. Thus, UnifyFS  addresses a major usability
 factor of current and future systems. We designed UnifyFS such
 that it transparently intercepts I/O calls, so it will integrate
 cleanly with other software including I/O and checkpoint/restart libraries.
@@ -81,36 +97,37 @@ it can deliver high performance.
 
 \paragraph{Recent Progress}
 
-In the third year of this project, the team worked to implement the
-design plan that was established in the first
-year of the project (See Figure \ref{fig:milestone2}). In particular
-we completed the replacement of MPI communication with DataLib software; we developed
-support for moving data into and out of UnifyFS by I/O libraries and VeloC;
-we implemented and tested support for VeloC; we updated and improved our integration
-with resource managers; we furthered our efforts to evaluate and implement support for I/O 
-libraries. Additionally, we detected and fixed numerous bugs, improved documentation, and
-implemented a metadata abstraction layer, and released UnifyFS 0.9.
-\begin{figure}[htb]
-        \centering
-        \includegraphics[width=4in]{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyCR/milestone2}
-        \caption{\label{fig:milestone2} \textbf{UnifyFS Design.} The UnifyFS
-instance consists of a dynamic library and a UnifyFS daemon that runs
-on each compute node in the job. The library intercepts I/O calls to
-the UnifyFS mount point from applications, I/O libraries, or VeloC and communicates them to the UnifyFS daemon that handles the I/O operation.}
-\end{figure}
-
-
+Recently, the UnifyFS team has focused on support for I/O libraries and on read performance. 
+For I/O libraries, we evaluated and improved support for HDF5 and MPI-IO. We rigorously 
+tested UnifyFS with extensive test suites from the two I/O libraries and uncovered and
+corrected numerous bugs and issues. We also performed a complete overhaul of our metadata
+infrastructure to improve read performance. With our old infrastructure, read performance
+was limited by the need to look up data locations in a distributed fashion. Now, most
+data lookups can be performed locally, resulting in orders of magnitude improvement
+in read performance.
 Our source code for UnifyFS is available on 
 GitHub at \url{https://github.com/LLNL/UnifyFS}. 
+%\begin{figure}[htb]
+        %\centering
+        %%\includegraphics[width=4in]{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyFS/milestone2}
+        %\includegraphics[width=4in]{milestone2}
+        %\caption{\label{fig:milestone2} \textbf{UnifyFS Design.} The UnifyFS
+%instance consists of a dynamic library and a UnifyFS daemon that runs
+%on each compute node in the job. The library intercepts I/O calls to
+%the UnifyFS mount point from applications, I/O libraries, or VeloC and communicates them to the UnifyFS daemon that handles the I/O operation.}
+%\end{figure}
+%
+
 \paragraph{Next Steps}
 
-For our next milestone effort, we are focused on delivering a design for 
-the UnifyFS API for use by HDF5 and other I/O libraries. Additionally, we are continuing work on 
-integrating and supporting ECP collaborator software including:
+For our next year's effort, we are focused on delivering an implementation
+of our UnifyFS API that can be used by high level I/O libraries for improved
+performance. We will also turn our attention to portability to pre-exascale 
+platforms. Additionally, we will continue to improve our support for 
+ECP collaborator software including:
 I/O libraries HDF5, MPI-IO, PnetCDF, and ADIOS; improving
-support for ECP VeloC; and targeting integration with ECP applications such as
+VeloC; and targeting integration with ECP applications such as
 E3SM, GEOS, and Chombo.
-We also plan to release UnifyFS 1.0 early in the 2020 calendar year.
 
 
 

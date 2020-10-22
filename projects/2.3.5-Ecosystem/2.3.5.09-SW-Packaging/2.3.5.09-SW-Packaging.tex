@@ -102,52 +102,51 @@ support multiple AD software ecosystems.
 \paragraph{Recent Progress}
 
 \begin{enumerate}
-\item Developed a library for labeling and comparing microarchitectures for
-      compatibility. This enables Spack to distribute optimized binaries for
-      specific target architectures, and to label containers based on what
-      machines they are compatible with.
+\item Released {\tt archspec}\footnote{https://github.com/archspec/archspec/},
+      a library for lableing and distributing CPU microarchitectures, as a
+      spin-off project from Spack.
 
-\item Worked with the E4S team to build a Spack environment-based build of
-      E4S. In contrast to prior iterations, this version is reproducible
-      and integrates with DevOps and Spack's GitLab pipeline support.
+\item Developed the {\tt spack containerize} command that enables users to
+      easily build lightweight containers from Spack environments.
 
-\item Held a hackathon at LLNL for HI teams to get Spack pipelines working.
-      Five teams were able to set up and deploy Spack pipelines.
+\item Worked with the E4S team to get E4S packages building on the Ascent
+      machine at OLCF, onNERSC's Cori machine, and in continuous integration in
+      Amazon Web Services (on optimized {\tt skylake} instances).
 
-\item Produced the first revision of our best practices document for
-      efficient container utilization: ``Containers in HPC: Best practices
-      and pitfalls for users,'' hosted on
-      GitLab pages.\footnote{https://reidpr.gitlab.io/best-practices/}
+\item Continued to support ECP ST teams and conducted a survey to better
+      understand their usage of Spack.
 
-\item Developed an enhanced tutorial session which introduces the context
-      of using containers in HPC systems, with a demo on NERSC's Cori system.
-      The tutorial had over 60 participants at ISC and will appear again at
-      SC19.
+\item Developed optimized E4S container images for {\tt ppc64le},
+      {\tt x86\_64}, as well as CUDA and ROCm GPUs. Solutions for
+      heterogeneous hardware usage via containers are ahead of available
+      solutions in industry. \footnote{https://hub.docker.com/u/ecpe4s}.
+
+\item Continued to test multiple container runtimes on pre-exascale systems.
 \end{enumerate}
 
 \paragraph{Next Steps}
 
 \begin{enumerate}
-\item Modify Spack to support generating multi-stage container build recipes.
-      This will enable Spack to produce the Dockerfiles required to build
-      minimal application images.
+\item Implement support for running test suites within Spack environments, and
+      develop ways for teams to build portable tests associated with Spack
+      packages (``{\tt spack test}'').
 
-\item Continue working with E4S on Spack build hardening, and continue to
-      Support ST teams' Spack usage.
+\item Integrate {\tt spack test} with GitLab continuous integration to display
+      dashboards for E4S tests run on EA systems.
 
-\item Produced the first revision of our best practices document for
-      efficient container utilization: ``Containers in HPC: Best practices
-      and pitfalls for users,'' hosted on GitLab
-      pages.\footnote{https://reidpr.gitlab.io/best-practices/}
+\item Work with the E4S team to implement initial package smoke tests for E4S
+      on EA systems.
 
-\item Investigate container scalability and optimization strategies, both
-      at the container image layers and also within container runtimes.
+\item Improve automation on GitHub by implementing a change notification bot
+      for Spack package maintainers, to tell them when others have proposed
+      changes to their packages.
 
-\item Build optimized container images which leverage new features in Spack to
-      generate the full E4S software stack.
+\item Implement pull request testing for Spack GitHub, so that every pull
+      request to Spack has its package builds tested in a sandboxed
+      environment to ensure that the {\tt develop} branch continues to build.
 
-\item Conduct deep dives with several AD teams to aid and advance container
-      utilization strategies for application development.
+\item Investigate unprivileged container builds at ECP facilities and determine
+      which runtimes provide the best support for this.
 
-\item Continue tutorials and outreach activities.
+\item Continue container training sessions, outreach efforts, and tutorials.
 \end{enumerate}

@@ -98,8 +98,8 @@ MPICH~\cite{coll} and evaluation of the selected ECP applications.
 Exascale MPI fault tolerance efforts~\cite{FT1, FT2} started with
 support for handling noncatastrophic errors in MPI. The second effort
 included defining the scope of errors in MPI, a prerequisite for
-user-level failure mitigation (ULFM). Other efforts in this direction
-includes standardizing ULFM in MPI and evaluating application
+user-level failure mitigation. Other efforts in this direction
+includes standardizing these efforts in MPI and evaluating application
 suitability for fault tolerance.
 
 Exascale MPI+X hybrid programming developed firstly with effort in
@@ -109,58 +109,50 @@ multithreaded MPI communication~\cite{workq}. We have included support
 for interaction of MPICH with user-level thread (ULT)
 libraries~\cite{ULT}, primarily targeting Argobots and the BOLT
 runtime~\cite{BOLT}.  Other issues that are being looked at include the
-investigation and evaluation on interaction between MPI and OpenMP and
-the study and evaluation of MPI endpoints.
+investigation and evaluation on multiple virtual communication
+interfaces for multithreaded MPI communication~\cite{VCI}.
 
 \paragraph{Recent Progress}
 
-Figure~\ref{fig:fy19} provides the details of major milestones completed
-in FY2019. In the first milestone, we studied the performance
-of the RMA improvements using the large quantum chemistry application
-suite NWChem (version 6.6) with ARMCI-MPI and MPICH on the Cray XC40
-supercomputer. The results shown that enabling network hardware atomics
-with the info hints fully eliminated the performance bottleneck in the
-Density Functional Theory (DFT) module and improved the performance
-scalability of NWChem DFT. In the second milestone, we studied the
-performance impact of ULFM when there is no failure. A study report has
-been submitted on performance analysis of the ULFM prototype. In the
-third milestone, we studied the performance of MPI Endpoints. The
-results shown significant improvement of using MPI endpoints
-prototype---the multithreaded MPI communication reached a message rate
-that is close to the case of single-threaded MPI communication. We
-concluded that exposing the application level parallelism to the MPI
-through the use of endpoints enables effectively scheduling of the
-traffic. In such a way, multiple hardware resource can be utilized to
-reduce the contention between threads and improve performance.
+The recent release of MPICH 3.4b1 version includes deliverables from the
+major milestones of FY2020. Figure~\ref{fig:fy20} provides the details
+of them. In the first milestone, we created the collective algorithm
+selection framework which allows MPI to choose different algorithm for
+collectives operations based on multiple factors including number of
+processes, network topology and support of hardware acceleration. The
+user of MPICH can provide a configuration file to describe the criteria
+for choosing different collective algorithms. We expect the vendors
+utilizing this capability to provide collective selection strategies
+that is optimized for the target supercomputers. The end-user could also
+generate their own strategies that is fine-tuned to the characteristic
+and needs of their applications.
+In the second milestone, we added the support for GPU in MPI
+communication. This allows a buffer in the GPU memory to be used
+directly in MPI communication operations. MPICH's GPU support can
+utilize the native support of fast GPU communication in hardware while also
+provide a fallback mode for more complex MPI communication pattens. We
+also created a new high-performance datatype engine that further
+utilizes GPU for handling non-contiguous datatype in MPI communication.
+
+Lastly, we made many efforts in participating the standardization of
+MPI-4 by discussing proposed features and contributing the feedback for
+our users back to the MPI forum. This has led to several new features
+being accepted by the MPI Forum.
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=6in]{projects/2.3.1-PMR/2.3.1.07-Exascale-MPI/MPICH-recent-milestones.pdf}
-  \caption{\label{fig:fy19}Major MPICH milestones completed in fiscal year 2019}
+  \caption{\label{fig:fy20}Major MPICH milestones completed in fiscal year 2020}
 \end{figure}
 
-In the fourth milestone, we evaluated the benefit of using
-topology-aware neighborhood collectives. We used the neighborhood
-collective integration in the PETSc scalable linear solvers (KSP)
-component for this evaluation. The results did show benefit, but with a
-caveat that is the neighborhood collectives incurs significant setup
-cost which currently overshadowing the communication benefit. The
-addition of ``persistent'' collective operations in MPI-4 will allow us
-to remove the per-operation setup cost. In the last milestone, we
-performed comprehensive evaluation of the project which included
-functional tests and performance tests.  The experiment results using
-Nek5000 on OLCF Summit supercomputer shown significant improvements in
-performance and scalability due to the techniques developed in this ECP
-project.
-
 \paragraph{Next Steps}
-A major focus of the ongoing Exascale MPI efforts is MPI+GPU
-improvements. This includes improvements for
-multiple accelerator nodes and native hardware models, support for
-noncontiguous data and software evaluations. Exascale MPI ongoing
-efforts also includes a developing a collective selection framework for
-improving the performance and scalability of collectives. We are also
-making efforts in MPI standardization which includes investigation
-application usage of MPI and incorporating those insights into the
-MPI standard through continuous participation of the MPI standardization
-process.
+A major focus of the ongoing Exascale MPI efforts is further
+improvements to the MPI+GPU support. This includes support for GPU
+stream triggered MPI operations, optimized support for noncontiguous
+data and software evaluations. Another focus of FY2021 is the
+implementation of new features in MPI-4 standard including persistent
+collective operations. We will also make effort for improving the MPICH
+testing infrastructure by improving the testsuite and promoting
+integration ECP systems to provide better test coverage and a
+close-to-production test environment. This would enhance the readiness
+of MPICH for exascale systems.

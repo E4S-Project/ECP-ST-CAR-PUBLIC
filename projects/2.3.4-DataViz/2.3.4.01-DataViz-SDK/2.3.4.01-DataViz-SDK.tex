@@ -1,4 +1,112 @@
 \subsubsection{\stid{4.01} \dataviz\ Software Development Kits} 
 
-\paragraph{Overview} 
-The \dataviz\ SDK effort is focused on identifying meaningful aggregations of products in this technical area.  SDK efforts are in the early stages of planning and execution.  Most of the work on SDKs has been driven from the \ecosystem\ technical area.  A description of the SDK effort can be found in Section~\ref{subsubsect:ecosystem-sdk}.
+\paragraph{\textbf{DataViz SDK Overview}}
+\paragraph{}
+
+The Data \& Visualization (DataViz) SDK aims to create a production-quality infrastructure necessary to manage, share, and facilitate data analysis of mission-critical codes at scale. The project focuses on community development and a commitment to success via quality improvement policies, better build and deployment processes, and the ability to use diverse, independently developed DataViz SDK projects, in combination, for data analysis and visualization problems.
+
+The DataViz SDK's responsibility is to coordinate the disparate documentation, development, testing, deployment activities, and develop the necessary tooling and shared infrastructure to serve these goals. This coordination's resulting product is a unified set of usable, standardized, and interoperable packages ready for the upcoming exascale machines. We have designed the efforts to support the DataViz SDK to fit within the overarching goal to leverage and integrate data management, analysis, and visualization techniques developed across the ECP Software Technology ecosystem to support scientific discovery and understanding.
+
+In addition, DataViz SDK provides a capability supporting collaborative analysis and visualization software development, helping independent teams accelerate the adoption of best practices, enabling interoperability of independently developed software, and improving developer productivity and sustainability of the software products.
+
+\paragraph{\textbf{Key Challenges}}
+\paragraph{}
+
+Scientists and engineers from various research cultures and significantly different software engineering maturity levels develop Data \& Visualization software packages. In addition to the challenges outlined in Section~\ref{subsubsect:ecosystem-sdk}, ECP Data \& Visualization software packages will use different combinations of dependency software in various configurations. Visualization applications and libraries, in particular, utilize lower-level graphics libraries from an OpenGL stack needing reliably mapped to a diverse set of underlying hardware.  These applications demand the deployment infrastructure support the appropriate combination of software and hardware-based rendering on NVIDIA, AMD, or Intel GPUs and accelerated offscreen rendering APIs like EGL.  Requirements such as these place the DataViz SDK between the hardware teams and the analysis and visualization software developers preparing to run on new architectures yet delivered by ECP.
+
+DataViz SDK software packages also have, on average, a much deeper dependency chain than is typical within HPC.  As of this writing, an optimized set of twelve ECP DataViz SDK packages requires over 160 dependencies.  Many packages share these dependencies, each with their own set of constraints.  This combination presents a unique challenge to ensure compatibility, interoperability, and reliability of the entire stack as a whole, beyond the individual packages.
+
+\paragraph{\textbf{Solution Strategy}}
+\paragraph{}
+
+First, the DataViz SDK solution strategy involves pursuing usability, standardization, interoperability, and sustainability goals through a set of community policies to improve software practices. The DataViz SDK community policy tasks have required us to define a common terminology for effective communication.
+
+Second, we leverage shared infrastructure, such as the Spack~\cite{gamblin+:sc15} package manager and CI testing at ECP facilities. We built the SDK release and delivery deployment goals on Spack as a unifying package manager, while our reliability and sustainability goals benefit from and leverage the facilities' CI testing infrastructure. 
+
+Finally, we define a set of spack meta-packages, ecp-vis-sdk and ecp-io-sdk, to enable the delivery of ECP targeted configurations of data and visualization packages through E4S.  These meta-packages establish dependencies for the packages within the DataViz SDK, and serve as the backbone of our interoperability testing and deployment efforts. 
+
+\begin{itemize}
+\item ecp-vis-sdk includes data analysis and visualization packages such as ASCENT, Catalyst, Cinema, ParaView, VTK-m along with data reduction and compression libraries like SZ, and ZFP.
+\item ecp-io-sdk includes input and output (I/O) services like ADIOS, Darshan, faodel, hdf5, parallel-netcdf, unifyfs, and veloc.
+ \end{itemize}
+
+\noindent
+The packages contained in the two meta-packages represent software at different maturity and readiness for release. The early release strategy was to push product readiness for inclusion in the E4S releases by assisting packages with Spack packaging and CI testing. We will continue to evolve the maturity level and interoperability of the packages while preparing for subsequent releases.
+
+\paragraph{\textbf{Recent Progress}}
+\paragraph{}
+
+In pursuit of establishing a baseline set of software quality across the entire ECP ST area, the SDK projects have been collectively developing a set of community policies a given package must adhere to be an E4S member package.  These community policies cover areas including publicly accessible documentation, mandatory spack packaging, testing practices, and other policy areas.  The DataViz SDK has played an active role in this panel by proposing new policies, refining language on official policies, and soliciting community feedback.  We are nearing a final set of initial guidelines required by the E4S project for packages to be accepted as a first-class E4S Member Package.  These community policies intended to be an ongoing collaborative effort to elevate the standard of software quality, reliability, and sustainability for the entire ECP software ecosystem.
+
+In addition, recent progress included the completion of the following three milestones during the fiscal year 2020.
+
+\textit{STDV01-06} --- Improved CI capabilities. During this milestone, we worked to ensure that all of the packages within the DataViz SDK were utilizing Continuous Integration in some way as part of their development workflow and software process. While the packages span a wide range of maturity and robustness of the software process, they all have incorporated at least a baseline CI capability (some far more extensive than others). Most leverage a public cloud CI like Travis or GitHub Actions, while others rely on internal resources from an internal GitLab or BitBucket ser er. We also improved the spack packaging for several of the SDK projects and integrated the remaining projects into the SDK meta-packages.
+
+\textit{STDV01-08} --- HDF Virtual Object Layer Architecture (VOL) documentation and ECP HPC-CI integration. During this time, we worked directly within the ADIOS and VTK-m projects to enable the newly developed ECP HPC-CPI capability. These two projects served as early adopters of the Gitlab-CI environment running directly on HPC resources at ORNL. The SDK coordinated directly with ORNL facilities personnel to debug the CI environment worked to identify issues other Data \& Viz projects are likely to encounter, and develop the initial capability for ADIOS and VTK-m. From this work, the SDK can assist other data and visualization projects in implementing the ECP HPC CI capability through both guidance and best practice recommendation and direct technical development assistance.
+
+\textit{STDV01-14} --- Optimized Spack configurations and CI. The default configuration of most spack packages is intended to produce the most compatible version, but not necessarily the most optimal for large scale HPC. In particular, packages may have key features disabled by default essential to HPC, such as MPI support and FORTRAN language bindings. The two meta-packages were enhanced to ensure that an optimized configuration explicitly targets ECP target platforms for every direct data and visualization package dependency.
+
+\paragraph{\textbf{Next Steps}}
+\paragraph{}
+
+We highlight our next steps in the follow on project milestones.
+
+\textit{STDV01-17} --- Cross SDK CI testing. The focus of this release is to demonstrate successful interoperable CI testing. The DataViz SDK is building out a CI infrastructure to allow all ST products within the Data \& Visualization focus area to be regularly built and tested with each other to ensure interoperability. This milestone is to have the CI system running with as many ST products in the DataViz SDK successfully building together, satisfying each other's dependencies.
+
+\textit{STDV01-29} --- Hardening to ensure SENSEI is deployable and reliable at scale. Establishing Spack recipes for the SENSEI software coupled with the hardening of the in transit code-base will go a long way in mitigating the risks associated with availability and defects for ECP applications. 
+
+\paragraph{HDF5}
+\paragraph{Overview}
+\paragraph{}
+HDF5 is a data model, I/O library, and file format to store and manage data. It supports an unlimited variety of datatypes, and is designed for flexible and efficient I/O for high volume and complex data. HDF5 is portable and is extensible, allowing applications to evolve in their use of HDF5. The HDF5 software suite includes tools and applications for managing, manipulating, viewing, and analyzing data in the HDF5 format. Numerous ECP applications use HDF5 or high-level libraries built on top of HDF5 (for example, netCDF-4, H5Part) for managing application's data. Therefore, HDF5 is a critical part of the Data \& Visualization SDK. It is developed and maintained by a nonprofit organization, The HDF Group.
+
+Under the Data \& Visualization SDK effort, The HDF Group releases HDF5 new features that enhance workflow, productivity and ECP applications performance. Such features, for example, include ExaHDF5 productized Virtual Object Layer Architecture (VOL) and HDF5 VOL connectors, which allow ECP applications to access data on different storage devices, including Tiered Memory and to access data in various file formats. 
+In this activity, we focus on:
+\begin{itemize}
+    \item Identifying and prioritizing components of SDK that could benefit from current underutilized HDF5 features and newly released features and recommending changes to the identified components.
+    \item Assisting other Data \& Visualization SDK team, ADIOS, ExaIO and DataLib teams, in requirements gathering for integration with HDF5 APIs.
+    \item Assuring that the latest released HDF5 software and non-integrated features developed under ExaIO (e.g., Async I/O VOL), are part of CI testing on the ECP platforms, including integrating HDF5 into the SDK CI testing framework (GitLab).
+    \item Addressing any HDF5 related CI testing issues, in addition to any HDF5 bug or deficiently affecting parallel I/O performance, sustainability, and/or utility on ECP platforms. 
+\end{itemize}
+The HDF Group is performing outreach activities as described here:
+\begin{itemize}
+    \item Reaching out to the ECP science application teams that use or intend to use HDF5 and assess applications’ usage of HDF5 or I/O needs, recommend best practices and existing HDF5 features to achieve scalable performance and to avoid I/O bottlenecks when using SDK components.
+    \item Identifying necessary improvements to data organization in HDF5, to the usage of HDF5 library features, and assisting applications to implement identified improvements.
+    \item Integrate ECP supported ZFP and SZ compression library with the HDF5 maintenance releases.
+    \item Series of HDF5 Tutorials for new and advanced HDF5 users, and seminars for the HDF5 applications developers on the HDF5 best practices and performance.
+\end{itemize}
+
+\paragraph{Key  Challenges}
+\paragraph{}
+
+HDF5 is a complex software used not only to perform I/O, but also to manage complex data in one HDF5 file. Very often, developers of HDF5 applications are challenged to find the right balance between optimum I/O performance and data organization in the HDF5 file for further processing and sharing. It is unreasonable to expect scientists to go over more than 500 HDF5 C functions to find the right tuning knobs. As a result, some application teams continue using home-grown \texttt{ASCII} and binary formats and not taking advantage of HDF5 features and especially the features developed for ECP.    
+
+\paragraph{Solution Strategy}
+\paragraph{}
+To lower the barrier for adopting HDF5 by ECP applications, The HDF Group has to provide quality HDF5 software that works on ECP platforms, integrate newly developed features into mainstream HDF5 and make them available to ECP applications promptly, educate HDF5 users on major HDF5 features, tuning tools and tuning techniques, and work closely with ECP applications teams on application tuning.
+
+\paragraph{Recent Progress}
+\paragraph{}
+During 2020 HDF5 \textit{develop} branch and HDF5 1.12.0 and 1.10.7 maintenance releases were fully integrated with Spack and ECP CI testing using Gitlab on Ascent, Cori and several machines at LLNL.  Test results are sent to The HDF Group public \href{cdash.hdfgroup.org} {CDash}.  
+
+We studied I/O access patterns of several ECP applications, including HACC, and summarized our findings in the white paper \href{http://portal.hdfgroup.org/display/HDF5/Parallel+HDF5} {\emph{"An I/O Study of ECP Applications"}}. 
+We summarize below the observations and some unexpected behaviors we found for each application along, with the suggestions on how to fix them. Detailed results and analysis can be found in the paper. 
+\begin{itemize}
+    \item \textbf{FLASH}: Unnecessary HDF5 metadata operations \texttt{H5Acreate()}, \texttt{H5Aopen()} and \texttt{H5Aclose()} are used during every checkpointing step. Those operations can be expensive, especially when running a large number of iterations. This can be easily fixed at the price of losing some code modularity. 
+    \item \textbf{NWChem}: File-per-process patterns are found for writing local temporary files. This is undesired and will cause a lot of pressures on parallel file systems for large scale runs. Conflicting patterns are found for the runtime database file, which can lead to consistency issues when running on non-POSIX file systems.
+    \item \textbf{Chombo}: The Same file-per-process pattern is observed for Chombo too. Moreover, by default, Chombo uses independent I/O to write the final result to a shared HDF5 file. Depending on the problem scale and underlying file system configurations, collective I/O can further optimize the I/O performance.
+    \item \textbf{QMCPack}: One unexpected pattern is found for checkpoint files. QMCPACK overwrites the same checkpoint file for each computation section. This could lead to an unrecoverable state if a failure occurred during the checkpointing step.
+    \item \textbf{HACC-IO}: HDF5 can use different data layout to achieve similar MPI-IO access patterns. Stripe settings of the parallel file system have a big impact on the write performance. Also, the default metadata header can greatly slow down the write performance. However, carefully setting the alignment or metadata data block size, HDF5 can deliver similar performance as the pure MPI-IO implementation. 
+\end{itemize}
+
+We hold several Webinars and Tutorials for HDF5 users. The recordings and corresponding materials are available from \href{http://https://www.hdfgroup.org/category/webinar} {The HDF Group Website}. Our goal was to introduce new and experienced HDF5 application developers to HDF5 tuning techniques and tools such as Darshan and Recorder to identify I/O performance bottlenecks. One of the \href{https://www.hdfgroup.org/2020/08/a-study-of-hacc-io-benchmarks/}{Webinars} was devoted to showing how HACC can achieve highly scalable performance when using HDF5. Setting right HDF5 metadata block size and Lustre or GPFS file system parameters allowed to match native HACC's MPI I/O approach when writing to a shared HDF5 file.
+Along with giving the \href{https://www.hdfgroup.org/2020/06/webinar-an-introduction-to-hdf5-in-hpc-environments-supporting-materials/}{Webinar: An Introduction to HDF5 in HPC Environments} we created hands-on materials for the HDF5 Parallel Tutorial that is available from the \href{https://github.com/HDFGroup/Tutorial/tree/main/Parallel-hands-on-tutorial}{GitHub repository}. The Tutorial provides a quick start with parallel HDF5 and shows major techniques to get a good performance. We also created a hands-on \href{https://github.com/HDFGroup/Tutorial/tree/main/HDF5-troubleshooting}{Tutorial on how to troubleshoot HDF5 performance}. Both Tutorials were presented at the second \href{https://www.hdfgroup.org/hug/2020-hug/hdf5-users-group-2020-agenda/}{HDF User Group Meeting} on October 13-16, 2020. 
+\paragraph{Next Steps}
+\paragraph{}
+The HDF Group activities will continue in two areas: productization of the HDF5 features developed for ECP applications and outreach.
+
+The HDF Group will continue working with the ExaIO, ADIOS and DataLib teams enhancing the HDF5 library and bringing HDF5 VOL connectors developed for ECP applications to production quality. We will also continue integrating developed features into HDF5 maintenance releases and CI testing. We are working to add CI testing to Theta and Summit.
+
+ZFP and SZ HDF5 compression filters will be made more visible through HDF5 filter packages added to Spack and integrated with CI testing on the ECP systems. We plan to release HDF5 1.12.1 and integrate it with Spack and ECP CI testing. The release will address HDF5 library's issues discovered by the ExaIO team during the development of the Asynchronous HDF5 VOL connector and the DataLib team when developing the HDF5 logging VOL connector. We will also integrate a subfiling feature developed by the ExaIO team into the HDF5 maintenance releases.
+
+We will continue working with the ECP HDF5 applications teams on I/O performance, and we will give Tutorials and Webinars, and create additional documentation on efficient usage of HDF5 in the ECP HPC environment.
