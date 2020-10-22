@@ -137,7 +137,10 @@ factorization and triangular solve with one-sided communication using NVSHMEM. A
 are performed on Summit.
 % The main algorithmic challenges we have to overcome are: parallel tasks are of non-uniform size,
 % load imbalance, and memory and communication bound operations.
-For STRUMPACK .... {\bf (Pieter ...)}
+
+For STRUMPACK we improved the GPU off-loading code. We ported the
+preconditioner based on block low-rank compression to distributed
+memory systems. We developed an interface from Trilinos to STRUMPACK.
 
 We also worked with the ECP application ExaSGD team, applying our sparse solvers to
 the linear systems coming from AC optimal power flow problems. The linear systems
@@ -150,21 +153,21 @@ The other algorithmic changes and the results are detailed below.
 
 \vspace{-5pt}
 \paragraph\
-\underline{STRUMPACK}   {\bf (Pieter -- update the following)}
+\underline{STRUMPACK}  % {\bf (Pieter -- update the following)}
 \begin{itemize}
-\item Algorithmic change: changed recursive tree traversal to a level-by-level
-traversal, which has less task scheduling overhead and allows to use batched
-dense linear algebra routines.
-\item There are many small dense linear algebra operations on lower levels
-of the supernodal elimination tree. Current solution strategy is to perform
- small DLA operations on CPU, for larger ones use cuBLAS with CUDA streams.
- The future solution strategy is to use variable sized batched operations
- from MAGMA and/or SLATE.
-\item On Summit, for the MFEM matrix, 8CPU + 1GPU factorization achieved
- 8x speedup over 8CPU cores, and 19x speedup over 1CPU core.
-\item Added the new Butterfly and low rank compression schemes. For the MFEM matrix,
- this obtained much smaller numerical rank and better compression rate
- compared to the HSS low rank format. 
+\item We added GPU kernels for the extend-add (gather-scatter)
+  operation used in the sparse solver, so that the entire
+  factorization (or a subset fitting in device memory) can be
+  off-loaded without requiring excessive amounts of data movement
+  between host and device. On a single summit node, the new GPU code
+  is up to 8x faster than the old algorithm.
+\item STRUMPACK now supports AMD GPUs through HIP, and the hipBLAS and
+  rocSOLVER libraries.
+\item We added a distributed memory block low-rank preconditioner to
+  the sparse solver. For a medium sized 3D $175^3$ high frequency
+  Helmholtz problem, the new preconditioner is 3.7x faster than the
+  sparse direct solver, and 2x faster than our previous state of the
+  art preconditioner based on Butterfly compression.
 \end{itemize}
 
 \underline{SuperLU}
@@ -180,35 +183,38 @@ of the supernodal elimination tree. Current solution strategy is to perform
   of the 3D process grid.
 \end{itemize}
 
-\vspace{-.3in}
+\vspace{-.13in}
 \begin{figure}[htb]
-\begin{minipage}[t]{0.48\columnwidth}
-\centering
-\includegraphics[scale=0.7]{projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/strumpack-Summit.pdf}
-\caption{STRUMPACK factorization on Summit GPU.}
-\label{fig:strumpack-parmetis-scaling}
-\end{minipage}
-\begin{minipage}[t]{0.48\columnwidth}
+%\begin{minipage}[t]{0.48\columnwidth}
+%% \centering
+%% \includegraphics[scale=0.7]{projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/strumpack-Summit.pdf}
+%% \caption{STRUMPACK factorization on Summit GPU.}
+%% \label{fig:strumpack-parmetis-scaling}
+%% \end{minipage}
+%% \hfill
+%% \begin{minipage}[t]{0.48\columnwidth}
 \centering
 %\includegraphics[scale=0.8]{projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/superlu-solve-Summit.pdf}
 %\caption{SuperLU solve on Summit GPU.}
 \includegraphics[scale=0.2]{projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/speedup_SOA.jpg}
-\caption{SuperLU symbolic factorization: \\ GPU speedup over CPU, 13 matrices}
-%  on Summit GPU nodes; 13 matrices}
 \label{fig:strumpack-metis-scaling}
-\end{minipage}
+\caption{SuperLU symbolic factorization: GPU speedup over CPU, 13 matrices}
+%  on Summit GPU nodes; 13 matrices}
+%% \end{minipage}
 \end{figure}
 
 %%--------------------------------------
 
+\vspace{-.135in}
 \paragraph{Next Steps} Our future efforts will focus on the following areas:
 %\textit{Describe what you are working on next.}
 %\begin{itemize}
 %\item
- {\bf (Pieter updates)}
-For STRUMPACK, Gather/Scatter operations are still on CPU. The future
- solution strategy is to use CUDA kernel, or OpenMP 4.5+ target off-load feature.
- % \item
+%%  {\bf (Pieter updates)}
+ For STRUMPACK, we will work to improve the performance of the
+ triangular solve on the GPU, and add GPU acceleration to the block
+ low-rank solver and preconditioner.
+% \item
  For SuperLU, we will work towards release of the GPU-enabled 3D code, including both numerical
  factorization and triangular solve on multi-GPUs, and release of GPU-enabled symbolic
  factorization code.
