@@ -39,7 +39,7 @@ GPU-accelerated compute nodes have complex memory hierarchies that include
 multiple memory technologies with different bandwidth and latency characteristics. In addition, 
 GPU-accelerated compute nodes have non-uniform connections between memories and computational elements (CPUs and GPUs). 
 Furthermore, the next three DOE supercomputers (Perlmutter, Aurora, and Frontier) will feature GPUs from different vendors (NVIDIA, Intel, and AMD). 
-There are significant differences in the underlying organization of these GPUs as well as their hardware support for performance measurement. For
+There are significant differences in the underlying organization of these GPUs as well as their hardware and software support for performance measurement. For
 performance tools, the need to support multiple CPU and GPU architectures significantly increases tool complexity.  At the same time, the
 complexity of applications is increasing dramatically as developers
 struggle to expose billion-way parallelism, map computation onto
@@ -63,9 +63,11 @@ interactions between software and key hardware subsystems in
 extreme-scale platforms, including GPUs and the complex memory hierarchies on GPU-accelerated compute nodes. A major focus of this effort is developing new capabilities for 
 measurement and analysis of performance on GPUs.
 Second, the team is working to improve performance
-attribution given optimized code for complex node-level programming
-models used by ECP developers, including OpenMP and template-based
-programming models such as LLNL's RAJA and Sandia's KOKKOS. To support
+attribution given optimized code for a large collection of complex node-level programming
+models used by ECP developers, including 
+vendor specific programming models such as CUDA, HIP, and Data Parallel C++,
+open source community programming models such as OpenMP,
+and template-based programming models developed at national laboratories such as LLNL's RAJA and Sandia's Kokkos. To support
 this effort, the project team is enhancing the Dyninst binary analysis
 toolkit, which is also used by other ECP tools. A major focus of this effort 
 is to support analysis of GPU binaries. Third, the team is
@@ -83,18 +85,24 @@ issues on ECP testbeds and forthcoming exascale systems.
 \begin{itemize}
 
 \item
-The project team developed a novel approach to synthesize a GPU Calling Context Tree (CCT) to report the performance of a GPU kernel that invokes multiple procedures.
-While attribution of performance metrics in the CCT is approximate, it is essential for understanding the interplay of many procedures that implement a kernel expressed using template-based programming models. Figure~\ref{fig:hpctoolkit}(a) shows a calling context that spans both CPU and GPU for a benchmark code implemented using LLNL's RAJA template-based programming model. 
-%The approximate calling context on the GPU was reconstructed by recovering the static call graph on the GPU by analyzing GPU machine instructions and using program counter samples on the GPU to guide weighted attribution of costs.   
-\item
+The project team developed a unified GPU monitoring substrate. Upon this substrate, they developed support for collecting summary metrics for 
+kernel launches, memory copies, and synchronizations on AMD, Intel, and NVIDIA GPUs.
 
-The project team extended HPCToolkit with prototype support for and collecting and visualizing traces of both CPU and GPU activity.
-Figure~\ref{fig:hpctoolkit}(b) shows a trace of a 6-process GPU-accelerated execution of a recent snapshot of Nyx---an adaptive mesh, compressible cosmological hydrodynamics simulation code being developed as part of the DOE ECP ExaSky project. In the figure, CPU trace lines appear as continuous multi-colored bands running the  trace lines the width of the figure. GPU trace lines show large intervals of white, indicating idleness, or red, indicating costly, excess synchronization present in the prototype code measured.
 
 \item
-The project team developed a novel approach to derive key GPU performance metrics, including GPU occupancy, by measuring a single execution of a GPU-accelerated program using program counter sampling on NVIDIA GPUs.
+The project team enhanced support for fine-grained measurement of GPU computations using PC sampling on NVIDIA GPUs and binary instrumentation on Intel GPUs. 
+HPCToolkit uses instruction-level measurements to reconstruct approximate calling context trees to help developers understand performance of complex GPU kernels.
+Figure~\ref{fig:hpctoolkit}(a) shows a calling context for Quicksilver, an ECP proxy application for LLNL's Mercury next-generation transport code; the highlighted region shows an approximate reconstruction of a GPU calling context tree.
 
-\item To reduce the overhead of measuring GPU-accelerated applications, the project team developed a novel wait-free data structure that is employed in the implementation of  HPCToolkit's measurement subsystem.
+\item
+The project team enhanced HPCToolkit for collecting and visualizing traces of both CPU and GPU activity.
+Figure~\ref{fig:hpctoolkit}(b) shows a trace of a GPU-accelerated execution of a recent snapshot of Nyx---an adaptive mesh, compressible cosmological hydrodynamics simulation code being developed as part of the ECP ExaSky project. Each GPU kernel is related to the CPU calling context in which it was launched, which helps developers understand the performance of complex applications.
+
+\item
+The project team developed a novel approach that utilizes both shared and distributed memory parallelism to analyze and aggregate sparse data representations of performance measurements from every rank, thread and GPU stream in a program execution. 
+
+\item 
+The project team improved the reliability of HPCToolkit's hpcrun for monitoring complex dynamic library loading and unloading and interacting with the application when other software tools are present.
 
 \end{itemize}
 
@@ -102,19 +110,19 @@ The project team developed a novel approach to derive key GPU performance metric
 \captionsetup{width=.96\textwidth}
 \begin{minipage}[t]{.48\textwidth}
 \centering
-\includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-raja-perf}
+\includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-qs}
 \\(a)
 \end{minipage}
 \hfill
-\begin{minipage}[t]{.48\textwidth}
+\begin{minipage}[t]{.46\textwidth}
 \centering
 \includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-nyx-trace}
 \\(b)
 \end{minipage}
 \caption{(a) 
 HPCToolkit's {\tt hpcviewer} showing a detailed attribution of GPU performance metrics in a 
-profile of an optimized, GPU-accelerated benchmark written using LLNL's RAJA template-based programming model.
-(b) HPCToolkit's {\tt hpctraceviewer} showing a 6-process GPU-accelerated execution trace of Nyx---an adaptive mesh, compressible cosmological hydrodynamics simulation code.}
+profile of Quicksilver.
+(b) HPCToolkit's {\tt hpctraceviewer} showing CPU and GPU trace lines for Nyx.}
 \label{fig:hpctoolkit}
 \end{figure}
 
@@ -126,10 +134,10 @@ Integrate GPU measurement and analysis capabilities into HPCToolkit's trunk for
 release.
 
 \item 
-Finish refactoring measurement support initially developed for NVIDIA GPUs into a GPU-independent monitoring substrate.
+Continue to improve solutions for fine-grained measurement of computations on Intel GPUs and explore new solutions for fine-grained measurement on AMD GPUs.
 
 \item 
-Add support for collecting new GPU performance metrics.
+Continue to refine the reliability and performance of monitoring operations on dynamic libraries.
 
 \item 
 Work with the open source community to upstream GPU measurement support
