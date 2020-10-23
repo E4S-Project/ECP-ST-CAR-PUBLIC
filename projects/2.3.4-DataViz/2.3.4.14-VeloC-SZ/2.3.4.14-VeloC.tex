@@ -28,7 +28,7 @@ VeloC faces several key challenges:
 simple checkpoint-restart mechanisms to survive failures that directly
 use a parallel file system. With diminishing I/O bandwidth available
 per core, this leads to high checkpointing overhead and is not
-sustainable
+sustainable.
 \vspace{-1em}
 
 \paragraph{\emph{Deep heterogeneous storage:}} To compensate for
@@ -41,9 +41,9 @@ application developers to take advantage of it.
 
 \paragraph{\emph{Restart-in-place:}} a majority of failures affect
 only a small part of the nodes where the job is running. Therefore,
-reusing the surviving nodes immediately after a failure is more
-efficient than submitting a new job (which may wait in the batch
-queue) that restarts from the latest checkpoint.
+reusing the surviving nodes to restart from the latest checkpoint
+immediately after a failure is more efficient than submitting a new job,
+which may wait in the batch queue.
 \vspace{-1em}
 
 \paragraph{\emph{Portability and robustness:}} applications need to
@@ -103,17 +103,18 @@ automatically serialized into checkpoint files.
 \paragraph{\emph{Modular design:}} applications link with a client
 library that is responsible to manage local checkpoints, while a
 separate engine is responsible to employ the rest of the resilience
-strategies as plugin-able modules. This simplifies the implementation
-of the asynchronous mode, enables users the flexibility to choose any
-combination of resilience strategies, as well as to customize the
+
+strategies as plugable modules. This simplifies the implementation
+of the asynchronous mode, it enables users the flexibility to choose any
+combination of resilience strategies, as well as, to customize their
 checkpoiting pipeline (e.g., add new post-processing operations such
-as analytics or compression)
+as analytics or compression).
 
 \paragraph{Recent Progress}
 
 We met and closely collaborated with several ECP application teams in
 an effort to address their checkpointing needs. Most of our current
-efforts involve the HACC, LatticeQCD and EXAALT teams. Starting from
+efforts involve the HACC, LatticeQCD, and EXAALT teams. Starting from
 our previous efforts to isolate the checkpointing code into an optional
 plugin within the application (which is notably the case of HACC, where
 we integrated VeloC as a CosmoTools plugin), we developed an automated
@@ -139,12 +140,12 @@ communication protocol based on Mercury/Thallium that enables the active
 backend to be deployed on separate nodes. Both alternatives complement the
 existing default control plane implemented using POSIX shared memory.
 
-We have also added several new features that facilitate better
-integration with the ECP ecosystem. In addition to continous
+In addition, we have added several new features that facilitate better
+integration with the ECP ecosystem. In addition to continuous
 integration based on Travis (linked to our public GitHub repository),
 we designed and developed a test suite for VeloC that verifies the
 correnctness in a multi-node setup on the ECP testbeds using the
-continous integration platform provided by ECP (which is configured to
+continuous integration platform provided by ECP (which is configured to
 mirror the GitHub repository). We are also providing a Spack
 installation package that is part of the OpenHPC distribution.
 
