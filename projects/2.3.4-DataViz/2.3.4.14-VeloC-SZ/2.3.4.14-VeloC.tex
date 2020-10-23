@@ -18,8 +18,7 @@ in Figure~\ref{fig:veloc:arch}.
 
 VeloC has been released and shows significant lower checkpointing
 overhead for several ECP applications, such as HACC, LatticeQCD,
-and EXAALT. VeloC is a next generation checkpointing system that builds on
-SCR, which won the prestigious R\&D 100 award in 2019.
+EXAALT. 
 
 \paragraph{Key Challenges.}
 VeloC faces several key challenges:
@@ -74,7 +73,7 @@ been written, applications do not need to wait for replication,
 erasure coding or writes to the parallel file system: these can be
 applied in the background, while the application continues
 running. However, in this case, it is important to minimize
-interference.
+interference with the application execution.
 \vspace{-1em}
 
 \paragraph{\emph{Transparent use of heterogeneous storage:}} we
@@ -104,8 +103,9 @@ automatically serialized into checkpoint files.
 \paragraph{\emph{Modular design:}} applications link with a client
 library that is responsible to manage local checkpoints, while a
 separate engine is responsible to employ the rest of the resilience
+
 strategies as plugable modules. This simplifies the implementation
-of the asynchronous mode, and it enables users the flexibility to choose any
+of the asynchronous mode, it enables users the flexibility to choose any
 combination of resilience strategies, as well as, to customize their
 checkpoiting pipeline (e.g., add new post-processing operations such
 as analytics or compression).
