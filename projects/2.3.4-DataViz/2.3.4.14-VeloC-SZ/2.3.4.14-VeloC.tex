@@ -18,8 +18,7 @@ in Figure~\ref{fig:veloc:arch}.
 
 VeloC has been released and shows significant lower checkpointing
 overhead for several ECP applications, such as HACC, LatticeQCD,
-EXAALT. VeloC is a next generation checkpointing system that builds on
-SCR, which won the prestigious R\&D 100 award in 2019.
+EXAALT. 
 
 \paragraph{Key Challenges.}
 VeloC faces several key challenges:
@@ -74,7 +73,7 @@ been written, applications do not need to wait for replication,
 erasure coding or writes to the parallel file system: these can be
 applied in the background, while the application continues
 running. However, in this case, it is important to minimize
-interference.
+interference with the application execution.
 \vspace{-1em}
 
 \paragraph{\emph{Transparent use of heterogeneous storage:}} we
@@ -105,7 +104,7 @@ automatically serialized into checkpoint files.
 library that is responsible to manage local checkpoints, while a
 separate engine is responsible to employ the rest of the resilience
 strategies as plugin-able modules. This simplifies the implementation
-of the asynchronous mode, enables users the flexibility choose any
+of the asynchronous mode, enables users the flexibility to choose any
 combination of resilience strategies, as well as to customize the
 checkpoiting pipeline (e.g., add new post-processing operations such
 as analytics or compression)
@@ -140,7 +139,7 @@ communication protocol based on Mercury/Thallium that enables the active
 backend to be deployed on separate nodes. Both alternatives complement the
 existing default control plane implemented using POSIX shared memory.
 
-In addition, we have added several new features that facilitate better
+We have also added several new features that facilitate better
 integration with the ECP ecosystem. In addition to continous
 integration based on Travis (linked to our public GitHub repository),
 we designed and developed a test suite for VeloC that verifies the
