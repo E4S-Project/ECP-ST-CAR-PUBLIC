@@ -155,7 +155,7 @@ importance to ECP, both for correctness and performance.
 \centering
 \begin{minipage}[c]{0.20\textwidth}
 \captionsetup{width=\textwidth,font=small,labelfont=bf} %% Need to override default width
-\caption{ReInit reduces the time for applications to recover from faults using checkpoints.}
+\caption{Partitioned communications enables increased concurrency in communication operations which can be carried out by multiple threads or tasks.}
 \label{fig:partitioned-communications}
 \end{minipage}
 \qquad
@@ -167,6 +167,12 @@ importance to ECP, both for correctness and performance.
 \includegraphics[width=\textwidth]{projects/2.3.1-PMR/2.3.1.17-OMPI-X/partitioned-communications-early-receive.png}
 \end{minipage}
 \end{figure}
+
+\begin{wrapfigure}{r}{0.40\textwidth}
+\includegraphics[width=0.40\textwidth]{projects/2.3.1-PMR/2.3.1.17-OMPI-X/reinit.png}
+\caption{ReInit reduces application recovery time.}
+\label{fig:reinit}
+\end{wrapfigure}
 
 \paragraph{Recent Progress}
 %% \textit{Describe what you have done recently.  It would be good to
@@ -183,7 +189,7 @@ sometimes need to be made between conformance with the standard and providing a 
 We are also continuing to drive forward on a number of fronts that did not make the 4.0 version of the standard,
 but are still considered important or useful for exascale and the ECP community, particularly in the context of resilience. The ULFM
 proposal has been updated to reflect those features that have been incorporated into 4.0, as well as the discussions
-within the Forum.  For the complementary Reinit simplified checkpoint/restart proposal, we have carried out a formal verification on the recovery algorithm. 
+within the Forum.  For the complementary Reinit simplified checkpoint/restart proposal (Figure~\ref{fig:reinit}), we have carried out a formal verification on the recovery algorithm. 
 This ensures that the protocol, which we plan to propose for a future version of MPI, correctly handles the recovery phase 
 of a failure response, including correct propagation of notifications, absence of deadlocks, and proper termination.
 
@@ -207,6 +213,11 @@ been demonstrated in several contexts within the Open~MPI library, including the
 either GPU HBM memory or DRAM.  We have also provided a design document for library developers
 to work with different memory pools in the context of Open~MPI.  Finally, on the hardware side, we have benefit
 working with HPE (Cray) to ensure that the new partitioned communication capability in MPI 4.0 will support GPUs effectively.
+
+In addition to these activities, we continue to support quality assurance of the Open~MPI code base through more and better testing.  The Open~MPI testing infrastructure, 
+MTT, continues to be improved for flexibility and capability.  One of this year's noteworthy efforts was the addition of the bueno application test harness to the testing 
+system.  The facilitates incorporating third-party test cases (i.e. based on user applications) into the routine testing process without having to commit them to the
+Open~MPI testing repository.
 
 \paragraph{Next Steps}
 %% \textit{Describe what you are working on next.}
