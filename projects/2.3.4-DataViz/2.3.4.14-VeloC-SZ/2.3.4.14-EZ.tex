@@ -55,7 +55,8 @@ The compression ratio can be improved by 51\% with the same data distortion leve
 We also significantly improved the GPU kernel performance of SZ. We have released the cuda-based SZ (cuSZ) 0.1.1 and tested its performance on V100 GPU (adopted by Summit). The cuSZ is optimized on each compression stage in the SZ framework, including the data prediction, quantization, and Huffman encoding. Specifically, we developed a dual-quantization scheme to entirely remove the data dependency in the prediction step of SZ such that this step can be performed efficiently on GPUs. We developed an efficient customized Huffman coding for the SZ compressor on GPUs. We implemented cuSZ using CUDA and optimized its performance by improving the utilization of GPU memory bandwidth. Figure \ref{fig:cuSZ:arch} presents the design overview, and the technical details can be found in our paper published in PACT2020. Experiments on V100 GPU show that the overall compression performance reaches up to 37GB/s based on both HACC and NYX simulation datasets.
 
 \begin{figure}
-  \includegraphics[width=0.9\textwidth]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/200718_workflow.pdf}
+  \centering
+  \includegraphics[width=0.8\textwidth]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/200718_workflow.pdf}
   \caption{cuSZ: Design Overview}%
   \label{fig:cuSZ:arch}%
   \vspace{-2mm}
@@ -66,6 +67,6 @@ We also developed the first prototype of kSZ (short for kokkosSZ), and compared 
 
 %We also have a good progress on the integration of SZ into EXAALT project. We have developed a multi-level cache system, which exhibits on  
 
-\paragraph{Next Steps} Our next efforts are: (1) Improve compression quality and performance for both cuSZ and kSZ, as well as their stability, (2) keep refactoring SZ in C++ (the first version will be released in Jan, 2021), (3) keep working on the compression quality improvement and integration of SZ in more ECP applications such as EXAALT, and (4) evaluate the portable GPU version of SZ on more systems such as Aurora and Frontier and improve SZ testing environment.
+\paragraph{Next Steps} Our next efforts are: (1) Improve compression quality and performance for both cuSZ and kSZ, as well as their stability, (2) keep refactoring SZ in C++ (the first version will be released in Jan, 2021), (3) keep working on the compression quality improvement and integration of SZ in more ECP applications such as EXAALT, and (4) evaluate the portable GPU version of SZ on more ECP platforms.
 
 %\textbf{Support advanced error controls allowing the user to specify relative error bounds and to control the error distribution.} We will write a report describing the integration of additional error controls (relative error bound and control of error distribution) in SZ.

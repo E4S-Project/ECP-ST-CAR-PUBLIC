@@ -168,17 +168,10 @@ approaches with ECP CANDLE, which relies primarily on deep learning.
 \paragraph{Next Steps}
 We are working towards several goals: (1) providing a set of C++
 client interfaces as well as automated serialization support for
-common C++ data structures (notably from the STL), which complements
-the current \emph{(pointer, size)} memory-based declarative API; (2)
-investigate and apply mitigation mechanisms for the case when certain
-features (e.g. multiple independent MPI instances sharing the same set
-of nodes simultaneously) are not available or perform suboptimally on
-some ECP platforms; (3) continue hardening the integration with
-existing ECP applications; (4) improve the automated testing
-infrastructure and build environment for VeloC to support
-comprehensive testing on ECP machines.
-
+common C++ data structures (notably from the STL); (2)
+investigate and apply mitigation mechanisms for features that
+are missing or perform suboptimally (notably multiple concurrent 
+MPI instances); (3) continue hardening the integration with
+existing ECP applications and automated testing infrastructure.
 In parallel, we will continue to collaborate with the ECP application
-teams to address new requirements should they arise.  Furthermore, we
-will expand our user base beyond ECP to interact and get feedback from
-the broader international community.
+teams to address new requirements should they arise.
