@@ -67,7 +67,7 @@ attribution given optimized code for a large collection of complex node-level pr
 models used by ECP developers, including 
 vendor specific programming models such as CUDA, HIP, and Data Parallel C++,
 open source community programming models such as OpenMP,
-and template-based programming models developed at national laboratories such as LLNL's RAJA and Sandia's KOKKOS. To support
+and template-based programming models developed at national laboratories such as LLNL's RAJA and Sandia's Kokkos. To support
 this effort, the project team is enhancing the Dyninst binary analysis
 toolkit, which is also used by other ECP tools. A major focus of this effort 
 is to support analysis of GPU binaries. Third, the team is
@@ -85,19 +85,18 @@ issues on ECP testbeds and forthcoming exascale systems.
 \begin{itemize}
 
 \item
-The project team developed a unified GPU monitoring substrate that supports GPUs from different vendors.
-Based on the GPU-independent substrate, the project team developed kernel level measurement, 
-which refers to the capability of collecting summary metrics for kernel launches, memory copies, and synchronizations,
-for NVIDIA, Intel and AMD GPUs.
+The project team developed a unified GPU monitoring substrate. Upon this substrate, they developed support for collecting summary metrics for 
+kernel launches, memory copies, and synchronizations on AMD, Intel, and NVIDIA GPUs.
+
 
 \item
-The project team refined fine-grained measurement, which refers to the capability of collecting metrics inside a kernel, such as metrics for a device function, a basic block, a source line, or even a machine instruction, Nvidia GPUs.
-Figure~\ref{fig:hpctoolkit}(a) shows a calling context that spans both CPU and GPU for a benchmark code implemented using LLNL's RAJA template-based programming model.
-The team is also investigating fine-grained measurement for Intel GPUs and discussing fine-grained measurement support for AMD GPUs with AMD.
+The project team enhanced support for fine-grained measurement of GPU computations using PC sampling on NVIDIA GPUs and binary instrumentation on Intel GPUs. 
+HPCToolkit uses instruction-level measurements to reconstruct approximate calling context trees to help developers understand performance of complex GPU kernels.
+Figure~\ref{fig:hpctoolkit}(a) shows a calling context for Quicksilver, an ECP proxy application for LLNL's Mercury next-generation transport code; the highlighted region shows an approximate reconstruction of a GPU calling context tree.
 
 \item
 The project team enhanced HPCToolkit for collecting and visualizing traces of both CPU and GPU activity.
-Figure~\ref{fig:hpctoolkit}(b) shows a trace of a 6-process GPU-accelerated execution of a recent snapshot of Nyx---an adaptive mesh, compressible cosmological hydrodynamics simulation code being developed as part of the DOE ECP ExaSky project. In the figure, CPU trace lines appear as continuous multi-colored bands running the  trace lines the width of the figure. GPU trace lines show large intervals of white, indicating idleness, or red, indicating costly, excess synchronization present in the prototype code measured.
+Figure~\ref{fig:hpctoolkit}(b) shows a trace of a GPU-accelerated execution of a recent snapshot of Nyx---an adaptive mesh, compressible cosmological hydrodynamics simulation code being developed as part of the ECP ExaSky project. Each GPU kernel is related to the CPU calling context in which it was launched, which helps developers understand the performance of complex applications.
 
 \item
 The project team developed a novel approach that utilizes both shared and distributed memory parallelism to analyze and aggregate sparse data representations of performance measurements from every rank, thread and GPU stream in a program execution. 
@@ -111,19 +110,19 @@ The project team improved the reliability of HPCToolkit's hpcrun for monitoring 
 \captionsetup{width=.96\textwidth}
 \begin{minipage}[t]{.48\textwidth}
 \centering
-\includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-raja-perf}
+\includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-qs}
 \\(a)
 \end{minipage}
 \hfill
-\begin{minipage}[t]{.48\textwidth}
+\begin{minipage}[t]{.46\textwidth}
 \centering
 \includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-nyx-trace}
 \\(b)
 \end{minipage}
 \caption{(a) 
 HPCToolkit's {\tt hpcviewer} showing a detailed attribution of GPU performance metrics in a 
-profile of an optimized, GPU-accelerated benchmark written using LLNL's RAJA template-based programming model.
-(b) HPCToolkit's {\tt hpctraceviewer} showing a 6-process GPU-accelerated execution trace of Nyx---an adaptive mesh, compressible cosmological hydrodynamics simulation code.}
+profile of Quicksilver.
+(b) HPCToolkit's {\tt hpctraceviewer} showing CPU and GPU trace lines for Nyx.}
 \label{fig:hpctoolkit}
 \end{figure}
 
@@ -135,10 +134,10 @@ Integrate GPU measurement and analysis capabilities into HPCToolkit's trunk for
 release.
 
 \item 
-Continue to investigate solutions for fine-grained GPU performance measurement for Intel and AMD GPUs.
+Continue to improve solutions for fine-grained measurement of computations on Intel GPUs and explore new solutions for fine-grained measurement on AMD GPUs.
 
 \item 
-Continue to improve reliability of hpcrun for monitoring dynamic library loading and unloading
+Continue to refine the reliability and performance of monitoring operations on dynamic libraries.
 
 \item 
 Work with the open source community to upstream GPU measurement support
