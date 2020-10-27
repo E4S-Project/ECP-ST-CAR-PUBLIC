@@ -35,7 +35,28 @@ Recognizing the release readiness and broader maturity differences between ECP S
 
 E4S release 1.0 was announced in November 2019 on the external E4S website~\cite{e4s:homepage}. The release supports 50 ST products under Linux x86\_64. In February 2020, E4S release 1.1 extended support to both NVIDIA and AMD GPUs with the inclusion of CUDA and ROCm in a single image under Linux x86\_64. Release 1.1 also introduced support for the Linux ppc64le platform that supports CUDA 10.1. E4S releases contain HPC as well as AI/ML software including TensorFlow and PyTorch. The E4S DocPortal, accessible from the E4S website, was created to rake information from E4S product GitHub pages and provide it in a single location with the most up-to-date information about releases, installation instructions, etc. The E4S validation testsuite~\cite{e4s:validation} was introduced with support for LLVM and other ST products.
 
-In October 2020, E4S v1.2 included an x86\_64 image with 67 E4S products. E4S images are now available for download on DockerHub under the ecpe4s area for testing and will be released on the E4S website in November 2020. The E4S Spack Build Cache now includes binaries for ppc64le as well as x86\_64 and includes over 22,000 total binaries. E4S containers now support custom images for ECP applications such as WDMapp and Pantheon. The E4S build cache has improved the the build times for these codes significantly. 
+In October 2020, E4S v1.2 included an x86\_64 image with 67 E4S products. E4S images are now available for download on DockerHub under the ecpe4s area for testing and will be released on the E4S website in November 2020. The E4S Spack Build Cache now includes binaries for ppc64le as well as x86\_64 and includes over 22,000 total binaries. E4S containers now support custom images for ECP applications such as WDMapp and Pantheon (see Figure~\ref{fig:SpackBuildCacheWDMapp}). The E4S build cache has improved the the build times for these codes significantly. 
+\begin{figure}
+        \centering
+        \includegraphics[width=0.9\linewidth]{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/SpackBuildCacheWDMapp}
+        \caption{WDMapp documentation for how to use the E4S WDMapp Docker container to speed up WDMapp installation by leveraging the E4S Spack build cache.}
+        \label{fig:SpackBuildCacheWDMapp}
+\end{figure}
+
+Also in October 2020, Version 1 of the E4S Community Policies was announced~\cite{e4s:policies}. The E4S Community Policies will serve as membership criteria for E4S member packages. The E4S Community Policies have their genesis in the xSDK Community Policies, and have a similar purpose. Their purpose is to help address sustainability and interoperability challenges within the complex software ecosystem that ECP ST is a part of.
+
+The process of establishing Version 1 of the E4S Community Policies was a multi-year effort led by the ECP SDK team, including representation from Programming Models and Runtimes, Development Tools, Math Libraries, Data and Vis, and Software Ecosystem and Delivery. This team reviewed the existing xSDK Community Policies and selected those policies that were most generally applicable to all of ECP ST, and not specific to math libraries. From there, the chosen policies were refined and gaps were analyzed.
+
+An early draft was presented to ECP ST leadership, after which an updated draft was socialized with all of ECP ST. The feedback gathered was incorporated into another draft that was again shared broadly across ECP ST. Feedback examples can be seen in Figure~\ref{fig:e4s-policy-feedback}. After considering the latest feedback, the first version of the policies was finalized. A strong effort was made to involve all interested community members and seriously consider the feedback received.
+
+\begin{figure}
+        \centering
+        \includegraphics[width=0.9\linewidth]{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/E4S-policy-comment}
+        \caption{Two examples of policy feedback received from the ECP ST development community. Comments commonly touched on issues such as appropriateness, both broadly and to specific types of software found within ST, as well as clarity and feasibility.}
+        \label{fig:e4s-policy-feedback}
+\end{figure}
+
+In addition to the policies shown in Figure~\ref{fig:E4S-Community-Policies-V1} a second list of Future Revision policies was also created. These policies are not currently E4S membership criteria, but will be very seriously considered in future versions. In most cases, these policies require further refinement or planning prior to adoption. The topics that these policies address provide information about likely subject areas for E4S policies going forward and are critical to ongoing communication with the E4S community.
 
 %In January 2019, E4S Release 0.2 was posted to the new external E4S website~\cite{e4s:homepage}. It includes a subset of ECP ST software products, and demonstrates the target approach for future delivery of the full ECP ST software stack. Also available are a number of ECP ST software products that support a Spack package, but are not yet fully interoperable. As the primary purpose of the 0.2 release is demonstrating the ST software stack release approach, not all ECP ST software products were targeted for this release. Software products were targeted primarily based on existing Spack package maturity, location within the scientific software stack, and ECP SDK developer experience with the software.
 
@@ -53,13 +74,11 @@ In October 2020, E4S v1.2 included an x86\_64 image with 67 E4S products. E4S im
 Current and near-term efforts include:
 
 \begin{itemize}
-\item  Defining community policies for E4S.
+\item  Defining a process for documenting and verifying compatibility with E4S  Community Policies.
 \item  Assisting with E4S deployment to computing Facilities.
-\item  Adding additional ST software to E4S for inclusion in the version 1.0 release.
-\item  Creating a Spack build-cache for improving the ease of installation of E4S packages. 
-\item  Creating a set of reproducible container recipes for E4S SDKs.
-\item  Creating base images for Linux x86\_64, ppc64le, and aarch64 architectures.
-\item  Beginning SDK-specific community policy discussions within newly formed SDK communities.
-\item  Testing new ECP-funded continuous integration capability.
+\item  Adding additional ST software to E4S.
+\item  Assisting with establishing workflows around the maintenance of multi-package CI builds at computing facilities.
+\item  Starting work on Version 2 of the E4S Community Policie.
+\item  Supporting SDK-specific efforts focused on the needs of each SDK, with a particular emphasis on sustainability.
 \end{itemize}
 
