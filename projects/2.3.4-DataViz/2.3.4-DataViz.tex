@@ -85,7 +85,114 @@ There are specific risks identified for the Data and Visualization portfolio.  T
 
 \textbf{Object stores} Facilities are planning deployments of non-POSIX storage solutions. One of the first of these will be the DAOS deployment on the A21 system at Argonne. The DAOS interfaces are available for teams to begin to understand, an HDF5 front-end for DAOS is available, and there are some examples of DAOS use for scientific codes. It is likely that the highest performance will come from applications directly using the DAOS APIs, and work to allow understanding of how these APIs are used would be beneficial.
 
-\textbf{Storage hardware} Even in systems that will continue to employ POSIX file systems as the main "scratch" store, the hardware on which these file systems are stored will be changing. For example, the Perlmutter system will provide a 30~PB nonvolatile storage tier using Lustre. The file system teams (e.g., Lustre team) will be working to maximize performance on these new storage back-ends, but simultaneously higher software layers must consider how this significant change impacts their assumptions about the relative costs of communication and data storage for common patterns of access.
-
 \textbf{Compression} Compression will continue to play an important role in computation as a vehicle for addressing the explosion in size of datasets and outputs. Improved integration of compression capabilities in libraries supporting parallel I/O will continue to be a topic for further development, and techniques for allowing concurrent updates while compression is enabled specifically need more exploration.  The use of lower precision data types has the potential of speeding up the visualization and analysis process as well as reducing data sizes without significantly degrading the accuracy of results. 
+
+\textbf{Storage technologies and architectures} Even in systems that will continue to employ POSIX file systems as the main "scratch" store, the hardware on which these file systems are stored will be changing. For example, the Perlmutter system will provide a 30~PB nonvolatile storage tier using Lustre. The file system teams (e.g., Lustre team) will be working to maximize performance on these new storage back-ends, but simultaneously higher software layers must consider how this significant change impacts their assumptions about the relative costs of communication and data storage for common patterns of access.
+
+
+% STORAGE ARCH. DIAGRAM -- HIGH LEVEL
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.70\textwidth]{projects/2.3.4-DataViz/DataViz-storage-notional-diagram.pdf}
+	\caption{\label{fig:DataViz:StorageDiagram} A notional diagram of DOE
+		facility storage resources. Not all systems have each role filled,
+		and often additional network connections exist to accelerate specific
+		data flows.}
+\end{figure}
+
+
+% FUTURE: STORAGE TECHNOLOGIES AND ARCHITECTURES
+Figure~\ref{fig:DataViz:StorageDiagram} depicts a notional diagram of
+the storage resources surrounding a leadership class platform at a DOE
+facility. In this diagram, ``platform'' is the HPC system itself: Theta, Summit,
+Cori, Frontier, Perlmutter, Aurora, etc. 
+
+Note that this is a notional diagram. There are often additional
+connections to speed specific transfers, and some sites augment one resource
+while omitting another.
+%
+Data transfer nodes provide access to data stored on facility storage from the
+outside world: Typically this is enabled using GridFTP, Globus Online, htar, or
+similar.
+
+There are lots of roles that storage might play:
+\begin{itemize}
+	\item \emph{Archival storage} holds ``cold'' data. Currently tape is
+	still the dominant media for archival storage, but disk is also used,
+	both as cache and as permanent storage (sometimes spun down).
+	\item \emph{Center-wide storage} allows for easy data access between
+	systems. This might include home directories and some other shared data
+	volumes. Often performance is limited compared to platform storage.
+	\item \emph{Platform storage} is storage that is connected to a limited
+	number of platforms in the facility and is meant to be a high-performance,
+	high-capacity store for data that will be used for multiple runs. While
+	disk drives are still used in some platform storage deployments,
+	increasingly solid-state storage (e.g., SSDs) is being employed in
+	this role.
+	\item \emph{Embedded storage} is located very close to the platform
+	itself, either as node-local storage or tightly integrated into the
+	fabric. Technologies used include NVMe and SSDs. Embedded storage that
+	is available across the system is perhaps best thought of as a special 
+	kind of platform storage.
+\end{itemize}
+
+%
+% CURRENT STORAGE SPECS
+%
+\begin{table}[t]
+	\vspace{-2mm}
+	\centering
+	\caption{\label{table:DataViz:StorageSpecsCurrent} Storage system specifications for current platforms.}
+	\includegraphics[width=0.75\textwidth]{projects/2.3.4-DataViz/DataViz-storage-specs-current.pdf}
+\end{table}
+
+Table~\ref{table:DataViz:StorageSpecsCurrent} captures the salient
+characteristics of the storage deployments for the current generation of
+systems: Theta, Cori, and Summit. These systems largely reflect trends in DOE
+storage over the last decade: HPSS archival storage coupled with a POSIX
+center-wide file system provided by GPFS or Lustre and backed by hard disk
+drives (HDDs). In two cases a faster, platform-specific POSIX file system is 
+deployed, while at OLCF the team chose to instead concentrate on a very high
+performance center-wide file system that is available on other resources as well.
+
+Of note in these systems are some embedded storage options that have
+provided the community with some early experiences with SSD storage. On
+Theta and Summit local SSDs are available that have seen limited use
+by specific teams. On Cori, the DataWarp service allows for SSD-backed
+storage pools to be allocated that are visible to an entire job or
+workflow. This functionality is close to the model that users are
+accustomed to, and the resource and has seen significant use.
+
+%
+% PROJECTED FUTURE SPECS
+%
+\begin{table}[t]
+	\vspace{-2mm}
+	\centering
+	\caption{\label{table:DataViz:StorageSpecsNext} Projected storage specifications for upcoming platforms.}
+	\includegraphics[width=0.75\textwidth]{projects/2.3.4-DataViz/DataViz-storage-specs-next.pdf}
+\end{table}
+
+Table~\ref{table:DataViz:StorageSpecsNext} captures the current, public
+understanding of storage characteristics for the next generation of
+systems: Aurora, Perlmutter, and Frontier.
+%
+Looking at this data, a number of observations can be made. First, POSIX will
+remain the dominant (at least low-level) API for interacting with the primary
+storage resources (embedded, platform, and center-wide). Obtaining peak
+performance will likely remain a challenge for users, but with node counts
+somewhat stalled, storage software scalability is not further pressured.
+%
+Second, a POSIX alternative, DAOS, will appear. DAOS is an Intel
+product that will provide a form of globally accessible key-value
+style of storage. However, a POSIX ``veneer'', or compatibility layer,
+will be provided that will give users an easy way to make use of the
+resource. With all the major ST I/O libraries already having the ability
+to implement alternative back-ends, the challenge will be more about how
+to persist things \emph{outside} DAOS efficiently (e.g., converting back
+to POSIX files).
+%
+Finally, there will still be a non-global, embedded storage resource on
+Frontier. The best ways to use this resource are unclear, but systems
+like UnifyFS could play a role.
 
