@@ -121,135 +121,121 @@ to address identified issues in our technologies as appropriate.
 
 \paragraph{Recent Progress}
 
-\emph{STDM12-11:}
-This milestone presents the deliverables of three new software features
-in PnetCDF library: 1) making use of burst buffers to improve the
-I/O performance; 2) providing read capability to HDF5 files; and 3)
-providing read capability to BP files. The first feature aggregates
-I/O requests transparently to burst buffers which are later flushed
-to the parallel file system. This effectively achieve a better I/O
-bandwidth utilization. The latter two features alleviates application
-users from developing a separate set of I/O functions in order to read
-files in HDF5 and BP formats. HDF5 has been a popular file format in the
-scientific communities, with many third-party software packages for data
-analysis and visualization. In addition to improve the productivity for
-application scientists, these new features also encourage the PnetCDF user
-communities, mainly in climate research, to expand to other scientific
-disciplines.
+\emph{STDM12-22:} Deliver Darshan/HDF and CAR input, establish calls with Mochi
+users. Discussion occurred with ExaHDF team regarding their understanding of
+interesting HDF access characteristics. Basic Darshan capabilities for tracking
+HDF dataset use have been implemented in a (public) branch of Darshan for
+inclusion in a future release.
 
-\emph{STDM12-12:}
-This milestone presents a Mercury suite release including
-platform-independent fault detection mechanisms for providing fault
-tolerance to ECP applications and data services. Additionally, a
-demonstration of this functionality on a production platform relevant
-to ECP and integration of correctness testing for this functionality
-into Mercury suite regression testing.
+Unify, DataSpaces, and VeloC teams were contacted regarding regular
+communication. All teams were interested in a quarterly "open call" for all
+Mochi users. The first of these is planned for April and will be advertised on
+the mochi-devel mailing list. DataSpaces and VeloC teams were also interested
+in regular one-on-one calls. We will be meeting with the VeloC team in person
+next week to discuss cadence of these. We have the first one-on-one call with
+the DataSpaces team on Feb. 14. B. Robey is in touch with Ristra and ExaFEL. 
 
-\emph{STDM12-13:}
-This milestone presents a Darshan software release including fine-grained
-I/O tracing capabilities, with a mechanism to automatically enable tracing
-at runtime. Additionally, we demonstrate the utility of this new automatic
-tracing mechanism for gaining insights into an ECP application. The new
-trace triggering mechanism provides Darshan users more control over
-what files Darshan traces at runtime. Specifically, Darshan now allows
-users to expose a file describing a set of trace triggers that control
-whether or not tracing should be enabled for a particular file. Currently
-supported triggers include static triggers that use filename-based or
-MPI rank-based regex matching (i.e., filenames with a specific extension
-or directory prefix, or files opened by a particular range of ranks),
-as well as dynamic triggers based on access characteristics to files at
-runtime (i.e., trace all files that had at least 50 percent accesses that were
-small or unaligned).  
+\emph{STDM12-23:} Analyze HDF use and improve Mochi services for ECP
+applications. Characterize performance and overhead of HDF use in specific ECP
+codes: we have been focusing on the FleCSI synthetic I/O benchmark developed
+for Ristra. A number of improvements have been made as a result of this work,
+including adjusting to use of collective metadata operations under HDF5, which
+help performance of this application use case. This exercise has led us to
+further consider how to improve how we present the new HDF5 data that can be
+captured as a result of our prior work (STDM12-22).
 
-\emph{STDM12-14:}
-In this milestone we demonstrate new two-phase I/O strategies in ROMIO. 
-We took a two-pronged approach to meeting this milestone. ROMIO has been a
-fundamental component of the HPC I/O stack for two decades. The original
-“two-phase collective buffering” optimization has served us well,
-but is beginning to show some design challenges on newest architectures
-and scales. We also developed a service-based I/O provider, through which
-we can deliver and explore I/O strategies in MPI and other contexts. 
-Some ROMIO changes could be incorporated directly into MPICH and will be
-available in the upcoming MPICH-3.3 release. Other changes are awaiting
-review before inclusion. Benvolio  our service-oriented I/O provider,
-is running on Theta, Argonne’s pre-exascale machine. We have developed
-a ROMIO  driver , allowing us to evaluate Benvolio with standard MPI-I/O
-benchmarks such as IOR. 
+A synthetic benchmark has been developed that stores FleCSI data for Ristra in
+the HDF format. This benchmark is being used as a test environment for new
+output options for Ristra. The code, known as the flecsi-hdf5proxy, is
+available in the flecsi-incubator project. Our work in this benchmark has
+formed the basis for the Ristra HDF I/O design. Departing from the traditional
+approach of developing a proxy application for an already implemented
+capability, the initial version of the flecsi-hdf5proxy was developed prior to
+any implementation within Ristra codes. This allowed rapid design space
+exploration prior to implementation in a production code base and a more rapid
+development cycle in Ristra.
 
-\emph{STDM12-21:}
-Delivery of composable data services for the ParSplice ECP EXALT
-application including source code changes to ParSplice and demonstration
- of use including performance analysis on an HPC system.   The
-Parallel Trajectory Splicing (ParSplice) application uses a novel
-time-parallelization strategy for accelerated molecular dynamics. The
-ParSplice technique (and associated application) enables long-time
-scale molecular dynamics (MD) simulations of complex molecular systems
-by employing a Markovian chaining approach allowing many independent MD
-simulations to run concurrently to identify short trajectories called
-“segments” that are then spliced together to create a trajectory
-that spans long time scales. A master/worker approach is used to generate
-segments starting from a set of initial coordinates stored in a key/value
-database. From these initial coordinates the workers use traditional MD
-simulation to generate a new segment and upon completion stores the final
-coordinate of the segment in a distributed key/value database. Segments
-are keyed by their atomic coordinates (corresponding to local energy
-minima) while the value is simulation state information associated with
-this atomic coordinate.  Our work included the integration of a number
-of composable data services developed within the Mochi ASCR project .
+Early in the year, we initiated discussions with the CODAR team building
+Chimbuko, an effort to create a provenance and performance analysis service for
+HPC. Through discussion on their use case, we determined that a new Mochi
+microservice was needed. The Sonata microservice has been developed to provide
+convenient storage and processing of their JSON record data.
 
-\begin{figure}[htb]
-        \centering
-        \includegraphics[height=2.5in]{projects/2.3.4-DataViz/2.3.4.10-DataLib/pnetcdf-figure.pdf}
-        \caption{\label{fig:pnetcdf} The new PnetCDF dispatch layer provides flexibility to target different back-end formats and devices under the PnetCDF API used by many existing applications.
-        }
-\end{figure}
+\emph{STDM12-24:} Improve HDF use in ECP code, deliver report on Mochi use and
+CAR input. Regarding HDF performance, a summary was compiled, including some
+discussion of PnetCDF performance, which is still critical to E3SM. Additional
+notes on improving HDF performance can be found in our meeting notes.
+
+Regarding Mochi use, feedback was compiled from our many users into a Mochi
+Customer Responses document, available in Jira.  Regarding Ristra, the merged
+HDF proxy is in github as part of the FleCSI incubator.
+
+Regarding CAR input, we have gathered initial data from ALCF, NERSC, and OLCF
+and identified personnel through which updates can be obtained as we get closer
+to the next CAR deliverable. 
+
+\emph{STDM12-25:} Deliver design of HDF5 VOL plug-in and improve I/O
+capabilities for ECP application. HDF5 VOL design is complete, and we have an
+initial prototype with which we are performing early performance testing. The
+design document and developer notes will be attached to the end of this report
+for convenience.
+
+As a reminder, our HDF VOL implementation layers on top of the “native” VOL
+implementation provided by HDF. We capture write operations as a log of
+changes, and currently we persist both the description of the writes (in our
+documentation simply the “metadata”, stored in the “metadata table”) and the
+contents of the writes (in our documentation the “log data”, stored in the “log
+dataset”) as HDF datasets. Additionally, another table (the “offset table”)
+stores the offsets of specific datasets in the metadata table, allowing one to
+skip over unrelated datasets when looking for specific log entries. We’re
+investigating the storage of metadata in memory, for performance reasons.
+
+I/O Improvement in E3SM. We have previously extracted an I/O kernel from the
+E3SM code, and we are now working on a branch of this code that can write
+directly into HDF51. As background, the netCDF4 API is missing a key capability
+to describe I/O to multiple datasets as a single operation, and this limits the
+performance of netCDF4 for many scientific codes regardless of the underlying
+I/O API being used (e.g., PnetCDF, HDF). The E3SM team is aware of this
+deficiency, but to our knowledge there is no plan to address it at this time.
+Meanwhile, the HDF Group has been looking at multi-dataset writes of this type,
+although it is unclear when the capability might be made part of a production
+release. Never the less, working around the netCDF4 deficiencies allows us to
+isolate HDF performance/API challenges from the higher-level netCDF4 ones, and
+allows us to better explore our HDF VOL implementation.
+
+I/O Improvement in xRAGE. Many applications use HDF5 to write extremely large
+single files used for checkpoint restart and/or data analysis. Even on
+pre-exascale systems such as Sierra it can be difficult to achieve high
+performance (bandwidth) for these workloads. Applications writing single shared
+files must carefully align I/O operations to avoid file locking overheads and
+balance I/O operations across multiple writers to ensure high performance. To
+help diagnose issues and optimize I/O in production Sierra applications the
+DataLib team has been working closely with LANL scientists to employ Darshan
+analysis capabilities that capture more detailed information about how HDF5,
+MPI-IO and POSIX are being used by the application and lower level software
+stacks. LANL has begun using Darshan on Sierra for a variety of applications
+including the xRAGE application and have worked with the DataLib team to
+identify potential bottlenecks in this and other applications.
 
 \paragraph{Next Steps}
 
-Our plan for FY20 includes:
-\begin{itemize}
-\item Augmentation of our Darshan tool to capture API use at an
-HDF5 dataset level of detail, building on existing (limited) HDF5
-instrumentation. This enhancement will enable a better understanding of
-codes using the HDF5 API across all domains, applications, and platforms,
-facilitating more targeted and prioritized responses to performance
-and/or reliability challenges.
+Our plan for FY21 includes:
+\emph{STDM12-32:} Evaluate HDF prototype and build new Darshan capabilities. We
+will build a DAOS module and continue evaluation of HDF VOL prototype,
+adjusting design in response.
 
-\item Initial performance and overhead characterization using specific
-ECP application workloads. Combined with detailed data from Darshan,
-this activity will prepare us to best address ECP needs and also help
-validate our initial approach. Users will be prioritized by potential
-impact (e.g., supporting AMReX would impact multiple code teams),
-prioritization by facilities (e.g., HACC is also an early science code
-at ALCF), and ECP management input.
+\emph{STDM12-33:} Hold Mochi boot camp and release HDF VOL prototype. We will
+hold a Mochi training session, likely at the Annual Meeting, and we will
+release the HDF VOL prototype with a Spack package for others to work with.
 
-\item Design of an HDF5 VOL plug-in targeting ECP code requirements and a
-specific platform and file system. The back-end file layout used in HDF5
-is a known performance problem. We are confident that we can begin to
-develop an alternative back end using modern parallel I/O concepts while
-simultaneously performing the more comprehensive assessment described
-above.
+\emph{STDM12-34:} Enhance HDF VOL implementation and evaluate Darshan and Mochi
+performance. We will revisit Darshan overheads on flagship platforms to ensure
+correctness and low-overhead operation, and we will incorporate new
+enhancements into the HDF VOL implementation for further evaluation. We will
+also perform a performance evaluation of key Mochi use cases on available test
+hardware.
 
-\item Further development and extension of FlameStore DNN model store
-for CANDLE application.
-
-\item	Development of Quantaii/Mochi to efficiently store, organize,
-and index FleCSI data structures for ATDM/Ristra.
-
-\item Exploration of E3SM HDF5 code paths and optimizations for key
-checkpoint and analysis workloads.
-
-\item Establishment of videoconferences with consumers of Mochi
-technologies. This will enable us to more quickly respond to needs of
-our stakeholders within ECP and vendors. 
-
-\item Increasing stakeholder input on prioritization of Mochi technologies
-and functionality. We will leverage the above mentioned videoconferences
-as a tool for gathering stakeholder input on our Mochi development
-activities, and we will adjust our plan going forward in response.
-
-\item Integration of Darshan logging into HDF5 implementation as needed,
-with any necessary modifications submitted to THG.
-
-\item Extension of regular testing of Mochi tools to SummitDev test platform.
-\end{itemize}
+\emph{STDM12-35:} Deliver UCX plug-in for Mercury in support of ECP
+applications and services. We will provide a tested UCX plug-in for Mercury,
+tuned for performance on ECP relevant platforms (e.g., Summit test systems),
+with appropriate nightly tests.
