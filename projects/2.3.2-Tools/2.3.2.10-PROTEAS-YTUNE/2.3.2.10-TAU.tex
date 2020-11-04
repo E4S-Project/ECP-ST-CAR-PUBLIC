@@ -11,24 +11,24 @@ Scalable Heterogeneous Computing (SHC) platforms are gaining popularity, but it 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=6in]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/miniFE_openmp_tau.png}
-\caption{TAU was used to collect profiles and traces of ECP proxy applications like miniFE (shown), observing OpenMP parallel regions, loops and synchronization without application instrumentation.}
-\label{figure:tau}
+\caption{TAU was used to collect profiles and traces of ECP proxy applications like miniFE (trace shown in Vampir), observing OpenMP parallel regions, loops and synchronization without application instrumentation.}
+\label{figure:tau:openmp}
 \end{figure}
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=6in]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/clacc_tau.png}
-\caption{TAU was used to collect profiles and traces of OpenACC benchmarks (303.stencil shown), observing OpenACC regions and device offload events without application instrumentation.}
-\label{figure:tau}
+\caption{TAU was used to collect profiles and traces of OpenACC benchmarks (303.stencil trace shown in Vampir), observing OpenACC regions and device offload events without application instrumentation.}
+\label{figure:tau:clacc}
 \end{figure}
 
 \paragraph{Recent Progress}
 \begin{enumerate}
 \item \textbf{Updated CUDA support} Added preliminary support in TAU for NVIDIA A100 GPUs with support for CUDA 11.
 
-\item \textbf{Updated OpenMP support} Updated OMPT support to OpenMP 5.0, tested with ECP Proxy applications miniFE and miniQMC.
+\item \textbf{Updated OpenMP support} Updated OMPT support to OpenMP 5.0, tested with ECP Proxy applications miniFE and miniQMC as shown in the Vampir~\cite{vampir.eu} trace viewer in Figure~\ref{figure:tau:openmp}.
 
-\item \textbf{Clacc support} Implemented/updated profiling support for OpenACC events provided by the Clacc compiler.
+\item \textbf{Clacc support} Implemented/updated profiling support for OpenACC events provided by the Clacc compiler as shown in the Vampir trace viewer in Figure~\ref{figure:tau:clacc}.
 
 \item \textbf{HIP} Added support for AMD GPUs with ROCm 3.3.
 
