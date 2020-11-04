@@ -91,7 +91,7 @@ There are specific risks identified for the Data and Visualization portfolio.  T
 
 
 % STORAGE ARCH. DIAGRAM -- HIGH LEVEL
-\begin{figure}[t]
+\begin{figure}[htb!]
 	\centering
 	\includegraphics[width=0.70\textwidth]{projects/2.3.4-DataViz/DataViz-storage-notional-diagram.pdf}
 	\caption{\label{fig:DataViz:StorageDiagram} A notional diagram of DOE
@@ -139,7 +139,7 @@ There are lots of roles that storage might play:
 %
 % CURRENT STORAGE SPECS
 %
-\begin{table}[t]
+\begin{table}[htb!]
 	\vspace{-2mm}
 	\centering
 	\caption{\label{table:DataViz:StorageSpecsCurrent} Storage system specifications for current platforms.}
@@ -151,22 +151,22 @@ characteristics of the storage deployments for the current generation of
 systems: Theta, Cori, and Summit. These systems largely reflect trends in DOE
 storage over the last decade: HPSS archival storage coupled with a POSIX
 center-wide file system provided by GPFS or Lustre and backed by hard disk
-drives (HDDs). In two cases a faster, platform-specific POSIX file system is 
+drives (HDDs). In two cases, a faster, platform-specific POSIX file system is 
 deployed, while at OLCF the team chose to instead concentrate on a very high
 performance center-wide file system that is available on other resources as well.
 
 Of note in these systems are some embedded storage options that have
 provided the community with some early experiences with SSD storage. On
-Theta and Summit local SSDs are available that have seen limited use
+Theta and Summit, local SSDs are available that have seen limited use
 by specific teams. On Cori, the DataWarp service allows for SSD-backed
 storage pools to be allocated that are visible to an entire job or
 workflow. This functionality is close to the model that users are
-accustomed to, and the resource and has seen significant use.
+accustomed to, and the resource has seen significant use.
 
 %
 % PROJECTED FUTURE SPECS
 %
-\begin{table}[t]
+\begin{table}[htb!]
 	\vspace{-2mm}
 	\centering
 	\caption{\label{table:DataViz:StorageSpecsNext} Projected storage specifications for upcoming platforms.}
@@ -177,22 +177,22 @@ Table~\ref{table:DataViz:StorageSpecsNext} captures the current, public
 understanding of storage characteristics for the next generation of
 systems: Aurora, Perlmutter, and Frontier.
 %
-Looking at this data, a number of observations can be made. First, POSIX will
+A number of observations can be made from this data. First, POSIX will
 remain the dominant (at least low-level) API for interacting with the primary
 storage resources (embedded, platform, and center-wide). Obtaining peak
 performance will likely remain a challenge for users, but with node counts
 somewhat stalled, storage software scalability is not further pressured.
 %
-Second, a POSIX alternative, DAOS, will appear. DAOS is an Intel
+Second, DAOS, will appear as a POSIX alternative. DAOS is an Intel
 product that will provide a form of globally accessible key-value
 style of storage. However, a POSIX ``veneer'', or compatibility layer,
 will be provided that will give users an easy way to make use of the
 resource. With all the major ST I/O libraries already having the ability
-to implement alternative back-ends, the challenge will be more about how
-to persist things \emph{outside} DAOS efficiently (e.g., converting back
+to implement alternative back-ends, 
+the challenge will be more about how to persist things \emph{outside} DAOS efficiently (e.g., converting back
 to POSIX files).
 %
 Finally, there will still be a non-global, embedded storage resource on
-Frontier. The best ways to use this resource are unclear, but systems
+Frontier. The best ways to utilize this resource need to be studied, but systems
 like UnifyFS could play a role.
 
