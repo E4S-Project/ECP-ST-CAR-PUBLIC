@@ -4,16 +4,15 @@ The Exascale Computing Project (ECP) Software Technology (ST) Focus Area is resp
 
 This \textit{ECP ST Capability Assessment Report (CAR)} provides an overview and assessment of current ECP ST capabilities and activities, giving stakeholders and the broader HPC community information that can be used to assess ECP ST progress and plan their own efforts accordingly.  ECP ST leaders commit to updating this document on regular basis (every six to 12 months). Highlights from this version of the report are presented here.  
 
-\textbf{What is new in CAR V2.0:} CAR V2.0 contains the following updates relative to CAR V1.5.
+\textbf{What is new in CAR V2.5:} CAR V2.5 contains the following updates relative to CAR V2.0.
 \begin{itemize}
-    \item We introduce the FY20--23 project structure.  ECP ST now consists of 6 (up from 5) level-3 (L3) technical areas, introducing the NNSA ST L3 area, which brings into one L3 the ECP open source development efforts at NNSA labs that are of particular importance to the rest of ECP.  The number of ECP ST level-4 (L4) subprojects has been reduced from 55 to 33.  The strategic aggregation of projects into fewer and larger units enables us to better manage L4 subprojects consistently as a portfolio.  See Section~\ref{subsect:ProjectRestructuring}.
-    \item We describe new and enhanced project management processes and resources including our iterative planning process, new KPP-3 capability integration process, a product dictionary and dependency management database.  These new project features and related dashboards enable more insight and better information to effectively manage efforts across ECP. See Section~\ref{sect:PETA}.
+    \item We highlight the progress with the Extreme-scale Scientific Software Stack (E4S) efforts.  In particular, we discuss how E4S has emerged as a new first-class entity in the HPC ecosystem, enabling new conversations with users, facilities, vendors, other US agencies and international partners.  We also highlight the development of the E4S DocPortal and Version 1.0 of E4S community policies, and E4S Spack build caches.
 	\item The two-page summaries of each ECP L4 projects have been updated to reflect recent progress and next steps. See Section~\ref{sect:project-summaries}.
 	\item The Extreme-scale Scientific Software Stack (E4S) is further described.  The third release, which is also the first major public release Version 1.0, was November 18, 2019. E4S is the primary integration and delivery vehicle for ECP ST capabilities.  See Section~\ref{subsubsect:e4s}.
 	\item The ECP ST SDK effort has further refined its groupings.  See Section~\ref{subsubsect:sdks}.
 \end{itemize}
 
-The Exascale Computing Project Software Technology (ECP ST) focus area represents the key bridge between Exascale systems and the scientists developing applications that will run on those platforms. ECP ST efforts contribute to 70 software products (Section~\ref{subsubsect:dictionary}) in six technical areas (Table~\ref{table:wbs}). Since the publishing of CAR V1.5, we have introduced a product dictionary of official product names, which enables more rigorous mapping of ECP ST deliverables to stakeholders (Section~\ref{subsubsect:dep-management}).
+The Exascale Computing Project Software Technology (ECP ST) focus area represents the key bridge between Exascale systems and the scientists developing applications that will run on those platforms. ECP ST efforts contribute to approximately 70 software products (Section~\ref{subsubsect:dictionary}) in six technical areas (Table~\ref{table:wbs}). Since the publishing of CAR V2.0, we continue to evolve the product dictionary of official product names, which enables more rigorous mapping of ECP ST deliverables to stakeholders (Section~\ref{subsubsect:dep-management}).
 
 \textbf{\pmr:} In addition to developing key enhancements to MPI and OpenMP for scalable systems with accelerated node architectures, we are working on performance portability layers (Kokkos and RAJA) and participating in OpenMP and OpenACC software design and development that will enable applications to write much of their source code without the need to provide vendor-specific implementations for each exascale system.  We anticipate that one legacy of ECP ST efforts will be a software stack that supports Intel and AMD accelerators in addition to Nvidia.  See Section~\ref{subsect:pmr}.
 
@@ -33,10 +32,22 @@ Development tools provide essential insight into these performance challenges an
 
  \textbf{ECP ST Software Delivery mechanisms:} ECP ST delivers software capabilities to users via several mechanisms (Section~\ref{sect:deliverables}).  Almost all products are delivered via source code to at least some of their users.  Each of the major DOE computing facilities provides direct support of some users for about 20 ECP ST products.  About 10 products are available via vendor software stack and via binary distributions such as Linux distributions.
  
- \textbf{ECP ST Project Restructuring:} ECP ST completed a significant restructuring in October 2019 (Section~\ref{subsect:ProjectRestructuring}).  We increased the number of technical areas from 5 to 6 and reduced the number of L4 projects from 55 to 33.  We introduced a new L4 subproject for software packaging and delivery in the L3 technical area (\ecosystem) that enhances existing NNSA funding for Spack and creates specific funding and goals for container environments.
- 
- \textbf{ECP ST Project Overviews:} A significant portion of this report includes 2-page synopses of each ECP ST project (Section~\ref{sect:project-summaries}), including a project overview, key challenges, solution strategy, recent progress and next steps.
+  \textbf{ECP ST Project Overviews:} A significant portion of this report includes 2-page synopses of each ECP ST project (Section~\ref{sect:project-summaries}), including a project overview, key challenges, solution strategy, recent progress and next steps.
  	
  \textbf{Project organization:} ECP ST has established a tailored project management structure using capability integration goals, milestones, regular project-wide video meetings, monthly and quarterly reporting, and an annual review process.  This structure supports project-wide communication, and coordinated planning and development that enables 33 projects and more than 250 contributors to create the ECP ST software stack.
+ 
+ \textbf{How to navigate this document:}  The size of the ECP ST CAR is large.  However, it is organized in a hierarchical fashion that should permit rapid navigation for readers who are interested in specific information as follows:
+ \begin{itemize}
+ 	\item General Overview of ECP ST: Sections~\ref{sect:intro} through~\ref{sect:deliverables} provide an introduction and general overview of ECP Software Technology.
+ 	\item Section~\ref{sect:project-summaries} is dedicated to the L3 Technical areas.  Each subsection includes an overview of the L3 area followed by two-page overview, status and plans for each product supported by ECP ST.
+ 	\begin{itemize}
+		 \item \pmr: Section~\ref{subsect:pmr}.
+ 		\item \tools: Section~\ref{subsect:tools}.
+ 		\item \mathlibs: Section~\ref{subsect:mathlibs}.
+ 		\item \dataviz: Section~\ref{subsect:dataviz}.
+ 		\item \ecosystem: Section~\ref{subsect:ecosystem}.
+ 	\item \nnsa: Section~\ref{subsect:nnsa}.
+ \end{itemize}
+\end{itemize}
 
 \end{abstract}
