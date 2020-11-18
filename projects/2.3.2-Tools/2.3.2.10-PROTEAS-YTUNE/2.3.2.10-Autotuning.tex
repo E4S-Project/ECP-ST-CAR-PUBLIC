@@ -1,4 +1,5 @@
 \subsubsection{\stid{2.10} PROTEAS-TUNE: Autotuning} 
+\label{sec:PROTEAS_TUNE_AUTOTUNING}
 
 \paragraph{Overview}
 
@@ -19,7 +20,7 @@ manycore CPUs and GPUs.
 Ideally Exascale application developers would express their
 computation separate from   its mapping to hardware, while autotuning compilers can automate this mapping and achieve performance portability.
 
-\paragraph{Key  Challenges}
+\paragraph{Key Challenges}
 Autotuning has the potential to dramatically improve the performance portability of Petascale and Exascale applications.  To date, autotuning has been used primarily in high-performance applications through tunable libraries or previously tuned application code that is integrated directly into the application.
 If autotuning is to be widely used in the HPC community,
 support for autotuning must address the software engineering challenges, manage configuration overheads, and continue to demonstrate significant performance gains and portability across architectures.
@@ -48,12 +49,12 @@ into the Clang/LLVM open-source compiler, as well as provide lightweight
 interfaces through Python, C++, and REST APIs/web services.
 
 For example, we have developed a \textit{brick data layout library and code generator} for
-stencil computations within CHiLL.
+stencil computations.
 Recent trends in computer architecture that favor computation over data movement incentivize high-order methods.  Paradoxically, high-order codes can be challenging for compilers/optimization to attain high performance.  Bricks enable high performance and make fine-grained data reuse and memory access information known at compile time.  The SIMD code generation achieves performance portability
 for high-order stencils for both CPUs with wide SIMD units (Intel Knights
 Landing) and GPUs (NVIDIA Pascall).  Integration with autotuning attains
 performance that is close to Roofline performance bound for both manycore CPU
-and GPU architectures.
+and GPU architectures and demonstrates strong scaling by reducing on-node data movement in communication.
 
 The Search using Random Forests (SuRF) search framework is a separate tool in Y-Tune that optimizes the search over an autotuning search space.  While
 SuRF provides support to CHiLL for compiler-directed autotuning, it can
@@ -68,16 +69,16 @@ SuRF is an asynchronous search framework that consists of sampling a small numbe
 We have pursued the following main activities this year:
 
 \textit{Autotuning capability in LLVM:}
-The key idea is to support the use of pragmas in the C++ source to guide transformations to be applied. These can include the types of transformation recipes used in CHiLL, but also parallelization directives for OpenMP and OpenACC that would interact with SOLLVE and PROTEAS. Our initial focus is the implementation of user/tool-directed optimizations in Polly, which is a polyhedral framework in LLVM with some similar features to CHiLL. An initial plan for pragmas in Clang and LLVM metadata has been developed. Several existing open-source LLVM projects allowing for just-in-time (JIT) compilation of C++ code have been identified and are being evaluated for use with autotuning. A summer intern has been identified who will work on the JIT/autotuning explorations.
+The key idea is to support the use of pragmas in the C++ source to guide transformations to be applied. These can include the types of transformation recipes used in CHiLL, but also parallelization directives for OpenMP and OpenACC that would interact with SOLLVE and PROTEAS. Our initial focus is the implementation of user/tool-directed optimizations in Polly, which is a polyhedral framework in LLVM with some similar features to CHiLL. An initial plan for pragmas in Clang and LLVM metadata has been developed. Several existing open-source LLVM projects allowing for just-in-time (JIT) compilation of C++ code have been identified and are being evaluated for use with autotuning. A summer intern developed the JIT/autotuning explorations. 
 
 \vspace*{.1in}
 \noindent
 \textit{SuRF Supporting Autotuning Search}
-We focused on testing and hardening SuRF for tuning SuperLU package. We used 6 matrices that come from different DOE applications and ran SuRF in an asynchronous mode with up to 32 nodes. We compared the results from SuRF to those from OpenTuner. On all instances tested, we found that SuRF obtains comparable results but in half the time of OpenTuner. We also observed that SuRF found high quality solutions in short computation time and used the remaining time for neighborhood exploration. Therefore, we implemented early stopping criterion. We also did single node tuning experiments with QMC. Since the current search space of QMCPACK is rather small, we did not evaluate it at scale. Currently, we are working with the QMCPACK developers to expose more parameters.
+%We focused on testing and hardening SuRF for tuning SuperLU package. We used 6 matrices that come from different DOE applications and ran SuRF in an asynchronous mode with up to 32 nodes. We compared the results from SuRF to those from OpenTuner. On all instances tested, we found that SuRF obtains comparable results but in half the time of OpenTuner. We also observed that SuRF found high quality solutions in short computation time and used the remaining time for neighborhood exploration. Therefore, we implemented early stopping criterion. We also did single node tuning experiments with QMC. Since the current search space of QMCPACK is rather small, we did not evaluate it at scale. Currently, we are working with the QMCPACK developers to expose more parameters.
 Recently, we developed stopping criterion based on local convergence and expected improvement over time. This allows the search to terminate in shorter computation time. Currently, we are expanding the search for multinode autotuning where each evaluation spans multiple nodes.
-In the past year, we have also used SuRF to perform autotuning search on
+In the past year, we have used SuRF to perform autotuning search on
 pragmas, including loop transformations and OpenMP pragmas. Most recently,
-we are using SuRF to refine descriptive OpenMP pragmas such as \texttt{\# pragma omp loop} to derive prescriptive pragmas for CPU and GPU mapping of code.
+we are using SuRF to refine descriptive OpenMP pragmas such as \texttt{\# pragma omp loop} to derive prescriptive pragmas for CPU and GPU mapping of code.  For this purpose, we refined SuRF to use a python library that supports expressing tree-structured search spaces, including dynamic trees.  We have demonstrated that this approach can achieve performance portability across CPU and GPU using OpenMP.   We also published a paper on using autotuning to drive loop transformation decisions.
 
 
 Large high-performance computing (HPC) clusters and DOE leadership-class supercomputing systems pose a few deployment and portability challenges for SuRF. The key issues stem from the differences in queuing systems, scheduling policies, and scripts needed to run the search in a distributed way. Typically, manager worker is implemented with message-passing interface (e.g., MPI) built into the search application. Although this approach is flexible, it requires SuRF to handle a number of system level issues related to system calls (such as apruns, sruns), Python package dependencies, and the correct MPI software stack.
@@ -107,13 +108,18 @@ can either target wide SIMD CPU instructions sets such as AVX-512 and SIMT
 threads on GPUs; and, (3) integration with autotuning framework to apply
 architecture-specific tuning. For a range of stencil computations, we show that
 it achieves high performance for both the Intel Knights Landing (Xeon Phi) CPU,
-and the NVIDIA GPUs \cite{P3HPC_Bricks,zhao2019}. 
+and the NVIDIA GPUs \cite{P3HPC_Bricks,zhao2019}. This year we extended the library in multiple ways.
+We show that the indirection in the brick data layout permits distinct physical and logical data layouts; we can
+therefore store the bricks in memory to reduce the data movement of packing and unpacking during cross-node
+communication.  We have demonstrated strong scaling by reducing communication time.  
 
 \paragraph{Next Steps}
-We will experiment with loop transformation and OpenMP pragmas using the pragma
-autotuner and derive search spaces for these transformations that match
-patterns in ECP codes.  Our goal is to encode patterns that are commonly
-used by application programmers to simplify the use of autotuning.
+%We will experiment with loop transformation and OpenMP pragmas using the pragma
+%autotuner and derive search spaces for these transformations that match
+%patterns in ECP codes.  Our goal is to encode patterns that are commonly
+%used by application programmers to simplify the use of autotuning.
+We will continue to work with ECP application teams to integrate our tools with their efforts.  In particular,
+we are integrating bricks into the Proto system, used in subsurface flows.
 
 \begin{figure}[h]
 %\begin{wrapfigure}{r}{0.35\textwidth}                                                                                                     

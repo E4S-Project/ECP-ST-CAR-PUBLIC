@@ -13,7 +13,7 @@ ST is also planning to increase integration within the ST portfolio through incr
 To accelerate this transition, we need a greater commitment on the part of software component developers to provide reliable and portable software that users can consider to be part of the software ecosystem in much the same way users depend on MPI and compilers. At the same time, we must expect application developers to participate as clients and users of reusable components, using capabilities from components, transitioning away from (or keeping as a backup option) their own custom capabilities.
 
 \subsubsection{The Extreme-scale Scientific Software Stack (E4S)}\label{subsubsect:e4s}
-On November 8, 2018, ECP ST released version 0.1 of the Extreme-scale Scientific Software Stack, E4S (\url{http://e4s.io}). It released version 0.2 of E4S in January 2019 and version 1.0 in November 2019. E4S contains a collection of the software products to which ECP ST contributes.  E4S is the primary conduit for providing easy access to ECP ST capabilities for ECP and the broader community.  E4S is also the ECP ST vehicle for regression and integration testing across DOE pre-Exascale and Exascale systems.
+In October 2020, ECP ST released version 1.2 of the Extreme-scale Scientific Software Stack, E4S (\url{http://e4s.io}). E4S contains a collection of the software products to which ECP ST contributes.  E4S is the primary conduit for providing easy access to ECP ST capabilities for ECP and the broader community.  E4S is also the ECP ST vehicle for regression and integration testing across DOE pre-Exascale and Exascale systems.
 
 \begin{figure}
 		\centering
@@ -24,14 +24,23 @@ On November 8, 2018, ECP ST released version 0.1 of the Extreme-scale Scientific
 
 E4S has the following key features:
 \begin{itemize}
-	\item \textbf{The E4S suite is a large and growing effort to build and test a comprehensive scientific software ecosystem:} E4S V0.1 contained 25 ECP products.  E4S V0.2, release in January 2019 contained 37 ECP products and numerous additional products needed for a complete software environment.  Eventually E4S will contain all open source products to which ECP contributes, and all related products needed for a holistic environment.
+	\item \textbf{The E4S suite is a large and growing effort to build and test a comprehensive scientific software ecosystem:} In November 2018, E4S V0.1 contained 25 ECP products.  Two years later, E4S V1.2, the fifth E4S release, contained 67 ECP ST products and numerous additional products needed for a complete software environment.  Eventually E4S will contain all open source products to which ECP contributes, and all related products needed for a holistic environment.
 	\item \textbf{E4S is not an ECP-specific software suite:}  The products in E4S represent a holistic collection of capabilities that contain the ever-growing SDK collections sponsored by ECP and all additional underlying software required to use ECP ST capabilities.  Furthermore, we expect the E4S effort to live beyond the timespan of ECP, becoming a critical element of the scientific software ecosystem.
 	\item \textbf{E4S is partitionable:} E4S products are built and tested together using a tree-based hierarchical build process.  Because we build and test the entire E4S tree, users can build any subtree of interest, without building the whole stack (see Figure~\ref{fig:e4s-build-tree}).
 	\item \textbf{E4S uses Spack:} The Spack~\cite{gamblin+:ecp18-spack-tutorial} meta-build tool invokes the native build process of each product, enabling quick integration of new products, including non-ECP products.
-	\item \textbf{E4S is available via containers:} In addition to a build-from-source capability using Spack, E4S maintains several container environments (Docker, Singularity, Shifter, CharlieCloud) that provides the lowest barrier to use.  Container distributions dramatically reduce installation costs and provide a ready-made environment for tutorials that leverage E4S capabilities.  For example, the ECP  application project CANDLE (Cancer Deep Learning Environment) uses an E4S container to provide a turnkey tutorial execution environment.
+	\item \textbf{E4S is available via containers:} In addition to a build-from-source capability using Spack, E4S maintains several container environments (Docker, Singularity, Shifter, CharlieCloud) that provides the lowest barrier to use.  Container distributions dramatically reduce installation costs and provide a ready-made environment for tutorials that leverage E4S capabilities.  For example, E4S containers now support custom images for ECP applications such as WDMapp and Pantheon.
 	\item \textbf{E4S distribution:} E4S products are available at \url{http://e4s.io}.
 	\item \textbf{E4S developer community resources:} Developers interested in participating in E4S can visit the E4S-Project GitHub community at \url{https://github.com/E4S-Project}.	
 \end{itemize}
+
+The first set of E4S Community Policies~\cite{e4s:policies} was adopted in October 2020 (see Figure~\ref{fig:E4S-Community-Policies-V1}). These Policies are membership criteria for a product to become an E4S member package. The purpose of the Community Policies is to establish baseline software quality and practice expectations to help address sustainability and interoperability challenges for the Software Technologies software ecosystem. While a package does not have to demonstrate compatibility with the policies as a condition of inclusion in E4S releases, compatibility is necessary for member package designation.
+
+\begin{figure}
+        \centering
+        \fbox{\includegraphics[width=0.9\linewidth]{E4S-Community-Policies-V1}}
+        \caption{Version 1 of the E4S Community Policies. These policies will serve as membership criteria for E4S member packages. The E4S Community Policy effort has heavily leveraged the existing xSDK Community Policies~\cite{xsdk-policies:homepage}.}
+        \label{fig:E4S-Community-Policies-V1}
+\end{figure}
 
 \begin{figure}
 	\centering
@@ -42,18 +51,17 @@ E4S has the following key features:
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.9\linewidth]{E4S-Build-Cache-Binaries}
-	\caption{Using Spack build cache features, E4S builds can be accelerated by use of cached binaries for any build signature that Spack has already seen.}
+	\includegraphics[width=0.9\linewidth]{E4S-Build-Cache-Binaries-2020}
+	\caption{Using Spack build cache features, E4S builds can be accelerated by use of cached binaries for any build signature that Spack has already seen. Between September 2019 and September 2020, more than 21,000 binaries were added to the cache.}
 	\label{fig:e4s-build-cache}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.9\linewidth]{E4S-AWS-public-image}
-	\caption{E4S is available as an Amazon AWS public image.  Images on Google and Microsoft Cloud environments will be available soon.}
-	\label{fig:e4s-aws-image}
+	\includegraphics[width=0.9\linewidth]{E4S-GCP}
+	\caption{E4S now supports Google Cloud Platform in addition to Amazon AWS.}
+	\label{fig:e4s-gcp-image}
 \end{figure}
-
 
 The E4S effort is described in further detail in Sections~\ref{subsect:ecosystem}, especially Section~\ref{subsubsect:sdks}.
 

@@ -1,12 +1,13 @@
+%\newpage
 \subsubsection{\stid{3.13} CLOVER Sub-project SLATE}\label{subsubsect:slate}
 
 \paragraph{Overview}
 
-The Software for Linear Algebra Targeting Exascale (SLATE)
+SLATE (Software for Linear Algebra Targeting Exascale)
 provides fundamental dense linear algebra capabilities
 to DOE and the HPC community at large.
 To this end, SLATE provides
-parallel Basic Linear Algebra Subprograms (BLAS), norms,
+parallel basic linear algebra subprograms (BLAS), norms,
 linear systems solvers, least square solvers,
 singular value and eigenvalue solvers.
 
@@ -26,14 +27,14 @@ For typical dense linear algebra workloads, this means getting close
 to the theoretical roofline peak performance and scaling to the full size of
 the machine.
 This is accomplished in a portable manner by relying on standards
-like MPI and OpenMP.
-
-SLATE functionalities will first be delivered to the ECP applications
-that most urgently require SLATE capabilities
-(NWChem, GAMESS, EXAALT, QMCPACK, CANDLE, etc.)
-and to other software libraries
-that rely on underlying dense linear algebra services
-(STRUMPACK, SuperLU, etc.).
+such as MPI and OpenMP.
+%
+% SLATE functionalities will first be delivered to the ECP applications
+% that most urgently require SLATE capabilities
+% (NWChem, GAMESS, EXAALT, QMCPACK, CANDLE, etc.)
+% and to other software libraries
+% that rely on underlying dense linear algebra services
+% (STRUMPACK, SuperLU, etc.).
 Figure~\ref{fig:slate-architecture} shows the role of SLATE
 in the ECP software stack.
 
@@ -68,7 +69,7 @@ in a distributed-memory environment.
 SLATE is being developed in a difficult hardware environment, where virtually
 all the processing power is on the GPU side.
 Achieving efficiency requires aggressive offload to GPU accelerators
-and careful optimization of multiple bottlenecks, including 
+and careful optimization of multiple bottlenecks, including
 interconnect technology lagging behind the computing
 capabilities of the GPUs.
 
@@ -79,8 +80,8 @@ and relies on modern C++ features and recent extensions
 to the OpenMP standard, many of which are not fully supported by compilers
 and their runtime environments.
 In terms of GPU acceleration, standardized solutions are still in flux.
-Also, while complete parallel programming frameworks exist, at this stage
-they have to be considered research prototypes.
+% Also, while complete parallel programming frameworks exist, at this stage
+% they have to be considered research prototypes.
 
 \end{enumerate}
 
@@ -96,7 +97,8 @@ with a careful analysis of the existing and emerging
 implementation technologies~\cite{abdelfattah2017roadmap},
 and followed with a phase
 of laying out the initial design~\cite{kurzak2017designing}.
-Since then, the team rolls out new computational routines every quarter.
+Since then, the team has rolled out new computational routines
+and performance improvements quarterly.
 While we continue to refactor as needed to achieve high performance, the basic
 design has solidified and been published~\cite{gates2019slate-design}.
 
@@ -122,67 +124,55 @@ at Cray, IBM, Intel, NVIDIA, AMD, and ARM.
 
 \paragraph{Recent Progress}
 
-% During 2018, the SLATE team implemented parallel BLAS, parallel norms,
-% linear system solvers (LU, Cholesky, Hermitian indefinite $LTL^T$),
-% and least squares solvers (QR, LQ).
-During 2019, the SLATE team continued to add to its suite:
-mixed-precision linear solvers for LU and Cholesky in March,
-matrix inversion for LU and Cholesky in June,
-and Hermitian eigenvalue and singular value solvers in September.
-Routines are available in the four standard precisions (single, double,
-complex-single, complex-double).
-% We also continued to implement performance improvements, such as a CPU--GPU
-% coherency protocol inspired by the MOSI cache consistency protocol, and
-% improved handling of row-major matrices for efficient row-swapping in LU.
-In addition to SLATE's native C++ API, compatibility APIs for LAPACK
-and ScaLAPACK users are also provided, so that SLATE can serve
-as a drop-in replacement.
+During 2020, the SLATE team expanded the Hermitian eigenvalue solver to
+the generalized Hermitian problem of the forms $Ax = \lambda Bx$, $ABx =
+\lambda x$, or $BAx = \lambda x$. These are of strong interest in
+mechanics and chemistry applications, among others.
+%
+We also implemented the polar decomposition with the QDWH algorithm,
+%
+wrote a Users' Guide and Developers' Guide to document the public and
+internal APIs,
+%
+and added native C and Fortran 2003 APIs that access SLATE's native
+matrix types from outside C++.
+%
+Further work was done on performance enhancements, with notable gains
+for BLAS (gemm, herk), norms, Cholesky and QR factorizations.
+%
+A new build system using CMake and Spack has been developed, in
+collaboration with the NWChemEx project to help include BLAS++ and
+LAPACK++ in their project.
+%
 All developments are documented in SLATE Working Notes
 \footnote{\url{http://www.icl.utk.edu/publications/series/swans}.}
-
 
 \paragraph{Next Steps}
 
 \begin{enumerate}
 
 \item
-\textbf{Users' Guide and Developers' Guide:}
-These guides will supplement SLATE's online Doxygen documentation by thoroughly
-explaining both SLATE's public interface---how to integrate it into an
-application, with examples---as well as SLATE's internal design, to help
-new developers and outside collaborators understand the codebase. As living
-documents, they will be continually updated as SLATE matures.
+\textbf{Port to AMD and Intel platforms:}
+Originally, SLATE was developed using NVIDIA CUDA and cuBLAS. We are now
+abstracting the backend to run on AMD and Intel platforms. BLAS++ will
+serve as a portability layer, with calls to NVIDIA cuBLAS, AMD rocBLAS,
+or Intel oneMKL, as appropriate for the platform. CUDA kernels will be
+ported to a combination of HIP, SYCL, and OpenMP offload.
 
 \item
-\textbf{Band solvers:}
-To SLATE's existing general band LU solvers,
-we are adding Hermitian band Cholesky factorization and solve,
-along with Hermitian band BLAS and norm routines.
-
-\item
-\textbf{Performance improvements:}
-We have observed several routines that are not performing as well as expected.
-In some cases, such as in QR, LQ, and parallel norms, we have already identified
+\textbf{Optimizing QR, eigenvalue, and singular value routines:}
+These are fundamental routines used by many projects.
+We have observed these routines that are not performing as well as expected.
+In some cases, such as eigenvalues, we have already identified
 improvements to be made to the algorithm, such as refactoring loops to improve
-parallelism. In other cases, we are analyzing traces to identify and
+parallelism. In other cases, we will analyze traces to identify and
 correct problems.
 
 \item
-\textbf{Generalized Hermitian eigenvalue solver:}
-We will extend SLATE's Hermitian eigenvalue solver to
-handle generalized Hermitian-definite eigenvalue problems, of the form
-$Ax = \lambda Bx$, $ABx = \lambda x$, or $BAx = \lambda x$.
-These are of strong interest in mechanics and chemistry applications,
-among others.
-
-\item
-\textbf{New C++, C, and Fortran application programming interfaces (APIs):}
-The BLAS and (Sca)LAPACK APIs have served well over the past 40 years, but are
-rooted in out-dated FORTRAN 77 limitations such as cryptic 5--6 letter
-abbreviations (e.g., \texttt{dgemm, dgesv}). For SLATE, we will design a new,
-user-friendly C++ interface (e.g., \texttt{multiply, solve}, respectively). New
-C and Fortran APIs will also give better direct access to SLATE's features and
-Matrix objects, without requiring use of our ScaLAPACK compatibility interface.
+\textbf{Implementing divide-and-conquer algorithm:}
+For singular value and Hermitian eigenvalue problems, the divide-and-conquer
+algorithm exhibits better performance and parallel scalability than the
+traditional QR-iteration based algorithm currently used in SLATE.
 
 \item
 \textbf{Non-symmetric eigenvalue problem:}

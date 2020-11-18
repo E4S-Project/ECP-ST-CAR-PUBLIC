@@ -90,12 +90,11 @@ Laboratory.
 A number of articles have also been published
 as part of the SOLLVE
 effort~\cite{openmp-tr6,zinenko.cc.2018,vandv2019,
-tregion, Mishra:2019:KFA:3314872.3314915,
-udm, loopTransPragmas, DBLP:conf/iwomp/SreenivasanJHBS19,
+tregion, Mishra:2019:KFA:3314872.3314915, udm, loopTransPragmas,ompautotuneFramework, osti_1559911, 
 DBLP:conf/iwomp/ScoglandSOHES19, DBLP:conf/iwomp/0001WLSS19,
-DBLP:conf/iwomp/KaleIKKC19, Bak2019OptimizedEO, lsrt, boltPACT19}.
+DBLP:conf/iwomp/KaleIKKC19, Bak2019OptimizedEO, lsrt, boltPACT19, machlearnoffload, DBLP:conf/sc/MishraLKFC17, Bak2019OptimizedEO}.
 
-
+%DBLP:conf/iwomp/SreenivasanJHBS19,
 %% The value that SOLLVE brings to ECP is observed in the ease of leveraging
 %% different OpenMP features related to data mappings, parallelism exposure (e.g.
 %% {\bf concurrent} or {\bf simd} directives) and control (affinity), runtime
@@ -110,17 +109,29 @@ DBLP:conf/iwomp/KaleIKKC19, Bak2019OptimizedEO, lsrt, boltPACT19}.
 \paragraph{Next Steps}
 The following next steps are planned:
 \begin{itemize}
-\item Applications: Continue to interact with ECP applications teams, evaluate implementations of new features and explore new requirements; 
-% create mini-apps to help evaluate OpenMP accelerator support; 
- identify best practices for the use of OpenMP on accelerators;
-%for memory management API and concurrent parallel construct; prepare and coordinate %OpenMP webinar focusing on memory management, deep copy and tasking. Spack %package development and deployment with applications. 
-\item OpenMP specification: Continue work toward the next version of the standard via ECP-motivated feature development and participation in the OpenMP Language Committee: version 5.1 is already well under way and is due for release November 2020;
-%Next face-to-face meeting in January 2019; ratify and vote latest memory management %features and mappers, vote on examples, add to loop scheduling and tasking for affinity %research. 
-\item LLVM compiler: Improve performance of device offloading and optimize generation of code within target devices; generalize to enable reuse across multiple offloading architectures; develop infrastructure to support integration of Fortran front end; increase parallel region performance; 
-%develop new optimizations for loop transformations; refine Clang based implementation of data layout transformations for OpenMP offloading; improve general testing; evaluate on Summit and other ECP systems. 
-\item OpenMP runtime: provide support for 5.0 spec; improve performance of MPI+OpenMP codes; address broader set of interoperability challenges; address advanced tasking requirements;
-% and MPI implementations
-\item V\&V suite: Continue expanding the coverage of the V\&V Suite, with main focus on 4.5 features;  expand Fortran tests; work with ARB Examples Committee; improve ALCF toolchains;
-\end{itemize}
+\item Applications: Continue to interact with ECP applications teams, evaluate implementations of new features and explore new requirements; identify best practices for the use of OpenMP on accelerators;
+
+\item OpenMP specification: Continue work toward the next version of the standard via ECP-motivated feature development and participation in the OpenMP Language Committee: version 5.1 is underway and due for release November 2020;
+
+\item LLVM compiler: Improve performance of device offloading and optimize generation of code within target devices; generalize to enable reuse across multiple offloading architectures; develop infrastructure to support integration of Fortran front end; increase parallel region performance; implementation of OpenMP 5.1 loop transformations;
+
+\item OpenMP runtime: Provide support for 5.0 spec; address broader set of interoperability challenges including MPI+OpenMP codes using BOLT; address advanced tasking requirements; 
+
+\item V\&V suite: Continue expanding the coverage of the V\&V Suite, with focus on 5.0 features and additions and corrections to 4.5 tests as OpenMP implementations mature; expand Fortran tests; work with ARB Examples Committee; improve ALCF toolchains; more vendor interactions.
+\end{itemize} 
 
 %\textit{Describe what you are working on next.}
+
+%\item Applications: Continue to interact with ECP applications teams, evaluate implementations of new features and explore new requirements; 
+% create mini-apps to help evaluate OpenMP accelerator support; 
+ %identify best practices for the use of OpenMP on accelerators;
+%for memory management API and concurrent parallel construct; prepare and coordinate %OpenMP webinar focusing on memory management, deep copy and tasking. Spack %package development and deployment with applications. 
+%\item OpenMP specification: Continue work toward the next version of the standard via ECP-motivated feature development and participation in the OpenMP Language Committee: version 5.1 is already well under way and is due for release November 2020;
+%Next face-to-face meeting in January 2019; ratify and vote latest memory management %features and mappers, vote on examples, add to loop scheduling and tasking for affinity %research. 
+%\item LLVM compiler: Improve performance of device offloading and optimize generation of code within target devices; generalize to enable reuse across multiple offloading architectures; develop infrastructure to support integration of Fortran front end; increase parallel region performance; 
+%develop new optimizations for loop transformations; refine Clang based implementation of data layout transformations for OpenMP offloading; improve general testing; evaluate on Summit and other ECP systems. 
+%\item OpenMP runtime: provide support for 5.0 spec; improve performance of MPI+OpenMP codes; address broader set of interoperability challenges; address advanced tasking requirements;
+% and MPI implementations
+%\item V\&V suite: Continue expanding the coverage of the V\&V Suite, with main focus on 4.5 features;  expand Fortran tests; work with ARB Examples Committee; improve ALCF toolchains;
+%\end{itemize}
+

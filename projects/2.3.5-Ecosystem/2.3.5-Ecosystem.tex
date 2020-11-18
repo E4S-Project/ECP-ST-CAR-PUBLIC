@@ -10,12 +10,13 @@ The focus of this effort is on the ``last mile'' delivery of software that is in
 	\item Oversight of the ST SDKs (Software Development Kits) developed in all five ST L3 areas, with a goal of ensuring the SDKs are deployed as production-quality products at the Facilities, and available to the broader open-source HPC community through coordinated releases
 	\item Development of testing infrastructure (e.g., Continuous Integration) in collaboration with HI 2.4.4 (Software Deployment at the Facilities) for use by ECP teams at the Facilities
 	\item Development and hardening of methods for software deployment through the use of container technology
+	\item Development and hardening of a toolkit of reusable components for scientific workflow management systems
 	\item Informal partnerships with the Linux Foundation's OpenHPC project for potential broader deployment of ST technologies in the OpenHPC ecosystem
 \end{itemize}
 
 A major goal of ST is to ensure that applications can trust that ST products will be available on DOE Exascale systems in a production-quality state, which implies robust testing, documentation, and a clear line of support for each product. This will largely be an integration effort building on both the SDKs project elements defined in each ST L3 area, and tight collaboration and coordination with the Hardware Integration L3 area for Deployment of Software on Facilities (WBS 2.4.4). We will work to develop, prototype, and deliver foundational infrastructure for technologies such as continuous integration and containers in tight collaboration with our DOE facility partners. The ultimate goal is ensuring that the ECP software stack is robustly supported, as well as finding a reach into the broader HPC open-source community -- both of which provide the basis for long-term sustainability required by applications, software, Facilities, and vendors who rely upon these products.
 
-Spack is gaining broad adoption in the open source community as an elegant solution toward solving many of the challenges presented by building software with many dependencies. Spack is one of the most visible outward-facing products in this L3 area, and is the basis for the SDK and E4S efforts.
+Spack has broad adoption in the open-source community as an elegant solution toward solving many of the challenges presented by building software with many dependencies. Spack is one of the most visible outward-facing products in this L3 area, and is the basis for the SDK and E4S efforts.
 
 \subsubsection{Assumptions and Feasibility}
 Success in this effort will require a coordinated effort across the entire hardware and software stack –- in particular with HI 2.4.4 (Delivery of Software to Facilities) and in some cases, our vendor partners.  This cooperation is a critical first step in enabling our goals, and this area will drive toward ensuring those partnerships can flourish for mutual gain.
@@ -23,23 +24,24 @@ Success in this effort will require a coordinated effort across the entire hardw
 Given the project timelines and requirements of production systems at our Facilities, we do not envision a wholly new software stack as a feasible solution. We do however recognize that in many cases the software of today's HPC environments will very likely need to either be evolved or extended to meet the mission goals. This will require first, proof-of-concept on existing pre-Exascale hardware, and ultimately adoption of technologies by system vendors where required, and by other application and software teams.
 
 \subsubsection{Objectives}
-This area will focus on all aspects of integration of the ECP software stack embodied in E4S, with a focus on putting the infrastructure in place (in partnership with HI and the SDKs) for production-quality software delivery through technologies such as Spack, continuous integration, and containers. 
+This area will focus on all aspects of integration of the ECP software stack embodied in E4S and the development of SDK Community Policies, and building the workflows community and deploying a toolkit of hardened, reusable components for workflow management systems, with a focus on putting the infrastructure in place (in partnership with HI and the SDKs) for production-quality software delivery through technologies such as Spack, continuous integration, and containers. 
 
 \subsubsection{Plan}
-Version 0.2 of the Extreme-Scale Scientific Software Stack (E4S) was released in January 2019 comprising of a subset of ST projects that had Spack packages. This release also demonstrated the use of container technologies, with inclusion of Docker, Singularity, Shifter, and CharlieCloud containers for people to use a starting point for integration into applications. In November 2019, version 0.3 of the E4S will be released and we will follow a regular cadence of E4S releases, with ever-increasing number of ST products included, broader facility adoption, and potentially inclusion in vendor offerings.
+Version 1.2 of the Extreme-Scale Scientific Software Stack (E4S) was released in October, which includes 67 ST products that have Spack packages. This release is downloadable from DockerHub under the ecpe4s area.  The E4S Spack Build Cache now includes binaries for ppc64le as well as x86\_64 and includes over 22,000 total binaries.  The E4S containers now support custom images for ECP applications, such as WDMApp and Pantheon.  A regular cadence of E4S releases will continue, with updated ST products, broader facility adoption, and potentially inclusion in vendor offerings.
 
-In close coordination with E4S, a number of SDKs are being developed across the other L3 ST areas, building on the years of experience the xSDK (Math Libraries).  These SDKs will become a prime vehicle for our delivery strategy, while also providing ST products with a standard set of community policies aimed at robust production-ready software delivery. In 2020 and beyond, we plan to further define these SDKs and their community policies, and develop a delivery and deployment mechanism that will get these products into the hands of our application users.
+In close coordination with E4S, a number of SDKs are being developed across the other L3 ST areas, building on the years of experience the xSDK (Math Libraries).  These SDKs will become a prime vehicle for our delivery strategy, while also providing ST products with a standard set of community policies aimed at robust production-ready software delivery.  In October 2020, Version 1 of the E4S Community Policies was announced. The E4S Community Policies will serve as membership criteria for E4S member packages.  The E4S Community Policies will continue to evolve as we work toward release of Version 2 of them.
 
-Spack continues to gain penetration across the ECP, and will be the de facto delivery method for ST products building from source. We provide Spack packaging assistance for ST users and DOE Facilities, and are developing new capabilities for Spack that enable automated deployments of software at Facilities, in containerized environments, and as part of continuous integration. Concurrently, we are developing technologies and best practices that enable containers to be used effectively at Facilities, and are pushing to accelerate container adoption within ECP.
+Spack continues to gain penetration across the ECP, and will be the de facto delivery method for ST products building from source. We provide Spack packaging assistance for ST users and DOE Facilities, and are developing new capabilities for Spack that enable automated deployments of software at Facilities, in containerized environments, and as part of continuous integration. A new effort to support running test suites within Spack environments via the {\tt spack test} functionality is underway and will be integrated with GitLab continuous integration to display dashboards for E4S tests.  Concurrently, we are developing technologies and best practices that enable containers to be used effectively at Facilities, and are pushing to accelerate container adoption within ECP.  
 
-In 2020, we plan to fill a gap in the ST portfolio with regard to scientific workflows and are working to determine the extent of the gap and to identify a technical plan to fill it.  This plan will be evaluated by the ST leadership with regard to merits of the technical plan, potential to have an impact on applications by the end of the ECP, deployability on the exascale machines, and sustainability beyond the end of the ECP.
+We filled a gap in the ST portfolio by instantiating a new project on scientific workflows, which is currently in an initial development phase.  Within this project, we are establishing the ExaWorks toolkit by assembling shared components from existing workflow projects. The ExaWorks toolkit will provide a robust, well-tested, documented, and scalable set of components that can be combined to enable diverse teams to produce scalable and portable workflows for a wide range of exascale applications. Importantly, the project will not create a new workflow system nor does it aim not to replace the many workflow solutions already deployed and used by scientists, but rather it will provide well engineered and scalable components which can be leveraged by new and existing workflows.
 
-\subsubsection{Risks and Mitigations Strategies}
+\subsubsection{Risks and Mitigation Strategies}
 \begin{itemize}
 	\item Deploying E4S on unknown architectures -- use Spack for deployment to decrease installation complexity
         \item Keeping updated versions of ST and dependent software in synch after initially achieving SDK interoperability
 	\item Delays in deploying a common CI infrastructure lead to subsequent delays in an integrated software release
 	\item Multiple container technologies in flight will make it hard to come to agreement on a ``common'' looking solution; may not be possible to generate containers that are both portable and performant
+	\item ECP Application Reliance on workflow management systems that may not be scalable and performant at exascale -- mitigate by adopting robust, well-tested, and scalable components 
 	\item OpenHPC partnership is ill-defined, and unfunded
 	\item Sustainability of ECP ST capabilities after ECP has ended
 \end{itemize}
@@ -48,7 +50,8 @@ In 2020, we plan to fill a gap in the ST portfolio with regard to scientific wor
 
 Software development kits will gain further traction in their communities as the benefits of 
 interoperability and community policies are demonstrated.  We believe these processes will
-become embedded into the communities and become one of the lasting legacies of ECP.
+become embedded into the communities and become one of the lasting legacies of ECP and
+critical for sustainability beyond ECP.
 
 Software deployments will continue to become more complex, especially when we require optimized 
 builds for the unique and complicated exascale architectures.  Keeping dependencies updated and 
@@ -59,10 +62,18 @@ regularly run them.  These put greater emphasis on using and updating Spack as a
 solution strategy for large collections of software and tight coordination with
 HI and Facilities on CI infrastructure and resources.
 
-We also believe that containers will become more popular and usable as a way to package the entire 
+Containers will become more popular and usable as a way to package the entire 
 environment necessary to run an application on the exascale machines, thereby managing some of the 
 complexity of an application deployment.  We expect that performance of an application within a 
-container will be nearly as fast or faster than running the application on bare metal.  
-Container-based scientific workflows will also begin to take off as we transition from
-demonstrations of applications at scale to performing science with them.
+container will be nearly as fast or faster than running the application on bare metal.  Application
+build time will be reduced by using the associated build caches.
+
+Workflows will continue to become more complex to complete their science missions, requiring
+orchestration of many applications and scripts, executed at various scales across many 
+different resource types, and often reliant on machine learning algorithms for guidance.
+We expect that hardening workflow management systems and building a community centered
+around robust and scalable components will be foundational for addressing these
+complexities.  Moreover, we expect that container-based scientific workflows will 
+begin to take off as we transition from demonstrations of applications at scale 
+to performing science with them.
 

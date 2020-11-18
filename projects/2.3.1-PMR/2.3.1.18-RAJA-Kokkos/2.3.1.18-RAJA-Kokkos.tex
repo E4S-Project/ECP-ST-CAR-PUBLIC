@@ -154,7 +154,7 @@
 \subsubsection{\stid{1.18} RAJA/Kokkos} 
 
 \paragraph{Introduction}
-The RAJA/Kokkos sub-project is a new combined effort intended to focus on collaborative development of backend capabilities for the Aurora and Frontier platforms.  The formation of this project is significant in that it bring two independent teams, RAJA (primarily from LLNL) and Kokkos (primarily from Sandia), to work on a common goal. This project also enhances interactions with staff from other labs, in particular Argonne and Oak Ridge, to help integrate RAJA and Kokkos into the software stack and applications at the respective leadership computing facilities.  The remainder of this section is focused on the Kokkos-specific activities since RAJA and integrated content were not available at the time of publication.
+The RAJA/Kokkos sub-project is a new combined effort intended to focus on collaborative development of backend capabilities for the Aurora and Frontier platforms.  The formation of this project is significant in that it brings two independent teams, RAJA (primarily from LLNL) and Kokkos (primarily from Sandia), to work on a common goal. This project also enhances interactions with staff from other labs, in particular Argonne and Oak Ridge, to help integrate RAJA and Kokkos into the software stack and applications at the respective leadership computing facilities.  The remainder of this section is focused on the Kokkos-specific activities. A description of RAJA is provided in the NNSA/LLNL section 2.3.6.02.
 
 
 \paragraph{Overview} 
@@ -216,21 +216,34 @@ This strong engagement enables the team to lead or contribute to numerous propos
 Among those proposals the team leads are abstractions for multi dimensional arrays based on Kokkos View, atomic operations on generic types and linear algebra algorithms based on Kokkos Kernels, which cover not only the classic Fortran BLAS capabilities, but also batched BLAS and mixed precision linear algebra.
 The team also has a central role in the primary proposal introducing heterogeneous computing into the C++ standard via the executors concept.
 
+Furthermore, certain areas of common needs between RAJA and Kokkos have emerged. 
+To avoid duplicated efforts, and leverage possible synergies the two teams are developing certain capabilities together.
+These include for example:
+\begin{itemize}
+ \item advanced atomic support with memory order and memory scope exposure.
+ \item common metaprogramming facilities.
+ \item optional integration of Umpire memory pools into Kokkos.
+ \item integration of Kokkos Tools callback mechanisms into RAJA.
+ \item an extension of the RAJA performance test suite to include Kokkos variants.
+\end{itemize}
+
 \paragraph{Recent Progress}
 
 The Kokkos project now consists of an integrated developers team spanning five DOE National Laboratories.
 In particular both NNSA and Office of Science funded developers are working based off the same task and code management system, use a shared slack channel, and attend a common weekly team meeting.
 This ensures that no duplication of effort happens, and makes Kokkos a true inter laboratory project.
 
-Kokkos is now used by many applications in production across the entire spectrum of DOE's super computers.
+Kokkos is used by many applications in production across the entire spectrum of DOE's super computers.
 Support for current production platforms is mature and stable.
-Work on supporting the upcoming ExaScale platforms has begun and initial capabilities for AMD GPUs and Intels GPUs are working.
-On the AMD side this is despite the fact that full support was previously available, but had to be removed due to the deprecation of the underlying programming model by AMD.
+Work on supporting the upcoming ExaScale platforms is underway and the primary Kokkos capabilities for AMD GPUs and Intels GPUs are working. 
+Initial application tests were successfully conducted with projects such as EXAALT/LAMMPS, ArborX and Cabana.
 
-Three Kokkos specific multi-day boot camps were organized with a total attendance on the order of 60 developers.
-Additionally the team provided single day tutorials at numerous venues with several hundred attendees in aggregate.
-The slack channel now sees daily questions from numerous users, and has attracted even vendor representatives who help answer machine specific questions.
+A training course was developed called "The Kokkos Lectures", which consists of about 15 hours of recorded lessons and over 20 hands-on exercises.
+It is available at \url{https://kokkos.link/the-lectures}.
+The \url{https://kokkosteam.slack.com} channel has grown dramatically in use, with about 500 users at the end of 2020, of which more than 150 are active in any given week.
 The team finished developing a full API documentation as well as adding use case descriptions for common patterns found in applications.
+
+Auto-tuning is now available as an integrated capability into Kokkos with user facing hooks, which allow for the development of custom tuning tools.
 
 At the C++ committee, the MDSpan proposal is now in wording review - meaning that the technical design is approved. 
 MDSpan will be able to provide all the core capabilities of Kokkos\:\:View.
@@ -244,15 +257,19 @@ It entails functionality covering all of BLAS 1, 2, and 3, but extends it to any
 The proposal was approved by the relevant study groups, as well as the library evolution incubator group.
 The Kokkos team was also able to gain co-authors from NVIDIA, Intel and AMD - providing significant support from the leading hardware vendors.
 
+Implementations of those proposals are now available on GitHub. 
+The new atomic operations implementation is hosted at \url{https://github.com/desul/desul} which serves as the common utility repository for both Kokkos and RAJA.
+RAJA integrated the Kokkos Tools callback interface, which allows it to leverage investment into tools made by the Kokkos effort.
+
 \paragraph{Next Steps}
 
-The most pressing next task is to complete and then mature support for the upcoming ExaScale architectures.
-Most of Kokkos's functionality is expected to be available by the end of FY20 for those systems, which will provide another year of time to mature the support before the first platforms will be delivered.
+Highest priority for both RAJA and Kokkos is now the further maturing of the backends for Aurora and Frontier, as well as optimization work guided by application teams.
+Besides our general support for application teams, we have chosen a few driver projects to focus the optimization efforts.
 
-On the programming model evolution side, more explicit asynchronous capabilities including the creation of graphs of kernel launches is a high priority.
+Addressing latency limitations in current application design is another critical topic.
+Many codes are now reaching a point on the production platforms, where kernel launch, memory transfer, and communication latencies are limiting factors.
+The Kokkos team is exploring concepts such as predefined kernel graphs as well as global arrays style communication to address these issues.
+Initial prototypes are available now, and need to be tested by applications.
 
-At the plumbing level, the team will start to replace some of the implementation level of Kokkos by the ISO C++ capabilities such as atomic\_ref and mdspan.
+Further work on the shared facilities for RAJA and Kokkos is ongoing.
 
-For Kokkos tools an upcoming capability will be the addition of autotuning tools. This will help with the increasingly difficult task of coming up with heuristics to determine good runtime settings for kernels on all the different architectures.
-
-And last but not least, the team will work on getting the proposed new ISO C++ capabilities into the C++23 draft standard, so that they will be available to our users as a vendor provided capability during the lifetime of the first ExaScale platforms.

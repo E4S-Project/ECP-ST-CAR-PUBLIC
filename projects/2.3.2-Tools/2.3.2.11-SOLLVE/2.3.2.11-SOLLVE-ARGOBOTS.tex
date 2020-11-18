@@ -14,7 +14,7 @@ implementations. (2) To provide interoperability with other
 programming systems such as OpenMP and MPI as well as with other
 software components (e.g., I/O services). (3) To provide a programming
 framework that manages hardware resources more efficiently and reduce
-interference with colocated applications.
+interference with co-located applications.
 
 \paragraph{Key Challenges}
 
@@ -81,66 +81,74 @@ them to build a hypothetical system.
 
 \paragraph{Recent Progress}
 
-Integration with other runtime systems is fundamentally important for
-the Argobots project. BOLT, an LLVM OpenMP runtime over Argobots, is
-one of the most successful parallel programming systems using
-Argobots. Thread scheduling mechanism tailored to the OpenMP
-specification plays a key role in efficient and effective exploitation
-of nested parallelism in BOLT. As a result, BOLT outperforms existing
-OS-level thread-based and ULT-based OpenMP runtime
-systems~\cite{BOLT}. This showcases the importance of exposing
-low-level threading functionalities including customizable thread
-schedulers and thread pool operations. The Argobots project continues
-to improve interoperability with communication layers such as MPI
-runtimes (e.g., MPICH and Open MPI) and Mercury RPC; Argobots benefit
-these communication libraries  by lightweight user-level context
-switch and flexible user-level scheduling. I/O service is one of the
-most important application areas for Argobots. Intel DAOS, a high
-performance storage system developed by Intel, uses Argobots to
-efficiently handle asynchronous I/O messages. We implemented several
-features and performed optimizations that are demanded by these key
-projects, including several debugging functionalities in Argobots.
+Threading overheads are crucial for fine-grained parallel applications
+and runtimes running in massively parallel environments.  We have
+found that the timing of yield operations highly affects the
+performance of lightweight threads~\cite{iwasaki2018}, but other
+factors remained unexplored.  We further optimized fork-join overheads
+by exploring new threading methods with respect to stack allocation
+timing and scheduling policies and a wider range of modern hardware
+architectures.  Our evaluation shows that our child-first scheduling
+yields promising results for deep and narrow recursive task-parallel
+programs while the parent-first scheduling is good for flat
+parallelism.  Our study helps users and application developers choose
+the best threading methods that fit their hardware architectures and
+application workloads and maximize the scalability~\cite{iwasaki2020}.
 
-Overheads of thread creation and scheduling highly impact the
-performance of applications and runtimes parallelized with Argobots.
-Our study has proven that a \textit{dynamic promotion technique},
-which initially creates ULTs with minimum features and lazily promotes
-threads when an independent context gets required, are effective in
-the scenario where chances of suspension are low~\cite{iwasaki2018}.
-In addition to support of x86/64 architectures, we extended this
-technique to various CPU architectures that are commonly seen in HPC:
-POWER and ARM. One of our recent efforts is improvement of testing
-with continuation integration by increasing test cases, testing
-compilers, and architectures in order to deliver a stable and
-well-tested implementation of Argobots.
+Integration with other runtime systems is fundamentally important for
+the Argobots project.  BOLT, a SOLLVE OpenMP runtime over
+Argobots~\cite{BOLT}, is one of the most successful parallel
+programming systems using Argobots.  Our enhancements of Argobots
+threads lowers the cost of OpenMP threading and tasking.  The Argobots
+project continues to improve interoperability with communication
+layers such as MPI runtimes (e.g., MPICH and Open~MPI) and Margo, a
+Mercury RPC over Argobots.  To help their performance analysis, our
+latest Argobots 1.1a1 release includes a lightweight yet powerful
+profiling interface, which helps runtime developers pinpointing a
+performance problem in these systems.  I/O service is one of the most
+important application areas for Argobots. Intel DAOS, a next-
+generation high-performance storage system developed by Intel, uses
+Argobots to efficiently handle asynchronous I/O messages.  We are
+working together to improve Argobots by providing a better debugging
+interface such as stack dump features. Our CI testing has been
+extended for various CPU architectures, operating systems, and
+compilers to cover most of the DOE HPC platforms.  Thanks to our CI,
+Argobots 1.1a1 works on major UNIX-based platforms including Ubuntu,
+FreeBSD, CentOS, macOS, and Solaris. Argobots supports most CPU
+architectures with special optimizations for Intel/AMD x86/64,
+ARMv8-A, and POWER 8 and 9. Argobots can be compiled with numerous C
+compilers including GCC, Clang, ICC (Intel), XLC (IBM), PGCC (PGI),
+Solaris Studio (Oracle), and Arm C Compiler for HPC (ARM).
+
+The innovative design and implementation of Argobots are highly
+recognized.  Argobots was named a finalist for the 2020 R\&D 100
+Awards.  The prestigious R\&D 100 competition, sponsored by R\&D
+Magazine, recognizes the 100 most innovative technologies of the
+previous year.  Argobots, a lightweight and highly flexible
+multithreading framework, was chosen as a finalist for the 2020 R\&D
+100 Awards.
 
 \paragraph{Next Steps}
 
 Argobots continues to implement new features and optimizations for
 application needs, while our substantial efforts will be made to
-promote integration and composition with other systems. Another key
-aspect is educating users and growing the user base of Argobots. Our
-major ongoing and planned steps are as follows.
+promote integration and composition with other systems. Our major
+ongoing and planned steps are as follows.
 
 \begin{enumerate}
 
-\item Further integration with communication layers including MPI
-runtimes and Mercury RPC. Particularly, we continue to collaborate
-with MPICH and Open MPI developers to make their Argobots
-interoperability layers more scalable and stable.
+\item Further integration with other applications and runtimes
+including MPI runtimes including MPICH and Open MPI.  In collaboration
+with MPICH and Open MPI developers, we will further optimize their
+Argobots interoperability layers by utilizing user-level threading
+techniques.
 
-\item Enhanced interoperability of multiple Argobots-aware components.
-As more and more software components use Argobots, managing resources
-in Argobots across multiple Argobots-aware software stacks gets
-challenging.  For example, blindly creating ESs can incur
-oversubscription of OS-level threads, which significantly lowers
-performance. To address this issue, we are investigating an approach
-that virtualizes the execution stream layer in Argobots.
-
-\item Provides tutorials for users and grows the community. The user
-community is precious to get feedback and bug reports and stabilize
-developments as well as expand the Argobots ecosystem. As our tutorial
-on Argobots at PACT '19 was successful, we plan to have another at
-PPoPP '20.
+\item Enhanced interoperability of multiple components that are not
+aware of Argobots.  Unfortunately, not all applications are written
+for lightweight ULTs; some programs suffer from core starvation and,
+in the worst case, deadlocks if they are running on Argobots.  To
+address this issue, we are investigating an approach that is as
+lightweight as the current Argobots ULTs while it has the OS-implicit
+preemption functionality that traditional OS-level threads have.
 
 \end{enumerate}
