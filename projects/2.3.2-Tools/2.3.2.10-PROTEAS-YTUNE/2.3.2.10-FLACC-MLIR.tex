@@ -24,9 +24,9 @@ community to be challenging to extend and, especially within the DOE, is
 losing favor to Clang and LLVM for new compiler research and development
 efforts.
 
-Recent efforts to build a Fortan counter-part to Clang in LLVM project have
+Recent efforts to build a Fortran counter-part to Clang in LLVM project have
 been accelerated and big chunk of the Flang have been upstreamed.
-Directive-based progamming model are heavily used in Fortran applications ported
+Directive-based programming model are heavily used in Fortran applications ported
 to accelerators. Unlike C and C++, Fortran doesn not have many alternatives.
 
 FLACC proposes to develop a prototype OpenACC 3.0 implementation in Flang based
@@ -52,7 +52,7 @@ SOLLVE projects.
       development. Flang will be the first core frontend relying on MLIR.
 
 \item \textbf{Runtime:} LLVM does not include an OpenACC runtime but only one
-      for OpenMP at the moment. This runtime can be generalize to support
+      for OpenMP at the moment. This runtime can be generalized to support
       missing OpenACC features. This generalization needs to be accepted by the
       current OpenMP community.
 
@@ -71,7 +71,7 @@ SOLLVE projects.
 
 \begin{enumerate}
 
-\item Flacc design follows a similar desigb than the OpenMP implementation for
+\item Flacc design follows a similar design as the OpenMP implementation for
       Flang. This design includes the following aspects:
 
 \begin{enumerate}
@@ -86,7 +86,7 @@ SOLLVE projects.
 
 \begin{enumerate}
 \item OpenACC 3.0 parser is upstreamed to the Flang front-end. It covers the
-      full specification and also implment the unparsing feature of Flang.
+      full specification and also implements the unparsing feature of Flang.
 \item Semantic checking for OpenACC 3.0 is also upstreamed in Flang. While
       implementing this part, a new TableGen backed for directive-based language
       has been contributed upstreamed. This is used by OpenACC and OpenMP for

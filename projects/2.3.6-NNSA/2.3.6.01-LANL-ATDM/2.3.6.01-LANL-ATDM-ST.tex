@@ -172,10 +172,10 @@ planned.
 \subparagraph{Legion:} 
 One of the strengths of Legion is that it executes asynchronous tasks as if they were executed in the sequence they occur in the program. This provides the programmer with a mental model of the computation that is easy to reason about. However, the top-level task in this tree-of-tasks model can often become a sequential bottleneck, as it is responsible for the initial distribution of many subtasks across large machines. In earlier work NVIDIA developed the initial implementation of control replication, which allows the programmer to write tasks with sequential semantics that can be  transparently replicated many times, as directed by the Legion mapper interface, and run in a scalable manner across many nodes.
 Dynamic control replication is an important capability for LANL's ATDM effort, allowing our application teams to write applications with apparently sequential semantics while enabling scalability to Exascale architectures. This approach will improve understandability of application code, productivity, and composability of software and ease the burden of optimization and porting to new architectures. 
-New dynamic tracing ability has been added to Legion to allow debugging and insight in to peformance optimization activites.
+New dynamic tracing ability has been added to Legion to allow debugging and insight in to performance optimization activities.
 
 \subparagraph{FleCSI Legion Integration:} 
-A key component of LANL's Advanced Technology  Development and Mitigation effort is the development of a flexible computational science infrastructure (FleCSI) to support a breadth of application use cases for our Next Generation Code. FleCSI has been co-designed with the Legion programing system in order to enable our Next Generation Code to be performance portable and scalable to future Exascale systems. Legion provides the underlying distributed and node-level runtime environment required for FleCSI to leverage task and data parallelism, data dependent execution, and runtime analysis of task dependencies to expose parallelism. We completed testing of Legion on Sierra with a Visco-Plastic Self-Consistent, VSCP, application to investigate initial performance on GPU systesm.
+A key component of LANL's Advanced Technology  Development and Mitigation effort is the development of a flexible computational science infrastructure (FleCSI) to support a breadth of application use cases for our Next Generation Code. FleCSI has been co-designed with the Legion programming system in order to enable our Next Generation Code to be performance portable and scalable to future Exascale systems. Legion provides the underlying distributed and node-level runtime environment required for FleCSI to leverage task and data parallelism, data dependent execution, and runtime analysis of task dependencies to expose parallelism. We completed testing of Legion on Sierra with a Visco-Plastic Self-Consistent, VSCP, application to investigate initial performance on GPU systesm.
 
 \subparagraph{Kitsune:}
 Our primary focus is the delivery of capabilities for LANL's ATDM
@@ -184,12 +184,12 @@ Ristra, we are targeting the lowering of \textit{``forall''} constructs,
 including Kokkos \texttt{parallel\_for} construct, directly into the
 parallel representation.  At present, this works for many C++ constructs
 (e.g., for and for-range statements).  We can target this code to different
-runtimes and architectures via the compiler and thus avoid reimplementaiton
-of Kokkos or fundametnall C++ constructs. In addition we are working to replace
+runtimes and architectures via the compiler and thus avoid reimplementation
+of Kokkos or fundamental C++ constructs. In addition we are working to replace
 LLVM's dominator tree, a key data structure for optimizations including
 parallelization and memory usage analysis, with a \emph{dominator directed-acyclic-graph}
 (DAG).  This capability is still in its early evaluation state and we continue to
-explore correctness and compatiblity within the overall LLVM infrastructure. We are
+explore correctness and compatibility within the overall LLVM infrastructure. We are
 actively watching recent events within the LLVM community around
 multi-level intermediate representations (MLIR) and the relationship
 they have with parallel semantics, analysis, optimization, and code
@@ -229,7 +229,7 @@ part of OpenHPC.  Charliecloud won an 2018 R\&D-100 award.
 BEE fully supports launching Charliecloud containers on all LANL HPC systems.
 It can also launch containers on AWS and OpenStack clouds such as NSF
 Chameleon.  BEE also supports interactive launching of jobs with the SLURM
-resource manager. BEE was shown at the end of FY19 to support a complex multiphysics application with setup, in situp visualization and checkpoint-restart on a production system at LANL.
+resource manager. BEE was shown at the end of FY19 to support a complex multiphysics application with setup, in situ visualization and checkpoint-restart on a production system at LANL.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Next Steps} \leavevmode \\
@@ -274,4 +274,4 @@ In FY21, Cinema will be hardening the Composable Image Sets format to meet user 
 \end{figure}
 
 \subparagraph{Bee/CharlieCloud}
-A refactoring of BEE to support an open standard is underway. Support for the Open Workflow standard will allow a base on a well defined workflow description language leveraged by other scientiic communities. This will then be tested on multiple systems to ensure portability.
+A refactoring of BEE to support an open standard is underway. Support for the Open Workflow standard will allow a base on a well defined workflow description language leveraged by other scientific communities. This will then be tested on multiple systems to ensure portability.

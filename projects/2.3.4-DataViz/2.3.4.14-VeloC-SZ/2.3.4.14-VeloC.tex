@@ -107,7 +107,7 @@ separate engine is responsible to employ the rest of the resilience
 strategies as plugable modules. This simplifies the implementation
 of the asynchronous mode, it enables users the flexibility to choose any
 combination of resilience strategies, as well as, to customize their
-checkpoiting pipeline (e.g., add new post-processing operations such
+checkpointing pipeline (e.g., add new post-processing operations such
 as analytics or compression).
 
 \paragraph{Recent Progress}
@@ -144,7 +144,7 @@ In addition, we have added several new features that facilitate better
 integration with the ECP ecosystem. In addition to continuous
 integration based on Travis (linked to our public GitHub repository),
 we designed and developed a test suite for VeloC that verifies the
-correnctness in a multi-node setup on the ECP testbeds using the
+correctness in a multi-node setup on the ECP testbeds using the
 continuous integration platform provided by ECP (which is configured to
 mirror the GitHub repository). We are also providing a Spack
 installation package that is part of the OpenHPC distribution.
@@ -159,7 +159,7 @@ also developed specialized checkpointing approaches for deep learning
 applications.  In particular, we explored how to take advantage of
 specific properties (e.g. multiple model replicas in the case of
 data-parallel training) in order to reduce the asynchronous
-checkpoining overhead. Our work DeepFreeze~\cite{DeepFreeze20}
+checkpointing overhead. Our work DeepFreeze~\cite{DeepFreeze20}
 illustrates such techniques based on the idea of augmenting the
 execution graph with fine-grain tensor copy operations, which then be
 asynchronously flushed to stable storage. We plan to integrate such
