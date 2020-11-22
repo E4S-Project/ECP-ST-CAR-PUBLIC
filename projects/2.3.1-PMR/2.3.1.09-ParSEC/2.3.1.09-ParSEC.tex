@@ -44,7 +44,7 @@ efficient and Exascale-ready programming paradigms.
 \paragraph{Key Challenges}
 %\textit{Describe what is hard to do, why it is challenging.}
 
-As Exascale platforms delivery become a closer deadline, a increasing number of
+As Exascale platforms delivery become a closer deadline, an increasing number of
 aspects of the hardware and software environment still pose challenges. First
 and foremost, keeping pace with the architectural changes on current and future
 platforms requires changes not only on how we take advantage of the hardware
@@ -63,8 +63,8 @@ transfers between different memory (both inter- and intra-nodes), memory
 hierarchies, heterogeneous architectures with support for accelerators with a
 simple programming scheme. The proposed approach envisions a middle-ground
 solution, addressing both hardware and software challenges. At the hardware
-level a team of dedicated developers extends PaRSEC to map it's capabilities to
-the hardware and to improve it's scalability and performance. At the upper
+level a team of dedicated developers extends PaRSEC to map its capabilities to
+the hardware and to improve its scalability and performance. At the upper
 software level the runtime interactions are through Domain Specific Languages
 with the target domain scientists in mind, that will facilitate the expression
 of algorithmic parallelism with familiar constructs mapped on the exposed
@@ -158,7 +158,7 @@ An important aspect of the DTE project is to define and prototype scalable
 domain specific languages that enable a productive expression of parallelism for
 end-user communities. PaRSEC presents multiple programming interfaces
 (Parameterized Task Graphs for maximum parallelism, the popular serial task
-insertion dataflow model to provide direct access to the runtime). In addition
+insertion dataflow model to provide direct access to the runtime). In addition,
 the DTE team is in close contact with application teams to define parallel
 abstractions that are suitable for their domain usage. Notably, the PaRSEC team
 has ongoing collaboration with the SLATE linear algebra package and NWChemEx and
@@ -183,7 +183,7 @@ runtime, the Dynamic Task Discovery (DTD) an approach similar to
 OpenMP but working on a distributed setting, and a version of the
 SLATE library where instead of relying on explicit parallelism
 (OpenMP) and communications (MPI) it rely on implicit dependencies
-qmanagement via PaRSEC.
+management via PaRSEC.
 
 
 % side including the integration of SLATE and PaRSEC. Two domain
@@ -250,7 +250,7 @@ used on the GPU tests.
 %
 In all cases, the performance achieved by running ScaLAPACK over
 DPLASMA is more than 90\% the performance of native DPLASMA.  For the
-CPU-only experiments, the usage of the DPLASMA wrapper introduces an
+CPU-only experiments, the usage of the DPLASMA wrapper introduces a
 speedup of 1.73x for GEMM (minimum 1.64x, maximum 1.88x) and 1.49x for
 POTRF (minimum 1.27x, maximum 1.71x) .  When exploiting also the GPUs
 of the computation nodes, the performance is increased by 16.75x for
