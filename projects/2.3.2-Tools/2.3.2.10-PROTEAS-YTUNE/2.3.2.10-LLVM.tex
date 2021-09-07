@@ -2,7 +2,7 @@
 
 \paragraph{Overview}
 
-LLVM, winner of the 2012 ACM Software System Award, has become an integral part of the software-development ecosystem for optimizing compilers, dynamic-language execution engines, source-code analysis and transformation tools, debuggers and linkers, and a whole host of programming-language and toolchain-related components. Now heavily used in both academia and industry, where it allows for rapid development of production-quality tools, LLVM is increasingly used in work targeted at high-performance computing. LLVM components are integral parts of the programming environments on our upcoming Exascale systems, and smaller-scale systems as well, being not only popular open-source dependencies, but are critical parts of the commercial toolchains provided by essentially all relevant vendors.
+LLVM, winner of the 2012 ACM Software System Award, has become an integral part of the software-development ecosystem for optimizing compilers, dynamic-language execution engines, source-code analysis and transformation tools, debuggers and linkers, and a whole host of programming-language and toolchain-related components. Now heavily used in both academia and industry, where it allows for rapid development of production-quality tools, LLVM is increasingly used in work targeted at HPC. LLVM components are integral parts of the programming environments on our upcoming Exascale systems, and smaller-scale systems as well, being not only popular open-source dependencies, but are critical parts of the commercial toolchains provided by essentially all relevant vendors.
 
 \paragraph{Key Challenges}
 
@@ -23,8 +23,8 @@ We are developing two significant enhancements to LLVM's core infrastructure, an
 \item Enhancements to LLVM's loop-optimization infrastructure to allow the direction of a sequence of loop transformations to loop nests, exposing these features to users through Clang pragmas (in addition to being available at an API level to tools such as autotuners), enabling those transformations to execute as specified, and otherwise enhancing the loop-optimization infrastructure.
 \end{itemize}
 
-As part of this project, we're investigating both fundamental intermediate
-representation (IR) level enhancements (as part of the Kitsune development), as
+As part of this project, we're investigating both fundamental 
+IR level enhancements (as part of the Kitsune development), as
 well as runtime call aware optimizations that deal with the classical lowering
 of parallelism into runtime calls. The latter mechanism is being implemented
 upstream as an OpenMP optimization pass, while the Kitsune work is, at present,
