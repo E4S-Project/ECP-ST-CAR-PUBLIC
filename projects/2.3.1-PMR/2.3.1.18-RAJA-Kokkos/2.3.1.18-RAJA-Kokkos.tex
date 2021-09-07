@@ -154,24 +154,24 @@
 \subsubsection{\stid{1.18} RAJA/Kokkos} 
 
 \paragraph{Introduction}
-The RAJA/Kokkos sub-project is a new combined effort intended to focus on collaborative development of backend capabilities for the Aurora and Frontier platforms.  The formation of this project is significant in that it brings two independent teams, RAJA (primarily from LLNL) and Kokkos (primarily from Sandia), to work on a common goal. This project also enhances interactions with staff from other labs, in particular Argonne and Oak Ridge, to help integrate RAJA and Kokkos into the software stack and applications at the respective leadership computing facilities.  The remainder of this section is focused on the Kokkos-specific activities. A description of RAJA is provided in the NNSA/LLNL section 2.3.6.02.
+The RAJA/Kokkos sub-project is a new combined effort intended to focus on collaborative development of backend capabilities for the Aurora and Frontier platforms.  The formation of this project is significant in that it brings two independent teams, RAJA (primarily from LLNL) and Kokkos (primarily from Sandia), to work on a common goal. This project also enhances interactions with staff from other labs, in particular Argonne and ORNL, to help integrate RAJA and Kokkos into the software stack and applications at the respective leadership computing facilities.  The remainder of this section is focused on the Kokkos-specific activities. A description of RAJA is provided in the NNSA/LLNL section 2.3.6.02.
 
 
 \paragraph{Overview} 
 
 The Kokkos C++ Performance Portability Ecosystem is a production-level solution for writing modern C++ applications in a hardware-agnostic way.
-Started by Sandia National Laboratories, it is now supported by developers at the Argonne, Berkeley, Oak Ridge, Los Alamos and Sandia National Laboratories as well as the Swiss National Supercomputing (Centre).
+Started by Sandia, it is now supported by developers at the Argonne, Berkeley, Oak Ridge, Los Alamos, and Sandia National Laboratories as well as the Swiss National Supercomputing (Centre).
 It is now used by more than a hundred HPC projects, and Kokkos-based codes are running regularly at-scale on half of the top ten supercomputers in the world. 
 The EcoSystem consists of multiple libraries addressing the primary concerns for developing and maintaining applications in a portable way.
 The three main components are the Kokkos Core Programming Model, the Kokkos Kernels Math Libraries and the Kokkos Tools.
 Additionally, the Kokkos team is participating in the ISO C++ standard development process, to get successful concepts from the Kokkos EcoSystem incorporated into the standard. 
-Its development is largely funded as part of the Exascale Computing Project, with a mix of NNSA ATDM and Office of Science sources. 
+Its development is largely funded as part of the ECP, with a mix of NNSA ATDM and SC sources. 
 
  
 \paragraph{Key Challenges}
 
 One of the biggest challenges for the Exascale supercomputing era is the proliferation of different computer architectures, and their associated mechanisms to program them.
-Vendors have an incentive to develop their own models in order to have maximum freedom of exposing special hardware capabilities, and potentially achieve "vendor-lock-in".
+Vendors have an incentive to develop their own models in order to have maximum freedom of exposing special hardware capabilities, and potentially achieve ``vendor-lock-in.''
 This poses the problem for applications that they may need to write different variants of their code for different machines - an effort which can be simply not feasible for many of the larger application and library projects.
 
 The Kokkos project aims at solving this issue by providing a programming solution which provides a common interface build upon the vendor specific software stacks.
@@ -206,7 +206,7 @@ Kokkos Tools is an innovative “plug in” software interface and a growing set
 
 Kokkos Support addresses the challenges of establishing, growing and maintaining the user community.
 First and foremost, it provides explicit means for supporting all DOE ECP applications. 
-A main component of that is funding for local Kokkos experts at the Sandia, Oak Ridge, Argonne, Berkeley and Los Alamos laboratories which can serve as direct contacts for local applications and the users of the leadership computing facilities. 
+A main component of that is funding for local Kokkos experts at the Sandia, Oak Ridge, Argonne, Berkeley, and Los Alamos laboratories which can serve as direct contacts for local applications and the users of the leadership computing facilities. 
 Secondly, the project develops and maintains a reusable support infrastructure, which makes supporting more users scalable and cost effective. 
 
 The support infrastructure consists of GitHub wiki pages for the programming guide and API reference, GitHub issues to track feature requests and bug reports, a Slack channel for direct user-to-user and user-to-developer communication, and tutorial presentations and cloud-based Kokkos hands-on exercises. 
@@ -230,7 +230,7 @@ These include for example:
 \paragraph{Recent Progress}
 
 The Kokkos project now consists of an integrated developers team spanning five DOE National Laboratories.
-In particular both NNSA and Office of Science funded developers are working based off the same task and code management system, use a shared slack channel, and attend a common weekly team meeting.
+In particular both NNSA and SC funded developers are working based off the same task and code management system, use a shared slack channel, and attend a common weekly team meeting.
 This ensures that no duplication of effort happens, and makes Kokkos a true inter laboratory project.
 
 Kokkos is used by many applications in production across the entire spectrum of DOE's super computers.

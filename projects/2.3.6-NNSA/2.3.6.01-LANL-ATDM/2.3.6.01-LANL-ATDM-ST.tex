@@ -4,8 +4,7 @@
 \paragraph{Overview} \leavevmode \\
 
 The LANL ATDM PMR effort is focusing on the development and use of
-advanced programming models for Advanced Technology Development and
-Mitigation (ATDM) use-cases. Our current focus is on research and development
+advanced programming models for (ATDM) use-cases. Our current focus is on research and development
 of new programming model capabilities in the \textbf{Legion} data-centric
 programming system. Legion provides unique capabilities that align
 well with our focus on the development of tools and technologies that
@@ -23,8 +22,8 @@ open-source software \url{https://gitlab.com/StanfordLegion/legion}.
 The \textbf{Kitsune} Project, provides a compiler-focused infrastructure
 for improving various aspects of the exascale programming environment.
 At present, efforts are primarily focused on advanced LLVM compiler and
-tool infrastructure to support the use of a \emph{parallel-aware} intermediate
-representation.  In addition, we are actively involved in the Flang Fortran
+tool infrastructure to support the use of a \emph{parallel-aware} IR.
+In addition, we are actively involved in the Flang Fortran
 front-end that is now an official sub-project within the overall LLVM
 infrastructure. All these efforts include interactions across ECP as well as
 with the broader LLVM community and industry.  
@@ -61,7 +60,7 @@ FleCSI is a Flexible Computational Science Infrastructure whose goal is to provi
 
 \subparagraph{Kitsune:}
 A key challenge to our efforts is reaching agreement within the
-broader community that a parallel intermediate representation is
+broader community that a parallel IR is
 beneficial and needed within LLVM.  This not only requires showing the
 benefits but also providing a full implementation for evaluation and
 feedback from the community.  In addition, significant new compiler
@@ -135,7 +134,7 @@ solutions, thereby managing risk while also providing the ability to
 introduce new technologies via the toolchain. 
 
 Unlike current designs, our approach introduces the notion of explicit
-parallel constructs into the LLVM intermediate representation, building
+parallel constructs into the LLVM IR, building
 off of work done at MIT on Tapir~\cite{2.3.6.01:kitsune:Schardl:2017}
 and the OpenCILK effort (url{https://cilk.mit.edu}). We are working with
 MIT to extend this work as well as making some changes to fundamental data
