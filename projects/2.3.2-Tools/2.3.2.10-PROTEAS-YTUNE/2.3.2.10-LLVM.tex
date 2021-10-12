@@ -1,4 +1,5 @@
 \subsubsection{\stid{2.10} PROTEAS-TUNE: LLVM} 
+\label{sec:PROTEAS_TUNE_LLVM}
 
 \paragraph{Overview}
 
@@ -52,18 +53,13 @@ view. Our approach was already discussed with the community and needs to be
 further refined and tested.
 
 For loop optimizations, we have implemented several new features in LLVM and
-Clang, including the OpenMP 5.1 ``tile'' directive and clang pragma syntax for
-exploration of future transformations not yet available through the OpenMP
-standard. Most of these enhancements are in papers
-(~\cite{kruse2018user,kruse2018loop} and in several forums directly to the LLVM
-community.
+Clang, including the OpenMP 5.1 ``tile'' directive and the ``unroll'' directive~\cite{kruse2021openmpbooth}.
+We also continued development of the OpenMPIRBuilder which refactors Clang's OpenMP lowering such that is can also be used from MLIR, specifically Flang.
+The OpenMPIRBuilder now also supports OpenMP 5.1 loop transformations and Clang can make use of either of the two lowering paths~\cite{kruse2021clangast}.
 
-In a more forward looking approach we prototyped a loop-hierarchical IR for
-LLVM which we also present and discuss in various LLVM community forums.
-
-To facilitate autotuning (ref. Section \ref{sec:PROTEAS_TUNE_AUTOTUNING}), we
-implemented a loop nest information extraction tool for
-LLVM-IR~\cite{kruse2020search}.
+To facilitate autotuning (ref. Section \ref{sec:PROTEAS_TUNE_AUTOTUNING}), we further
+enhanced the semantics-preserving implementation of loop transformations using Polly~\cite{wu2021autotuning}.
+Additional supported loop transformations include array packing, unroll, unroll-and-jam, loop distribution and fusion.
 
 We have developed a prototype C++ compiler, based on Clang, supporting an
 extension that enables programmers to embed (domain specific) languages inside

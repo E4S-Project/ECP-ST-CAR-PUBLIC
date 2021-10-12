@@ -66,7 +66,11 @@ ytopt/SurF is a machine-learning-based search software package for autotuning th
 We have pursued the following main activities this year:
 
 \textit{Autotuning capability in LLVM:}
-The key idea is to support the use of pragmas in the C++ source to guide transformations to be applied. These can include the types of transformation recipes used in CHiLL, but also parallelization directives for OpenMP and OpenACC that would interact with SOLLVE and PROTEAS. Our initial focus is the implementation of user/tool-directed optimizations in Polly, which is a polyhedral framework in LLVM with some similar features to CHiLL. An initial plan for pragmas in Clang and LLVM metadata has been developed. Several existing open-source LLVM projects allowing for just-in-time (JIT) compilation of C++ code have been identified and are being evaluated for use with autotuning. A summer intern developed the JIT/autotuning explorations. 
+The key idea is to support the use of pragmas in the C++ source to guide transformations to be applied. These can include the types of transformation recipes used in CHiLL, but also parallelization directives for OpenMP and OpenACC that would interact with SOLLVE and PROTEAS. Our initial focus is the implementation of user/tool-directed optimizations in Polly, which is a polyhedral framework in LLVM with some similar features to CHiLL. Several existing open-source LLVM projects allowing for just-in-time (JIT) compilation of C++ code have been identified and are being evaluated for use with autotuning. 
+
+We have successfully used loop transformations directives implemented in Clang (ref. Section \ref{sec:PROTEAS_TUNE_LLVM}) to drive a machine learning process with YtOpt. The correctness of these transformations are checked in the Clang compiler by Polly such that it is not possible to result in wrong results. The search strategies used include a Globally Greedy~\cite{kruse2020search}, random search, beam search and our latest algorithm a customized Monte-Carlo Tree Search~\cite{wu2021autotuning}.
+In addition to the PolyBench benchmark suite, we applied the search over a tree-shaped configuration space to three ECP Proxy apps, namely SW4Lite, CoMD and minrAMR with promising results.
+
 
 \vspace*{.1in}
 \noindent
