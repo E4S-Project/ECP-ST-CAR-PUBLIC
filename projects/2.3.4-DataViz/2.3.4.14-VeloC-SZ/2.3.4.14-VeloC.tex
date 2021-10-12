@@ -18,10 +18,10 @@ in Figure~\ref{fig:veloc:arch}.
 
 VeloC has been released and shows significant lower checkpointing
 overhead for several ECP applications, such as HACC, LatticeQCD,
-EXAALT. 
+EXAALT.
 
 \paragraph{Key Challenges.}
-VeloC faces several key challenges:
+VeloC addresses several key challenges:
 \vspace{-1em}
 
 \paragraph{\emph{I/O bottlenecks:}} applications typically employ
@@ -35,7 +35,7 @@ sustainable.
 diminishing parallel file system I/O bandwidth per core, the storage
 stack is becoming increasingly deeper and heterogeneous: node-local
 NVRAM, burst buffers, key-value stores, etc. However, the variety of
-vendors and performance characteristics make it difficult for
+vendor APIs and performance characteristics make it difficult for
 application developers to take advantage of it.
 \vspace{-1em}
 
@@ -43,16 +43,16 @@ application developers to take advantage of it.
 only a small part of the nodes where the job is running. Therefore,
 reusing the surviving nodes to restart from the latest checkpoint
 immediately after a failure is more efficient than submitting a new job,
-which may wait in the batch queue.
+which may wait for a long time in the batch queue.
 \vspace{-1em}
 
-\paragraph{\emph{Portability and robustness:}} applications need to
-run on a variety of supercomputing architectures, each featuring
-distinct capabilities. Their critical data structures that need to be
-checkpointed are constantly growing in size and complexity. Therefore,
-a flexible checkpointing solution is needed that can adapt to a
-variety of scenarios and configurations without sacrificing
-performance and scalability.
+\paragraph{\emph{Efficient serialization:}} The critical data structures
+of HPC applications that need to be checkpointed are constantly
+growing in size and complexity. Manual serialization of such data
+structures as contiguous sequences of bytes to be written into
+checkpoints is both tedious (leading to loss of productivity) and
+inefficient (leading to longer runtime). Therefore, automated
+optimized serialization support is needed.
 
 \paragraph{Solution Strategy}
 
@@ -103,7 +103,6 @@ automatically serialized into checkpoint files.
 \paragraph{\emph{Modular design:}} applications link with a client
 library that is responsible to manage local checkpoints, while a
 separate engine is responsible to employ the rest of the resilience
-
 strategies as plugable modules. This simplifies the implementation
 of the asynchronous mode, it enables users the flexibility to choose any
 combination of resilience strategies, as well as, to customize their
@@ -114,14 +113,13 @@ as analytics or compression).
 
 We met and closely collaborated with several ECP application teams in
 an effort to address their checkpointing needs. Most of our current
-efforts involve the HACC, LatticeQCD, and EXAALT teams. Starting from
-our previous efforts to isolate the checkpointing code into an optional
-plugin within the application (which is notably the case of HACC, where
-we integrated VeloC as a CosmoTools plugin), we developed an automated
-deployment for the components of VeloC, which has two advantages: (1)
-it eliminates the need to change the application deployment scripts
-to launch the active backend; (2) it enables the application to decide
-the VeloC configuration dynamically at runtime.
+efforts involve the HACC, LatticeQCD, and EXAALT teams. We also
+started integrating VELOC into NWChemEX. Based on feedback from
+several teams, we extended VELOC to support multiple communication
+protocols that reduce dependencies on external libraries (such as
+Boost) if desired.  Furthermore, we added preliminary support for
+checkpoint aggregation, which reduces the number of checkpoint files
+from one per rank to a desired smaller number.
 
 \begin{wrapfigure}{l}{0.47\textwidth}
   \includegraphics[width=0.4\textwidth]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/veloc-arch}
@@ -129,49 +127,50 @@ the VeloC configuration dynamically at runtime.
   \label{fig:veloc:arch}%
 \end{wrapfigure}
 
-Furthermore, we added several new capabilities. First, we have added
-a \emph{checksumming} module that verifies the integrity of the checkpoints
-This is done asynchronously to minimize the overheads of using this capability.
-Second, we have refactored the control plane that facilitates the communication
-between the VeloC clients and the active backends to include two new alternatives:
-(1) a lightweight communication protocol based on UNIX sockets for the case
-when the active backend is co-deployed with the VeloC clients; an RPC-based
-communication protocol based on Mercury/Thallium that enables the active
-backend to be deployed on separate nodes. Both alternatives complement the
-existing default control plane implemented using POSIX shared memory.
+Furthermore, we added several new capabilities. First, we added
+support for \emph{serialization} of C++ objects based on the notion
+of \emph{lambda serializers}, which register a recipe for
+serialization with VELOC that will be used during checkpointing. This
+recipe can be individually tuned for each data structure individually
+and may potentially mix different serialization libraries within the
+same checkpoint. Second, we added support to run the active backend as
+an application thread within a leading rank on each compute node. This
+approach eliminates the need to deploy an active backend on each
+compute node separately.
 
 In addition, we have added several new features that facilitate better
-integration with the ECP ecosystem. In addition to continuous
-integration based on Travis (linked to our public GitHub repository),
-we designed and developed a test suite for VeloC that verifies the
-correctness in a multi-node setup on the ECP testbeds using the
-continuous integration platform provided by ECP (which is configured to
-mirror the GitHub repository). We are also providing a Spack
-installation package that is part of the OpenHPC distribution.
+integration with the ECP ecosystem. We extended the series of tests
+(originally a minimal set based on Travis and linked with our public
+GitHub repository) to include a comprehensive set of combinations of
+scenarios, both for VELOC and its subcomponents. Furthermore, we
+devised a series of multi-node tests specifically designed for
+HPC scenarios running on ECP testbeds. These tests were also integrated
+with the continous integration infrastructure maintained by ECP
+(which runs in parallel with our Travis integration). Finally, we
+are also providing a Spack installation package that is part of the
+OpenHPC distribution.
 
 We also started several exploratory directions that resulted in
-several research publications. Notably, we explored how to optimize
-the checkpoint interval for our multi-level checkpointing strategies
-used in VeloC. In this context, we devised a technique to reduce the
-simulation cost of various failure scenarios for a wide range of
-parameters using machine learning ~\cite{MLCkpt20}. Furthermore, we
-also developed specialized checkpointing approaches for deep learning
-applications.  In particular, we explored how to take advantage of
-specific properties (e.g. multiple model replicas in the case of
-data-parallel training) in order to reduce the asynchronous
-checkpointing overhead. Our work DeepFreeze~\cite{DeepFreeze20}
-illustrates such techniques based on the idea of augmenting the
-execution graph with fine-grain tensor copy operations, which then be
-asynchronously flushed to stable storage. We plan to integrate such
-approaches with ECP CANDLE, which relies primarily on deep learning.
+several research publications. Notably, we explored how to integrate
+VELOC with performance-portable asbtractions such as Kokkos. Notably,
+we proposed the notion of \emph{resilience portability} based on
+checkpointable memory views, which automates the definition of
+critical regions (otherwise manually identified by
+users)~\cite{PortResEuroPar21}. This research effort continues with
+additional support for incremental checkpointing based on
+deduplication techniques applied to the memory views. Furthermore, we
+proposed several checkpoint aggregation techniques specifically
+designed for the asynchronous mode of operation that allows the
+application to continue running. In this context, we have explored a
+strategy based on parallel POSIX writes to disjoint offsets in the
+same file, as well as a strategy based on MPI-IO. A publication that
+summarizes our findings is under preparation.
 
 \paragraph{Next Steps}
-We are working towards several goals: (1) providing a set of C++
-client interfaces as well as automated serialization support for
-common C++ data structures (notably from the STL); (2)
-investigate and apply mitigation mechanisms for features that
-are missing or perform suboptimally (notably multiple concurrent 
-MPI instances); (3) continue hardening the integration with
-existing ECP applications and automated testing infrastructure.
-In parallel, we will continue to collaborate with the ECP application
-teams to address new requirements should they arise.
+We are working towards several goals: (1) more advanced checkpoint
+aggregation techniques; (2) support for key-value stores as an
+alternative to parallel file systems, notably DAOS; (3) continue
+hardening the integration with existing ECP applications and automated
+testing infrastructure.  In parallel, we will continue to collaborate
+with the ECP application teams to address new requirements should they
+arise.
