@@ -60,47 +60,52 @@ optimization, SA, and UQ solvers.
 
 \paragraph{Recent Progress}
 
-In the past year, we have released PETSc/TAO 3.14 (available at \url{http://www.mcs.anl.gov/petsc}),
-which features enhanced GPU support.  The library now supports CUDA-11 and HIP, along with CUDA-aware 
-MPI, which allows direct communication of data between Summit GPUs, bypassing the previously needed 
-step of first copying the data to the CPU memory. This enhancement reduces the latency of the 
-communication and improves bandwidth.  An experimental Kokkos backend for some matrix and 
-vector operations using KokkosKernels was also provided, as one step in the refactoring 
-process to support the variety of accelerators needed for exascale systems and the 
-programming models for performance portability wanted by applications.
+In the past year, we have released PETSc/TAO 3.16 (available at \url{http://www.mcs.anl.gov/petsc}), which 
+features enhanced GPU support.  We have full support for a Kokkos plus KokkosKernels backend for 
+performance portability that includes vector, matrix, and matrix-matrix operations and full 
+support for a native CUDA backend.  We have partial support for a native HIP and OpenCL 
+backends.  We have been updating and profiling the GAMG solver, the native algebraic 
+multigrid solver in PETSc, to use the enhanced GPU support.  Numerical results on
+this work is available in \cite{mills2021toward}.  We have also been updating
+our scalable communication layers, PetscSF, which allows us to use GPU-aware
+MPI, thus allowing direct communication of data between Summit GPUs, bypassing 
+the previously needed step of first copying the data to the CPU memory.  Numerical
+results on this work is available in \cite{zhang2021petscsf}.
 
 \begin{figure}
 \centering
 \includegraphics[trim = 0in .2in 1.7in .2in, clip, width=0.9\textwidth]{projects/2.3.3-MathLibs/2.3.3.06-PETSc-TAO/petsc_arch}
-\caption{The improved PETSc/TAO architecture enables users to utilize a variety of programming 
+\caption{The PETSc/TAO architecture enables users to utilize a variety of programming 
 models for GPUs independently of PETSc's internal programming model.}
 \label{fig:petsc-tao-fig}
 \end{figure}
 
-We have also release libEnsemble 0.7.1 (available at \url{https://github.com/Libensemble/libensemble}).
-This release includes new generator functions and examples, changes to become xSDK compatible, and 
-improved testing across available platforms.
+We have also release libEnsemble 0.7.2 (available at \url{https://github.com/Libensemble/libensemble}).
+This release includes new generator functions and examples, improved testing across available platforms,
+and a new tutorial.  A paper documenting libEnsemble and providing use cases is available
+in \cite{hudson2021libensemble}.
 
 \paragraph{Next Steps}
 
 Our next efforts are:
 \begin{enumerate}
-  \item \textbf{Performance and application assessment}: 
-  We will provide updated performance reports of PETSc/TAO on the architectures available to us.
-  We will work with our applications to assess the usage of our software technologies and our 
-  progress toward reaching our impact goals.
-  We will add a libEnsemble guide for function writer users to the documentation and survey 
-  the libEnsemble user community.
-  \item \textbf{PETSc/TAO release with full-functionality on available hardware}:
-  We will release a version of PETSc/TAO that fully supports the hardware and software on the 
-  architectures available to us. 
-  We will begin testing important kernels using different backends and prepare more methods to utilize accelerators.
-  \item \textbf{libEnsemble release with enhanced capabilities}:
-  We will release a version of libEnsemble that implements a method for Bayesian calibration. 
-  We will connect libEnsemble to continuous integration tools and demonstrate capabilities.
-  \item \textbf{PETSc/TAO release focused on performance on available hardware}:
-  We will release a version of PETSc/TAO with performance improvements on the architectures available to us. 
-  We will continue testing important kernels using different backends and optimize more methods to 
-  utilize accelerators.
+  \item \textbf{Application readiness}: 
+  We will complete a status review of our applications for the early access hardware.  We will 
+  complete software quality initiatives related to the build system, architecture specific spack 
+  recipes, and spack smoke tests for build and accelerator usage validation.
+  \item \textbf{PETSc/TAO + Kokkos + KokkosKernels release}:
+  We will release a version of PETSc/TAO with full Kokkos and KokkosKernels integration.  We will 
+  provide a tutorial on these features, characterize the performance, and suggest optimizations 
+  and best practices.  
+  We will also make improvements to the PETSc/TAO GAMG solver and provide updated performance results.
+  \item \textbf{libEnsemble + Balsam2 release}:
+  We will release a version of libEnsemble with full Balsam2 support and updated API.
+  We will follow continuous integration best practices and continue testing on pre-exascale DOE systems.
+  \item \textbf{PETSc/TAO + Optimized communication layer release}:
+  We will release a version of PETSc/TAO with an optimized communication layer for the early access systems.  
+  This version will include support for AMGx on NVIDEA GPUs and a batch LU factorization and solver.
+  We will optimize some numerical methods (such as methods in DMNetwork and numerical optimization methods) 
+  to use the communication layer and better utilize the accelerators.
+  We will provide initial benchmark results for GAMG and AMGx.
 \end{enumerate}
 
