@@ -6,7 +6,7 @@
 The PaRSEC Environment provides a software ecosystem composed of a runtime
 component to dynamically execute task-based applications on heterogeneous
 distributed systems, and a productivity toolbox that comprises a development
-framework for the support of multiple domain specific languages (DSLs) and
+framework for the support of multiple Domain Specific Languages (DSLs) and
 extensions, with debugging, trace collection, and analysis tools.
 %
 The PaRSEC project team is dedicated to solving two challenging and
@@ -20,9 +20,9 @@ productivity of the application developers, not only for the ECP target
 environments but for the foreseeable future.
 
 \begin{wrapfigure}[17]{l}{.45\linewidth}
-  \includegraphics[scale=0.3]{projects/2.3.1-PMR/2.3.1.09-ParSEC/PaRSEC-diagram.png}
-  \caption{PaRSEC architecture\label{fig:parsec} based on a modular framework where each
-           component can be dynamically activated as needed.}
+\includegraphics[scale=0.3]{projects/2.3.1-PMR/2.3.1.09-ParSEC/PaRSEC-diagram.png}
+\caption{PaRSEC architecture\label{fig:parsec} based on a modular framework where each
+component can be dynamically activated as needed.}
 \end{wrapfigure}
 %
 PaRSEC is an open source, community-based implementation of a generic task-based
@@ -39,12 +39,12 @@ will be stuck either in fixed programming paradigms, or with a particular,
 potentially less efficient, mix of programming languages. The DTE project
 provides means to maintain a high competitiveness in the field leading to more
 innovation on addressing the challenges we are facing toward scalable,
-performant and Exascale ready programming paradigms.
+efficient and Exascale-ready programming paradigms.
 
 \paragraph{Key Challenges}
 %\textit{Describe what is hard to do, why it is challenging.}
 
-As Exascale platforms delivery become a closer deadline, a increasing number of
+As Exascale platforms delivery become a closer deadline, an increasing number of
 aspects of the hardware and software environment still pose challenges. First
 and foremost, keeping pace with the architectural changes on current and future
 platforms requires changes not only on how we take advantage of the hardware
@@ -59,12 +59,12 @@ at the node level.
 %\textit{Describe your basic strategy for addressing the challenges.}
 The approach followed in PaRSEC is to provide a low-level, flexible and dynamic
 runtime able not only to schedule tasks at the node level, but to handle data
-transfers between different memory (both inter and intra nodes), memory
+transfers between different memory (both inter- and intra-nodes), memory
 hierarchies, heterogeneous architectures with support for accelerators with a
 simple programming scheme. The proposed approach envisions a middle-ground
 solution, addressing both hardware and software challenges. At the hardware
-level a team of dedicated developers extends PaRSEC to map it's capabilities to
-the hardware and to improve it's scalability and performance. At the upper
+level a team of dedicated developers extends PaRSEC to map its capabilities to
+the hardware and to improve its scalability and performance. At the upper
 software level the runtime interactions are through Domain Specific Languages
 with the target domain scientists in mind, that will facilitate the expression
 of algorithmic parallelism with familiar constructs mapped on the exposed
@@ -80,10 +80,10 @@ complexity~\cite{lorapo-protools,BLR_LU,parsec_pdgemm}.
 
 \paragraph{Recent Progress}
 
-The software release (2019.11) provides many new additions to the low-level task
-runtime, supports for a number of hardware capabilities (GPU, NVLink, P9 atomic
-ops), brings significant improvements to the performance and scalability of the
-runtime, and addresses many pending issues.
+The software release (2020.10) provides many new additions to the low-level task
+runtime, supports for a number of hardware capabilities (multi-stream GPU, NVLink,
+P9 atomic ops, ARM SVE support), brings significant improvements to the performance
+and scalability of the runtime, and addresses many pending issues.
 %
 % The installation system has been improved to take advantage of the latest
 % capability of CMake, and scripts for seamless integration in the ECP software
@@ -92,59 +92,182 @@ runtime, and addresses many pending issues.
 %
 On the software quality side, the PaRSEC runtime has been evaluated and amended
 to compile and run on all pre-Exascale platforms (ALCF Mira, Theta; OLCF
-Summit). PaRSEC now includes a Spack definition file to ease the deployment on
-future target systems as part of the system software SDK effort.
+Summit), as well as some early platforms based on the new ARM architecture.
+PaRSEC now includes a Spack definition file to ease the deployment on
+future target systems as part of the system software xSDK effort.
+
+%
+% Recent work: irregular block-sparse GEMM on Summit
+%
 
 \begin{wrapfigure}{l}{.45\linewidth}
-\centering\includegraphics[scale=0.55]{projects/2.3.1-PMR/2.3.1.09-ParSEC/gemm_summit_mean.pdf}
-\caption{Strong-scaling performance of the matrix-matrix multiplication
-(PDGEMM)\label{fig:PDGEMM}} \end{wrapfigure} The DTE GPU support engine has been
-refactored, addressing some of the existing limitations in data management
-(allocation and transfer), and adding support for NVLink capabilities to
-minimize the transfer cost between GPUs on the same node. All these improvements
-have enabled unprecedented performance on distributed, multi-GPU platforms for
-real applications.
-%
-Figure~\ref{fig:PDGEMM} shows a strong scaling performance of PDGEMM from our
-DPLASMA math library using PaRSEC to power one of the most compute intensive
-operation and study the implementation scalability with an increasing problem
-and number of computing elements size. This integration illustrates the runtime
-capability to obtain high efficiency for such operation independent on the
-number of resources involved in the computation, even in scenarios where the
-memory required for the storage of the matrices is larger than the total amount
-of memory available on the GPU. A pro-active data transfer management system and
-an efficient data transfer mechanisms are some of the PaRSEC underlying features
-that enable such level of performance.
+\centering\includegraphics[width=.9\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/irr-bs-gemm-combined.pdf}
+\caption{Time to solution and Performance as a function of the number
+  of V100 GPUs on Summit, for the molecule
+  $C_{65}H_{132}$\label{fig:irrbsgemm}}
+\end{wrapfigure}
+The PaRSEC team, in collaboration with NWChemEx project researchers,
+developed an efficient and portable tensor product algorithm
+specifically designed for the computational chemistry domain needs on
+top of the PaRSEC runtime. This includes an efficient matrix product
+operation for hybrid architectures, like Summit, with an irregularly
+blocked, block-sparse representation of matrices. Moreover, the
+requirements on this implementation were extremely strict, the
+matrices are rectangular and extremely large in at least one of their
+dimensions, such that none of the input matrices could fit in the
+aggregated memory of all GPUs. The algorithm and a deeper analysis of
+the results are described in~\cite{parsec::rr::irrbs}.
 
-An important aspect of the DTE project is to define and prototype scalable
-domain specific languages that enable a productive expression of parallelism for
-end-user communities. PaRSEC presents multiple programming interfaces
-(Parameterized Task Graphs for maximum parallelism, the popular serial task
-insertion dataflow model to provide direct access to the runtime). In addition
-the DTE team is in close contact with application teams to define parallel
-abstractions that are suitable for their domain usage. Notably, the PaRSEC team
-has ongoing collaboration with the SLATE linear algebra package and NWChemEx and
-GAMESS chemistry package teams. The PaRSEC development team did the first step
-toward the integration of their framework into the SLATE (2.3.3.09) in the
-context of the shared milestone (STPM11-23). The first prototype of the
-application ran in a distributed environment and showed the capability of the
-SLATE library using a modern fully capable runtime system. This work involved
-enhancing the insert task interface available in the ParSEC runtime to map onto
-the logic of a SLATE algorithm.
+Figure~\ref{fig:irrbsgemm} shows a strong scaling performance
+evaluation of this algorithm, when applied to the main tensor product
+required by the CCSD method to simulate the electronic structure from
+first principles. The simulated molecule was $C_{65}H_{132}$, which is
+a quasi-1-dimensional system and small atomic orbital basis, where the
+sparsity of tensors is maximized while the optimal (from the data
+compression perspective) tile size is small. That molecule is
+representative of applications to 1-d polymers and quasi-linear
+molecules (such as some proteins), while the choice of the atomic
+orbital basis is representative of medium-precision simulations in
+chemistry and condensed phase. Such use case stresses the system and
+algorithm as it implies a significant sparsity: the largest matrix,
+while being of square of rank $2,464,900$, has only a density of
+3.1\%.
+
+The strong scaling evaluation shows a parallel efficiency of 35\%,
+with a time to solution at 180s on 3 GPUs, going down to 13s at 118
+GPUs.
+% The performance per GPU decreases with the number of nodes,
+% between 36\% at 3 GPUs and 12\% at 118 GPUs.
+Compared to the state of the art, DBCSR~\cite{parsec::dbcsr} can only
+run problems that fit in the GPU memory, preventing us to run the same
+experiment, but experiments on synthetic problems that fit in memory
+show an improvement by a factor two, while
+TiledArray~\cite{parsec::tiledarray} cannot leverage the GPUs of
+Summit without using PaRSEC and would run, on the CPUs of Summit ten
+times slower.
+%
+% End
+%
 
 \begin{wrapfigure}[16]{l}{.45\linewidth}
 \vspace*{-1em}\centering\includegraphics[scale=0.50]{projects/2.3.1-PMR/2.3.1.09-ParSEC/slate_updated_nacl.pdf}
   \caption{Comparison of DPLASMA and SLATE Cholesky factorization over PaRSEC with
            SLATE and ScaLAPACK on 64 nodes 12 cores each\label{fig:slate-parsec}}
 \end{wrapfigure}
-%
-In figure~\ref{fig:slate-parsec}, we compare the integration of SLATE
-and PaRSEC against the state of the art. First against the two legacy
-domain specific languages that have the capability to do linear
-algebra; then against the regular SLATE using OpenMP for intra-node
-parallelism, and MPI for communication; and finally against ScaLAPACK,
-which is the reference for distributed linear algebra.
+An important aspect of the DTE project is to define and prototype scalable
+domain specific languages that enable a productive expression of parallelism for
+end-user communities. PaRSEC presents multiple programming interfaces
+(Parameterized Task Graphs for maximum parallelism, the popular serial task
+insertion dataflow model to provide direct access to the runtime). In addition,
+the DTE team is in close contact with application teams to define parallel
+abstractions that are suitable for their domain usage. Notably, the PaRSEC team
+has ongoing collaboration with the SLATE linear algebra package and NWChemEx and
+GAMESS chemistry package teams.
 
+In this context it is interesting to highlight the first step toward
+the integration of the PaRSEC framework into the SLATE (2.3.3.09) in
+the context of the shared milestone (STPM11-23). The first prototype
+of the application ran in a distributed environment and showed the
+capability of the SLATE library using a modern fully capable runtime
+system. This work involved enhancing the insert task interface
+available in the ParSEC runtime to map onto the logic of a SLATE
+algorithm.
+
+Figure~\ref{fig:slate-parsec} compares different implementation of the
+Cholesky factorization. On one side we have two reference
+implementation for distributed linear algebra, ScaLAPACK and the
+current version of the SLATE library (using OpenMP for intra-node
+parallelism and MPI for communications). On the other side we have two
+DSL expressing the same algorithm but using PaRSEC as the underlying
+runtime, the Dynamic Task Discovery (DTD) an approach similar to
+OpenMP but working on a distributed setting, and a version of the
+SLATE library where instead of relying on explicit parallelism
+(OpenMP) and communications (MPI) it rely on implicit dependencies
+management via PaRSEC.
+
+
+% side including the integration of SLATE and PaRSEC. Two domain
+% specific languages that have the capability to do linear algebra; then
+% against the regular SLATE using OpenMP for intra-node parallelism, and
+% MPI for communication; and finally against ScaLAPACK, which is the
+% reference for distributed linear algebra.
+
+%
+% Recent work: ScaLAPACK - DPLASMA - PaRSEC
+%
+
+
+%\begin{wrapfigure}{l}{.42\linewidth}
+%\centering\includegraphics[width=.9\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/scalapack_cpu_GEMM.pdf}
+%\centering\includegraphics[width=.9\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/scalapack_cpu_POTRF.pdf}
+%\caption{Performance using only CPUs of native ScaLAPACK, ScaLAPACK
+%  over DPLASMA and native DPLASMA for GEMM and
+%  POTRF.\label{fig:scalapack_cpu}}
+%\end{wrapfigure}
+%\begin{wrapfigure}{l}{.42\linewidth}
+%\centering\includegraphics[width=.9\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/scalapack_gpu_GEMM.pdf}
+%\centering\includegraphics[width=.9\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/scalapack_gpu_POTRF.pdf}
+%\caption{Performance using GPUs of native ScaLAPACK, ScaLAPACK over
+%  DPLASMA and native DPLASMA for GEMM and
+%  POTRF.\label{fig:scalapack_gpu}}
+%\end{wrapfigure}
+\begin{wrapfigure}{l}{.45\linewidth}
+\centering\includegraphics[width=.9\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/scalapack_GEMM.pdf}
+\centering\includegraphics[width=.9\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/scalapack_POTRF.pdf}
+\caption{Performance using GPUs of native ScaLAPACK, ScaLAPACK over
+  DPLASMA and native DPLASMA for GEMM and
+  POTRF.\label{fig:scalapack_gpu}}
+\end{wrapfigure}
+In the context of milestone STPM11-81, the PaRSEC team worked to
+enable the usage DPLASMA as a replacement for ScaLAPACK.  This
+functionality is provided as an independent library which contains a
+wrapped version of the ScaLAPACK API and hides the PaRSEC API from the
+application while it constructs the structures necessary for the
+operation with matrices represented on ScaLAPACK memory layout.  Users
+of applications exploiting ScaLAPACK can link against this independent
+library to run the wrapped routines over DPLASMA-PaRSEC, while any
+other ScaLAPACK function, i.e. that does not have an equivalent
+provided by DPLASMA, will use the original ScaLAPACK implementation.
+This approach reduces to a minimum the changes that need to be
+performed on the ScaLAPACK application, while enabling the
+exploitation of the algorithms implemented on DPLASMA and the
+operation over PaRSEC for a better exploitation of the available
+hardware resources.
+
+
+Figure~\ref{fig:scalapack_gpu} compare the
+performance of the ScaLAPACK wrapper extensions against the native
+DPLASMA and native ScaLAPACK in their typical usage scenarios (one
+process per core for ScaLAPACK),
+% Experiments were run using a dense matrix with dimensions 122~880 in
+% double precision. The internal block size and the process grid have
+% been tuned for the best performance on each library. In all cases,
+% the native ScaLAPACK tests were ran spawning one process per core
+while DPLASMA tests (native DPLASMA and ScaLAPACK over DPLASMA) use
+one thread per core and one process per node on the experiments using
+only the CPU and two processes per node, each exploiting 3 GPUs, are
+used on the GPU tests.
+%
+In all cases, the performance achieved by running ScaLAPACK over
+DPLASMA is more than 90\% the performance of native DPLASMA.  For the
+CPU-only experiments, the usage of the DPLASMA wrapper introduces a
+speedup of 1.73x for GEMM (minimum 1.64x, maximum 1.88x) and 1.49x for
+POTRF (minimum 1.27x, maximum 1.71x) .  When exploiting also the GPUs
+of the computation nodes, the performance is increased by 16.75x for
+GEMM (minimum 10.79x, maximum 25.68x) and by 4.27x for POTRF (minimum
+2.77x, maximum 6.70x).  The lower performance of the DPLASMA's POTRF
+over GPUs is explained because in the current implementation of this
+algorithm not all the tasks are run on GPUs. However, further
+improvements of DPLASMA algorithms that will be integrated in the next
+release of DPLASMA will likely achieved similar performance when used
+for wrapping the ScaLAPACK routines. Therefore, enabling applications
+already using the ScaLAPACK API to improve their usage of the
+available hardware resource with very little effort that is translated
+in important performance benefits.
+
+%
+% End
+%
 
 \paragraph{Next Steps}
 %\textit{Describe what you are working on next.}

@@ -14,9 +14,9 @@
 
 
 \paragraph{Overview}
-OpenMP is a directive-based API for intra-node programming that is widely used  in ECP applications. Implementations of OpenMP and  tools to facilitate OpenMP application development.are available in all DOE LCFs.  
+OpenMP is a directive-based API for intra-node programming that is widely used  in ECP applications. Implementations of OpenMP and  tools to facilitate OpenMP application development are available in all DOE LCFs.  
 The specification is supported by a stable community of vendors, research labs, and academics who
-participate in the efforts of the  OpenMP Architecture Review Board (ARB) and its Language Committee to evolve its features.
+participate in the efforts of the  OpenMP ARB and its Language Committee to evolve its features.
 The mission of the SOLLVE project is to further enhance  OpenMP and its implementations to meet the performance and productivity goals of ECP applications. 
 
 SOLLVE has identified open ECP application software requirements, developed features and/or implementation technology to address them, and created use cases that motivate the need for enhancements. 
@@ -115,12 +115,10 @@ The following next steps are planned:
 
 \item LLVM compiler: Improve performance of device offloading and optimize generation of code within target devices; generalize to enable reuse across multiple offloading architectures; develop infrastructure to support integration of Fortran front end; increase parallel region performance; implementation of OpenMP 5.1 loop transformations;
 
-\item  OpenMP runtime: Provide support for 5.0 spec; investigate performance optimization of MPI+OpenMP codes; address broader set of interoperability challenges; address advanced tasking requirements; 
+\item OpenMP runtime: Provide support for 5.0 spec; address broader set of interoperability challenges including MPI+OpenMP codes using BOLT; address advanced tasking requirements; 
 
 \item V\&V suite: Continue expanding the coverage of the V\&V Suite, with focus on 5.0 features and additions and corrections to 4.5 tests as OpenMP implementations mature; expand Fortran tests; work with ARB Examples Committee; improve ALCF toolchains; more vendor interactions.
 \end{itemize} 
-
-
 
 %\textit{Describe what you are working on next.}
 

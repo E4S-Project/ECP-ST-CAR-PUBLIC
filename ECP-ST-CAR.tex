@@ -5,6 +5,8 @@
 \usepackage{subfig}
 \usepackage{xcolor,colortbl}
 \usepackage{array}
+\usepackage{float} %added to wrangle tables and figures
+\usepackage{todonotes} %added todonotes for hardcopy notes and to span repos -STC
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \definecolor{Gray}{gray}{0.85}
 \definecolor{LightCyan}{rgb}{0.88,1,1}
@@ -22,7 +24,7 @@
 \newcommand{\tools}{Development Tools}
 \newcommand{\mathlibs}{Mathematical Libraries}
 \newcommand{\dataviz}{Data \& Visualization}
-\newcommand{\ecosystem}{SW Ecosystem \& Delivery}
+\newcommand{\ecosystem}{Software Ecosystem \& Delivery} %changed SW to ``software'' per Julia.
 \newcommand{\nnsa}{NNSA ST}
 \newcommand{\stid}[1]{{\texttt{WBS 2.3.{#1}}}}
 \newcommand{\zfp}{\textsc{zfp}}
@@ -48,10 +50,10 @@
 %% VARIABLES
 %%---------------------------------------------------------------------------%%
 \author{Michael A.~Heroux, Director ECP ST
-  \and Jonathan Carter, Deputy Director ECP ST
+  \and Lois Curfman McInnes, Deputy Director ECP ST
   \and Rajeev Thakur, Programming Models \& Runtimes Lead
   \and Jeffrey S.~Vetter, Development Tools Lead
-  \and Lois Curfman McInnes, Mathematical Libraries Lead
+  \and Sherry Li, Mathematical Libraries Lead
   \and James Ahrens, Data \& Visualization Lead
   \and Todd Munson, Software Ecosystem \& Delivery Lead
   \and Kathryn Mohror, NNSA ST Lead}
@@ -61,7 +63,7 @@
 \title{ECP Software Technology Capability Assessment Report--Internal}
 \fi
 %\date{\today}
-\date{February 1, 2020}
+\date{November 19, 2020 \todo[inline]{Update date}}
 %\wbs{2.3}
 \ifpublic
 \id{ECP-RPT-ST-0002-2020--Public}
@@ -93,6 +95,7 @@
   1.0 & July 1, 2018 & \textit{ECP ST Capability Assessment Report } \\\hline
   1.5 & February 1, 2019 & \textit{Second release} \\\hline
    2.0 & February 1, 2020 & \textit{Third release} \\\hline
+     2.5 & November 19, 2020 & \textit{Fourth release} \\\hline
 \end{revlog}
 
 %%---------------------------------------------------------------------------%%
@@ -139,13 +142,14 @@
 \section{ECP ST Technical Areas}\label{sect:project-summaries}
 %\section{ECP ST Project Summaries}\label{sect:project-summaries}
 
-ECP ST is composed of six Level-3 Technical Areas (see Figure~\ref{fig:l3-overview}).  In this section of the ECP ST Capabilities Assessment Report we provide an overview of each Level-3 Technical Area and two-page summaries of each funded project within the technical area.  For each L3 area, we discuss scope and requirements, assumptions and feasibility, objectives, plans, risks and mitigations and future trends.  For each Level-4 subproject, we provide a project overview and summarizes the key challenges, solution strategy, recent progress and next steps for the project.
+ECP ST is composed of six L3 technical areas (Figure~\ref{fig:l3-overview}).  This section of the report provides an overview of each L3 technical area and two-page summaries of each funded project within the technical area.  For each L3 area, the report discusses scope and requirements, assumptions and feasibility, objectives, plans, risks and mitigations, and future trends.  For each L4 subproject, a project overview is provided and the key challenges, solution strategy, recent progress, and next steps for the project are summarized.
 \
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\fbox{\includegraphics[width=0.9\linewidth]{L3-Overview}}
-	\caption{ECP ST is composed of 6 Level-3 Technical Areas.  The first four areas are organized around functionality development themes.  The fifth is focused on technology for packaging and delivery of capabilities.  The sixth is organized around per-lab open source development at the three DOE NNSA laboratories, LANL, LLNL and SNL.  }
+	\caption{ECP ST is composed of six L3 technical areas.  The first four areas are organized around functionality development themes.  The fifth is focused on technology for packaging and delivering capabilities.  The sixth is organized around per-lab open-source development at the three DOE NNSA laboratories: LANL, LLNL, and SNL.  }
 	\label{fig:l3-overview}
+	\todo[inline]{Please add a higher resolution version of this figure without the spell check underlines.}
 \end{figure}
 
 \newpage
@@ -273,7 +277,7 @@ ECP ST is composed of six Level-3 Technical Areas (see Figure~\ref{fig:l3-overvi
 
 \section{Conclusion}
 
-ECP ST is providing a collection of essential software capabilities necessary for successful results from Exascale computing platforms, while also delivery a suite of products that can be sustained into the future.  This Capabilities Assessment Report and subsequent versions will provide a periodic summary of capabilities, plans, and challenges as the Exascale Computing Project proceeds.
+ECP ST is providing a collection of essential software capabilities necessary for successful results from Exascale computing platforms, while also delivery a suite of products that can be sustained into the future.  This Capabilities Assessment Report and subsequent versions will provide a periodic summary of capabilities, plans, and challenges as the ECP proceeds.
 %%---------------------------------------------------------------------------%%
 \newpage
 \section*{Acknowledgments}
