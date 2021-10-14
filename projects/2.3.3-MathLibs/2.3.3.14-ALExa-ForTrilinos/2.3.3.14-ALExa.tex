@@ -210,12 +210,11 @@ a C++ code base with extensive unit testing on multiple platforms.  Trilinos
 packages are used to support interpolation methods.  Kokkos is used to achieve
 performance portability across accelerated platforms.
 
-{\bf Tasmanian:} The C++ kernels within Tasmanian (currently tuned for Nvidia
-Volta architecture) are templated exposing numerous performance tweaks and
-tuning parameters that can be adjusted to perform well on a corresponding AMD
-system.
-The kernels also need to be ported to DPC++/SYCL to allow for the utilization
-of Intel GPUs. Tasmanian requires a general GPU-BLAS interface that can
+{\bf Tasmanian:} The C++ CUDA/HIPO kernels within Tasmanian are templated exposing
+numerous performance tweaks and tuning parameters that can be adjusted to
+perform well on a corresponding Nvidia/AMD system.
+The kernels are also ported to DPC++/SYCL to allow for the utilization
+of Intel GPUs. Tasmanian also links to general GPU-BLAS interfaces that can
 utilize any of the accelerated backends, e.g., cuBlas, rocBlas, MKL and MAGMA.
 
 {\bf ForTrilinos:}
@@ -239,22 +238,13 @@ cosmological analysis pipeline) by more than $15\times$. For the stretched
 inclined geometries of the wind turbine simulations in the ExaWind project,
 ArborX now provides a new k-DOP bounding volume.
 
-{\bf Tasmanian:} Work with partner application ExaStar (2.2.3.01) created a
-reduced representation of neutrino opacities used by the Thornado simulation
-software. The classical representation uses dense tables that do not fit in
-GPU memory and lead to unnecessary and expensive data movement for each time-step.
-The reduced representation by Tasmanian preserved the accuracy of the simulations
-and dramatically reduces the memory footprint by removing redundancies
-and exploiting smoothness in the data.
-
-\begin{figure}[htb]
-        \centering
-        \includegraphics[width=2.5in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/tasmanian_exastar}
-\caption{\label{fig:tasmanian-exastar}
-		The resulting neutrino and antineutrino distributions in a deleptonization
-		wave simulation using sparse grid opacities, which require only 6\% of
-		the memory used in the dense approach, with relative $L^2$ error less than 1\%.}
-\end{figure}
+{\bf Tasmanian:} Work with partner application ExaStar (2.2.3.01) performed
+multiphysics simulations on OLCF Summit using the Nvidia Volta GPUs.
+The Fortran interface of Tasmanian was extended (using Swig-Fortran)
+to expose the necessary C++ methods. Utilizing the GPUs yields a near 10x
+performance boost, which is consistent with the Tasmanian stand-alone test
+indicating that the Thornado-Tasmanian interface does not incur appreciable
+overhead.
 
 {\bf ForTrilinos:}
 As with DTK, ForTrilinos now has an independent build system with Trilinos as a
@@ -277,9 +267,11 @@ Expand search algorithms to accommodate multi-dimensional data.
 {\bf DTK:} Continue performance engineering campaign and deploy in a variety of
 applications.
 
-{\bf Tasmanian:} Port the surrogate evaluation kernels to AMD and Intel
-GPUs and optimize the performance on the next generation architectures
-(including next generation Nvidia GPUs).
+{\bf Tasmanian:} Tune the existing GPU kernels on the next generation
+GPU architectures from Nvidia, AMD and Intel.
+Extend the Tasmanian-libEnsemble integration to allow for advanced workflow
+management of libEnsemble (2.3.3.06) to be coupled with the asynchronous sampling
+methods within Tasmanian.
 
 {\bf ForTrilinos:} Extend ForTrilinos native Fortran interface documentation and
 prioritize Fortran app customer needs. Integrate SWIG into ECP ST projects that
