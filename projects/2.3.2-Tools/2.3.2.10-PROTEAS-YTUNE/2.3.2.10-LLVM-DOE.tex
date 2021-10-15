@@ -1,0 +1,77 @@
+\subsubsection{\stid{2.10} PROTEAS-TUNE - LLVM-DOE: Creating and Maintaining a DOE Fork of LLVM}\label{s:llvm-doe}
+
+\paragraph{Overview}
+
+The ECP funds multiple projects that develop compiler technologies, based on the
+popular, open-source LLVM compiler infrastructure project. This ecosystem allows
+customization to meet the unique needs of ECP, and a level of well-established
+mechanisms to deploy technologies through vendors and at DOE’s leadership
+facilities. Importantly, this provides an alternative open-source compiler
+ecosystem to those provided by the vendor, thus reducing the dependence on the
+vendor’s compilers, timelines, and staff (Risk 10032 that ST product will not
+function or meet performance targets).
+
+In addition, most today’s vendors already rely on LLVM as the foundation for
+their compiler ecosystems. This means ECP technology has a path back to vendors
+via LLVM itself or through a DOE-/ECP-focused fork of LLVM’s open source
+repository. This work will focus on deployment to reduce Risk 10020.
+
+More broadly, there are eight LLVM-related projects supported by ECP that have
+a risk of not being used if developers cannot easily access their contributions.
+This fork of LLVM will provide an opportunity for these projects to work
+collectively on establishing synergies, interoperability, address the unique
+needs of ECP, and mechanisms for making contributions back into the mainstream
+LLVM code base. The tasks to setup the DOE Fork of LLVM are:
+
+\begin{enumerate}
+
+\item Set up a fork of the llvm-project upstream repository (see \url{https://github.com/llvm-doe-org}).
+
+\item Enable continuous integration for the fork on various hardware of       interests.
+
+\item Enable LLVM ECP related projects to be able to push and test branches.
+
+\item Setup status information for the continuous information results.
+
+\end{enumerate}
+
+
+\paragraph{Solution Strategy}
+
+\begin{enumerate}
+
+\item The DOE LLVM repository is setup on GitHub as a fork of the llvm-project
+      main repository also hosted on GitHub. This makes it easier to have a
+      seamless synchronization with the main repository and keep all the
+      GitHub main-fork integrated features.
+
+\item The GitHub repository is automatically mirrored in the GitLab premium
+      instance hosted at ORNL.
+
+\item The continous integration takes advantage of the GitLab CI infrastructure.
+      This infrastructure is available on several machines form the ExCL lab as
+      well as on Summit and Theta.
+
+\end{enumerate}
+
+
+\paragraph{Recent Progress}
+
+\begin{enumerate}
+\item Fork is setup with an automatic mirroring with the upstream repository.
+      The mirroring is using GitHub Actions.
+
+\item A GitLab premium instance is running at ORNL and mirrors automatically the
+      GitHub repository. The base continuous integration is running nightly
+      for the main branch of the repository on ExCL machines (Kold and Leconte).
+\end{enumerate}
+
+
+\paragraph{Next Steps}
+
+\begin{enumerate}
+\item Add continuous integration on more hardware (AMD explorer node in ExCL,
+      Summit and Theta)
+\item Enhance the continuous integration with additional LLVM sub-projects.
+\item Add test-suite to the CI (e.g. SOLLVE validation test-suite).
+\end{enumerate}

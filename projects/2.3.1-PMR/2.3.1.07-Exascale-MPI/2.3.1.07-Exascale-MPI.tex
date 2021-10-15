@@ -5,9 +5,9 @@ MPI has been the de facto standard programming model for HPC from the
 mid 90's till today, a period where supercomputing performance
 increased by six orders of magnitude.  The vast majority of DOE's
 parallel scientific applications running on the largest HPC systems
-use MPI.  These application codes represent billions of dollars of
-investment.  Therefore, MPI must evolve to run as efficiently as
-possible on Exascale systems.  Our group at Argonne developed a
+use MPI. These application codes represent billions of dollars of
+investment. Therefore, MPI must evolve to run as efficiently as
+possible on Exascale systems. Our group at Argonne developed a
 high-performance, production-quality MPI implementation, called MPICH.
 The focus areas of the Exascale MPI / MPICH project are: (1)
 continuous improvement of the performance and capabilities of the
@@ -17,35 +17,37 @@ interactions to ensure efficient solutions to applications, and (3) be
 involved in the MPI forum and standardization efforts to ensure
 continuity of the work beyond this project.
 
-MPICH team is  involved in the formation of the MPI Forum and have been
-deeply involved in defining the MPI standard since 1992. MPICH has helped
-prototype and define the majority of the features in the MPI standard.
-As such, MPICH has been one of the most influential pieces of software in accelerating
-the adoption of the MPI standard by the HPC community. MPICH has been adopted by leading
-vendors into their own derivative implementations. Examples include Intel (for Intel MPI),
-Cray (for Cray MPI), IBM (for IBM PE MPI), Mellanox (for MLNX-MPI), Microsoft (for MS-MPI),
-and Ohio State University (for MVAPICH). MPICH and its derivatives are exclusively used in
-8 of the top 10 supercomputers in the world today.
-MPICH is the recipient of a number of awards including an R\&D 100 award.
+MPICH team is involved in the formation of the MPI Forum and have been
+deeply involved in defining the MPI standard since 1992. MPICH has
+helped prototype and define the majority of the features in the MPI
+standard. As such, MPICH has been one of the most influential pieces of
+software in accelerating the adoption of the MPI standard by the HPC
+community. MPICH has been adopted by leading vendors into their own
+derivative implementations. Examples include Intel (for Intel MPI), Cray
+(for Cray MPI), IBM (for IBM PE MPI), Mellanox (for MLNX-MPI), Microsoft
+(for MS-MPI), and Ohio State University (for MVAPICH). MPICH and its
+derivatives are exclusively used in 7 of the top 10 supercomputers in
+the world today. MPICH is the recipient of a number of awards including
+an R\&D 100 award.
 
-\paragraph{Key  Challenges}
+\paragraph{Key Challenges}
 
 While we believe MPI is a viable programming model at Exascale, both
 the MPI standard and MPI implementations have to address the
 challenges posed by the increased scale, performance characteristics
 and evolving architectural features expected in Exascale systems, as
 well as the capabilities and requirements of applications targeted at
-these systems.  The key challenges are:
+these systems. The key challenges are:
 
 \begin{enumerate}
 
 \item Interoperability with intranode programming models having a high
-  thread count \cite{Hybrid1, Hybrid2, FT2} (such as OpenMP,
+  thread count~\cite{Hybrid1, Hybrid2, FT2} (such as OpenMP,
   OpenACC and emerging asynchronous task models);
 
-\item Scalability and performance over complex architectures
-  \cite{Perf1, Perf2, FT2, Perf4} (including high core counts,
-  processor heterogeneity and heterogeneous memory);
+\item Scalability and performance over complex
+  architectures~\cite{Perf1, Perf2, FT2, Perf4} (including high core
+  counts, processor heterogeneity and heterogeneous memory);
 
 \item Software overheads that are exacerbated by lightweight cores and
   low-latency networks;
@@ -60,7 +62,6 @@ these systems.  The key challenges are:
 
 \end{enumerate}
 
-
 \paragraph{Solution Strategy}
 
 The Exascale MPI project has the following primary technical thrusts:
@@ -69,84 +70,89 @@ The Exascale MPI project has the following primary technical thrusts:
 \textbf{MPI+X Hybrid Programming}.
 
 Our solution strategy started by addressing performance and
-scalability aspects in MPICH related to network address management
-\cite{memscal}.  Apart from this, we also looked at communication
-strategies which allow the MPI library to be as lightweight as
-possible \cite{ch41, ch42}.  Other solutions include
+scalability aspects in MPICH related to network address
+management~\cite{memscal}.  Apart from this, we also looked at
+communication strategies which allow the MPI library to be as
+lightweight as possible~\cite{ch41, ch42}. Other solutions include
 investigation and evaluation of communication relaxation hints,
 investigation of optimizations to memory scalability in MPICH and
 improvements to MPI RMA operations.
 
-Exascale MPI heterogeneity efforts \cite{Hetero1, Hetero2, Hetero3}
+Exascale MPI heterogeneity efforts~\cite{Hetero1, Hetero2, Hetero3}
 started with the survey on heterogeneous memory architectures on
-upcoming DOE machines and how MPICH can take advantage of them
-\cite{hexe}.  The other efforts include the investigation of
+upcoming DOE machines and how MPICH can take advantage of
+them~\cite{hexe}. The efforts also included the investigation of
 utilizing heterogeneous memory inside the MPI implementation and
-evaluation of applications.
+evaluation of applications~\cite{hetero4}. The heterogeneity efforts
+further extended to investigating and developing technologies for GPU
+integration for the better support of the coming Exascale
+supercomputers.
 
-Exascale MPI topology awareness efforts \cite{Topo1,Topo2} originated
+Exascale MPI topology awareness efforts~\cite{Topo1,Topo2} originated
 with the investigation and evaluation of hints based on topology
-awareness and optimizations to virtual topology functionality in MPICH
-\cite{topo-io,topo-io2}.  The ongoing efforts include investigation of
-topology-aware collectives and neighborhood collectives in MPICH
-\cite{coll} and evaluation of the selected ECP applications.
+awareness and optimizations to virtual topology functionality in
+MPICH~\cite{topo-io,topo-io2}. The other efforts include investigation
+of topology-aware collectives and neighborhood collectives in
+MPICH~\cite{coll} and evaluation of the selected ECP applications.
 
-Exascale MPI fault tolerance efforts \cite{FT1, FT2} started with
-support for handling noncatastrophic errors in MPI.  The second effort
+Exascale MPI fault tolerance efforts~\cite{FT1, FT2} started with
+support for handling noncatastrophic errors in MPI. The second effort
 included defining the scope of errors in MPI, a prerequisite for
-user-level failure mitigation (ULFM).  Other efforts that we are
-looking at in this direction are standardizing ULFM in MPI and
-evaluating application suitability for fault tolerance.
+user-level failure mitigation. Other efforts in this direction
+includes standardizing these efforts in MPI and evaluating application
+suitability for fault tolerance.
 
 Exascale MPI+X hybrid programming developed firstly with effort in
-improving interoperation of MPICH with threads \cite{interthread}.
-Secondly, we included support for interaction of MPICH with user-level
-thread (ULT) libraries \cite{ULT}, primarily targeting Argobots and
-the BOLT runtime and the work-queue data transfer model for
-multithreaded MPI communication.  Other issues that are being looked
-at include the investigation and evaluation on interaction between MPI
-and OpenMP and the study and evaluation of MPI endpoints.
-
+improving interoperation of MPICH with threads~\cite{interthread}.
+Secondly, we developed the work-queue data transfer model for
+multithreaded MPI communication~\cite{workq}. We have included support
+for interaction of MPICH with user-level thread (ULT)
+libraries~\cite{ULT}, primarily targeting Argobots and the BOLT
+runtime~\cite{BOLT}.  Other issues that are being looked at include the
+investigation and evaluation on multiple virtual communication
+interfaces for multithreaded MPI communication~\cite{VCI}.
 
 \paragraph{Recent Progress}
 
-Figure~\ref{fig:sep18} provides the details of the milestones completed in FY18Q3 and FY18Q4.
-In the first milestone completed in June 2018, a communicator info hint is proposed to expose
-communication progress characteristics to the user to provide a more efficient way of ensuring
-MPI progress that results in better application  performance.
-In the second milestone completed in June 2018, a study report was submitted on efforts needed to
-achieve interoperability between MPI and task and to enable direct transfer of data from
-GPU memory to NIC with MPI calls.
-In the third milestone completed in June 2018, three categories of applications are investigated: 1)
-stencil computation applications; 2)cosmology applications;  3)dynamic  execution  environment  applications.
-While these applications currently do
-not benefit from ULFM, we think it is still important for us to provide ULFM in the Exascale
-MPI library and explore on a broader range of applications.
-In the fourth milestone completed in June 2018, a list of recommendations that will be
-helpful to users wishing to exploit memory heterogeneity \cite{hetero4} in their MPI codes.
+The recent release of MPICH 3.4b1 version includes deliverables from the
+major milestones of FY2020. Figure~\ref{fig:fy20} provides the details
+of them. In the first milestone, we created the collective algorithm
+selection framework which allows MPI to choose different algorithm for
+collectives operations based on multiple factors including number of
+processes, network topology and support of hardware acceleration. The
+user of MPICH can provide a configuration file to describe the criteria
+for choosing different collective algorithms. We expect the vendors
+utilizing this capability to provide collective selection strategies
+that is optimized for the target supercomputers. The end-user could also
+generate their own strategies that is fine-tuned to the characteristic
+and needs of their applications.
+In the second milestone, we added the support for GPU in MPI
+communication. This allows a buffer in the GPU memory to be used
+directly in MPI communication operations. MPICH's GPU support can
+utilize the native support of fast GPU communication in hardware while also
+provide a fallback mode for more complex MPI communication pattens. We
+also created a new high-performance datatype engine that further
+utilizes GPU for handling non-contiguous datatype in MPI communication.
+
+Lastly, we made many efforts in participating the standardization of
+MPI-4 by discussing proposed features and contributing the feedback for
+our users back to the MPI forum. This has led to several new features
+being accepted by the MPI Forum.
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=6in]{projects/2.3.1-PMR/2.3.1.07-Exascale-MPI/MPICH-recent-milestones.pdf}
-  \caption{\label{fig:sep18}MPICH milestones
-    completed in June 2018 and Septmeber 2018}
+  \caption{\label{fig:fy20}Major MPICH milestones completed in fiscal year 2020}
 \end{figure}
 
-In the first milestone completed in September 2018, lightweight send and receive requests
-for communication are instroduced. In this
-way, we are able to only use constant number of requests to track many operations which
-significantly reduce the memory scalability
-of MPI. Furthermore, by sharing the preallocated requests, we also avoid the costs
-of request allocation and initialization within each operation and achieved even higher message rate.
-In the second milestone completed in September 2018, introduced MPI info, "disable\_shm\_accumulate",
-to only use network-based atomics for MPI accumulates in specific windows and
-"which\_accumulate\_ops", to limit the need of atomic support at runtime.
-
 \paragraph{Next Steps}
-Exascale MPI ongoing efforts include ECP application performance evaluation of utilizing
-heterogeneous memory inside the MPI implementation, analysis of the performance evaluation
-of the implementation of virtual topology functionality, standardization of ULFM
-in MPI and finally, investigate and evaluate the implementation of MPI-4 ULFM proposal in MPICH,
-to investigate a study of the benefit potential of the MPI endpoints approach and evaluate
-it with selected ECP applications and to investigate
-topology-aware collectives and neighborhood collectives in MPICH and evaluate the selected ECP applications.
+A major focus of the ongoing Exascale MPI efforts is further
+improvements to the MPI+GPU support. This includes support for GPU
+stream triggered MPI operations, optimized support for noncontiguous
+data and software evaluations. Another focus of FY2021 is the
+implementation of new features in MPI-4 standard including persistent
+collective operations. We will also make effort for improving the MPICH
+testing infrastructure by improving the testsuite and promoting
+integration ECP systems to provide better test coverage and a
+close-to-production test environment. This would enhance the readiness
+of MPICH for exascale systems.

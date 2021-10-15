@@ -2,11 +2,11 @@
 
 \paragraph{Overview}
 The ECP/VTK-m project is providing the core capabilities to perform scientific visualization on Exascale architectures.
-The ECP/VTK-m project fills the critical feature gap of performing visualization and analysis on processors like graphics-based processors and many integrated core.
+The ECP/VTK-m project fills the critical feature gap of performing visualization and analysis on processors like graphics-based processors.
 The results of this project will be delivered in tools like ParaView, VisIt, and Ascent as well as in stand-alone form.
 Moreover, these projects are depending on this ECP effort to be able to make effective use of ECP architectures.
 
-One of the biggest recent changes in high-performance computing is the increasing use of accelerators.
+One of the biggest recent changes in HPC is the increasing use of accelerators.
 Accelerators contain processing cores that independently are inferior to a core in a typical CPU, but these cores are replicated and grouped such that their aggregate execution provides a very high computation rate at a much lower power.
 
 Current and future CPU processors also require much more explicit parallelism.
@@ -18,7 +18,7 @@ VTK-m supports the fine-grained concurrency for data analysis and visualization 
 The ECP/VTK-m project is building up the VTK-m codebase with the necessary visualization algorithm implementations that run across the varied hardware platforms to be leveraged at the Exascale.
 We will be working with other ECP projects, such as ALPINE, to integrate the new VTK-m code into production software to enable visualization on our HPC systems.
 
-\paragraph{Key  Challenges}
+\paragraph{Key Challenges}
 The scientific visualization research community has been building scalable HPC algorithms for over 15 years, and today there are multiple production tools that provide excellent scalability.
 However, our current visualization tools are based on a message-passing programming model.
 More to the point, they rely on a coarse decomposition with ghost regions to isolate parallel execution \cite{Ahrens2001,Childs2010}.
@@ -41,6 +41,7 @@ VTK-m has a software framework that provides the following critical features.
   VTK-m uses the notion of an abstract device adapter, which allows algorithms written once in VTK-m to run well on many computing architectures.
   The device adapter is constructed from a small but versatile set of data parallel primitives, which can be optimized for each platform \cite{Blelloch1990}.
   It has been shown that this approach not only simplifies parallel implementations, but also allows them to work well across many platforms \cite{Lo2012,Larsen2015,Moreland2015}.
+  Within the device adapter we are leveraging Kokkos \cite{Edwards2011} to rapidly port to ECP hardware.
 \item \textbf{Flexible integration:}
   VTK-m is designed to integrate well with other software.
   This is achieved with flexible data models to capture the structure of applications' data \cite{Meredith2012} and array wrappers that can adapt to target memory layouts \cite{Moreland2012:PDAC}.
@@ -51,75 +52,70 @@ Our approach is to incrementally add features to VTK-m and expose them in tools 
 
 
 \begin{figure}[t]
+  % Throwing this up here because it seems least likely to overflow the page.
+  \setlength{\intextsep}{0in}
+  \noindent
+  \begin{wrapfigure}[3]{r}{1.23in}
+    \includegraphics[height=0.25in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/snl-logos.png}
+  \end{wrapfigure}
+  {\tiny Sandia National Laboratories is a multimission laboratory managed and operated by National Technology \& Engineering Solutions of Sandia, LLC, a wholly owned subsidiary of Honeywell International Inc., for the U.S. Department of Energy's National Nuclear Security Administration under contract DE-NA0003525. \hfill SAND~2020-8674~R
+  \par}
+  ~\\
+
   \centering
-  \includegraphics[width=2in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-Multiblock}\quad
-  \includegraphics[width=2in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-Gradients}\quad
-  \includegraphics[width=2in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-FieldToColors}
+  \includegraphics[height=1.35in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-flying-edges}\quad
+  \includegraphics[height=1.35in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-contour-cell-types}\quad
+  \includegraphics[height=1.35in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-extruded-cell-set}\quad
   \caption{
-    Examples of recent progress in VTK-m include (from left to right) multiblock data structures, gradient estimation, and mapping of fields to colors.
+    Examples of recent progress in VTK-m include (from left to right) optimized structured grid contouring, contouring of extended cell types, and representation of an extruded cell set.
   }
   \label{fig:VTKmRecent}
 \end{figure}
 
 \paragraph{Recent Progress}
 The VTK-m project is organized into many implementation activities.
-The following features have been completed in the FY18 fiscal year.
+The following features have been completed in the FY20 fiscal year.
 
 \begin{itemize}
-\item \textbf{Multiblock Data:}
-  Treat multiple blocks of data, such as those depicted in Figure \ref{fig:VTKmRecent} at left, as first-class data sets.
-  %Direct support of multiblock data not only provides programming convenience but also allows us to improve scheduling tasks for smaller groups of data.
-\item \textbf{Gradients:}
-  Gradients, depicted in Figure \ref{fig:VTKmRecent} at center, are an important metric of fields and must often be derived using topological data.
-  %Gradients are also fundamental in finding important vector field qualities like divergence, vorticity, and q-criterion.
-\item \textbf{Field to Colors:}
-  Pseudocoloring, demonstrated in Figure \ref{fig:VTKmRecent} at right, is a fundamental feature of scientific visualization, and it depends on a good mechanism of converting field data to colors.
-\item \textbf{VTK-m 1.1 Release:}
-  VTK-m 1.1 was released in December 2017.
-\item \textbf{Extract External Surface:}
-  When rendering solid objects, it is only necessary to render the external surface of the object as the interior of the volume is hidden \cite{Lessley2016,Lessley2017}.
-  %As such, external surface extraction is one of the most common operations in scientific visualization applications.
-\item \textbf{Coordinate system transformations:}
-  3D rendering systems operate in Cartesian coordinate systems.
-  However, data are sometimes referenced in cylindrical or spherical coordinate systems.% to match the physical structure of the data.
-  %Consequently, visualization tools need a fast method to convert coordinates among different spaces.
-\item \textbf{Affine Transformations:}
-  Affine transformations, which include translate, rotate, and scale, are a common and important method to manipulate objects in 3D space.
-\item \textbf{Location Structures:}
-  Finding mesh components from a coordinate in space requires search structures.
-\item \textbf{Rendering Topological Entities:}
-  It is often helpful to analysts to view representations of the constitute components of a mesh.
-\item \textbf{OpenMP:}
-  %Much of the code we wish to integrate with uses OpenMP \cite{OpenMP}, which can conflict with other threading implementations.
-  %VTK-m now supports multiple threading libraries, including OpenMP, to better match the code it integrates with.
-  VTK-m now supports OpenMP \cite{OpenMP} to better match the code it integrates with.
+\item \textbf{VTK-m Releases:}
+  VTK-m 1.5 was released in October 2019.
+\item \textbf{Kokkos:}
+  Device adapters in VTK-m can now leverage the Kokkos programming model to more rapidly port to ECP hardware.
+\item \textbf{Improved Contouring:}
+  VTK-m now implements the Flying Edges implementation of structured grid contouring \cite{Schroeder2015}.
+  The contouring in VTK-m, demonstrated in Figure \ref{fig:VTKmRecent}, is now measured as one of the fastest implementations in existence.
+  VTK-m has also contour support for expanded cell types to support more mesh types, also demonstrated in Figure \ref{fig:VTKmRecent}.
+\item \textbf{Data Control Thread Safety:}
+  The initial implementation of VTK-m assumed that all control would be on a single thread and all parallelism would be handled internally.
+  However, several VTK-m customers need to launch GPU algorithms from multiple different threads.
+  The internal management of array data has been redesigned to safely manage data from multiple control threads.
+\item \textbf{Spack Package:}
+  Spack \cite{Gamblin2015} is the package manager used to distribute the ECP ST software to the ECP platforms.
+  The VTK-m package in Spack has been updated to the latest version of VTK-m.
+\item \textbf{Random Numbers:}
+  Many algorithms rely on pseudo-random numbers.
+  VTK-m now uses Salmon, et al's algorithm \cite{Salmon2011} to provide ``random'' arrays that allow algorithms to use numbers with random properties that are correct both within a thread and across threads of execution.
+\item \textbf{Extruded Cell Sets:}
+  ECP's XGC simulation code uses an extrusion of a surface mesh for its data representation as demonstrated in Figure \ref{fig:VTKmRecent}.
+  A similar representation is added to VTK-m for zero-copy data ingestion.
 \end{itemize}
 
 \paragraph{Next Steps}
 Our next efforts include:
 
 \begin{itemize}
-\item \textbf{Dynamic Types:}
-  %The initial implementation of VTK-m used templating to adjust to different data structures.
-  %However, when data types are not known at compile time, which is common in applications like ParaView and VisIt, templating for all possible combinations becomes infeasible.
-  Provide mechanisms to enable runtime polymorphism.
-\item \textbf{ZFP:}
-  We are assisting the ZFP project (WBS 2.3.4.11) by helping them implement {\zfp} in VTK-m and port across ECP platforms.
-\item \textbf{Clip:}
-  Cuts away a mesh based on a spatial intersection or field values.
-\item \textbf{Ghost Cells:}
-  Provide better support for ghost/halo regions across blocks in a mesh.
-\item \textbf{Merge Points:}
-  Combine points in a mesh that can be considered coincident.
-\item \textbf{Connected Components:}
-  Identify regions in a mesh where all cells are topologically connected to each other.
-\item \textbf{Particle Advection:}
-  Many flow visualization algorithms depend on computing the movement of weightless particles in a flow vector field.
-%% \item \textbf{Lightweight Cell Library:}
-%%   There is much repetition between VTK-m and other visualization code to perform operations on cells.
-%%   We would like to consolidate that code into a lightweight library.
+\item \textbf{Demonstrate VTK-m on Pre-Exascale Hardware:}
+  With pre-exascale hardware available for O21 (Tulip) and A21 (Iris), VTK-m will be demonstrated on these platforms.
+  For FY21 we expect to be able to compile VTK-m, run the regression tests, and use the benchmarking code to compare performance.
+\item \textbf{Support New Compiler Types:}
+  VTK-m uses CMake to support cross-platform compilation.
+  Using CMake with compilers that are not directly supported can be challenging.
+  CMake will be updated for new compiler types as necessary, and VTK-m's build system will be similarly updated.
+%% \item \textbf{Better Support for Dynamic Types:}
+%%   VTK-m (and GPU's in general) prefer knowing static types.
+%%   However, it is often not possible to know for sure what specific type data are.
+%%   VTK-m's handling of dynmaic types will be improved.
+\item \textbf{Resource Management:}
+  Add general mechanisms to VTK-m that allow resource management (such as selecting which GPU to use when multiple GPUs are available on a node).
+  Providing a general interface prevents code using VTK-m from having to use device-specific API's to control the resource.
 \end{itemize}
-
-\noindent
-{\tiny Sandia National Laboratories is a multimission laboratory managed and operated by National Technology \& Engineering Solutions of Sandia, LLC, a wholly owned subsidiary of Honeywell International Inc., for the U.S. Department of Energy's National Nuclear Security Administration under contract DE-NA0003525. \hfill SAND~2018-13745~R
-\par}

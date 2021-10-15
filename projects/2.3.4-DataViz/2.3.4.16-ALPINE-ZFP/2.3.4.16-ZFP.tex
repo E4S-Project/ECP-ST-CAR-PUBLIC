@@ -1,15 +1,12 @@
+\newcommand{\zfpmilestone}[1]{~(STDM16-#1)}
+
 \subsubsection{\stid{4.16} ZFP: Compressed Floating-Point Arrays}
 
 \paragraph{Overview} 
 
-One of the primary challenges for Exascale computing is overcoming the
-performance cost of data movement.  Through simulation, observation, and
-experiments, far more data is being generated than can reasonably be stored
-to disk and later analyzed without any form of data reduction.  Moreover,
-with deepening memory hierarchies and dwindling per-core memory bandwidth
-due to increasing parallelism, even on-node data motion between RAM and
-registers makes for a significant performance bottleneck and primary source
-of power consumption.
+One of the primary challenges for Exascale computing is overcoming the performance cost of data movement.  
+Far more data is being generated than can reasonably be stored to disk and later analyzed without some form of data reduction.  
+Moreover, with deepening memory hierarchies and dwindling per-core memory bandwidth due to increasing parallelism, even on-node data motion between RAM and registers makes for a significant performance bottleneck and primary source of power consumption.
 
 {\zfp} is a floating-point array primitive that mitigates this problem using
 very high-speed, lossy (but optionally error-bounded) compression to
@@ -19,7 +16,7 @@ requirements, as dictated by user-set error tolerances.  Unique among data
 compressors, {\zfp} also supports constant-time read/write random access to
 individual array elements from compressed storage.  {\zfp}'s compressed arrays
 can often replace conventional arrays in existing applications with minimal
-code changes, allowing for instance the user to store tables of floating-point
+code changes.  This allows the user to store tables of floating-point
 data in compressed form that otherwise would not fit in memory, either using
 a desired memory footprint or a prescribed level of accuracy.  When used in
 numerical computations, {\zfp} arrays provide a fine-grained knob on precision
@@ -27,7 +24,7 @@ while achieving accuracy comparable to IEEE floating point at half the
 storage, reducing both memory usage and bandwidth.
 
 This project is extending {\zfp} to make it more readily usable in an Exascale
-computing setting, by parallelizing it on both the CPU and GPU while ensuring
+computing setting by parallelizing it on both the CPU and GPU while ensuring
 thread safety; by providing bindings for several programming languages (C,
 C++, Fortran, Python); by adding new functionality, e.g., for unstructured
 data and spatially adaptive compressed arrays; by hardening the software and
@@ -36,7 +33,7 @@ with a variety of ECP applications, I/O libraries, and visualization and data
 analysis tools.
 
 
-\paragraph{Key  Challenges}
+\paragraph{Key Challenges}
 
 There are several challenges to overcome on this project with respect
 to implementing compressed floating-point arrays:
@@ -56,8 +53,7 @@ storage, which complicates random access and indexing.
 \item \textbf{Parallelism}.  Manycore architectures allow for massively
 concurrent execution over millions or billions of array elements.
 Yet compression is usually a process of reducing such multidimensional
-arrays to a single-dimensional
-sequence of bits, which requires considerable coordination among parallel
+arrays to a single-dimensional sequence of bits, which requires considerable coordination among parallel
 threads of execution.
 
 \item \textbf{Unstructured data}.  Unstructured data, such as independent
@@ -76,7 +72,6 @@ These challenges often suggest conflicting solutions and are further
 complicated by the extreme demands of Exascale computing applications.
 
 \paragraph{Solution Strategy}
-
 
 {\zfp} is unique in supporting read and write random access to
 multidimensional data, and was designed from the outset to address
@@ -123,73 +118,24 @@ substituted for uncompressed arrays.
 
 \paragraph{Recent Progress}
 
-This project has made progress on several fronts over the past six months to
-make the {\zfp} software~\cite{zfp-code} more Exascale ready and capable.
-The 0.5.4 release of {\zfp} adds array slicing and views into arrays,
-which enable thread-safe concurrent read and write access.  New in this
-release is also a CUDA implementation of fixed-rate compression and
-decompression.  Our CUDA implementation has undergone several rewrites to
-improve performance, culminating in a 150~GB/s compression throughput on an
-NVIDIA~V100 GPU.  Also new in {\zfp}~0.5.4 is support for compressing 4D
-data and C bindings to {\zfp}'s C++ compressed array primitives.
+Recent work has focused on extending the capabilities of {\zfp}'s compressed-array C++ classes.  We have refactored these classes to reduce code redundancy between the fixed- and variable-rate representations, added support for 4D arrays, and provided new C and Python language bindings to these classes.  This refactoring effort has also decoupled concepts such as array, cache, compression codec, and data store, enabling a more modular design that allows incorporating new codecs and mixed-precision representations under the same array interface.  In addition, mutable and immutable proxy references, pointers, and iterators are now available, both for arrays and views into arrays.  We have further made progress on parallel decompression of variable-rate streams~\cite{zfp-pdp2020} and released {\zfp} version 0.5.5~\cite{zfp-code} as Conda and PIP Python packages.
+In addition to ST integrations with \textsc{adios}, \textsc{hdf5}, \textsc{strumpack}, and \textsc{vtk-m}, we are integrating {\zfp} with \textsc{ceed}, \textsc{eqsim} (Figure~\ref{fig:zfp-result}), \textsc{qmcpack}, and \textsc{warpx}.
 
-Further developments since the fall release include work on Fortran
-and Python bindings to {\zfp}'s high-level compression API---efforts
-that are both nearing completion.
-Meanwhile, we have devised several independent candidates for lossless
-compression within {\zfp} that are being evaluated.
-%, including a generalization of iterative
-%refinement; a sieve that distinguishes {\zfp} blocks that can be
-%compressed losslessly from those that should be stored verbatim; as well
-%as a new decorrelating transform that does not incur round-off error.
-%We are currently evaluating these strategies and will select one for
-%inclusion in the next {\zfp} release.
-Although not designed for compression of unstructured data, we have
-applied {\zfp} to particle-based data
-%from molecular dynamics,
-%cosmology, and particle-in-cell codes, and to data attached to
-%unstructured meshes
-by first ``preconditioning'' it via local
-sorts that increase autocorrelation.  We found this strategy largely
-ineffective, however.
-A more successful preconditioner is to pass structured data through
-a wavelet transform, which we found to improve accuracy by as much as
-an order of magnitude for the same storage cost.
-
-Finally, we have been working with ECP tools and applications to integrate
-{\zfp} compression.  One effort that is wrapping up is support in VTK-m for
-compressing and decompressing multidimensional arrays.  We are also
-working with CEED to develop a {\zfp}-based format for high-order
-finite elements.
-
-The results of our R\&D efforts have been documented through
-publications~\cite{zfp-isc2017,zfp-jsm2017}, and significant efforts have
-been made to reach out to customers and the HPC community at large through
-one-on-one interactions and tutorials, both at ECP meetings and
-conferences~\cite{zfp-isc2017-tut,zfp-sc2017-tut,zfp-ep2018-tut,zfp-sc2018-tut}.
+The results of our R\&D efforts have been documented through publications~\cite{zfp-isc2017,zfp-jsm2017,zfp-sisc2019,zfp-drbsd2019,zfp-pdp2020,zfp-vis2020}, and significant efforts have been made to reach out to customers and the HPC community at large through one-on-one interactions and tutorials, both at ECP meetings and conferences~\cite{zfp-isc2017-tut,zfp-sc2017-tut,zfp-ep2018-tut,zfp-sc2018-tut,zfp-isc2019-tut,zfp-sc2019-tut}.  Together with the \textsc{sz} team, we will be giving a tutorial and panel at SC20~\cite{zfp-sc2020-tut,zfp-sc2020-pan}.
 
 \noindent
-\begin{minipage}[t]{3.75in}
-\paragraph{Next Steps}
-
-Efforts are underway to develop compressed array primitives that support
-spatially adaptive variable-rate compression and that allocate bits to regions
-where they are most needed.
-%, for example, to meet a uniform error tolerance or precision.
-Two separate efforts are being pursued to support read-only arrays, e.g., for
-static tables and simulation results, and mutable arrays for which blocks may
-expand or shrink in compressed size over time.  We are also considering
-changes to the main compression CODEC to support new features that are being
-added to {\zfp}, and we will be working toward filling gaps in the Cartesian
-product feature space (array dimensionality, scalar type, programming
-language, execution policy, etc.).
-
-\end{minipage}%
-\hspace*{0.125in}%
-\begin{minipage}[t]{2.625in}
+\begin{minipage}[t]{\textwidth}
 \vspace{0pt}%
-\includegraphics[width=\columnwidth]{projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/ZFP}%
+\centering%
+\includegraphics[width=4in]{projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/zfp-sw4}%
 \vspace{-2ex}%
-\captionof{figure}{240:1 {\zfp} compressed density field.}%
+\captionsetup{width=\linewidth}%
+\captionof{figure}{112:1 {\zfp} compression of \textsc{sw4} seismic displacement data to $80\mu\text{m}$ accuracy.}%
 \label{fig:zfp-result}%
 \end{minipage}
+
+\paragraph{Next Steps}
+
+Next year's effort will focus on (1)~extending {\zfp} to support parallel (de)compression of variable-rate streams,
+and (2)~readying {\zfp} for Frontier by porting our CUDA implementation to HIP.
+We will also continue our integration efforts with ECP applications and ECP software technologies.

@@ -2,22 +2,34 @@
 
 \paragraph{Overview} 
 
-Data Libraries and Services Enabling Exascale Science (DataLib). The
-DataLib project encompasses multiple related activities in user-level
-storage and I/O support for ECP codes on upcoming DOE platforms,
-providing a number of options for effectively storing and retrieving
-data and tools for assessing I/O behavior and performance.
-%
-The \textbf{ROMIO} and \textbf{Parallel netCDF} (PnetCDF) activities
-focus on existing standards-based interfaces in broad use, assisting
-in performance debugging on new platforms and augmenting existing
-implementations to support new storage models (e.g., “burst
-buffers”). In addition to being used directly by applications, ROMIO
-and PnetCDF are also indirectly used in HDF5 and netCDF-4. Our work is
-ensuring that these libraries are ready for upcoming platforms and
-effective for their users (and ready as alternatives if other
-libraries fall short).
-%
+The Data Libraries and Services Enabling Exascale Science (DataLib)
+project has been pushing on three distinct and critical
+aspects of successful storage and I/O technologies for ECP applications:
+enhancing and enabling traditional I/O libraries used by DOE/ECP
+codes on leadership platforms, establishing a nascent paradigm of data
+services specialized for ECP codes, and working closely with facilities
+to ensure the successful deployment of our tools. In FY20-23 we plan to
+continue to focus on these three complementary aspects of storage and
+I/O technologies, adjusting in response to changing needs and bringing
+these three aspects together to provide the most capable products for
+end users. DataLib activities ensure that facilities have key production
+tools, including tools to debug I/O problems in ECP codes; enable multiple
+I/O middleware packages through Mochi and ROMIO; and will provide high
+performance implementations of major I/O APIs in use by ECP codes.
+
+We strongly support ECP management’s shift of focus towards
+\textbf{Hierarchical Data Format (HDF)}. In response to ECP guidance
+to prioritize the HDF5 API, we propose to emphasize enhanced HDF5
+capabilities for ECP codes on current and future DOE leadership
+platforms, strengthening HDF as a core technology for the future. We
+propose to shift our focus away from ROMIO and PnetCDF development work
+to enable rapid progress on this topic. We will continue to support the
+use of Mochi tools for development of data services and I/O middleware,
+including assisting other ECP AD, ECP ST, and vendor teams in providing
+the best storage services possible for ECP applications. We will also
+continue to work closely with the facilities to ensure the availability
+and quality of our tools on critical platforms.
+
 The \textbf{Darshan} I/O characterization toolset is an instrumentation tool
 deployed at facilities to capture information on I/O behavior of
 applications running at scale on production systems. It has become
@@ -27,7 +39,17 @@ problems for applications and can also (in some cases) assist in
 correctness debugging. Our work in this project focuses on extending
 Darshan to new interfaces and ensuring readiness on upcoming
 platforms.
-%
+
+The \textbf{ROMIO} and \textbf{Parallel netCDF} (PnetCDF) activities
+focus on existing standards-based interfaces in broad use, assisting
+in performance debugging on new platforms and augmenting existing
+implementations to support new storage models (e.g., “burst
+buffers”). In addition to being used directly by applications, ROMIO
+and PnetCDF are also indirectly used in HDF5 and netCDF-4. Our work is
+ensuring that these libraries are ready for upcoming platforms and
+effective for their users (and ready as alternatives if other
+libraries fall short).
+
 The \textbf{Mochi} and \textbf{Mercury} software tools are building blocks for
 user-level distributed HPC services. They address issues of
 performance, programmability, and portability in this key facet of
@@ -38,12 +60,13 @@ plans to leverage these tools. In addition to working with these
 stakeholders and ensuring performance and correctness on upcoming
 platforms, we are also working with ECP application teams to customize
 data services for their needs (e.g., memoization, ML model management
-during learning).
+during learning). These are supporting tools that are not represented as 
+official products in the ECP ST portfolio.
 
 \paragraph{Key Challenges}
 
 Each of these subprojects has its own set of challenges. Libraries
-such as ROMIO and PnetCDF have numerous users from over a decade of
+such as HDF, ROMIO, and PnetCDF have numerous users from over a decade of
 production use, yet significant changes are needed to address the
 scale, heterogeneity, and latency requirements of upcoming
 applications. New algorithms and methods of storing data are required.
@@ -60,110 +83,159 @@ those users, and gain a foothold in the science community.
 
 \paragraph{Solution Strategy}
 
-\emph{Transparently refactoring application I/O.}
-Collective I/O is an important optimization in codes where phases of
-I/O are naturally identifiable: individual I/O operations from
-application processes are transparently refactored (i.e., without
-application code changes) to achieve the same goals at lower cost. We
-will improve collective I/O techniques for Exascale through tighter
-integration with I/O forwarding layers, topology awareness, and
-employing collective approaches in higher-level libraries where
-additional information is available.
+\emph{HDF enhancement.} HDF is the most popular high-level API for
+interacting with storage in the DOE complex, but users express concerns
+with the current The HDF Group (THG) implementation. We propose to perform
+an independent assessment and systematic software development activity
+targeting the highest possible performance for users of the HDF5 API on
+ECP platforms of interest.
 
-\emph{Intermediate storage and alternative data organizations.}
-Nonvolatile memory (NVM) or
-solid-state disk (SSD) integrated into platforms provides a pool of
-fast storage where data can be stored temporarily or staged for
-writing to an external store (e.g., parallel file system). Recognizing
-that this data is transient, alternative organizations (e.g.,
-provide higher performance.
+\emph{Directly supporting ECP applications and facilities.} We currently
+have ongoing interactions with E3SM (PnetCDF), CANDLE (FlameStore/Mochi),
+and ATDM/Ristra (Quantaii/Mochi), and we routinely work with the
+facilities as relates to Darshan deployments. Our work with these
+teams is targeted on specific use cases that are inhibiting their use
+of current pre-exascale systems, such as E3SM output at scale using the
+netCDF-4/PIO/PnetCDF preferred code path. We will continue to work with
+these teams to address concerns, to maintain portability and performance,
+and may develop new capabilities if needs arise. 
 
-\emph{Capturing and reconstructing I/O behavior.}
-Darshan characterizes fully the POSIX and MPI-IO layers and captures
-some statistics for HDF5 and PnetCDF. We will improve our coverage of
-HDF5, PnetCDF, and ADIOS to better enable understanding of these
-codes. We will reach out to other library teams to consider
-characterization of them as well (e.g., SCR, FTI, PIO, SILO).
+\emph{Supporting data services.} Mochi framework components are in use in
+multiple ECP related activities, including in the UnifyCR and Proactive
+Data Containers (PDC) in ExaHDF5 (WBS 2.4.x) and in the Distributed
+Asynchronous Object Storage and other services in the Intel storage
+software stack. The VeloC and DataSpaces teams (WBS 2.4.x and x.y.z as
+part of CODAR, respectively) are also strongly considering adoption
+of our tools. Mochi components enhance the performance, portability,
+and robustness of these packages, and our common reliance on Mochi
+components means that as Mochi improves, so do all these users.
 
-\emph{Mercury porting and support for relevant platforms.}
-Mercury is an RPC/bulk data communication library for use in HPC
-services and co-developed by the HDF Group. We will work with system
-vendors to enable efficient Mercury communication on the platforms of
-interest (e.g., UCX/PAMI on IBM).
-
-\emph{Data service co-design with application teams.}
-A number of candidate ECP applications have data service needs (e.g.,
-material property databases, producer-consumer data pipelines,
-multi-scale/physics simulation coupling, multi-modal data organization
-and indexing). We will identify application teams with data service
-requirements that are particularly ill-suited to solution by vendor
-offerings (e.g., parallel file systems, standard burst buffers,
-cloud-based databases) and co-design, develop, and evolve specialized
-services based on our components to meet their specific requirements
-for ECP.
+\emph{Integration and Software QA.} DataLib has actively pursued
+integration with the ECP ST software stack through the development
+and upstreaming of Spack packages and the development and deployment
+of automated testing for DataLib technologies, so we are already well
+positioned in this aspect of our work. We anticipate this effort to
+continue throughout the FY20-23 timeframe, with the addition of pull
+requests submitted to THG to upstream HDF5 enhancements and effort applied
+to address identified issues in our technologies as appropriate.
 
 \paragraph{Recent Progress}
 
-\emph{Darshan.}
-Darshan has won a 2018 R\&D 100 Award. The award is given by R\&D magazine
-to the 100 top new technologies for the year. The Darshan software
-package enables researchers to investigate and tune the I/O behavior of
-complex high-performance computing (HPC) applications. A key feature of
-the package is its ability to run on some of the largest systems in the
-world, including Crays, IBM Blue Gene systems and Linux clusters. 
+\emph{STDM12-22:} Deliver Darshan/HDF and CAR input, establish calls with Mochi
+users. Discussion occurred with ExaHDF team regarding their understanding of
+interesting HDF access characteristics. Basic Darshan capabilities for tracking
+HDF dataset use have been implemented in a (public) branch of Darshan for
+inclusion in a future release.
 
-We've begun designing automatic tracing in Darshan (STDM12-13), starting
-with an analysis of use cases provided by a number of stakeholders.
+Unify, DataSpaces, and VeloC teams were contacted regarding regular
+communication. All teams were interested in a quarterly "open call" for all
+Mochi users. The first of these is planned for April and will be advertised on
+the mochi-devel mailing list. DataSpaces and VeloC teams were also interested
+in regular one-on-one calls. We will be meeting with the VeloC team in person
+next week to discuss cadence of these. We have the first one-on-one call with
+the DataSpaces team on Feb. 14. B. Robey is in touch with Ristra and ExaFEL. 
 
+\emph{STDM12-23:} Analyze HDF use and improve Mochi services for ECP
+applications. Characterize performance and overhead of HDF use in specific ECP
+codes: we have been focusing on the FleCSI synthetic I/O benchmark developed
+for Ristra. A number of improvements have been made as a result of this work,
+including adjusting to use of collective metadata operations under HDF5, which
+help performance of this application use case. This exercise has led us to
+further consider how to improve how we present the new HDF5 data that can be
+captured as a result of our prior work (STDM12-22).
 
-\emph{Mochi and Mercury.}
-Nightly tests are now running on Aires, InfiniBand, and OmniPath networks
-(STDM12-7). See below for more information on STDM12-7.
+A synthetic benchmark has been developed that stores FleCSI data for Ristra in
+the HDF format. This benchmark is being used as a test environment for new
+output options for Ristra. The code, known as the flecsi-hdf5proxy, is
+available in the flecsi-incubator project. Our work in this benchmark has
+formed the basis for the Ristra HDF I/O design. Departing from the traditional
+approach of developing a proxy application for an already implemented
+capability, the initial version of the flecsi-hdf5proxy was developed prior to
+any implementation within Ristra codes. This allowed rapid design space
+exploration prior to implementation in a production code base and a more rapid
+development cycle in Ristra.
 
-\emph{PnetCDF.}
-Figure~\ref{fig:pnetcdf} illustrates a refactoring of the PnetCDF
-library to include a dispatch layer. The dispatch layer provides a
-mechanism for implementing multiple back-ends under the standard
-API. This functionality is being used to enable writing in a log
-format for intermediate data and access of data in the netCDF-4 format
-(stored in HDF5 files).
+Early in the year, we initiated discussions with the CODAR team building
+Chimbuko, an effort to create a provenance and performance analysis service for
+HPC. Through discussion on their use case, we determined that a new Mochi
+microservice was needed. The Sonata microservice has been developed to provide
+convenient storage and processing of their JSON record data.
 
-The PnetCDF Burst Buffer capabilities have been tested, and results were
-published at the PDSW workshop in conjunction with SC18 (STDM12-10).
-ADIOS and netCDF-4 read capabilities have been implemented in PnetCDF,
-and testing of ADIOS read capabilities under PnetCDF (STDM12-11) is
-underway.
-%
-We continue to make improvements in support of E3SM workloads.
+\emph{STDM12-24:} Improve HDF use in ECP code, deliver report on Mochi use and
+CAR input. Regarding HDF performance, a summary was compiled, including some
+discussion of PnetCDF performance, which is still critical to E3SM. Additional
+notes on improving HDF performance can be found in our meeting notes.
 
-\emph{ROMIO.}
-Integration of pipelined I/O functionality into ROMIO (STDM12-9) is complete,
-specifically into the Lustre driver. We continue to improve the LogFS
-ROMIO back-end.
+Regarding Mochi use, feedback was compiled from our many users into a Mochi
+Customer Responses document, available in Jira.  Regarding Ristra, the merged
+HDF proxy is in github as part of the FleCSI incubator.
 
-\emph{ParSplice.}
-Work with ParSplice is complete for now (STDM12-21). Specialized segment
-store attains similar performance as a tightly integrated solution for
-current problem sizes. As the application team scales up, we expect
-the scalability of the segment store to provide a performance benefit,
-but this is TBD.
+Regarding CAR input, we have gathered initial data from ALCF, NERSC, and OLCF
+and identified personnel through which updates can be obtained as we get closer
+to the next CAR deliverable. 
 
-\emph{Portage/JALI}. Examining Portage/JALI as next candidate for service
-specialization (STDM12-21).
+\emph{STDM12-25:} Deliver design of HDF5 VOL plug-in and improve I/O
+capabilities for ECP application. HDF5 VOL design is complete, and we have an
+initial prototype with which we are performing early performance testing. The
+design document and developer notes will be attached to the end of this report
+for convenience.
 
-\begin{figure}[htb]
-        \centering
-        \includegraphics[height=2.5in]{projects/2.3.4-DataViz/2.3.4.10-DataLib/pnetcdf-figure.pdf}
-        \caption{\label{fig:pnetcdf} The new PnetCDF dispatch layer provides flexibility to target different back-end formats and devices under the PnetCDF API used by many existing applications.
-        }
-\end{figure}
+As a reminder, our HDF VOL implementation layers on top of the “native” VOL
+implementation provided by HDF. We capture write operations as a log of
+changes, and currently we persist both the description of the writes (in our
+documentation simply the “metadata”, stored in the “metadata table”) and the
+contents of the writes (in our documentation the “log data”, stored in the “log
+dataset”) as HDF datasets. Additionally, another table (the “offset table”)
+stores the offsets of specific datasets in the metadata table, allowing one to
+skip over unrelated datasets when looking for specific log entries. We’re
+investigating the storage of metadata in memory, for performance reasons.
+
+I/O Improvement in E3SM. We have previously extracted an I/O kernel from the
+E3SM code, and we are now working on a branch of this code that can write
+directly into HDF51. As background, the netCDF4 API is missing a key capability
+to describe I/O to multiple datasets as a single operation, and this limits the
+performance of netCDF4 for many scientific codes regardless of the underlying
+I/O API being used (e.g., PnetCDF, HDF). The E3SM team is aware of this
+deficiency, but to our knowledge there is no plan to address it at this time.
+Meanwhile, the HDF Group has been looking at multi-dataset writes of this type,
+although it is unclear when the capability might be made part of a production
+release. Never the less, working around the netCDF4 deficiencies allows us to
+isolate HDF performance/API challenges from the higher-level netCDF4 ones, and
+allows us to better explore our HDF VOL implementation.
+
+I/O Improvement in xRAGE. Many applications use HDF5 to write extremely large
+single files used for checkpoint restart and/or data analysis. Even on
+pre-exascale systems such as Sierra it can be difficult to achieve high
+performance (bandwidth) for these workloads. Applications writing single shared
+files must carefully align I/O operations to avoid file locking overheads and
+balance I/O operations across multiple writers to ensure high performance. To
+help diagnose issues and optimize I/O in production Sierra applications the
+DataLib team has been working closely with LANL scientists to employ Darshan
+analysis capabilities that capture more detailed information about how HDF5,
+MPI-IO and POSIX are being used by the application and lower level software
+stacks. LANL has begun using Darshan on Sierra for a variety of applications
+including the xRAGE application and have worked with the DataLib team to
+identify potential bottlenecks in this and other applications.
 
 \paragraph{Next Steps}
-Closing on the end of our first three year project period, we are focusing
-on (a) wrapping up software releases of Darshan, PnetCDF, and Mercury
-suite (STDM12-13, STDM12-11, and STDM12-12); (b) adding new optimized
-collective I/O capabilities in ROMIO (STDM12-14); (c) completing automatic
-triggering of tracing in Darshan (STDM12-13); and (d) investigating
-additional use cases of specialized services in ECP applications
-(STDM12-21). 
 
+Our plan for FY21 includes:
+\emph{STDM12-32:} Evaluate HDF prototype and build new Darshan capabilities. We
+will build a DAOS module and continue evaluation of HDF VOL prototype,
+adjusting design in response.
+
+\emph{STDM12-33:} Hold Mochi boot camp and release HDF VOL prototype. We will
+hold a Mochi training session, likely at the Annual Meeting, and we will
+release the HDF VOL prototype with a Spack package for others to work with.
+
+\emph{STDM12-34:} Enhance HDF VOL implementation and evaluate Darshan and Mochi
+performance. We will revisit Darshan overheads on flagship platforms to ensure
+correctness and low-overhead operation, and we will incorporate new
+enhancements into the HDF VOL implementation for further evaluation. We will
+also perform a performance evaluation of key Mochi use cases on available test
+hardware.
+
+\emph{STDM12-35:} Deliver UCX plug-in for Mercury in support of ECP
+applications and services. We will provide a tested UCX plug-in for Mercury,
+tuned for performance on ECP relevant platforms (e.g., Summit test systems),
+with appropriate nightly tests.

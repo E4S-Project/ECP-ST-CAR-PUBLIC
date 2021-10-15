@@ -1,10 +1,94 @@
 # Put your BibTeX entries in this file.
 @inproceedings{icl:958,
-  author      = {Hoque, R. and Herault, T. and Bosilca, G. and Dongarra, J.},
-  title       = {{Dynamic Task Discovery in PaRSEC- A data-flow task-based Runtime}},
-  booktitle   = {ScalA17: 8th Workshop on Latest Advances in Scalable Algorithms for LargeScale Systems},
-  institution = {Innovative Computing Laboratory, University of Tennessee},
-  address     = {Denver, CO},
-  month       = {November},
-  year        = {2017}
+  author =       {Hoque, R. and Herault, T. and Bosilca, G. and
+                  Dongarra, J.},
+  title =        {{Dynamic Task Discovery in PaRSEC- A data-flow
+                  task-based Runtime}},
+  booktitle =    {ScalA17: 8th Workshop on Latest Advances in Scalable
+                  Algorithms for LargeScale Systems},
+  institution =  {Innovative Computing Laboratory, University of
+                  Tennessee},
+  address =      {Denver, CO},
+  month =        {November},
+  year =         {2017}
+}
+
+@inproceedings{lorapo-protools,
+  author =       {Q. Cao and Y. Pei and T. Herault and K. Akbudak and
+                  A. Mikhalev and G. Bosilca and H. Ltaief and
+                  D. E. Keyes and J. Dongarra},
+  title =        {{Performance Analysis of Tile Low-Rank Cholesky
+                  Factorization Using PaRSEC Instrumentation Tools}},
+  booktitle =    {ProTools'19},
+  series =       {ProTools'19},
+  year =         {2019},
+  location =     {Colorado, USA},
+}
+
+@INPROCEEDINGS{BLR_LU,
+  author =       {Y. Pei and G. Bosilca and I. Yamazaki and A. Ida and
+                  J. Dongarra},
+  title =        {{Evaluation of Programming Models to Address Load
+                  Imbalance on Distributed Multi-Core CPUs: A Case
+                  Study with Block Low-Rank Factorization}},
+  booktitle =    {{Parallel Applications Workshop, Alternatives To
+                  MPI+X}},
+  series =       {PAW-ATM 2019},
+  year =         {2019},
+  month =        {Nov}
+}
+
+@inproceedings{parsec_pdgemm,
+  title =        {{Generic matrix multiplication for multi-GPU
+                  accelerated distributed-memory platforms over
+                  PaRSEC}},
+  author =       {Thomas Herault and Yves Robert and George Bosilca
+                  and Jack J. Dongarra},
+  series =       {Scala19},
+  year =         {2019}
+}
+
+@article{parsec::tiledarray,
+  author =       {Peng, Chong and Calvin, Justus A and Pavo{\v
+                  s}evi{\'c}, Fabijan and Zhang, Jinmei and Valeev,
+                  Edward F},
+  title =        {{Massively Parallel Implementation of Explicitly
+                  Correlated Coupled-Cluster Singles and Doubles Using
+                  TiledArray Framework}},
+  journal =      {J. Phys. Chem. A},
+  year =         {2016},
+  volume =       {120},
+  number =       {51},
+  pages =        {10231--10244},
+  month =        dec
+}
+
+@techreport{parsec::rr::irrbs,
+  TITLE = {{Distributed-memory multi-GPU block-sparse tensor contraction for electronic structure (revised version)}},
+  AUTHOR = {Herault, Thomas and Robert, Yves and Bosilca, George and Harrison, Robert J and Lewis, Cannada A and Valeev, Edward F and Dongarra, Jack J},
+  TYPE = {Research Report},
+  NUMBER = {RR-9365},
+  PAGES = {34},
+  INSTITUTION = {{Inria - Research Centre Grenoble -- Rh{\^o}ne-Alpes}},
+  YEAR = {2020},
+  MONTH = Oct,
+  KEYWORDS = {Electronic structure ; Tensor contraction ; Block-sparse matrix multiplication ; Distributed-memory ; Multi-GPU node ; PaRSEC ; Contraction de tenseur ; Produit de matrices creuses par blocs ; M{\'e}moire distribu{\'e}e ; N{\oe}ud multi-GPU ; PaRSEC},
+  HAL_ID = {hal-02970659},
+  HAL_VERSION = {v1},
+}
+
+@inbook{parsec::dbcsr,
+author = {Sch\"{u}tt, Ole and Messmer, Peter and Hutter, J\"{u}rg and VandeVondele, Joost},
+publisher = {John Wiley \& Sons, Ltd},
+isbn = {9781118670712},
+title = {{GPU}-Accelerated Sparse Matrix–Matrix Multiplication for Linear Scaling Density Functional Theory},
+booktitle = {Electronic Structure Calculations on Graphics Processing Units},
+chapter = {8},
+pages = {173-190},
+baddoi = {10.1002/9781118670712.ch8},
+badurl = {\url{https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118670712.ch8}},
+badeprint = {\url{https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781118670712.ch8}},
+year = {2016},
+keywords = {asynchronous processing, graphics processing units, linear scaling density functional theory, self-consistent field, software architecture, sparse matrix-matrix multiplications},
+abstract = {Summary This chapter discusses how graphics processing units (GPUs) can be exploited to accelerate sparse matrix-matrix multiplications as required to solve the self-consistent field equations in linear scaling density functional theory calculations. It presents the DBCSR sparse matrix multiplication library and describes the algorithms that are used to achieve maximum performance on distributed multicore and hybrid CPU/GPU architectures. The GPU is queried using the event based mechanism, and if buffer space is available on the GPU the stack will be handed over to the CUDA-driver, otherwise the host-driver processes the stack. Part of the challenge in writing efficient GPU-accelerated code is to exploit the asynchronous task based programming model. The asynchronous nature of the device had to be taken into account at a sufficiently high level, and a library of highly optimized kernels had to be created. This required a detailed understanding of the GPU device and the application programming interface.}
 }

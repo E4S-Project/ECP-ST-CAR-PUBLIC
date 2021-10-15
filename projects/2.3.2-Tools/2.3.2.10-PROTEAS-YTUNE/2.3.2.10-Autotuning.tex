@@ -1,4 +1,5 @@
 \subsubsection{\stid{2.10} PROTEAS-TUNE: Autotuning} 
+\label{sec:PROTEAS_TUNE_AUTOTUNING}
 
 \paragraph{Overview}
 
@@ -19,7 +20,7 @@ manycore CPUs and GPUs.
 Ideally Exascale application developers would express their
 computation separate from   its mapping to hardware, while autotuning compilers can automate this mapping and achieve performance portability.
 
-\paragraph{Key  Challenges}
+\paragraph{Key Challenges}
 Autotuning has the potential to dramatically improve the performance portability of Petascale and Exascale applications.  To date, autotuning has been used primarily in high-performance applications through tunable libraries or previously tuned application code that is integrated directly into the application.
 If autotuning is to be widely used in the HPC community,
 support for autotuning must address the software engineering challenges, manage configuration overheads, and continue to demonstrate significant performance gains and portability across architectures.
@@ -48,18 +49,15 @@ into the Clang/LLVM open-source compiler, as well as provide lightweight
 interfaces through Python, C++, and REST APIs/web services.
 
 For example, we have developed a \textit{brick data layout library and code generator} for
-stencil computations within CHiLL.
+stencil computations.
 Recent trends in computer architecture that favor computation over data movement incentivize high-order methods.  Paradoxically, high-order codes can be challenging for compilers/optimization to attain high performance.  Bricks enable high performance and make fine-grained data reuse and memory access information known at compile time.  The SIMD code generation achieves performance portability
 for high-order stencils for both CPUs with wide SIMD units (Intel Knights
-Landing) and GPUs (NVIDIA Pascall).  Integration with autotuning attains
+Landing) and GPUs (NVIDIA Pascal).  Integration with autotuning attains
 performance that is close to Roofline performance bound for both manycore CPU
-and GPU architectures.
+and GPU architectures and demonstrates strong scaling by reducing on-node data movement in communication.
 
-The Search using Random Forests (SuRF) search framework is a separate tool in Y-Tune that optimizes the search over an autotuning search space.  While
-SuRF provides support to CHiLL for compiler-directed autotuning, it can
-also be integrated directly with applications and runtimes to search over
-application parameters and alternative code variants.
-SuRF is an asynchronous search framework that consists of sampling a small number of input parameter configurations and progressively fitting a surrogate model over the input-output space until exhausting the user-defined maximum number of evaluations. The framework is designed to operate in the master-worker computational paradigm, where one master node fits the surrogate model and generates promising input configurations and worker nodes perform the computationally expensive evaluations and return the outputs to the master node. We implemented both MPI- and scheduler-based master-worker approaches.
+
+ytopt/SurF is a machine-learning-based search software package for autotuning that consists of sampling a small number of input parameter configurations, evaluating them, and progressively fitting a surrogate model over the input-output space until exhausting the user-defined time or the maximum number of evaluations. The package is built based on Bayesian Optimization that solves any optimization problem and is especially useful when the objective function is difficult to evaluate. It provides an interface that deals with unconstrained and constrained problems. The software is designed to operate in the master-worker computational paradigm, where one master node fits the surrogate model and generates promising input configurations and worker nodes perform the computationally expensive evaluations and return the outputs to the master node. The asynchronous aspect of the search allows the search to avoid waiting for all the evaluation results before proceeding to the next iteration. As soon as an evaluation is finished, the data is used to retrain the surrogate model, which is then used to bias the search toward the promising configurations.
 
 
 \paragraph{Recent Progress}
@@ -68,30 +66,29 @@ SuRF is an asynchronous search framework that consists of sampling a small numbe
 We have pursued the following main activities this year:
 
 \textit{Autotuning capability in LLVM:}
-The key idea is to support the use of pragmas in the C++ source to guide transformations to be applied. These can include the types of transformation recipes used in CHiLL, but also parallelization directives for OpenMP and OpenACC that would interact with SOLLVE and PROTEAS. Our initial focus is the implementation of user/tool-directed optimizations in Polly, which is a polyhedral framework in LLVM with some similar features to CHiLL. An initial plan for pragmas in Clang and LLVM metadata has been developed. Several existing open-source LLVM projects allowing for just-in-time (JIT) compilation of C++ code have been identified and are being evaluated for use with autotuning. A summer intern has been identified who will work on the JIT/autotuning explorations.
+The key idea is to support the use of pragmas in the C++ source to guide transformations to be applied. These can include the types of transformation recipes used in CHiLL, but also parallelization directives for OpenMP and OpenACC that would interact with SOLLVE and PROTEAS. Our initial focus is the implementation of user/tool-directed optimizations in Polly, which is a polyhedral framework in LLVM with some similar features to CHiLL. Several existing open-source LLVM projects allowing for just-in-time (JIT) compilation of C++ code have been identified and are being evaluated for use with autotuning. 
+
+We have successfully used loop transformations directives implemented in Clang (ref. Section \ref{sec:PROTEAS_TUNE_LLVM}) to drive a machine learning process with YtOpt. The correctness of these transformations are checked in the Clang compiler by Polly such that it is not possible to result in wrong results. The search strategies used include a Globally Greedy~\cite{kruse2020search}, random search, beam search and our latest algorithm a customized Monte-Carlo Tree Search~\cite{wu2021autotuning}.
+In addition to the PolyBench benchmark suite, we applied the search over a tree-shaped configuration space to three ECP Proxy apps, namely SW4Lite, CoMD and minrAMR with promising results.
+
 
 \vspace*{.1in}
 \noindent
-\textit{SuRF Supporting Autotuning Search}
-We focused on testing and hardening SuRF for tuning SuperLU package. We used 6 matrices that come from different DOE applications and ran SuRF in an asynchronous mode with up to 32 nodes. We compared the results from SuRF to those from OpenTuner. On all instances tested, we found that SuRF obtains comparable results but in half the time of OpenTuner. We also observed that SuRF found high quality solutions in short computation time and used the remaining time for neighborhood exploration. Therefore, we implemented early stopping criterion. We also did single node tuning experiments with QMC. Since the current search space of QMCPACK is rather small, we did not evaluate it at scale. Currently, we are working with the QMCPACK developers to expose more parameters.
-Recently, we developed stopping criterion based on local convergence and expected improvement over time. This allows the search to terminate in shorter computation time. Currently, we are expanding the search for multinode autotuning where each evaluation spans multiple nodes.
-In the past year, we have also used SuRF to perform autotuning search on
-pragmas, including loop transformations and OpenMP pragmas. Most recently,
-we are using SuRF to refine descriptive OpenMP pragmas such as \texttt{\# pragma omp loop} to derive prescriptive pragmas for CPU and GPU mapping of code.
+\textit{ytopt/SuRF Supporting Autotuning Search}
 
+Compiler directives such as pragmas can help programmers to separate an algorithm's semantics from its optimization. Pragma directives for code transformations are useful for assisting program optimization and are already widely used in OpenMP. A prototype of user-directed loop transformations using Clang and Polly was implemented for the ECP SOLLVE project.
+Polly is LLVM's polyhedral loop optimizer which makes it easy to apply specific transformations as directed by pragmas.
+While the SOLLVE team is working on integrating the changes into the official LLVM repository, only few of the changes have been upstreamed yet.
+The additional loop transformation directives supported are loop reversal (inverting the iteration order of a loop), loop interchange (permuating the order of nested loops), tiling, unroll(-and-jam), array packing (temporarily copying the data of a loop's working set into a new buffer) and thread parallelization. 
+More importantly, it supports composing multiple loop nest transformation in arbitrary order. Vectorization is also supported by LLVM's dedicated loop vectorizer.
+These pragmas are intended to make applying common loop optimization technique much easier and allow better separation of a code's semantics and its optimization.
 
-Large high-performance computing (HPC) clusters and DOE leadership-class supercomputing systems pose a few deployment and portability challenges for SuRF. The key issues stem from the differences in queuing systems, scheduling policies, and scripts needed to run the search in a distributed way. Typically, manager worker is implemented with message-passing interface (e.g., MPI) built into the search application. Although this approach is flexible, it requires SuRF to handle a number of system level issues related to system calls (such as apruns, sruns), Python package dependencies, and the correct MPI software stack.
+We developed and extended ytopt autotuning framework that leverages Bayesian optimization to explore the parameter space search of LLVM Clang/Polly loop optimization pragmas. We integrated and compared four different supervised learning methods within Bayesian optimization and evaluated their effectiveness. We selected six of the most complex PolyBench benchmarks and apply the newly developed LLVM Clang/Polly loop optimization pragmas to the benchmarks to optimize them. We then used ytopt/SuRF framework to optimize the pragma parameters to improve their performance. The experimental results showed that our autotuning approach outperforms the other compiling methods to provide the smallest execution time for the benchmarks syr2k, 3mm, heat-3d, lu, and covariance with two large datasets in 200 code evaluations for effectively searching the parameter spaces with up to 170,368 different configurations. 
 
-To that end, we integrated Balsam, a default workflow manager on Theta leadership-class system at Argonne Leadership Computing Facility. \texttt{BalsamEvaluator} module was implemented to interface SuRF with Balsam. The \texttt{BalsamEvaluator} uses the Python API provided by Balsam to interact with the BalsamJob database. Each BalsamJob corresponds to a single autotuning configuration evaluation and contains information pointing to the task executable and the command-line arguments used to run the configuration with the executable. The \texttt{BalsamEvaluator} comprise two dictionaries: \texttt{pending\_evals}, which maps configurations onto the corresponding BalsamJob IDs, and \texttt{evals}, which maps the same configurations to the stored objective value (runtime). As a search proceeds asynchronously, receiving data from \texttt{BalsamEvaluator}, these data structures are updated accordingly. The \texttt{BalsamEvaluator} takes advantage of the Balsam Django API to filter jobs according to their state (e.g., process return code) and leverages functionality such as monitoring job output, logging error tracebacks, and generating compute node utilization profiles.
+In a number of settings, the search space exposed by the transformation pragmas in LLVM LLVM/Polly’s composable loop optimization is a tree, wherein each node represents a specific combination of loop transformations that can be applied to the code resulting from the parent node's loop transformations. Consequently, Bayesian optimization within ytopt/SuRF will become ineffective. To that end, we have developed ytopt/MCTS, a search algorithm based on Monte Carlo tree search (MCTS). The algorithm consists of two phases: exploring loop transformations at different depths of the tree to identify promising regions in the tree search space and exploiting those regions by performing a local search. Moreover, a restart mechanism is used to avoid the MCTS getting trapped in a local solution. The best and worst solutions are transferred from the previous phases of the restarts to leverage the search history. We compared our approach with breadth-first, beam, global greedy, and random search methods using PolyBench kernels and ECP proxy applications. Experimental results showed that our MCTS algorithm finds pragma combinations with a speedup of 2.3x over Polly's heuristic optimizations on average.
 
-We developed an easy-to-use common interface for search space definition for autotuning. GPTune is an autotuning software developed within xSDK4ECP project. The interface allow GPTune and SuRF to share the same search space and problem definition. We developed SPACK specifications for SuRF package installation and made the software open source in github.
+CCS is a autotuning interface that we developed recently for ECP Kokkos library. CCS aims at providing interoperability between autotuning frameworks and applications with autotuning needs. It does so by providing a C interface with which users can describe their tuning problem, but also write their own tuners, possibly in higher-level languages. At the start of the collaboration with Kokkos team, CCS did not match up exactly with the Kokkos model of tuning. In CCS, there were no input types, and the concept of output types, objective space in CCS, was much more complex, providing a system of constraints among those types. It also had a much more complex view of a good run, having an objective space concept to specify how well a given configuration performed. Through codesign, CCS has adopted the input type concept as the features space, while maintaining the full expressiveness of their other concepts. This is progressing to the point where, as uses develop new tuners to the CCS infrastructure, they get the ability to tune Kokkos as well.
 
-% \textit{SuRF Supporting Autotuning Search}
-% We focused on testing and hardening SuRF for tuning SuperLU package. We used 6 matrices that come from different DOE applications and ran SuRF in an asynchronous mode with up to 32 nodes. We compared the results from SuRF to those from OpenTuner. On all instances tested, we found that SuRF obtains comparable results but in half the time of OpenTuner. We also observed that SuRF found high quality solutions in short computation time and used the remaining time for neighborhood exploration. Therefore, we implemented early stopping criterion. We also did single node tuning experiments with QMC. Since the current search space of QMCPACK is rather small, we did not evaluate it at scale. Currently, we are working with the QMCPACK developers to expose more parameters.
-% Recently, we developed stopping criterion based on local convergence and expected improvement over time. This allows the search to terminate in shorter computation time. Currently, we are expanding the search for multinode autotuning where each evaluation spans multiple nodes.
-% In the past year, we have also used SuRF to perform autotuning search on 
-% pragmas, including loop transformations and OpenMP pragmas. Most recently,
-% we are using SuRF to refine descriptive OpenMP pragmas such as \texttt{\# pragma omp loop} to derive prescriptive pragmas for CPU and GPU mapping of code.
 
 
 \vspace*{.1in}
@@ -107,24 +104,13 @@ can either target wide SIMD CPU instructions sets such as AVX-512 and SIMT
 threads on GPUs; and, (3) integration with autotuning framework to apply
 architecture-specific tuning. For a range of stencil computations, we show that
 it achieves high performance for both the Intel Knights Landing (Xeon Phi) CPU,
-and the NVIDIA GPUs \cite{P3HPC_Bricks,zhao2019}. 
+and the NVIDIA GPUs \cite{P3HPC_Bricks,zhao2019}. This year we extended the library in multiple ways.
+We show that the indirection in the brick data layout permits distinct physical and logical data layouts; we can
+therefore store the bricks in memory to reduce the data movement of packing and unpacking during cross-node
+communication.  We have demonstrated strong scaling by reducing communication time.  
 
 \paragraph{Next Steps}
-We will experiment with loop transformation and OpenMP pragmas using the pragma
-autotuner and derive search spaces for these transformations that match
-patterns in ECP codes.  Our goal is to encode patterns that are commonly
-used by application programmers to simplify the use of autotuning.
 
-\begin{figure}[h]
-%\begin{wrapfigure}{r}{0.35\textwidth}                                                                                                     
-\begin{center}
-\includegraphics[width=.8\textwidth]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/YTune-solution.jpg}
-% \includegraphics[width=.8\textwidth]{YTune-solution.png}
-% \includegraphics[width=.8\textwidth]{PastedGraphic-1.png    }
-\end{center}
-\caption{Y-TUNE Solution Approach.}
-%\caption{S.}                                                                                                                              
-%\end{wrapfigure}                                                                                                                          
-\end{figure}
-
-%\end{document}
+We will continue to work with ECP application teams to integrate our tools with their efforts.  In particular,
+we are integrating bricks into the Proto system, used in subsurface flows.
+Moreover, we are developing online tuning capability for ytopt/SuRF. 

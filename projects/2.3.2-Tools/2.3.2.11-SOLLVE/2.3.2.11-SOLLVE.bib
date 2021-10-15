@@ -1,11 +1,13 @@
 @misc{openmp-tr6,
   author = {Bronis R. De Supinski and Michael Klemm},
-  title = {{OpenMP Technical Report 6: Version 5.0 Preview 2}},
-  howpublished = "\url{http://www.openmp.org/wp-content/uploads/openmp-tr6.pdf}",
+  title = {{OpenMP Technical Report 8: Version 5.0 Preview 2}},
+  howpublished = "\url{http://www.openmp.org/wp-content/uploads/openmp-tr8.pdf}",
   year = {2017}, 
-  note = "[Online; accessed 13-April-2018]"
+  note = "[Online; accessed 31-November-2019]"
 }
 
+%This is very old and should not be cited in the document
+%Not cited anywhere in document and shouldn't be.
 @article{exascale-roadmap.ijhpca.2011,
   title={The international exascale software project roadmap},
   author={Dongarra, Jack and Beckman, Pete and Moore, Terry and Aerts, Patrick and Aloisio, Giovanni and Andre, Jean-Claude and Barkai, David and Berthou, Jean-Yves and Boku, Taisuke and Braunschweig, Bertrand and others},
@@ -17,8 +19,37 @@
   publisher={Sage Publications, Inc.}
 }
 
+@inproceedings{thiddenhelper,
+author = {Shilei Tian and Johannes Doerfert and Barbara Chapman},
+title = "{Concurrent Execution of Deferred OpenMP Target Tasks with Hidden Helper Threads}",
+booktitle = "In Workshop on Languages and Compilers for Parallel Computing (LCPC 2020)"
+} 
+
+@inproceedings{machlearnoffload,
+author = {Alok Mishra and Abid M. Malik and Barbara Chapman},
+title =  "{Using Machine Learning for OpenMP GPU Offloading in LLVM}", 
+booktitle ="{ ACM SRC to be held at SC20}"
+}
+
+@inproceedings{llvmompmeta,
+author = {Alok Mishra, Abid M. Malik and Barbara Chapman}, 
+title = "{Extending the LLVM/Clang Framework for OpenMP Metadirective Support}", 
+booktitle = {LLVM HPC Workshop at The International Conference for High-Performance Computing, Networking, Storage, and Analysis (SC20)}
+}
+
+
+@inproceedings{fcc,
+authors = {A. Wang, A. Mishra, C. Liao, Y. Yan, B. Chapman},
+title = "{FreeCompilerCamp.org: Training for OpenMP Compiler Development from Cloud}",
+month = November,
+year = 2019,
+booktitle = {Sixth SC Workshop on Best Practices for HPC Training and Education},
+doi = {10.22369/issn.2153-4136/11/1/9}
+}
+
+
 @inproceedings{zinenko.cc.2018,
-  title={Modeling the conflicting demands of parallelism and Temporal/Spatial locality in affine scheduling},
+  title={Modeling the Conflicting Demands of Parallelism and Temporal/Spatial Locality in Affine Scheduling},
   author={Zinenko, Oleksandr and Verdoolaege, Sven and Reddy, Chandan and Shirako, Jun and Grosser, Tobias and Sarkar, Vivek and Cohen, Albert},
   booktitle={Proceedings of the 27th International Conference on Compiler Construction},
   pages={3--13},
@@ -26,6 +57,8 @@
   organization={ACM}
 }
 
+
+%Old
 @misc{osti_1429981,
 title = {OpenMP 4.5 Validation and Verification Suite, Version 00},
 author = {Pophale, Swaroop S and Bernholdt, David E and Hernandez, Oscar R},
@@ -36,13 +69,192 @@ year = {2017},
 month = {12}
 }
 
+
+@article{vandv2019,
+author = {Monsalve Diaz, Jose Manuel and Friedline, Kyle and Pophale, Swaroop and Hernandez, Oscar and Bernholdt, David and Chandrasekaran, Sunita},
+year = {2019},
+month = {08},
+pages = {102546},
+title = "{Analysis of OpenMP 4.5 Offloading in Implementations: Correctness and Overhead}",
+journal = {Parallel Computing},
+doi = {10.1016/j.parco.2019.102546}
+}
+
+@inproceedings{ompautotuneFramework,
+  author    = {Vinu Sreenivasan and
+               Rajath Javali and
+               Mary W. Hall and
+               Prasanna Balaprakash and
+               Thomas R. W. Scogland and
+               Bronis R. de Supinski},
+  title     = "{A Framework for Enabling OpenMP Autotuning}",
+  booktitle = {OpenMP: Conquering the Full Hardware Spectrum - 15th International
+               Workshop on OpenMP, {IWOMP} 2019, Auckland, New Zealand, September
+               11-13, 2019, Proceedings},
+  pages     = {50--60},
+  year      = {2019},
+  url       = {https://doi.org/10.1007/978-3-030-28596-8\_4},
+  doi       = {10.1007/978-3-030-28596-8\_4},
+  timestamp = {Mon, 26 Aug 2019 14:36:19 +0200},
+  biburl    = {https://dblp.org/rec/bib/conf/iwomp/SreenivasanJHBS19},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+@inproceedings{analyzingPerfTradeoff,
+author = {Shintaro Iwasaki, Abdelhalim Amer, Kenjiro Taura, and Pavan Balaji}, 
+title = "{Analyzing the Performance Trade-Off in Implementing User-Level Threads}", 
+booktitle = {IEEE Transactions on Parallel and Distributed Systems (TPDS)}, 
+month = {February},
+year = {2020},
+doi = {10.1109/TPDS.2020.2976057}
+}
+
+@inproceedings{datareuse, 
+author = {Alok Mishra and Abid M. Malik and Barbara Chapman},
+title = "{Data Transfer and Reuse Analysis Tool for GPU-offloading using OpenMP}",
+inproceedings = {In International Workshop on OpenMP (IWOMP2020)},
+month = September,
+year = 2020
+}
+
+@inproceedings{mgputask,
+author = {Vivek Kale, Wenbin Lu, Anthony Curtis, Abid M. Malik, Barbara Chapman, and Oscar Hernandez},
+title = "{Toward Supporting Multi-GPU Targets via Taskloop and User-defined Schedules}",
+booktitle = "International Workshop on OpenMP (IWOMP2020)", 
+month = September,
+year = 2020,
+}
+
+@inproceedings{udm, 
+author = {Lingda Li and Barbara Chapman},
+title = "{Compiler Assisted Hybrid Implicit and Explicit GPU Memory Management under Unified Address Space}",
+booktitle = "{Proceedings of the 31st ACM/IEE International Conference for High Performance Computing, Networking, Storage, and Analysis in Denver, CO, USA (SC ’19)}",
+Year = {2019},
+Month = {November},
+doi = {10.1145/3295500.3356141}
+} 
+
+%CGO paper by Alok 
+@inproceedings{Mishra:2019:KFA:3314872.3314915,
+ author = {Mishra, Alok and Kong, Martin and Chapman, Barbara},
+ title = "{Kernel Fusion/Decomposition for Automatic GPU-offloading}",
+ booktitle = {Proceedings of the 2019 IEEE/ACM International Symposium on Code Generation and Optimization},
+ series = {CGO 2019},
+ year = {2019},
+ isbn = {978-1-7281-1436-1},
+ location = {Washington, DC, USA},
+ pages = {283--284},
+ numpages = {2},
+ url = {http://dl.acm.org/citation.cfm?id=3314872.3314915},
+ acmid = {3314915},
+ publisher = {IEEE Press},
+ address = {Piscataway, NJ, USA},
+}
+
+@inbook{tregion,
+author = {Doerfert, Johannes and Diaz, Jose and Finkel, Hal},
+year = {2019},
+month = {08},
+pages = {153-167},
+title = "{The TRegion Interface and Compiler Optimizations for OpenMP Target Regions}",
+isbn = {978-3-030-28595-1},
+doi = {10.1007/978-3-030-28596-8_11}
+}
+
+
+@inproceedings{DBLP:conf/iwomp/ScoglandSOHES19,
+  author    = {Thomas R. W. Scogland and
+               Dan Sunderland and
+               Stephen L. Olivier and
+               David S. Hollman and
+               Noah Evans and
+               Bronis R. de Supinski},
+  title     = "{Making OpenMP Ready for {C++} Executors}",
+  booktitle = {OpenMP: Conquering the Full Hardware Spectrum - 15th International
+               Workshop on OpenMP, {IWOMP} 2019, Auckland, New Zealand, September
+               11-13, 2019, Proceedings},
+  pages     = {320--332},
+  year      = {2019},
+  url       = {https://doi.org/10.1007/978-3-030-28596-8\_22},
+  doi       = {10.1007/978-3-030-28596-8\_22},
+  timestamp = {Wed, 25 Sep 2019 18:20:10 +0200},
+  biburl    = {https://dblp.org/rec/bib/conf/iwomp/ScoglandSOHES19},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+@inproceedings{DBLP:conf/iwomp/KaleIKKC19,
+  author    = {Vivek Kale and
+               Christian Iwainsky and
+               Michael Klemm and
+               Jonas H. M{\"{u}}ller Kornd{\"{o}}rfer and
+               Florina M. Ciorba},
+  title     = "{Toward a Standard Interface for User-Defined Scheduling in OpenMP}",
+  booktitle = {OpenMP: Conquering the Full Hardware Spectrum - 15th International
+               Workshop on OpenMP, {IWOMP} 2019, Auckland, New Zealand, September
+               11-13, 2019, Proceedings},
+  pages     = {186--200},
+  year      = {2019},
+  url       = {https://doi.org/10.1007/978-3-030-28596-8\_13},
+  doi       = {10.1007/978-3-030-28596-8\_13},
+  timestamp = {Mon, 26 Aug 2019 14:36:19 +0200},
+  biburl    = {https://dblp.org/rec/bib/conf/iwomp/KaleIKKC19},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+@inproceedings{Bak2019OptimizedEO,
+  title= "{Optimized Execution of Parallel Loops via User-Defined Scheduling Policies}",
+  author={Seonmyeong Bak and Yanfei Guo and Pavan Balaji and Vivek Sarkar},
+  booktitle={ICPP},
+  year={2019}
+}
+
+
+@inproceedings{lsrt,
+Title = "{A Runtime Approach for Dynamic Load Balancing of OpenMP Parallel Loops in LLVM}",
+author= {Jonas H. Muller Kondorfer and Florina Ciorba and Christian Iwainsky and Johannes Doerfert and Hal Finkel and Vivek Kale and Michael Klemm}, 
+booktitle = {Proceedings of the 31st ACM/IEEE International Conference for High Performance Computing, Networking, Storage, and Analysis in Denver, CO, USA (SC ’19)}, 
+Year = {2019},
+Month = {November}
+} 
+
+
+@inproceedings{boltPACT19,
+author = {Shintaro Iwasaki and Abdelhalim Amer and Kenjiro Taura and Sangmin Seo and Pavan Balaji},
+title = "{BOLT: Optimizing OpenMP Parallel Regions with User-Level Threads}", 
+booktitle = {Proceedings of the 28th International Conference on Parallel Architectures and Compilation Techniques (PACT ’19)},
+Year = {2019},
+Month = {September}
+}
+
+@INPROCEEDINGS{Zinenko2018-ni,
+  title     = "Modeling the Conflicting Demands of Parallelism and
+               {Temporal/Spatial} Locality in Affine Scheduling",
+  booktitle = "Proceedings of the 27th International Conference on Compiler
+               Construction",
+  author    = "Zinenko, Oleksandr and Verdoolaege, Sven and Reddy, Chandan and
+               Shirako, Jun and Grosser, Tobias and Sarkar, Vivek and Cohen,
+               Albert",
+  publisher = "Association for Computing Machinery",
+  pages     = "3--13",
+  series    = "CC 2018",
+  month     =  feb,
+  year      =  2018,
+  address   = "New York, NY, USA",
+  keywords  = "Compiler Optimizations, Polyhedral Model",
+  location  = "Vienna, Austria"
+}
+
+
 @inproceedings{DBLP:conf/sc/MishraLKFC17,
   author    = {Alok Mishra and
                Lingda Li and
                Martin Kong and
                Hal Finkel and
                Barbara Chapman},
-  title     = {Benchmarking and Evaluating Unified Memory for OpenMP {GPU} Offloading},
+  title     = "{Benchmarking and Evaluating Unified Memory for OpenMP {GPU} Offloading}",
   booktitle = {Proceedings of the Fourth Workshop on the {LLVM} Compiler Infrastructure
                in HPC, LLVM-HPC@SC 2017, Denver, CO, USA, November 13, 2017},
   pages     = {6:1--6:10},
@@ -51,262 +263,69 @@ month = {12}
   doi       = {10.1145/3148173.3148184},
   timestamp = {Mon, 30 Oct 2017 18:31:08 +0100},
   biburl    = {https://dblp.org/rec/bib/conf/sc/MishraLKFC17},
+  bibsource = {dblp computer science bibliography, https://dblp.org} 
+}
+
+
+
+@article{osti_1559911,
+title = "{A Framework for Enabling OpenMP Autotuning}",
+author = {Sreenivasan, V and Javali, R and Hall, M and Balaprakash, P and de Supinski, B R},
+abstractNote = {},
+doi = {10.1007/978-3-030-28596-8_4},
+journal = {},
+issn = {0302--9743},
+volume = 11718,
+place = {United States},
+year = {2019},
+month = {6}
+}
+
+@inproceedings{loopTransPragmas,
+  author    = {Michael Kruse and Hal Finkel},
+  title     = "{Design and Use of Loop Transformation Pragmas}",
+  booktitle = {OpenMP: Conquering the Full Hardware Spectrum - 15th International
+               Workshop on OpenMP, {IWOMP} 2019, Auckland, New Zealand, September
+               11-13, 2019, Proceedings},
+  year      = {2019},
+  url       = {https://doi.org/10.1007/978-3-030-28596-8\_9},
+  doi       = {10.1007/978-3-030-28596-8_9}
+}
+
+
+@inproceedings{DBLP:conf/iwomp/0001WLSS19,
+  author    = {Yonghong Yan and
+               Anjia Wang and
+               Chunhua Liao and
+               Thomas R. W. Scogland and
+               Bronis R. de Supinski},
+  title     = "{Extending OpenMP Metadirective Semantics for Runtime Adaptation}",
+  booktitle = {OpenMP: Conquering the Full Hardware Spectrum - 15th International
+               Workshop on OpenMP, {IWOMP} 2019, Auckland, New Zealand, September
+               11-13, 2019, Proceedings},
+  pages     = {201--214},
+  year      = {2019},
+  url       = {https://doi.org/10.1007/978-3-030-28596-8\_14},
+  doi       = {10.1007/978-3-030-28596-8\_14},
+  timestamp = {Mon, 26 Aug 2019 14:36:19 +0200},
+  biburl    = {https://dblp.org/rec/bib/conf/iwomp/0001WLSS19},
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 
 
-%%%% The references below were added on December 11 2018
-
-@InProceedings{li.iwomp.2018,
-author="Li, Lingda
-and Finkel, Hal
-and Kong, Martin
-and Chapman, Barbara",
-editor="de Supinski, Bronis R.
-and Valero-Lara, Pedro
-and Martorell, Xavier
-and Mateo Bellido, Sergi
-and Labarta, Jesus",
-title="Manage OpenMP GPU Data Environment Under Unified Address Space",
-booktitle="Evolving OpenMP for Evolving Architectures",
-year="2018",
-publisher="Springer International Publishing",
-address="Cham",
-pages="69--81",
-abstract="OpenMP has supported the offload of computations to accelerators such as GPUs since version 4.0. A crucial aspect in OpenMP offloading is to manage the accelerator data environment. Currently, this has to be explicitly programmed by users, which is non-trival and often results in suboptimal performance. The unified memory feature available in recent GPU architectures introduces another option, implicit management. However, our experiments show that it incurs several performance issues, especially under GPU memory oversubscription. In this paper, we propose a compiler and runtime collaborative approach to manage OpenMP GPU data under unified memory. In our framework, the compiler performs data reuse analysis to assist runtime data management. The runtime combines static and dynamic information to make optimized data management decisions. We have implement the proposed technology in the LLVM framework. The evaluation shows our method can achieve significant performance improvement for OpenMP GPU offloading.",
-isbn="978-3-319-98521-3"
-}
-
-
-
-
-@InProceedings{bertolacci.iwomp.2018,
-author="Bertolacci, Ian
-and Strout, Michelle Mills
-and de Supinski, Bronis R.
-and Scogland, Thomas R. W.
-and Davis, Eddie C.
-and Olschanowsky, Catherine",
-editor="de Supinski, Bronis R.
-and Valero-Lara, Pedro
-and Martorell, Xavier
-and Mateo Bellido, Sergi
-and Labarta, Jesus",
-title="Extending OpenMP to Facilitate Loop Optimization",
-booktitle="Evolving OpenMP for Evolving Architectures",
-year="2018",
-publisher="Springer International Publishing",
-address="Cham",
-pages="53--65",
-abstract="OpenMP provides several mechanisms to specify parallel source-code transformations. Unfortunately, many compilers perform these transformations early in the translation process, often before performing traditional sequential optimizations, which can limit the effectiveness of those optimizations. Further, OpenMP semantics preclude performing those transformations in some cases prior to the parallel transformations, which can limit overall application performance.",
-isbn="978-3-319-98521-3"
-}
-
-@ARTICLE{openmpevol.2018, 
-author={B. R. d. Supinski and T. R. W. Scogland and A. Duran and M. Klemm and S. M. Bellido and S. L. Olivier and C. Terboven and T. G. Mattson}, 
-journal={Proceedings of the IEEE}, 
-title={The Ongoing Evolution of OpenMP}, 
-year={2018}, 
-volume={106}, 
-number={11}, 
-pages={2004-2019}, 
-keywords={application program interfaces;parallel processing;program debugging;shared memory systems;parallelization strategies;debugging;performance analysis tools;OpenMP API;OpenMP application programming interface;shared memory;programming abstractions;Fortran;C++ base languages;C language;Parallel processing;C++ languages;High performance computing;Information processing;Parallel programming;Complexity theory;Program processors;Memory management;Accelerator architectures;computer architecture;computer science;computers and information processing;memory management;multicore processing;multithreading;parallel architectures;parallel processing;parallel programming;programming}, 
-doi={10.1109/JPROC.2018.2853600}, 
-ISSN={0018-9219}, 
-month={Nov},}
-
-@InProceedings{scogland.iwomp.2017,
-author="Scogland, Tom
-and Earl, Chris
-and de Supinski, Bronis",
-editor="de Supinski, Bronis R.
-and Olivier, Stephen L.
-and Terboven, Christian
-and Chapman, Barbara M.
-and M{\"u}ller, Matthias S.",
-title="Custom Data Mapping for Composable Data Management",
-booktitle="Scaling OpenMP for Exascale Performance and Portability",
-year="2017",
-publisher="Springer International Publishing",
-address="Cham",
-pages="338--347",
-abstract="Early experiences with OpenMP 4.0, as well as other directive-based offload models, have shown that deep copy is a key challenge to porting complex applications to offload directives. Without a flexible deep-copy mechanism, pointer-based data structures are at best difficult to manage, particularly when shared memory between the host and device cannot be assumed. Despite the importance of the issue, and the considerable effort expended by vendors, standards bodies and users, no solution has emerged as the clear choice. We propose an approach that combines a restricted compiler-assisted (sometimes called ``true'') deep copy with a mechanism for users to register their own custom mapping implementations that we call packers. This combination offers the flexibility to address complex cases when necessary while keeping the complexity out of the directives, a balance that serves all cases.",
-isbn="978-3-319-65578-9"
-}
-
-@article{kruse.arxiv.2018b,
-  title={User-Directed Loop-Transformations in Clang},
-  author={Kruse, Michael and Finkel, Hal},
-  journal={arXiv preprint arXiv:1811.00624},
-  year={2018}
-}
-
-@article{kruse.arxiv.2018a,
-  title={Loop Optimization Framework},
-  author={Kruse, Michael and Finkel, Hal},
-  journal={arXiv preprint arXiv:1811.00632},
-  year={2018}
-}
-
-
-@InProceedings{doerfert.iwomp.2018,
-author="Doerfert, Johannes
-and Finkel, Hal",
-editor="de Supinski, Bronis R.
-and Valero-Lara, Pedro
-and Martorell, Xavier
-and Mateo Bellido, Sergi
-and Labarta, Jesus",
-title="Compiler Optimizations for OpenMP",
-booktitle="Evolving OpenMP for Evolving Architectures",
-year="2018",
-publisher="Springer International Publishing",
-address="Cham",
-pages="113--127",
-abstract="Modern compilers support OpenMP as a convenient way to introduce parallelism into sequential languages like C/C++ and Fortran, however, its use also introduces immediate drawbacks. In many implementations, due to early outlining and the indirection though the OpenMP runtime, the front-end creates optimization barriers that are impossible to overcome by standard middle-end compiler passes. As a consequence, the OpenMP-annotated program constructs prevent various classic compiler transformations like constant propagation and loop invariant code motion. In addition, analysis results, especially alias information, is severely degraded in the presence of OpenMP constructs which can severely hurt performance.",
-isbn="978-3-319-98521-3"
-}
-
-
-@InProceedings{kemp.iwomp.2018,
-author="Kemp, Jeremy
-and Chapman, Barbara",
-editor="de Supinski, Bronis R.
-and Valero-Lara, Pedro
-and Martorell, Xavier
-and Mateo Bellido, Sergi
-and Labarta, Jesus",
-title="Mapping OpenMP to a Distributed Tasking Runtime",
-booktitle="Evolving OpenMP for Evolving Architectures",
-year="2018",
-publisher="Springer International Publishing",
-address="Cham",
-pages="222--235",
-abstract="Tasking was introduced in OpenMP 3.0 and every major release since has added features for tasks. However, OpenMP tasks coexist with other forms of parallelism which have influenced the design of their features. HPX is one of a new generation of task-based frameworks with the goal of extreme scalability. It is designed from the ground up to provide a highly asynchronous task-based interface for shared memory that also extends to distributed memory. This work introduces a new OpenMP runtime called OMPX, which provides a means to run OpenMP applications that do not use its accelerator features on top of HPX in shared memory. We describe the OpenMP and HPX execution models, and use microbenchmarks and application kernels to evaluate OMPX and compare their performance.",
-isbn="978-3-319-98521-3"
-}
-
-@article{kong.arxiv.2018,
-  title={A Performance Vocabulary for Affine Loop Transformations},
-  author={Kong, Martin and Pouchet, Louis-No{\"e}l},
-  journal={arXiv preprint arXiv:1811.06043},
-  year={2018}
-}
-
-@InProceedings{diaz.iwomp.2018,
-author="Diaz, Jose Monsalve
-and Pophale, Swaroop
-and Hernandez, Oscar
-and Bernholdt, David E.
-and Chandrasekaran, Sunita",
-editor="de Supinski, Bronis R.
-and Valero-Lara, Pedro
-and Martorell, Xavier
-and Mateo Bellido, Sergi
-and Labarta, Jesus",
-title="OpenMP 4.5 Validation and Verification Suite for Device Offload",
-booktitle="Evolving OpenMP for Evolving Architectures",
-year="2018",
-publisher="Springer International Publishing",
-address="Cham",
-pages="82--95",
-abstract="OpenMP has been widely adopted for shared memory systems for over a decade. With the heterogeneity trend in architectures rapidly growing, the programming model needed to evolve such that applications could not only be ported to traditional CPUs but also to accelerators often acting as discrete or integrated devices to CPUs. To that end, OpenMP started to provide support for heterogeneous systems since 2013 when the version 4.0 of the specification was ratified. OpenMP 4.5 is being enhanced to cover major requirements of Exascale Computing Project (ECP) applications. As a result it is time-critical to ensure that the implementations of the 4.5 features are correct and conforming to the specification. This paper focuses on building a Validation and Verification testsuite that will test and present results for several offloading features implemented in compilers such as Clang, IBM XL C/C++, CCE, and GCC. We have results for our testsuite on TITAN, Summitdev and Summit at the Oak Ridge National Lab. We will highlight some of the ambiguities we encountered in the process of validating and verifying feature implementations. We also make the testsuite available for anyone to use and will walk the readers through the infrastructure and the workflow of the testsuite. A website has been built to capture our efforts narrated in this paper https://crpl.cis.udel.edu/ompvvsollve.",
-isbn="978-3-319-98521-3"
-}
-
-@inproceedings{diaz.icpp.2018,
- author = {Diaz, Jose Monsalve and Pophale, Swaroop and Friedline, Kyle and Hernandez, Oscar and Bernholdt, David E. and Chandrasekaran, Sunita},
- title = {Evaluating Support for OpenMP Offload Features},
- booktitle = {Proceedings of the 47th International Conference on Parallel Processing Companion},
- series = {ICPP '18},
- year = {2018},
- isbn = {978-1-4503-6523-9},
- location = {Eugene, OR, USA},
- pages = {31:1--31:10},
- articleno = {31},
- numpages = {10},
- url = {http://doi.acm.org/10.1145/3229710.3229717},
- doi = {10.1145/3229710.3229717},
- acmid = {3229717},
- publisher = {ACM},
- address = {New York, NY, USA},
- keywords = {Evaluation, Offloading, OpenMP 4.5},
-} 
-
-
-
-@misc{openmp.spec.5.0,
-  author = {OpenMP Architecture Review Board},
-  title = {{OpenMP Application Programming Interface}},
-  howpublished = "\url{https://www.openmp.org/wp-content/uploads/OpenMP-API-Specification-5.0.pdf}",
-  year = {2018}, 
-  note = "[Online; accessed 11-December-2018]"
-}
-
-@misc{bolt.git,
-  author = {Argonne National Laboratory},
-  title = {{A Lightning-Fast OpenMP Implementation}},
-  howpublished = "\url{https://press3.mcs.anl.gov/bolt/}",
-  year = {2018}, 
-  note = "[Online; accessed 11-December-2018]"
-}
-
-
-@misc{bnl.knl-hackathon.2018,
-  author = {Brookhaven National Laboratory},
-  title = {{Intel Knight Landing (KNL) Hackathon 2018}},
-  howpublished = "\url{https://www.bnl.gov/knlhackathon2018/}",
-  year = {2018}, 
-  note = "[Online; accessed 11-December-2018]"
-}
-
-@misc{bnl.gpu-hackathon.2018,
-  author = {Brookhaven National Laboratory},
-  title = {{GPU Hackathon 2018}},
-  howpublished = "\url{https://www.bnl.gov/gpuhackathon2018/}",
-  year = {2018}, 
-  note = "[Online; accessed 11-December-2018]"
-}
-
-
-@misc{sollve.ecp-am.tutorial.2018,
-  author = {He (Helen), Yu and Kong, Martin and Hernandez, Oscar and Chapman, Barbara},
-  title = {{Optimizing OpenMP in Hybrid Codes}},
-  howpublished = "\url{https://ecpannualmeeting.com/archive/2018/assets/program_assets/pdfs/Friday%20Agenda_20180201.pdf}",
-  year = {2018}, 
-  note = "[Online; accessed 11-December-2018]"
-}
-
-
-@misc{sollve.ecp.webinar.2018,
-  author = {Scogland, Thomas and Hernandez, Oscar},
-  title = {{OpenMP Tutorial}},
-  howpublished = "\url{https://www.exascaleproject.org/event/openmp-tutorial/}",
-  year = {2018}, 
-  note = "[Online; accessed 11-December-2018]"
-}
-
-@misc{sollve.ecp-am.tutorial.2019,
-  author = {Scogland, Thomas and Hernandez, Oscar},
-  title = {{OpenMP 4.5 and 5.0}},
-  howpublished = "\url{https://www.ecpannualmeeting.com/agenda.php}",
-  year = {2018}, 
-  note = "[Online; accessed 11-December-2018]"
-}
-
-
-@misc{openmp.sc.tutorial.2018a,
-  author = {Mattson, Tim and Koniges, Alice and Yun, (Helen) He and Eder, David},
-  title = {{OpenMP Common Core: a Hands-On Exploration}},
-  howpublished = "\url{https://sc18.supercomputing.org/presentation/?id=tut136&sess=sess248}",
-  year = {2018},
-  note = "[Online; accessed 11-December-2018]"
-}
-
-@misc{openmp.sc.tutorial.2018b,
-  author = {Terboven, Christian and Klemm, Michael and van der Paas, Ruud and de Supinski, Bronis},
-  title = {{Advanced OpenMP: Host Performance and 5.0 Features}},
-  howpublished = "\url{https://sc18.supercomputing.org/presentation/?id=tut130&sess=sess247}",
-  year = {2018}, 
-  note = "[Online; accessed 11-December-2018]"
+@inproceedings{kruse2021clangast,
+    author = {Kruse, Michael},
+    title = {Loop Transformations Using Clang’s Abstract Syntax Tree},
+    year = {2021},
+    isbn = {9781450384414},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3458744.3473359},
+    doi = {10.1145/3458744.3473359},
+    booktitle = {50th International Conference on Parallel Processing Workshop},
+    articleno = {21},
+    numpages = {7},
+    keywords = {code generation, Clang, semantic analysis, OpenMP, abstract syntax tree},
+    location = {Lemont, IL, USA},
+    series = {ICPP Workshops '21}
 }

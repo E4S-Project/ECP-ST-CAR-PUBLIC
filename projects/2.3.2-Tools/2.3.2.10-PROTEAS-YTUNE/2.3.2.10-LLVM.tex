@@ -1,0 +1,108 @@
+\subsubsection{\stid{2.10} PROTEAS-TUNE: LLVM} 
+\label{sec:PROTEAS_TUNE_LLVM}
+
+\paragraph{Overview}
+
+LLVM, winner of the 2012 ACM Software System Award, has become an integral part of the software-development ecosystem for optimizing compilers, dynamic-language execution engines, source-code analysis and transformation tools, debuggers and linkers, and a whole host of programming-language and toolchain-related components. Now heavily used in both academia and industry, where it allows for rapid development of production-quality tools, LLVM is increasingly used in work targeted at HPC. LLVM components are integral parts of the programming environments on our upcoming Exascale systems, and smaller-scale systems as well, being not only popular open-source dependencies, but are critical parts of the commercial toolchains provided by essentially all relevant vendors.
+
+\paragraph{Key Challenges}
+
+LLVM is well suited to the compilation of code from C++ and other languages on CPU hardware, and for some models, GPU hardware, but lacks the kind of high-level optimizations necessary to enable performance-portable programming across future architectures.
+\begin{itemize}
+\item LLVM lacks the ability to understand and optimize parallelism constructs within parallel programs.
+\item LLVM lacks the ability to perform high-level loop transformations to take advantage of complex memory hierarchies and parallel-execution capabilities.
+\end{itemize}
+
+Without these abilities, code compiled well for LLVM must be presented to the compiler in a form already tuned for a specific architecture, including expressions of parallelism suited for the particular characteristics of the target machine. It is, however, unfeasible to tune our entire workload of applications in this way for multiple target architectures. Autotuning helps this problem by allowing dynamic analysis to supplement static cost modeling, which is always fundamentally limited, but without the ability to perform complex transformations, both the parallel and serial execution speed of the resulting programs will be suboptimal.
+
+There are two remaining challenges that we are addressing: The first is that deploying autotuning relying on source-to-source transformations is difficult because maintaining these separate source kernel versions is practically difficult. The second is that, as a general matter, performance improvements can be obtained by specializing code and runtime as opposed to limiting ourselves to ahead-of-time code generation.
+
+\paragraph{Solution Strategy}
+We are developing two significant enhancements to LLVM's core infrastructure, and many other LLVM components. These enhancements are grouped into two categories:
+\begin{itemize}
+\item Enhancements to LLVM's inter-procedural analysis, and an improved representation of parallelism constructs, to allow LLVM to propagate information across boundaries otherwise imposed by parallelism constructs, and to allow LLVM to transform the parallelism constructs themselves.
+\item Enhancements to LLVM's loop-optimization infrastructure to allow the direction of a sequence of loop transformations to loop nests, exposing these features to users through Clang pragmas (in addition to being available at an API level to tools such as autotuners), enabling those transformations to execute as specified, and otherwise enhancing the loop-optimization infrastructure.
+\end{itemize}
+
+As part of this project, we're investigating both fundamental 
+IR level enhancements (as part of the Kitsune development), as
+well as runtime call aware optimizations that deal with the classical lowering
+of parallelism into runtime calls. The latter mechanism is being implemented
+upstream as an OpenMP optimization pass, while the Kitsune work is, at present,
+more exploratory.
+
+To address autotuning and the need for code specialization, we are developing a just-in-time compilation technology with integrates naturally with the C++ language as well as embedding of (domain specific) languages into C/C++ programs.
+
+\paragraph{Recent Progress}
+
+For parallelism, we have implemented several new features in upstream LLVM
+including an OpenMP-aware optimization pass that performs various optimizations
+specific to OpenMP code on the host and device (=GPU)~\cite{OpenMPOpt2020}. It
+is run by default with medium and high optimizations enabled (``-O2'' and
+``-O3''). In addition to transformations it will provide user feedback in form
+of optimization remarks (``-Rpass=openmp-opt'')
+
+Extension to the Attributor inter-procedural optimization framework that
+transparently applies transformations across the  boundary between sequential
+and parallel code. This upstream work will reduce the overhead parallelism
+introduces due to missed classical optimizations~\cite{giorgis2020}.
+
+We prototyped heterogeneous LLVM-IR modules which allow host and device code to
+coexist in the same LLVM-IR file and therefore be optimized with a holistic
+view. Our approach was already discussed with the community and needs to be
+further refined and tested.
+
+For loop optimizations, we have implemented several new features in LLVM and
+Clang, including the OpenMP 5.1 ``tile'' directive and the ``unroll'' directive~\cite{kruse2021openmpbooth}.
+We also continued development of the OpenMPIRBuilder which refactors Clang's OpenMP lowering such that is can also be used from MLIR, specifically Flang.
+The OpenMPIRBuilder now also supports OpenMP 5.1 loop transformations and Clang can make use of either of the two lowering paths~\cite{kruse2021clangast}.
+
+To facilitate autotuning (ref. Section \ref{sec:PROTEAS_TUNE_AUTOTUNING}), we further
+enhanced the semantics-preserving implementation of loop transformations using Polly~\cite{wu2021autotuning}.
+Additional supported loop transformations include array packing, unroll, unroll-and-jam, loop distribution and fusion.
+
+We have developed a prototype C++ compiler, based on Clang, supporting an
+extension that enables programmers to embed (domain specific) languages inside
+their ``C-like'' programs~\cite{finkel2020dsl}. That is, we allow a new type of
+Clang plugin to bridge the gap between classical code, e.g., C or C++, and code
+written in a different language, e.g., a quantum or tensor domain specific
+language (DSL). The latter two examples have been successfully prototyped as
+well.
+
+In support of the Clacc project~\ref{s:clacc}, we developed a compiler
+pass from a subset of OpenACC to Tapir, building on the Kitsune
+project. This enables optimizations and alternative backends to the
+primary compilation path of Clacc.
+
+All our efforts have also been featured in many talks, tutorials, and so on at
+LLVM developers' meetings over the last couple of years.
+
+\paragraph{Next Steps}
+We will continue to prototype implementations, discuss them with the LLVM
+community, and then refine them for integration in upstream LLVM.
+
+For the C++ JIT technology, we will also continue to pursue standardization at
+the C++ standards committee.
+
+In addition, we are implementing autotuning technology based on the loop
+transformation improvements, and other improvements developed by this project.
+This will enable an easy-to-use autotuning capability for applications on
+Exascale systems.
+
+Parallelism specific optimizations will further be improved through Attributor
+enhancements upstream and more capabilities for the OpenMP-aware aware
+optimization pass. Generalization of the latter to other parallel models is
+planned as well.
+
+Building on existing and in-progress MLIR efforts, e.g.
+FLACC~\ref{s:flacc} and Kitsune, we will develop Tapir backends for
+multiple parallel MLIR dialects, including the OpenACC MLIR dialect.
+This should show the advantages of multiple levels of parallelism
+awareness in compiler representations.
+
+To enable optimizations across the host-device boundary we are continuing to
+work on heterogeneous LLVM-IR modules in order to integrate them into upstream
+LLVM.
+
+
+%\end{document}

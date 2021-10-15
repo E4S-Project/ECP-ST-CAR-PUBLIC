@@ -1,14 +1,14 @@
+
 \subsubsection{\stid{4.16} ALPINE} 
 
 
 \paragraph{Overview} 
 
-ECP ALPINE will deliver in situ visualization and analysis infrastructure to ECP Applications.  
+ECP ALPINE/{\zfp} will deliver in situ visualization and analysis infrastructure and algorithms along with lossy compression for floating point arrays to ECP Applications.  
+
+\textbf{ALPINE} infrastructure developers come from the ParaView~\cite{alpine:Paraview1,alpine:Paraview2} and VisIt~\cite{alpine:VisIt} teams and ALPINE solutions will deliver in situ DAV functionality in those tools, as well as through Ascent~\cite{alpine:Ascent}, a new in situ infrastructure framework that focuses on flyweight processing. 
 %
-ALPINE developers come from the ParaView~\cite{paraview1,paraview2} and VisIt~\cite{VisIt} teams and ALPINE solutions will deliver in situ functionality in those tools, as
-well as ASCENT~\cite{ASCENT}, a new in situ solution that focuses on flyweight processing. 
-%
-The ALPINE team focuses on four major activities: 
+ALPINE  focuses on four major activities: 
 \begin{enumerate}
         \setlength{\itemsep}{1pt}
         \setlength{\parskip}{0pt}
@@ -22,108 +22,93 @@ The ALPINE team focuses on four major activities:
 
 \paragraph{Key  Challenges}
 
-Many high performance simulation codes are using post hoc processing, meaning they write data to disk and then visualize and analyze it afterwards. 
-%
-Given Exascale I/O constraints, in situ processing will be necessary. 
-%
+Many high performance simulation codes are using post hoc processing.  
+Given Exascale I/O and storage constraints, in situ processing will be necessary. 
 In situ data analysis and visualization selects, analyzes, reduces, and generates extracts from scientific simulation results during the simulation runs to overcome bandwidth and storage bottlenecks associated with writing out full simulation results to disk. 
-
-The ALPINE team is addressing two problems related to Exascale processing --- (1) delivering infrastructure and (2) delivering in situ-appropriate algorithms.
-%
-For delivering infrastructure, the challenge is that our existing tools are not ready for Exascale.
-%
-In particular, we are concerned about achieving performance within simulation codes' time budgets, supporting many-core architectures, scaling to massive concurrency, and leveraging deep memory hierarchies.
-%
-For in situ-appropriate algorithms, the challenge is that our stakeholders need to be able to apply in situ processing effectively without a human being in the loop.
-%
-This means that we must have approaches to automate saving either the correct visualizations or the correct data extracts.
+The ALPINE team is addressing two problems related to Exascale processing --- (1) delivering infrastructure and (2) delivering performant in situ algorithms.
+The challenge is that our existing infrastructure tools need to be made Exascale-ready in order to 
+achieve performance within simulation codes' time budgets, support many-core architectures, scale to massive concurrency, and leverage deep memory hierarchies.
+The challenge for in situ algorithms is to apply in situ processing effectively without a human being in the loop.
+This means that we must have adaptive approaches to automate saving the correct visualizations and data extracts.
 
 
 \paragraph{Solution Strategy}
 
-A major strategy for our team is to leverage existing, successful software, ParaView and VisIt, including their recent developed in situ libraries Catalyst~\cite{Catalyst} and Libsim~\cite{LibSim}, and then to integrate and augment them with ALPINE capabilities to address the challenges of Exascale. 
+A major strategy for our team is to leverage existing, successful software, ParaView and its in situ Catalyst~\cite{Catalyst} library and VisIt, and then to integrate and augment them with ALPINE data and analysis capabilities to address the challenges of Exascale. 
 %
-Both software projects represent long-term DOE investments, and they are the two dominant software packages for large-scale visualization and analysis within the DOE Office of Science (SC) and the DOE National Nuclear Security Agency (NNSA). 
-%
-These two products will provide significant coverage of ECP Applications, and we can leverage their existing engagements to deliver ALPINE's algorithms and infrastructure. 
-%
+Both software projects represent long-term DOE investments, and they are the two dominant software packages for large-scale visualization and analysis within the DOE SC and the DOE NNSA. 
+%These two products provide significant coverage of ECP Applications, and we can leverage their existing engagements to deliver ALPINE's algorithms and infrastructure. 
 %Our development strategy consists of placing all new algorithms developed in a single code repository, and deploying this code in both
 %ParaView and VisIt.
 %
-We are also developing another in situ library, ASCENT, with also utilizes this code repository; ASCENT is a ``flyweight'' solution,
-meaning that it is focused on a streamlined API, minimal memory footprint, and small binary size.
-
-In terms of specifics, our solution strategy is two-fold, in response to our two major challenges (infrastructure and algorithms).
+Our VisIt team is also developing an additional  in situ framework, Ascent.  Ascent is a ``flyweight'' solution, meaning that it is focused on a streamlined API, minimal memory footprint, and small binary size.
+Our solution strategy is two-fold, in response to our two major challenges: infrastructure and algorithms.
 
 For infrastructure, we have developed a layer on top of the VTK-m library for ALPINE algorithms.
-%
-This layer is where all ALPINE algorithms will be implemented, and it is deployed in ParaView, VisIt, and ASCENT.
-%
-This means that all development effort by ALPINE will be available in all of our tools.
-%
-Further, by leveraging VTK-m, we will be addressing issues with many-core architectures.
-%
-Figure~\ref{fig:alpine_infrastructure} illustrates our software strategy.
+This layer is where all ALPINE algorithms will be implemented, and it is deployed in ParaView/Catalyst, VisIt, and Ascent.
+Thus all development effort by ALPINE will be available in all of our tools and by leveraging VTK-m, we will be addressing issues with many-core architectures.  
+%Figure~\ref{fig:alpine_infrastructure} illustrates our software strategy.
 
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=3in]{projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/alpine_infrastructure.png}
-	\caption{\label{fig:alpine_infrastructure}ALPINE's strategy for delivering and developing software.  We are making use of existing software (ParaView, VisIt), but making sure all new development is shared in all of our tools.  The dotted lines represent future work, specifically that the ASCENT API will work with ParaView and VisIt.}
-\end{figure}
+%\begin{figure}[htb]
+%	\centering
+%	\includegraphics[width=3in]{projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/alpine_infrastructure.png}
+%	\caption{\label{fig:alpine_infrastructure}ALPINE's strategy for delivering and developing software.  We are making use of existing software (ParaView, VisIt), but making sure all new development is shared in all of our tools.  The dotted lines represent ongoing work, specifically that the Ascent API will work with ParaView and VisIt.}
+%\end{figure}
 
-For automating in situ, we are pursuing four different algorithms:
-\begin{itemize}
-        \setlength{\itemsep}{1pt}
-        \setlength{\parskip}{0pt}
-        \setlength{\parsep}{0pt}
-\item \textbf{Feature-based analysis} with moments to detect rotation-invariant patterns.  These patterns can then be used either to direct which features should be visualized or to direct which extracts should be saved.
-\item \textbf{Lagrangian analysis} of vector flow allows more efficient and complete analysis and tracking of flow.  It is a method for saving vector field data with more higher accuracy and less storage than the traditional approach.
-\item \textbf{Topological analysis} can be used to detect features in the data and steer visualizations.  For example, contour trees can identify the most significant isosurfaces in complex simulations and then the resulting visualizations can use these isosurfaces.
-\item \textbf{Importance sampling} can be used to guide visualizations and extracts to the most important parts of the simulation.  Examples ranges from clustering similar data points within a region to identifying important time slices to save.
-\end{itemize}
+ALPINE is developing a suite of in situ  algorithms designed to address I/O and data output constraints and enable scientific discovery.   These algorithms include:
+\begin{description}  
+	\setlength{\itemsep}{1pt}
+    \setlength{\parskip}{0pt}
+    \setlength{\parsep}{0pt}
+	\item [Topological analysis] can be used to detect features in the data and adaptively steer visualizations with no human in the loop.  For example, contour trees can identify the most significant isosurfaces in complex simulations and then the resulting visualizations can use these isosurfaces~\cite{alpine:Carr:TVCG19}.
+	\item [Adaptive sampling]  can be used to guide visualizations and extracts to the most important parts of the simulation, significantly reducing I/O~\cite{alpine:Biswas:ISAV18,alpine:Dutta:Entropy19,alpine:Liu:SC19poster}.  %Figure~\ref{fig:alpine-sampling-example} shows an adaptive sampling technique based on importance to preserve  features in the data  
+	\item [Statistical feature detection] models data using distribution-based approaches and statistical similarity measures to identify and isolate features of interest~\cite{alpine:Dutta:PVIS17,alpine:Dutta:VIS15}. Significant data reduction is possible by only saving the statistical representations of the data.  Figure~\ref{fig:alpine-statistical-feature} illustrates the use of the statistical feature detection approach to identifying bubbles in situ in an MFiX-Exa simulation.  
+	\item [Task-based feature extraction] uses segmented merge trees to encode a wide range of threshold based features.  An embedded domain specific language (EDSL) can describe algorithms using a  task graph abstraction~\cite{alpine:Landge:SC14,alpine:Petruzza:IPDPS18} and execute it using different runtimes (e.g., MPI, Charm++, Legion).
+	\item [Optimal Viewpoint] Optimal viewpoint metrics can be used to automate visualization decisions while running in situ.  The initial algorithm implementation will choose the best camera placement for a scene, minimizing visualizations written to disk~\cite{alpine:Bonaventura:Entropy18,alpine:Marsaglia:UOtech20}.  
+	\item [Lagrangian analysis] of vector flow allows more efficient and complete tracking of flow.  It can save vector field data with higher accuracy and less storage than the traditional approaches~\cite{alpine:Sane:EGPGV18,alpine:Sane:EGPGV19,alpine:Binyahib:LDAV19}.
+%	\item [Moments-based pattern detection] can be used to find rotation-invariant patterns~\cite{alpine:Bujack:WSCG17,alpine:Yang:PR17,alpine:Wang:TopoVis17}. 
+\end{description}
 
-
-
+%\begin{figure*}[htb]
+%	\begin{center}
+	%	\includegraphics[width=0.65\textwidth]{projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/alpine_nyxSamplingExample.png}
+%		\caption{Point rendering results from Nyx simulation using (left to right):  ALPINE adaptive sampling  (sampling ratio 0.5\%); regular sampling  (sampling ratio 1.5\%); random sampling  (sampling ratio 0.5\%).}
+%		\label{fig:alpine-sampling-example}
+%	\end{center}
+%\end{figure*}
 
 \paragraph{Recent Progress}
 
-Again, we organize our recent progress around infrastructure and algorithms.
+During this past year, ALPINE has made considerable progress in core functionality in infrastructure and algorithms, and in creating a robust software stack to meet exascale data and viz needs.  ALPINE rolled out continuous integration for ParaView and Ascent, improving the Spack build systems.  Documentation has been rolled out for algorithms (https://alpine-dav.readthedocs.io/en/latest/) and algorithm teams have added robust unit tests.  ALPINE team members have ported ParaView and VisIt to Summit, built Ascent on Iris and are working to port core ALPINE functionality to Tulip.  ALPINE is working closely with the VTK-m team to ensure cross-platform portability and the current set of algorithms has been ported to or prototyped in VTK-m.   
 
-On the infrastructure side, we have completed the layer on top of VTK-m for ALPINE algorithms (Milestone STDA04-2, https://gitlab.kitware.com/vtk/vtk-m). 
-%
-We have stood up ASCENT, our flyweight in situ library, including defining its API (STDA04-1), making an initial release (STDA04-11), and making a production release (STDA04-30, https://github.com/Alpine-DAV/ascent).
-Most recently, we integrated VTK-m into VisIt and ParaView and integrated our algorithms into our ALPINE infrastructure (STDA04-32, https://github.com/Alpine-DAV/vtk-h).
+ParaView utilized the Ascent python extract feature to add in situ visualization in Ascent via ParaView and redesigned the Catalyst in situ library for greater ease of use.  As more simulations have adapted in situ approaches, infrastructure integration has shifted from the domain of a small set of VTK-cognizant developers to application scientists who may not have experience with the VTK data model.  
+The new Catalyst adaptor leverages Ascent's Conduit API to describe data and provides schema to convert Conduit mesh descriptions to VTK data objects.  
+%The initial design has been completed and prototyped.  
 
-On the algorithms side, we have been researching and developing our four algorithms (STDA04-5).
-%
-In all cases, the progress is a combination of evaluating best approaches, and developing VTK-m based solutions that
-can be deployed in our infrastructures.
-%
-Our topological analysis work resulted in some early successes.
-%
-With this work, there is now a VTK-m implementation, although it needs additional effort for distributed memory support.
-%
-The algorithm was applied to a WarpX simulation (STDA04-15), and used to automatically select isovalues in situ.
-%
-Figure~\ref{fig:alpine_topology} compares the traditional approach with our enhanced version.
-%
-With our latest milestone (STDA04-33), we are demonstrating each of our four algorithms with ECP Applications --- running an example of moment detection on MFIX data, demonstrating sampling performance for an MFIX particle data set, running in situ topological analysis for WarpX, and applying Lagrangian methods to Nyx data.
+New functionality in Ascent includes Jupyter notebook integration and new derived field quantities, enabling simulations instrumented with Ascent to connect to Jupyter and simulation users to interact with their data in situ using Jupyter Notebooks. 
+%The Jupyter ecosystem of tools provides a rich paradigm for interactive data analysis. This work enables simulations instrumented with Ascent to connect to Jupyter and allows simulation users to interact with their data in situ using Jupyter Notebooks. 
+%The system combines Ascent’s embedded Python filter infrastructure with a Client/Server Jupyter Bridge Kernel design that simplifies both deployment and security considerations on HPC systems. 
+Building on its existing query system, Ascent added a production-oriented in situ derived field system leveraging just-in-time (JIT) compilation to target heterogeneous HPC architectures.  Ascent's new derived quantities include topological functions, gradients, and basic math functions.  
+%These new derived quantities were validated with an ECP application and with proxy apps within Ascent.  Additionally, a set of unit tests have been developed to exercise the derived quantities.   
 
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=4in]{projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/alpine_topology}
-	\caption{\label{fig:alpine_topology}In situ visualizations taken from WarpX using VisIt.  At left, equally spaced isovalues in an ion accelerator simulation. At right, our method chooses isovalues using topological analysis to more fully represent complex behavior in the data.}
-\end{figure}
+Algorithms have  focused on providing new functionality and integration with clients has continued apace.  The Ascent $<->$ ExaSky:Nyx integration pipeline has been upgraded to fully run on the GPU.  A filter has been developed to allow in situ extraction of visualization slices for Nyx.  Two sampling algorithms are now available within Ascent.  The initial version uses scalar field values to assign importance to regions of the data while the upgraded algorithm uses both scalar fields and gradient magnitudes.  
+%The upgraded version is currently in testing with Nyx.  
 
+The Ascent $<->$ PeleC integration has expanded to include ExaLearn.  The teams are  jointly developing a workflow for tensor-based in situ anomaly detection in high-fidelity combustion Direct Numerical Simulations (DNS).  ExaLearn tensor kernels are integrated into the Pele combustion application via Ascent.  This workflow has been run on the Summit GPUs for Ascent, ExaLearn, and PeleC and current effort is focusing on the development of specific science use cases.
+
+ALPINE and MFiX-Exa teams are collaborating on bubble finding with the statistical feature detection algorithm and a Catalyst integration.  An initial C++ implementation of the statistical feature detection algorithm was integrated directly into the MFiX-Exa simulation to extract bubbles in situ with greater temporal resolution and a factor of 300 in data reduction.  A pipeline consisting of the in situ bubble extraction and post hoc Cinema workflow enables interactive exploration of bubble dynamics, Figure~\ref{fig:alpine-statistical-feature}.  The Kitware team recently finished the Catalyst integration into MFiX-Exa while the algorithm team finished an updated VTK-m version.  These are currently being merged for testing on Summit's GPU.  
+
+The contour tree algorithm recently completed an upgrade and VTK-m port for its distributed parallel version and will circle back to its integration with WarpX.   An Ascent $<->$ NekRS  integration has been demonstrated on Iris' CPUs and this effort is now looking at science use cases and in situ analysis needs.   ALPINE and ExaWind have recently prototyped an Ascent $<->$ AMR:Wind integration and the teams are assessing in situ analysis approaches.  
+
+\begin{figure*}[htb]
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/alpine-cinema-mfixexa-workflow.png}
+		\caption{The ALPINE statistical feature detection algorithm is used to identify bubbles in situ in an MFiX-Exa fluidized bed simulation.  The raw particle data is converted to a particle density field.  A threshold is applied to the density field to create a feature similarity field, separating the bubbles from uninteresting regions.  Saving only the statistical representation allows greater temporal resolution while significantly reducing output data size.  A preliminary study shows a factor of 300 reduction in data size compared to the raw particle fields. The statistical bubble representation becomes the input to a post hoc Cinema-based workflow to track bubbles and explore bubble dynamics. }
+		\label{fig:alpine-statistical-feature}
+	\end{center}
+\end{figure*}
 
 \paragraph{Next Steps}
 
-We have three milestones remaining, one for algorithms, one for infrastructure, and one for outreach with ECP Applications.
-\begin{itemize}
-        \setlength{\itemsep}{1pt}
-        \setlength{\parskip}{0pt}
-        \setlength{\parsep}{0pt}
-\item For infrastructre, our next major activity is to fully integrate ALPINE infrastructure into ParaView and VisIt (STDA04-36).
-\item For algorithms, our next major activity is optimization, refinement, hardening, and extension of the developed in situ algorithms, including in situ demonstrations (STDA04-37).
-\item For outreach, we will do an end-to-end demonstration of automatic data selection, automatic data reduction, and extract processing algorithms using  our in situ infrastructure for ECP Applications (STDA04-38).
-\end{itemize}
+Plans for FY21-23 will continue the focus on integration and delivery to ECP applications. The emphasis will shift to porting the team’s software products to early hardware and performance studies relevant to ECP applications. The team will also continue outreach and prototyping integrations with ECP application codes in order to facilitate full integration in later years.
+
