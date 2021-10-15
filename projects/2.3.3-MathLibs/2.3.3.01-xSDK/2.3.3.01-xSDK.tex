@@ -21,46 +21,32 @@ Community policies for the xSDK promote long-term sustainability and interoperab
 
 For the adaptive execution effort, the team is working toward GPTune, a Gaussian process tuner, to help math library users find the optimal parameter settings for the libraries to achieve high performance for their applications. In addition, an interface will be created to also give access to alternate autotuners.
 
-%For the multiprecision effort, the project assesses current status and functionalities, advances the theoretical knowledge on multiprecision algorithms, design prototype implementations and multiprecision interoperability layers, deploys production-ready multiprecision algorithms in the xSDK math libraries, ensures multiprecision cross-library interoperability and integrates multiprecision algorithms into ECP application projects.
+Another effort in the project is the development of a software quality toolkit that automates analyses and activities related to code testing, documentation and use. The goal is to facilitate the use of both general-purpose and custom code analysis tools to improve the quality of the xSDK libraries, and, more broadly, software within the high-performance applications community.
 
 \paragraph{Recent Progress}
 
-The xSDK team developed a suite of example codes that demonstrate interoperabilities between select xSDK libraries, xsdk-examples v.0.1.0~\cite{xsdk-examples}. The suite includes a build system and documentation in the subfolders of the codes and can be built with Spack~\cite{gamblin+:sc15}. It provides training for xSDK users on mixed package use. It also serves as test suite and will be included in testing of future xSDK releases.
-Figure~\ref{fig:xsdk-schematic} illustrates the xSDK libraries and their interoperabilities represented in the first release.
-
-The xSDK team also released version v.0.6.0 of the xSDK community policies~\cite{xsdk-policies:github}. It includes a new recommended policy on documentation quality. Since the switch from the original xSDK installer to Spack as the xSDK package installer has facilitated the build of the xSDK, the team could simplify policy M1 by merging it with M16 and abandoning the installation policies. In place of the installation policies, Spack variant guidelines have been provided, and a new policy M16 was created to keep the installation policy requirement that xSDK libraries need to have an option to be configured in debug mode.
-
+The xSDK team released xSDK 0.6.0 with two new xSDK libraries heFFTe and SLATE and is preparing xSDK 0.7.0 with planned addition of ArborX.
+Figure~\ref{fig:xsdk-schematic} illustrates the dependency graph of Spack-enabled interoperabilities of xSDK libraries in version 0.6.0 and the growth of the xSDK over the years .
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=4.2in]{projects/2.3.3-MathLibs/2.3.3.01-xSDK/xSDK-examples-diagram.png}
-	%\includegraphics[width=4.2in]{xSDK-examples-diagram.png}
-	\caption{\label{fig:xsdk-schematic} xSDK packages and interoperabilities represented in version v.0.1.0 of the xsdk-examples test suite. A$\rightarrow$B indicates that A uses functionalities of B}
+	\includegraphics[width=4.2in]{projects/2.3.3-MathLibs/2.3.3.01-xSDK/xSDK-0.6.0.png}
+	\caption{\label{fig:xsdk-schematic} Dependency graph of xSDK packages with Spack-enabled  interoperabilities represented in xSDK 0.6.0. A$\rightarrow$B indicates A uses B}
 \end{figure}
+The team also looked for ways to increase interoperability within the xSDK. To achieve this goal, package developers were surveyed for opportunities to increase interoperabilites and a report was provided summarizing survey results and new and planned interoperability capabilities between xSDK members. Version 0.2.0 of the xsdk-examples code suite was released with updated and expanded examples to demonstrate xSDK library interoperabilities, including some CUDA-enabled examples.
 
+Version 2.0 of the GPTune auto-tuning software for parameter optimization of HPC codes \cite{gptune:homepage} was released. In this new release, the team finished the workflow design, with history database, shared repository and web interface for crowd-tuning. and developed the multi-fidelity GPTuneBand, combining LCM multitask learning and multi-armed bandit. The  GPTuneBand tuning algorithm was applied to the electromagnetic equations solvers in the finite element xSDK library MFEM, and achieved almost 2x speedup compared to the default parameter settings. 
 
-The first version of the GPTune autotuning software for parameter optimization of HPC codes was released~\cite{gptune:homepage}. It was evaluated by tuning several ECP math libraries and applications codes using up to 2048 Cori Haswell cores. GPTune achieved a performance gain of up to 60 percent compared to default parameter settings. It outperformed two state-of-the-art tuners, OpenTuner and HpBandster, up to 2.5, when tuning ScaLAPACK QR.
-
-%The xSDK team performed a literature survey on mixed precision algorithms and summarized the results in a report and a paper submitted to IJHPC~\cite{Anztetal2020}. It designed an accessor that separates memory precision from arithmetic precision and provided a document that contains details about the design.
+The first version, v. 1.0.0, of a code quality toolkit, which contains open-source static and dynamic code analysis tools for C and C++, was released and applied to the xSDK libraries PETSc, Slepc, SUPERLU and hypre. Example codes are provided in the xsdk-code-quality repository \cite{xsdk-code-quality}.
 
 \paragraph{Next Steps}
 
 Our next efforts include 
 \begin{itemize}
-    \item a new xSDK release with two additional math libraries heFFTe and SLATE, 
-    \item development of new interoperabilities between xSDK libraries and their inclusion in xsdk-examples, 
-   % \item advancing multiprecision capabilities for solvers, preconditioners, and other ECP-relevant kernels in xSDK libraries,
-  %  \item a production-ready implementation of an accessor that separates memory precision from arithmetic precision, and an example to showcase its use,
-    \item enhancing GPTune with new features, such as transfer learning, incorporation of predictive models, and speeding up the internal Gaussian process modeling algorithms,
-    \item design and implementation of a code quality toolkit that automates analyses and activities related to code testing, documentation, and use.
-    
+    \item development of a plan to improve xSDK testing with view towards sustainability,
+    \item updating and enhancing the xsdk-examples test suite,
+    \item implementation of the xSDK testing plan,
+   \item a new xSDK release with additional libraries and build options for GPUs, including software, documentation and user engagement materials.
 \end{itemize}
 
 \newpage
-%\begin{enumerate}
-%	\item \textbf{Include more libraries:} xSDK4ECP will continue efforts to expand the number of participating packages, adapt community policies, and exploit increased interoperability.  We are coordinating with broader SDK efforts and working toward the inclusion of additional domain application packages.
-%	\item \textbf{Extend application usage:}  xSDK4ECP will continue partnering with application teams to evaluate the effectivness of current functionality and to motivate new capabilities.
-%	\item \textbf{Autotuning of code performance:} The team will finish a prototype autotuning framework using the multi-output Gaussian Process ML approach which includes multitask and transfer learning.
-%	\item \textbf{Multiprecision effort:} The xSDK4ECP team will investigate the use of multiprecision for the math libraries and document the results of the investigation. 
 
-% 		\item \textbf{Process control transfer interfaces:} The ever-increasing use of concurrency within the top-level MPI processes requires that computational resources used by an application or library can be transferred to another library. Transfer of these resources is essential for obtaining good performance.  The xSDK project will develop interfaces to support sharing and transfer of computational resources.	
-%\end{enumerate}
