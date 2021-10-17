@@ -1,0 +1,101 @@
+\subsubsection{\stid {3.01} xSDK Sub-project: batched sparse linear algebra}
+
+\paragraph{Overview}
+
+Over the course of the development of the xSDK libraries and
+interactions with the ECP applications teams, the need for batched
+sparse linear algebra (LA) functions has emerged in order to make more
+efficient use of the GPUs for many small and sparse linear algebra
+problems. Currently there is almost no support from the vendors for
+batched sparse linear algebra routines, except
+for a few functions from NVIDIA (batched SpMV and batched sparse QR).
+The broad appeal of such a functionality that could be
+integrated across xSDK libraries represents a unique opportunity in
+terms of avoiding critical performance bottlenecks and integrating
+algorithmic advances across low-level software libraries used in ECP.
+We have identified six ECP applications that will benefit from new batched sparse solvers.
+These include chemical and nuclear kinetics, device modeling  power grid planning and additive manufacturing applications.
+We will work with vendors to develop batched sparse linear algebra software, starting with the design of an interface,
+followed by the implementation of the software and their integration into application codes and libraries.
+We will evaluate the performance, pinpoint any issues and implement solutions to improve performance.
+
+
+\paragraph{Key Challenges}
+
+The applications we identified need to solve many small linear systems
+with varying sizes and sparsity patterns simultaneously.  System sizes
+range between 30 and 200. The insight into the challenges of this effort
+then are the combination of dealing with sparsity, batched interface,
+iterative solvers, and matrix properties that depend on the elements'
+values.
+One of the main challenges facing this effort is how recent the
+discovery of the need for better handling of batched sparse LA is. This
+will require bridging the gap between what is possible on the upcoming
+Exascale hardware platform and what the eventual need of ECP
+applications will be.
+There are no such solvers available yet to draw the design potential and
+limitations from or try to conduct early feasibility and performance
+studies. This implies that a lot of the effort will face the lack of
+easy starting points and more careful analysis is needed on how to proceed.
+We envision challenges due to the structural sparsity that is already an
+issue on the accelerators for the existing software that deals with
+sparsity such as direct or iterative solvers and graph processing
+kernels.
+Additionally, potential solutions would be limited to what the application
+data allows. In particular, the matrix elements will determine numerical
+properties such as conditioning that could vary even if other parameters
+remain the same across the batch.
+All the variable factors mentioned above will require exploration and
+pose a challenge to limit the potential splintering of work with little
+eventual return. Minimizing this will require tight coordination between
+participants.
+
+\paragraph{Solution Strategy}
+
+We will try to draw on the existing libraries and their solvers and
+either extend their capability to our new context or limit their
+features that are an unlikely fit for the specialized function of
+batched sparse LA for small batch sizes, such as multi-GPU support.
+With the abundance of iterative solvers, we will
+start exploring their functionality and potential extensions for our
+effort.
+We are collaborating with ECP industry partners, including NVIDIA, AMD,
+and Intel, to develop a set of new APIs to support required batched
+sparse linear algebra operations for various GPUs. This is essential to
+receive an early and frequent feedback on the direction and the
+potential benefit of the solvers and data formats we propose and
+evaluate.
+We will then develop batched sparse linear solvers, both direct and
+iterative, and preconditioners for the GPUs. We will also develop new
+interoperability layers for integration across the applications,
+solvers, and lower-level libraries. The planned work will involve the
+following math libraries: Ginkgo, hypre, Kokkos Kernels, MAGMA, PETSc,
+PLASMA, STRUMPACK, SUNDIALS, SuperLU-DIST, and Trilinos.
+We envision that the functionality
+should be for on-device compute with careful use of shared/local/private
+memory (e.g., only 64KB on NVIDIA GPU). The interface will support
+multiple sparse matrix formats. For language interoperability, C++ and C
+will be the core languages, and SWIG will be used to build the Fortran
+wrappers.
+
+\paragraph{Recent Progress}
+
+In initial meetings with team members and vendors, we started reviewing existing batched
+interface options in vendor and xSDK libraries.
+We extracted application data in the form of small sparse matrices that
+occur in batches in the Chemical kinetics ECP application Pele. They are now available to the
+project members in an easily readable form for analysis and testing with
+the existing and future batched kernels.
+We started reviewing the options available for host-side and device-side
+interface design.
+
+\paragraph{Next Steps}
+
+Our next efforts include
+\begin{itemize}
+\item Finalization of vendor batched interface review,
+\item Organization of batched sparse matrix examples,
+\item Design of batched sparse linear algebra interface for the relevant application use cases,
+\item Initial implementation of batched sparse linear algebra software,
+\item Integration of batched sparse LA software into applications and libraries and performance assessment of effort.
+\end{itemize}
