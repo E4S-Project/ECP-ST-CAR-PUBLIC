@@ -35,12 +35,28 @@ Recognizing the release readiness and broader maturity differences between ECP S
 
 E4S release 1.0 was announced in November 2019 on the external E4S website~\cite{e4s:homepage}. The release supports 50 ST products under Linux x86\_64. In February 2020, E4S release 1.1 extended support to both NVIDIA and AMD GPUs with the inclusion of CUDA and ROCm in a single image under Linux x86\_64. Release 1.1 also introduced support for the Linux ppc64le platform that supports CUDA 10.1. E4S releases contain HPC as well as AI/ML software including TensorFlow and PyTorch. The E4S DocPortal, accessible from the E4S website, was created to rake information from E4S product GitHub pages and provide it in a single location with the most up-to-date information about releases, installation instructions, etc. The E4S validation testsuite~\cite{e4s:validation} was introduced with support for LLVM and other ST products.
 
-In October 2020, E4S v1.2 included an x86\_64 image with 67 E4S products. E4S images are now available for download on DockerHub under the ecpe4s area for testing and will be released on the E4S website in November 2020. The E4S Spack Build Cache now includes binaries for ppc64le as well as x86\_64 and includes over 22,000 total binaries. E4S containers now support custom images for ECP applications such as WDMapp and Pantheon (see Figure~\ref{fig:SpackBuildCacheWDMapp}). The E4S build cache has improved the build times for these codes significantly. 
+In August 2021, E4S v21.08 included x86\_64 and ppc64le Docker and Singularity images with 88 E4S products. It included the DOE fork of LLVM compilers as well as E4S products built using these compilers. E4S images with support for three GPU architectures (Intel, AMD, and NVIDIA) are now available for download on DockerHub under the ecpe4s area and are released on the E4S website. These images support Intel oneAPI, AMD ROCm, and NVIDIA NVHPC and CUDA. The E4S Spack Build Cache now includes binaries for ppc64le as well as x86\_64 and includes over 53,000 total binaries (see Figure~\ref{fig:e4s-build-cache}. E4S containers now support custom images for ECP applications such as WDMapp (see Figure~\ref{fig:SpackBuildCacheWDMapp}), Nalu-Wind (see Figure~\ref{fig:E4SImageOnAWS}, and the Pantheon project (see Figure~\ref{fig:PantheonE4S}). The WBS 2.3.6.01 LANL ATDM Software Technologies project highlights the integration of Nalu-Wind and Cinema in a curated Pantheon workflow using an E4S build cache. The E4S build cache has improved the build times for these codes significantly. 
 \begin{figure}
         \centering
-        \includegraphics[width=0.9\linewidth]{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/SpackBuildCacheWDMapp}
+        \includegraphics[width=0.9\linewidth]{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/E4S_WDMApp}
         \caption{WDMapp documentation for how to use the E4S WDMapp Docker container to speed up WDMapp installation by leveraging the E4S Spack build cache.}
         \label{fig:SpackBuildCacheWDMapp}
+\end{figure}
+
+\begin{figure}
+        \centering
+        \includegraphics[width=0.9\linewidth]{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/E4S_Nalu_AWS}
+        \caption{Output from the Nalu-Wind application built using E4S, is visualized using ParaVer and TAU on an AWS cloud instance.}
+        \label{fig:E4SImageOnAWS}
+\end{figure}
+
+E4S is also deployed on AWS and is used for outreach activities including tutorials at conferences such as ISC-HPC and SC. Figure~\ref{fig:E4SImageOnAWS} shows the output of the ECP ExaWind application, Nalu-Wind, being visualized using ParaView. Performance data for the run is being visualized using TAU's ParaProf browser with instrumentation hooks inserted in the Kokkos runtime. Spack, Trilinos, Kokkos, TAU, ParaVer, Cinema, and Nalu-Wind are all pre-installed in the E4S AWS image. 
+
+\begin{figure}
+        \centering
+        \includegraphics[width=0.9\linewidth]{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/E4S_Pantheon}
+        \caption{Pantheon Science uses E4S build caches to speed up installation on Summit at ORNL.}
+        \label{fig:PantheonE4S}
 \end{figure}
 
 Also in October 2020, Version 1 of the E4S Community Policies was announced~\cite{e4s:policies}. The E4S Community Policies will serve as membership criteria for E4S member packages. The E4S Community Policies have their genesis in the xSDK Community Policies, and have a similar purpose. Their purpose is to help address sustainability and interoperability challenges within the complex software ecosystem that ECP ST is a part of.
