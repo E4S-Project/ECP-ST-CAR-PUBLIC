@@ -35,12 +35,12 @@ software implementations that exploit increasing on-node concurrency targeting
 multiple complex architectures (e.g. GPUs). This part of the project is
 synergistic with and leverages efforts from the ECP CEED co-design center.
 
-MFEM is an open-source finite element library with ~3000 downloads/year from 70+
+MFEM is an open-source finite element library with ~10000 downloads/year from 100+
 countries. It is freely available at \url{mfem.org}, on GitHub
-at \url{github.com/mfem}, where the MFEM community includes more than 165
+at \url{github.com/mfem}, where the MFEM community includes more than 450
 members), as well as via Spack and OpenHPC. The application outreach and the
 integration in the ECP ecosystem is further facilitated by MFEM's participation
-in ECP's xSDK project.
+in ECP's xSDK and E4S projects.
 
 \textbf{RAJA}, \textbf{CHAI}, and \textbf{Umpire} are providing software libraries that enable
 application and library developers to meet advanced architecture
@@ -81,7 +81,7 @@ disruption as new machine, programming models, and vendor software become
 available.
 
 These libraries in development in this project are currently used in
-production ASC applications at 
+production ASC applications at
 LLNL and receive most of their support from the LLNL national security
 application project. They are also being used or being explored/adopted
 by several ECP application and library projects, including: LLNL ATDM
@@ -173,7 +173,8 @@ control oscillations and ensure accuracy.
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/mfem-amr}
-\caption{\label{fig:mfem-amr}AMR implementation in MFEM allows many applications to benefit from non-conforming adaptivity, without significant changes in their codes.}
+\caption{\label{fig:mfem-amr}AMR implementation in MFEM allows many applications to benefit
+from non-conforming adaptivity, without significant changes in their codes.}
 \end{figure}
 
 \noindent
@@ -291,7 +292,7 @@ the MFEM team is developing AMR algorithms at library level, targeting both
 refinement for quad/hex meshes. Our approach is fairly general, allowing for
 any high-order finite element space, H1, H(curl), H(div), on any high-order
 curved mesh in 2D and 3D, arbitrary order hanging nodes, anisotropic refinement,
-derifenement and parallel load balancing.
+derefinement and parallel load balancing.
 An important feature of our library approach is that it is independent of
 the physics, and thus easy to incorporate in apps, see Figure \ref{fig:mfem-amr}.
 
@@ -304,9 +305,9 @@ other efforts available through CEED.
 
 To reach its many customers and partners in NNSA, DOE SC,
 academia and industry, the MFEM team delivers regular releases on GitHub
-(e.g., mfem-4.0 in 2019 and mfem-4.1 in 2020) that include
+(e.g., mfem-4.2 in October 2020 and mfem-4.3 in July 2021) that include
 detailed documentation and many example codes.  Code quality is ensured
-by smoke tests with Travis CI on Linux, Mac, Windows and nightly
+by smoke tests with GitHub actions on Linux, Mac, Windows and nightly
 regression testing at LLNL.
 
 \subparagraph{RAJA/Umpire/CHAI:}
@@ -410,9 +411,9 @@ between different parts of the code.
 
 Selected recent highlights:
 \begin{itemize}
-\item Completed major software releases: Laghos-3.0, Remhos-1.0, MFEM-4.0, and MFEM-4.1. 
-\item Actively engaged with GPUs and advanced partial assembly algorithms work in MARBL. Demonstrated large-scale GPU performance in ALE hydro in MFEM benchmarks, Laghos, and BLAST on Lassen. 
-\item Implemented ALE discretization improvements for compressible flow in BLAST, including significant improvements in mesh optimization methods, dynamic Adaptive Mesh Refinement (AMR), and transfer between high-order and low-order-refined simulations. 
+\item Completed major software releases: MFEM-4.2, GLVIS-4.0 and MFEM-4.3.
+\item Actively engaged with GPUs and advanced partial assembly algorithms work in MARBL. Demonstrated large-scale GPU performance in ALE hydro in MFEM benchmarks, Laghos, and BLAST on Lassen.
+\item Implemented ALE discretization improvements for compressible flow in BLAST, including significant improvements in mesh optimization methods, dynamic Adaptive Mesh Refinement (AMR), and improved transfer between high-order and low-order-refined simulations.
 
 \end{itemize}
 
@@ -426,9 +427,9 @@ Status of RAJA, Umpire, and CHAI support for exascale platforms.
 \end{figure}
 
 \begin{itemize}
-\item Developed and released support for AMD GPUs (via the HIP programming model) with RAJA, CHAI, and Umpire in preparation for El Capitan. 
+\item Developed and released support for AMD GPUs (via the HIP programming model) with RAJA, CHAI, and Umpire in preparation for El Capitan.
 \item Continued to support integration of Umpire into multiple ASC application codes.
-\item Developed and delivered new capabilities to ASC applications in support of ASC milestones and user needs. 
+\item Developed and delivered new capabilities to ASC applications in support of ASC milestones and user needs.
 \item Developed prototype of fully overlapped asynchronous GPU kernel execution and data transfer to optimize application performance.
 \item Developed novel memory pool algorithms in Umpire to handle very large allocation counts.
 \end{itemize}
@@ -441,8 +442,8 @@ Status of RAJA, Umpire, and CHAI support for exascale platforms.
 
 \begin{itemize}
 
-\item Developed hierarchical scheduling tools within Flux via co-design with UQ Pipeline, demonstrating improvements across the entire lifecycle of simulation campaigns; and demonstrated that DYAD can optimize ML workflows by automatically transferring data files using Flux. 
-\item Demonstrated that Fluxion, our graph-based scheduler, can uniquely enable key use cases of multitiered storage on El Capitan, driving co-design with HPE; tested AMD GPU scheduling by enabling COVID-19 workflows on Corona; demonstrated the viability of power management within Flux using Variorum, a platform-independent power library; and released MPIBIND-2. 
+\item Developed hierarchical scheduling tools within Flux via co-design with UQ Pipeline, demonstrating improvements across the entire lifecycle of simulation campaigns; and demonstrated that DYAD can optimize ML workflows by automatically transferring data files using Flux.
+\item Demonstrated that Fluxion, our graph-based scheduler, can uniquely enable key use cases of multitiered storage on El Capitan, driving co-design with HPE; tested AMD GPU scheduling by enabling COVID-19 workflows on Corona; demonstrated the viability of power management within Flux using Variorum, a platform-independent power library; and released MPIBIND-2.
 
 
 \end{itemize}
@@ -450,7 +451,7 @@ Status of RAJA, Umpire, and CHAI support for exascale platforms.
 \subparagraph{AID:}
 \begin{itemize}
 
-\item Demonstrated that our new correctness tools (FLiT and FPChecker) can analyze large LLNL code, discovering previously unknown issues in LLNL code; and facilitated tools co-design via the El Capitan tools working group. 
+\item Demonstrated that our new correctness tools (FLiT and FPChecker) can analyze large LLNL code, discovering previously unknown issues in LLNL code; and facilitated tools co-design via the El Capitan tools working group.
 
 
 \end{itemize}
@@ -475,8 +476,8 @@ In FY21, the team will focus on:
 
 \subparagraph{MFEM:}
 \begin{itemize}
-\item Develop adaptive discretizations for high-order finite element ATDM applications, including algorithms such as dynamic AMR, mesh optimization, and hp-adaptivity. 
-\item Support MFEM-based ATDM applications in their transition to exascale hardware.  
+\item Develop adaptive discretizations for high-order finite element ATDM applications, including algorithms such as dynamic AMR, mesh optimization, and hp-adaptivity.
+\item Support MFEM-based ATDM applications in their transition to exascale hardware.
 \item Continue engagement with ATDM application work, develop mini-apps, and provide support.
 \end{itemize}
 
@@ -485,20 +486,20 @@ In FY21, the team will focus on:
 
 \begin{itemize}
 \item Develop and deliver new RAJA capabilities to LLNL codes to support ASC milestone and user requirements, including expanding support for overlapping kernel execution and data transfer and optimized AMD support.
-\item Continue to develop and deliver Umpire capabilities to applications in support of ASC milestone and user requirements, including interprocess shared memory to support shared on-node data and expanding functionality available inside GPU kernels. 
-\item Continue interactions with El Capitan Center of Excellence (COE) partners to resolve performance and correctness issues identified as application users begin testing on early access hardware. 
+\item Continue to develop and deliver Umpire capabilities to applications in support of ASC milestone and user requirements, including interprocess shared memory to support shared on-node data and expanding functionality available inside GPU kernels.
+\item Continue interactions with El Capitan Center of Excellence (COE) partners to resolve performance and correctness issues identified as application users begin testing on early access hardware.
 
 \end{itemize}
 
 \subparagraph{Flux:}
 
 \begin{itemize}
-\item Demonstrate the scalable end-to-end support within Flux for: 1) smart multitiered storage scheduling and management, 2) CTI-based tool launching, 3) Variorum-enabled power monitoring/capping, 4) more versatile UQ/V\&V/ML workflow scheduling, and 5) DYAD-enabled workflow data scheduling on El Capitan early access systems. 
+\item Demonstrate the scalable end-to-end support within Flux for: 1) smart multitiered storage scheduling and management, 2) CTI-based tool launching, 3) Variorum-enabled power monitoring/capping, 4) more versatile UQ/V\&V/ML workflow scheduling, and 5) DYAD-enabled workflow data scheduling on El Capitan early access systems.
 \end{itemize}
 
 \subparagraph{AID:}
 \begin{itemize}
-\item Implement, evaluate and harden a multilevel general-purpose graphics processing unit (GPGPU) debugging/code-correctness tool suite on early applications running on Collaboration of Oak Ridge, Argonne, and Livermore (CORAL)-2 early access systems. 
+\item Implement, evaluate and harden a multilevel general-purpose graphics processing unit (GPGPU) debugging/code-correctness tool suite on early applications running on Collaboration of Oak Ridge, Argonne, and Livermore (CORAL)-2 early access systems.
 \end{itemize}
 
 \subparagraph{Caliper:}
