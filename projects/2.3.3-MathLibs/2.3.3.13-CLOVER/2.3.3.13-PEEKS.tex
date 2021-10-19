@@ -1,21 +1,15 @@
-\subsubsection{\stid{3.13} CLOVER Sub-project PEEKS} \label{subsubsect:peeks}
+\subsubsection{\stid{3.13} CLOVER Sub-project Ginkgo} \label{subsubsect:peeks}
 \paragraph{Overview} 
-The PEEKS subproject is a focused team effort to advance the capabilities of the
-ECP software stack in terms of communication-avoiding Krylov solvers and
-advanced preconditioning techniques featuring fine-grained parallelism.
-Previously developed techniques that are available as prototype codes -- as
-well as novel algorithm developments -- are turned into production-quality 
-implementations and integrated into the ECP software ecosystem 
-as part of the Trilinos~\footnote{\url{https://trilinos.org/}} and the  
-Ginkgo~\footnote{\url{https://github.com/ginkgo-project/ginkgo}} software 
-stacks. 
-%With the PEEKS project focus being on algorithm development an software design 
-%and leading developers of the Trilinos and Ginkgo software packages being 
-%involved in the PEEKS project, a strong focus is on software interoperability 
-%and software sustainability. In consequence, there exists a strong link to the 
-%other ECP math libraries and the xSDK4ECP project coordinating the ECP 
-%mathematical library interoperability efforts. All technology developed in 
-%PEEKS is available and disseminated via the xSDK software stack.
+Ginkgo~\footnote{\url{https://github.com/ginkgo-project/ginkgo}} 
+is a modern linear algebra library engineered towards performance portability, and productivity. 
+To achieve these goals, the library design is guided by combining ecosystem extensibility with heavy, 
+architecture-specific kernel optimization using the platform-native languages CUDA (NVIDIA GPUs), 
+HIP (AMD GPUs), DPC++ (Intel GPUs) and OpenMP (Intel/AMD/ARM multicore). 
+Ginkgo is part of the extreme-scale Software development Kit (xSDK), 
+the Extreme Scale Scientific Software part of the Extreme-Scale Scientific Software Stack (E4S), 
+and has already been integrated as backend into simulation libraries like deal.ii, mfem, and HyTeg. 
+% SUNDIALS, and XGC.
+
 
 
 \paragraph{Key  Challenges}
