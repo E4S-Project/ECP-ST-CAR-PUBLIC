@@ -91,12 +91,13 @@ kernel launches, memory copies, and synchronizations on AMD, Intel, and NVIDIA G
 
 \item
 The project team enhanced support for fine-grained measurement of GPU computations using PC sampling on NVIDIA GPUs and binary instrumentation on Intel GPUs. 
-HPCToolkit uses instruction-level measurements to reconstruct approximate calling context trees to help developers understand performance of complex GPU kernels.
-Figure~\ref{fig:hpctoolkit}(a) shows a calling context for Quicksilver, an ECP proxy application for LLNL's Mercury next-generation transport code; the highlighted region shows an approximate reconstruction of a GPU calling context tree.
+HPCToolkit uses instruction-level measurements to reconstruct approximate calling context trees and
+parses NVIDIA's extended line map to reconstruct GPU inlining call chains to help developers understand performance of complex GPU kernels.
+Figure~\ref{fig:hpctoolkit}(a) shows a calling context for PeleC, an ECP application for adaptive-mesh compressible hydrodynamics code for reacting flows; the highlighted region shows an approximate reconstruction of a GPU calling context tree with multiple inlined GPU device functions.
 
 \item
 The project team enhanced HPCToolkit for collecting and visualizing traces of both CPU and GPU activity.
-Figure~\ref{fig:hpctoolkit}(b) shows a trace of a GPU-accelerated execution of a recent snapshot of Nyx---an adaptive mesh, compressible cosmological hydrodynamics simulation code being developed as part of the ECP ExaSky project. Each GPU kernel is related to the CPU calling context in which it was launched, which helps developers understand the performance of complex applications.
+Figure~\ref{fig:hpctoolkit}(b) shows a trace of a GPU-accelerated execution of LAMMPS, an ECP application for parallel molecular dynamics simulation, using 512 NVIDIA A100 GPUs. Each GPU kernel is related to the CPU calling context in which it was launched, which helps developers understand the performance of complex applications.
 
 \item
 The project team developed a novel approach that utilizes both shared and distributed memory parallelism to analyze and aggregate sparse data representations of performance measurements from every rank, thread and GPU stream in a program execution. 
@@ -108,21 +109,21 @@ The project team improved the reliability of HPCToolkit's hpcrun for monitoring 
 
 \begin{figure}[t]
 \captionsetup{width=.96\textwidth}
-\begin{minipage}[t]{.48\textwidth}
+\begin{minipage}[t]{.40\textwidth}
 \centering
-\includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-qs}
+\includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-pelec-profiles}
 \\(a)
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.46\textwidth}
 \centering
-\includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-nyx-trace}
+\includegraphics[width=\textwidth]{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/hpctoolkit-lammps-traces}
 \\(b)
 \end{minipage}
 \caption{(a) 
 HPCToolkit's {\tt hpcviewer} showing a detailed attribution of GPU performance metrics in a 
-profile of Quicksilver.
-(b) HPCToolkit's {\tt hpctraceviewer} showing CPU and GPU trace lines for Nyx.}
+profile of PeleC.
+(b) HPCToolkit's {\tt hpctraceviewer} showing CPU and GPU trace lines for LAMMPS.}
 \label{fig:hpctoolkit}
 \end{figure}
 
@@ -130,8 +131,7 @@ profile of Quicksilver.
 \begin{itemize}
 
 \item 
-Integrate GPU measurement and analysis capabilities into HPCToolkit's trunk for
-release.
+Integrate GPU measurement and analysis capabilities using hardware counters.
 
 \item 
 Continue to improve solutions for fine-grained measurement of computations on Intel GPUs and explore new solutions for fine-grained measurement on AMD GPUs.
