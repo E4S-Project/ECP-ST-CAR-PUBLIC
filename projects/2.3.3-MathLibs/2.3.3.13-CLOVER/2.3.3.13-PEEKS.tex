@@ -13,25 +13,29 @@ and has already been integrated as backend into simulation libraries like deal.i
 
 
 \paragraph{Key  Challenges}
-Developing preconditioned iterative solvers for the US flagship supercomputers 
-deployed in ECP, we acknowledge three major challenges coming from the hardware 
-architecture:
+There is a list of challenges to meet with the development sparse linear algebra functionality for the US flagship supercomputers 
+deployed in ECP:
 \begin{enumerate}
 \item 
-Fine-grained parallelism in a single node that has to be exploited efficiently 
-by the iterative solver and the preconditioner.
+The extreme levels of hardware concurrency available in the 
+GPU-accelerated nodes need to be reflected in fine-grained parallelism 
+in the numerical building blocks.
 \item
-Rising communication and synchronization cost as the
-computational power is growing much faster than memory power, resulting in 
-increased pressure on the bandwidth of all cache/memory levels.
+An increasing variety of hardware designs and hardware-native programming 
+languages requires a library design that enables platform portability without sacrificing 
+the performance.
+\item
+The arithmetic performance of processors growing much faster than the memory 
+bandwidth and interconnect speed requires to explore innovative strategies for 
+reducing the pressure on all cache/memory levels.
+\item
+Applications that build upon the fast solution of many independent moderate-sized 
+sparse linear systems require batched sparse linear algebra functionality.
+\item
+Applications building upon matrix-free methods require the flexibility to 
+compose linear solvers out of library-native and customized external functionality.
 \end{enumerate}
 
-All challenges require the redesign of existing iterative solvers with respect 
-to higher parallelism, % within all building blocks
-a reduced number of 
-communication and synchronization points, favoring computations over 
-communication, and adopting multiprecision algorithms for efficient hardware 
-utilization. 
 
 \paragraph{Solution Strategy}
 
