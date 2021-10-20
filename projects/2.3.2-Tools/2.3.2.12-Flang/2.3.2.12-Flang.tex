@@ -5,7 +5,7 @@
 The Flang project provides an open-source Fortran standard 
 \cite{iso-fortran-2004, iso-fortran-2010, iso-fortran-2018}
 compiler front-end for the LLVM Compiler Infrastructure (see
-\url{http://llvm.org})~\cite{llvm:homepage}.  Flang formally
+\url{http://llvm.org})~\cite{llvm:homepage}.  Flang was formally
 accepted as an official component of LLVM in 2019 and merged portions
 of its initial code base into the main LLVM repository in April 2020. 
 Work continues today with a growing set of contributors to the
@@ -31,8 +31,8 @@ typically available from one vendor and often for a limited set of
 platforms.  None of these are open source.  While the GNU gfortran compiler is
 open source and available on a wide variety of platforms, the source base is not modern
 LLVM-style C++ and the GPL license is not compatible with
-LLVM, places limits on a wide breath of potential collaborations, and thus has an
-impact broader community participation and adoption.
+LLVM.  This places limits on a wide breath of potential collaborations, and thus has an
+impact on broader community participation and adoption.
 
 The primary challenge of this project is to create a source base with
 the maturity, features, and performance of proprietary solutions with
@@ -50,7 +50,7 @@ and delivery of a solid, alternative Fortran compiler for DOE's
 platforms.  It is critical that we be good shepherds within
 the LLVM community to successfully establish this community for Flang.
 This external engagement is in the best interest
-of ECP as well as the long-term success of Fortran, and leveraging
+of ECP as well as the long-term success of Fortran, and enables leveraging
 the significant momentum and strengths of this widely used and accepted
 code base. 
 
@@ -75,7 +75,7 @@ available via GitHub:
 The current capabilities of Flang include the parsing and semantic
 analysis of the full Fortran 2018 standard and OpenMP 5.X. As part of the
 development of the parsing and semantic analysis portions of the
-front-end, over five million lines of Fortran code has been
+front-end, over five million lines of Fortran code have been
 successfully processed. Beyond parsing and semantics, we have been
 focusing our efforts on creating a Fortran-centric intermediate
 representation (Fortran IR -- ``FIR'') that leverages recent activities
