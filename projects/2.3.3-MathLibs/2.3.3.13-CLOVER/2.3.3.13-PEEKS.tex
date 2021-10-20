@@ -4,7 +4,7 @@
 Ginkgo~\footnote{\url{https://github.com/ginkgo-project/ginkgo}} is a modern
 linear algebra library engineered towards performance portability, and
 productivity. To achieve these goals, the library design is guided by combining
-ecosystem extensibility with heavy, architecture-specific kernel optimization
+ecosystem extensibility with architecture-specific kernel optimization
 using the platform-native languages CUDA (NVIDIA GPUs), HIP (AMD GPUs), DPC++
 (Intel GPUs) and OpenMP (Intel/AMD/ARM multicore). Ginkgo is part of the
 extreme-scale Software development Kit (xSDK), part of the Extreme-Scale
@@ -30,9 +30,9 @@ into simulation libraries like deal.II, MFEM, and HyTeG.
   \item Applications that build upon the fast solution of many independent
 		moderate-sized sparse linear systems require batched sparse linear
 		algebra functionality.
-  \item Applications building upon matrix-free methods requires the flexibility
-		to compose linear solvers out of library-native and customized external
-		functionality.
+  \item Applications building upon matrix-free methods require the flexibility
+		to compose library-native routines and customized application
+		functionality to create effective linear solvers.
 \end{enumerate}
 
 \begin{figure}[!h]
@@ -68,13 +68,13 @@ portability, modularity, extensibility, and hardware-aware algorithm design.
 		framework~\cite{pasc_anzt}. Ginkgo is an open source effort licensed
 		under the BSD 3-clause and included in the xSDK and E4S software
 		packages.
-  \item \textbf{Fine-grain parallelism:} Ginkgo features coarse linear algebra
-		building blocks and advanced algorithms for preconditioning and solving
-		linear systems that can efficiently leverage the concurrency of modern
-		GPUs, including (incomplete) parallel factorizations, parallel sparse
+  \item \textbf{Fine-grain parallelism:} Ginkgo features linear algebra building
+		blocks and advanced algorithms for preconditioning and solving linear
+		systems that can efficiently leverage the concurrency of modern GPUs,
+		including (incomplete) parallel factorizations, parallel sparse
 		triangular solves, parallel matrix operations, and parallel iterative
 		methods.
-  \item \textbf{Mixed precision methods:} Ginkgo features the memory accessor
+  \item \textbf{Mixed precision methods:} Ginkgo features a memory accessor
 		that encapsulates on-the-fly compression for decoupling the memory
 		precision from the arithmetic precision. This allows accelerating
 		memory-bound algorithms that can compensate or tolerate some information
