@@ -1,3 +1,4 @@
+\newpage
 \subsubsection{\stid{3.13} CLOVER Sub-project Ginkgo} \label{subsubsect:peeks}
 \paragraph{Overview} 
 Ginkgo~\footnote{\url{https://github.com/ginkgo-project/ginkgo}} 
@@ -7,18 +8,18 @@ architecture-specific kernel optimization using the platform-native languages CU
 HIP (AMD GPUs), DPC++ (Intel GPUs) and OpenMP (Intel/AMD/ARM multicore). 
 Ginkgo is part of the extreme-scale Software development Kit (xSDK), 
 the Extreme Scale Scientific Software part of the Extreme-Scale Scientific Software Stack (E4S), 
-and has already been integrated as backend into simulation libraries like deal.ii, mfem, and HyTeg. 
+and has already been integrated as backend into simulation libraries like deal.ii, MFEM, and HyTeg. 
 % SUNDIALS, and XGC.
 
 
 
 \paragraph{Key  Challenges}
-There is a list of challenges to meet with the development sparse linear algebra functionality for the US flagship supercomputers 
-deployed in ECP:
+%There is a list of challenges to meet with the development sparse linear algebra functionality for the US flagship supercomputers 
+%deployed in ECP:
 \begin{enumerate}
 \item 
 The extreme levels of hardware concurrency available in the 
-GPU-accelerated nodes need to be reflected in fine-grained parallelism 
+GPU-accelerated nodes need to be reflected in fine-grain parallelism 
 in the numerical building blocks.
 \item
 An increasing variety of hardware designs and hardware-native programming 
@@ -26,7 +27,7 @@ languages requires a library design that enables platform portability without sa
 the performance.
 \item
 The arithmetic performance of processors growing much faster than the memory 
-bandwidth and interconnect speed requires to explore innovative strategies for 
+bandwidth and interconnect speed requires exploring innovative strategies for 
 reducing the pressure on all cache/memory levels.
 \item
 Applications that build upon the fast solution of many independent moderate-sized 
@@ -36,69 +37,66 @@ Applications building upon matrix-free methods require the flexibility to
 compose linear solvers out of library-native and customized external functionality.
 \end{enumerate}
 
+\begin{figure}[!h]
+\centering
+\includegraphics[width=.8\columnwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/ginkgo_portability_crop}
+\caption{\label{fig:ginkgoportability}Portability concept of the Ginkgo math library enable high performance kernel implementations in the vendor-supported programming language.}
+\end{figure}
+
 
 \paragraph{Solution Strategy}
 
-The primary thrusts of the PEEKS project are:
+The Ginkgo team is addressing these challenges by thriving for platform portability, modularity, 
+extensibility, and hardware-aware algorithm design.
 \begin{enumerate}
     \item \textbf{Architecture-portable software design:}
-	In the Ginkgo C++ software~\cite{anzt2020ginkgo}, we design and develop a 
-	next-generation 
-	sparse linear algebra library able to run on multi- and manycore 
-	architectures. The library design decouples
-	algorithm implementations from hardware-specific kernel implementations, 
+     Ginkgo~\cite{anzt2020ginkgo} employs a design that decouples the
+	algorithm implementations from the hardware-specific kernel implementations, 
 	thereby acknowledging the importance of platform portability and allowing 
-	for extensibility as well as architecture-specific kernel optimization. 
+	for architecture-specific kernel optimization in the vendor language, see Figure~\ref{fig:ginkgoportability}. 
+    \item \textbf{Modularity, flexibility, and extensibility:} 
+    Ginkgo employs a ``linear operator'' abstraction for all functionality, which allows for 
+    flexibility in combining functionality and interfacing external operators.
    \item \textbf{Sustainability efforts:}
-	The Ginkgo and Trilinos software development adheres the Better Scientific 
-	Software (BSSw) design principles~\cite{betterscientificsoftware} that 
-	ensure production-quality code by featuring unit testing, automated 
-	configuration and installation, Doxygen code documentation, as well as a 
-	continuous integration and continuous benchmarking 
-	framework~\cite{pasc_anzt}. Ginkgo and Trilinos are 
-	open source effort licensed under BSD 3-clause and included in the xSDK and 
-	I4S software packages.
-   \item \textbf{Pipelined and CA Krylov methods:} 
-    	We realize pipelined and 
-	communication-avoiding Krylov methods in production-quality code, and 
-	we are actively collaborating with the ECP ExaWind project to integrate 
-        our new features into their application~\cite{Yamazaki-lowsynch}. 
-	\item \textbf{Memory Precision Decoupling:}  In collaboration with the ECP 
-	xSDK multiprecision effort, we are working on sparse linear algebra 
-	iterative methods and preconditioners that reduce runtime by compressing 
-	data before invoking memory operations, such as the adaptive precision 
-	block-Jacobi preconditioner~\cite{toms_anzt} and the compressed basis 
-	GMRES~\cite{aliaga2020compressed}. 
+	Ginkgo adheres the Better Scientific Software (BSSw) design 
+	principles~\cite{betterscientificsoftware} that ensure production-quality 
+	code by featuring unit testing, automated configuration and installation, 
+	Doxygen code documentation, as well as a continuous integration and 
+	continuous benchmarking framework~\cite{pasc_anzt}. 
+	Ginkgo is an open source effort licensed under the BSD 3-clause and included in the xSDK and E4S software packages.
+   \item \textbf{Fine-grain parallelism:} 
+    Ginkgo features coarse linear algebra building blocks and advanced algorithms for 
+    preconditioning and solving linear systems that can efficiently leverage the concurrency 
+    of modern GPUs, including (incomplete) parallel factorizations, 
+    parallel sparse triangular solves, parallel matrix operations, and parallel iterative methods.
+	\item \textbf{Mixed precision methods:} 
+	Ginkgo features the memory accessor that encapsulates on-the-fly compression for 
+	decoupling the memory precision from the arithmetic precision. 
+	This allows accelerating memory-bound algorithms that can compensate or tolerate 
+	some information loss in the memory operations. The memory accessor can also be used
+	to increase the result accuracy of memory-bound kernels that benefit from using a 
+	more complex precision format in the arithmetic operations without performance loss.
+	\item \textbf{Batched preconditioned iterative solvers:} 
+	Ginkgo contains high performance batched iterative solvers that handle the 
+	concurrent solution of a set of independent sparse linear systems of moderate size.
+	The batched iterative solvers allow for some flexibility in terms of the preconditioner and
+	monitor the system-individual convergence without performance degradation.
 \end{enumerate}
 
 \paragraph{Recent Progress}
 \begin{enumerate}
 \item 
-The Ginkgo library realized full native support for NVIDIA GPUs (via CUDA) and 
-AMD GPUs (via HIP) and became a role model for platform 
-portability~\cite{tsai2020preparing}.
+The Ginkgo library realized native support for Intel GPUs (via DPC++)~\cite{portingintel}.
 \item 
-The production-ready implementation of the first parallel threshold ILU 
-preconditioner (ParILUT~\cite{ipdps_anzt}) compensates via algorithmic 
-improvement for 5 years of hardware development (see 
-Figure~\ref{fig:ParILUTperf}).
+MFEM treating Ginkgo as numerical backend allows accelerating MFEM simulations with AMD GPUs, Intel GPUs, and NVIDIA GPUs.
 \item
-We implemented and released five variations of communication-avoiding
-and pipelined Krylov solvers in the Belos Trilinos package.
-\item
-We demonstrated the efficient use of communication-avoiding Krylov methods in Trilinos inside wind turbine simulations of the ECP ExaWind 
-project~\cite{Yamazaki-lowsynch}.
-\item
-We developed an initial implementation of a new polynomial preconditioner based on the GMRES polynomial \cite{LoeThornquistBoman20}.
+Based on the memory accessor, the Ginkgo team deployed a Compressed Basis GMRES (CB-GMRES) solver that outperforms the standard GMRES solver by storing the Krylov basis vectors in lower precision, 
+therewith accelerating the memory access.
+\item 
+The Ginkgo team successfully employed the batched iterative solvers for the 
+hydrodynamic problems arising in the PeleLM simulations~\cite{scala21} and the gyrokinetic problems arising in the 
+XGC simulations~\cite{ipdps22}.
 \end{enumerate}
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=4in]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/parilut_speedup}
-	\caption{\label{fig:ParILUTperf}Time-to-solution performance of anisotropic 
-	flow problems of different sizes on different hardware architectures: 
-	standard ILU(0) vs. new ParILUT.}
-\end{figure}
 
 
 \paragraph{Next Steps}
@@ -106,42 +104,18 @@ We developed an initial implementation of a new polynomial preconditioner based 
 
 Our next efforts are:
 \begin{enumerate}
+	\item \textbf{Deployment of multi-node functionality:} 
+	Ginkgo already has experimental support for multi-node execution via an executor-agnostic MPI layer. 
+	We will harden the support and make it production-ready.
+	\item \textbf{Deployment of GPU-resident spare direct solvers:} 
+	In response to an urgent need of national power grid simulations, 
+	we will develop GPU-resident sparse direct solvers.
 	\item \textbf{Block-versions of the parallel Incomplete factorization 
 	preconditioner:} To better reflect the properties of the ECP application 
 	projects, we will deploy blocked versions of the ParILU and ParILUT 
 	parallel ILU and parallel threshold ILU preconditioners in the Ginkgo 
 	software library.
-	\item \textbf{Intel GPU backend:} We are currently designing a Ginkgo 
-	backend for Intel GPU architectures based on the SYCL language.
-	\item \textbf{Compressed Basis Krylov Solvers:} Using the memory accessor 
-	designed in the xSDK multiprecision project, we will develop Krylov solvers 
-	that reduce the execution time by compressing the Krylov vectors before 
-	invoking memory operations.
 	\item \textbf{Problem-specific preconditioners for MFEM:} In collaboration 
-	with the ECP CEED cluster, we will design problem-specific preconditioners 
-	for matrix-free finite element simulations.
-	\item \textbf{Low-synchronous orthogonalization:} The success of 
-	communication-avoiding Krylov methods motivates to push the synchronization 
-	limits further by deploying low-synchronous orthogonalization methods.
-        (Collaboration with the ExaWind team at NREL.)
-	\item \textbf{Parallel incomplete factorization preconditioner 
-	application:} With the advances in the parallel incomplete factorization
-	preconditioner generation, the focus increasingly turns to the efficient 
-	preconditioner application. We enhance the concept of sparse approximate 
-	inverse approximation for incomplete factorization preconditioners, and 
-	extend the scope to novel hardware architectures featuring attractive 
-	performance in the low-precision regimes.
-%	\item \textbf{Get-set usage of software-defined events:} Together with the 
-%	Exa-PAPI team, deployed software-defined events (SDE) in the Ginkgo sparse 
-%	linear algebra library. These provide the user with access to 
-%	domain-specific events like, e.g., preconditioner invocations, 
-%	synchronizations, precision format changes. With building blocks differing 
-%	in the resource usage, we investigate the possibility of instant power and 
-%%	frequency scaling for reducing the power and energy footprint.
-%	\item \textbf{Graph analytics kernels:} Preconditioning techniques like 
-%	block Jacobi have a strong need for efficient and low-overhead graph 
-%	analytics tools identifying strongly-connected components. We deploy GPU 
-%	kernels providing this functionality while introducing only negligible 
-%	overhead to the preconditioner generation.
-	\item \textbf{Polynomial preconditioners:} Polynomial preconditioning is an old idea, but has had limited popularity since it is hard to find good polynomials in the general case. We believe using the GMRES polynomial addresses this issue. Polynomials are also cheap to apply and save communication by reducing the number of inner products. We plan to implement a version using Kokkos that runs on GPU and exascale systems.
+	with the ECP CEED cluster, we will design problem-specific mixed precision 
+	preconditioners for matrix-free finite element simulations.
 \end{enumerate}
