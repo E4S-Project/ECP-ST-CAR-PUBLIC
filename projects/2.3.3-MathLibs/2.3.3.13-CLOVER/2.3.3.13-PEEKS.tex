@@ -68,10 +68,17 @@ portability, modularity, extensibility, and hardware-aware algorithm design.
 		framework~\cite{pasc_anzt}. Ginkgo is an open source effort licensed
 		under the BSD 3-clause and included in the xSDK and E4S software
 		packages.
+<<<<<<< Updated upstream
   \item \textbf{Fine-grain parallelism:} Ginkgo features linear algebra building
 		blocks and advanced algorithms for preconditioning and solving linear
 		systems that can efficiently leverage the concurrency of modern GPUs,
 		including (incomplete) parallel factorizations, parallel sparse
+=======
+  \item \textbf{Fine-grain parallelism:} Ginkgo features linear algebra
+		building blocks and advanced algorithms for preconditioning and solving
+		linear systems that can efficiently leverage the concurrency of modern
+		GPUs, including (incomplete) parallel factorizations, parallel sparse
+>>>>>>> Stashed changes
 		triangular solves, parallel matrix operations, and parallel iterative
 		methods.
   \item \textbf{Mixed precision methods:} Ginkgo features a memory accessor
@@ -93,19 +100,19 @@ portability, modularity, extensibility, and hardware-aware algorithm design.
 \paragraph{Recent Progress}
 \begin{enumerate}
   \item The Ginkgo library realized native support for Intel GPUs (via
-		DPC++)~\cite{portingintel}.
+		DPC++)~\cite{tsai2021porting}.
   \item MFEM treating Ginkgo as numerical backend allows accelerating MFEM
 		simulations with AMD GPUs, Intel GPUs, and NVIDIA GPUs.
   \item The Ginkgo library has been expanded with new advanced preconditioners
-		such as ISAI and Multigrid, also supporting mixed-precision capabilities.
+		such as ISAI and Multigrid, also supporting mixed-precision capabilities~\cite{10.1007/978-3-030-85665-6_34}.
   \item Based on the memory accessor, the Ginkgo team deployed a Compressed
 		Basis GMRES (CB-GMRES) solver that outperforms the standard GMRES solver
 		by storing the Krylov basis vectors in lower precision, therewith
-		accelerating the memory access.
+		accelerating the memory access~\cite{DBLP:journals/corr/abs-2009-12101}.
   \item The Ginkgo team successfully employed the batched iterative solvers for
 		the hydrodynamic problems arising in the PeleLM
-		simulations~\cite{scala21} and the gyrokinetic problems arising in the
-		XGC simulations~\cite{ipdps22}.
+		simulations and the gyrokinetic problems arising in the
+		XGC simulations.
 \end{enumerate}
 
 
