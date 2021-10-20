@@ -12,7 +12,7 @@ encompassing the two widely used algorithm variants: supernodal
 and multifrontal (STRUMPACK: \url{http://portal.nersc.gov/project/sparse/strumpacK}).
 STRUMPACK is
 further enhanced with scalable preconditioning using
-hierarchical matrix algebra. Both libraries are purely algebraic,
+hierarchical and data-sparse matrix algebra. Both libraries are purely algebraic,
 applicable to many application domains. We will address
 several Exascale challenges, with the following
 focus areas: 
@@ -95,6 +95,7 @@ also exploits data sparseness in the dense blocks of sparse factors using
 low-rank representations, which leads to linear scaling $O(n)$ or $O(n \log n)$
 memory and arithmetic complexity for PDEs with smooth kernels.
 The developments for STRUMPACK will focus on several areas:
+\ignore{ %% old
 (1) develop robust stopping criteria --- both absolute and relative --- for
     adaptive (incremental) randomized sampling schemes to reveal numerical
     ranks in the low-rank compression routine. The goal is to use
@@ -111,7 +112,26 @@ The developments for STRUMPACK will focus on several areas:
 (5) work with ECP application teams to examine their specific problem
     characteristics and develop the best clustering/ordering methods to 
     reveal low-rank structures.
-    
+}
+
+(1) development of an advanced preconditioner based on approximate
+multifrontal LU factorization, combining small dense fronts, medium
+sized Block Low-Rank (BLR) fronts (reducing the complexity pre-factor)
+and large fronts compressed using the Hierarchically Off-Diagonal
+Butterfly (HODBF) representation (leading to nearly linear scaling for
+large high-frequency problems); (2) port the BLR algorithms --
+including several variants like left and right-looking, low-rank
+update and accumulate -- to GPUs (targeting CUDA, HIP/ROCm and
+SYCL/DPC++), and include in the preconditioner;
+%targeting Perlmutter, Frontier and Aurora.  (3) reduce
+%MPI communication
+(3) develop sparse direct solvers (preconditioners) that are fully
+resident on the GPU, including reordering and symbolic analysis.
+%. (4)
+%work with ECP application teams to examine their specific problem
+%characteristics
+
+
 \vspace{-10pt}
 \paragraph{Recent Progress}
 %\textit{Describe what you have done recently.  It would be good to have some kind of figure or diagram in this section.}
@@ -139,9 +159,14 @@ are performed on Summit.
 % The main algorithmic challenges we have to overcome are: parallel tasks are of non-uniform size,
 % load imbalance, and memory and communication bound operations.
 
-For STRUMPACK we improved the GPU off-loading code. We ported the
-preconditioner based on block low-rank compression to distributed
-memory systems. We developed an interface from Trilinos to STRUMPACK.
+% For STRUMPACK we improved the GPU off-loading code. We ported the
+% preconditioner based on block low-rank compression to distributed
+% memory systems. We developed an interface from Trilinos to STRUMPACK.
+
+For STRUMPACK we further improved performance of the sparse direct
+solver on GPUs, by reducing memory allocations. We reduced the peak
+memory usage of the BLR enabled preconditioner, allowing to solve much
+larger problems.
 
 We also worked with the ECP application ExaSGD team, applying our sparse solvers to
 the linear systems coming from AC optimal power flow problems. The linear systems
@@ -156,19 +181,17 @@ The other algorithmic changes and the results are detailed below.
 \paragraph\
 \underline{STRUMPACK}  % {\bf (Pieter -- update the following)}
 \begin{itemize}
-\item We added GPU kernels for the extend-add (gather-scatter)
-  operation used in the sparse solver, so that the entire
-  factorization (or a subset fitting in device memory) can be
-  off-loaded without requiring excessive amounts of data movement
-  between host and device. On a single summit node, the new GPU code
-  is up to 8x faster than the old algorithm.
-\item STRUMPACK now supports AMD GPUs through HIP, and the hipBLAS and
-  rocSOLVER libraries.
-\item We added a distributed memory block low-rank preconditioner to
-  the sparse solver. For a medium sized 3D $175^3$ high frequency
-  Helmholtz problem, the new preconditioner is 3.7x faster than the
-  sparse direct solver, and 2x faster than our previous state of the
-  art preconditioner based on Butterfly compression.
+\item We improved the block low-rank preconditioner to drastically
+  reduce the peak memory usage. This is achieved by building the BLR
+  representation one single column at a time. This has allowed us to
+  solve numerically challenging 3D problems up to $350^3$, using
+  double precision complex arithmetic, on 64 nodes of Cori.
+\item We implemented different BLR variants, including left-looking
+  (reducing communication), and low-rank update and accumulate
+  operations (reducing algorithm complexity).
+\item STRUMPACK now has experimental support for Intel GPUs through
+  SYCL/DPC++ and the oneAPI standard's variable sized batched BLAS and
+  LAPACK routines.
 \end{itemize}
 
 \underline{SuperLU}
@@ -212,9 +235,8 @@ The other algorithmic changes and the results are detailed below.
 %\begin{itemize}
 %\item
 %%  {\bf (Pieter updates)}
- For STRUMPACK, we will work to improve the performance of the
- triangular solve on the GPU, and add GPU acceleration to the block
- low-rank solver and preconditioner.
+ For STRUMPACK, we will work to improve the performance of the block
+ low-rank preconditioner on multi-GPU systems.
 % \item
  For SuperLU, we will work towards release of the GPU-enabled 3D code, including both numerical
  factorization and triangular solve on multi-GPUs, and release of GPU-enabled symbolic
