@@ -221,7 +221,9 @@ utilize any of the accelerated backends, e.g., cuBlas, rocBlas, MKL and MAGMA.
 ForTrilinos defines several SWIG-Fortran modules that generate Fortran-2003
 interfaces to C++ Trilinos solver classes. ForTrilinos provides a
 ``high-level'' interface for applications to access nonlinear and eigenvalue
-solvers in addition to low-level Trilinos classes.
+solvers in addition to low-level Trilinos classes. The SWIG-Fortran methodology
+is applicable to other ECP projects and has been used strategically to provide
+low-maintenance Fortran wrappers for several other ST codes.
 
 %----------------------------------------
 
@@ -246,13 +248,14 @@ performance boost, which is consistent with the Tasmanian stand-alone test
 indicating that the Thornado-Tasmanian interface does not incur appreciable
 overhead.
 
-{\bf ForTrilinos:}
-As with DTK, ForTrilinos now has an independent build system with Trilinos as a
-dependency. This improves robustness of the build and makes ForTrilinos
-available to app developers even if a system installation of Trilinos does not
-enable Fortran. ForTrilinos is now independently available through the Spack
-package manager. New ST libraries including Tasmanian have been wrapped with the
-SWIG-Fortran utility.
+{\bf ForTrilinos:} This year has focused on wrapping up development of
+ForTrilinos and applying SWIG-Fortran to other ECP projects. We released Flibcpp
+1.0.0, a set of Fortran interfaces to the C++ standard library to supplement
+ForTrilinos. We released ForTrilinos 2.0.0 based on ForTrilinos 13. New
+documentation for Flibcpp and SWIG-Fortran were published as ORNL technical
+memoranda. SWIG-Fortran gained support for C and C++ complex numbers.
+We applied SWIG-Fortran to other ECP projects and C/C++ libraries, generating
+Fortran wrappers for METIS/ParMETIS, STRUMPACK, and Tasmanian.
 
 %----------------------------------------
 
@@ -273,8 +276,8 @@ Extend the Tasmanian-libEnsemble integration to allow for advanced workflow
 management of libEnsemble (2.3.3.06) to be coupled with the asynchronous sampling
 methods within Tasmanian.
 
-{\bf ForTrilinos:} Extend ForTrilinos native Fortran interface documentation and
-prioritize Fortran app customer needs. Integrate SWIG into ECP ST projects that
-desire Fortran interfaces.
+{\bf ForTrilinos:} Complete documentation for ForTrilinos native Fortran
+interface. Continue maintenance and support for ForTrilinos, SWIG-Fortran, and
+related Fortran interfaces for other ECP projects.
 
 %----------------------------------------
