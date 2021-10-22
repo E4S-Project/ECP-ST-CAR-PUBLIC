@@ -38,7 +38,7 @@ computational power of GPU-accelerated compute nodes comes from GPUs rather than
 GPU-accelerated compute nodes have complex memory hierarchies that include 
 multiple memory technologies with different bandwidth and latency characteristics. In addition, 
 GPU-accelerated compute nodes have non-uniform connections between memories and computational elements (CPUs and GPUs). 
-Furthermore, the next three DOE supercomputers (Perlmutter, Aurora, and Frontier) will feature GPUs from different vendors (NVIDIA, Intel, and AMD). 
+Furthermore, three emerging DOE supercomputers (Perlmutter, Aurora, and Frontier) will feature GPUs from different vendors (NVIDIA, Intel, and AMD). 
 There are significant differences in the underlying organization of these GPUs as well as their hardware and software support for performance measurement. For
 performance tools, the need to support multiple CPU and GPU architectures significantly increases tool complexity.  At the same time, the
 complexity of applications is increasing dramatically as developers
@@ -91,9 +91,9 @@ kernel launches, memory copies, and synchronizations on AMD, Intel, and NVIDIA G
 
 \item
 The project team enhanced support for fine-grained measurement of GPU computations using PC sampling on NVIDIA GPUs and binary instrumentation on Intel GPUs. 
-HPCToolkit uses instruction-level measurements to reconstruct approximate calling context trees and
+HPCToolkit uses instruction-level measurements to reconstruct calling context trees and
 parses NVIDIA's extended line map to reconstruct GPU inlining call chains to help developers understand performance of complex GPU kernels.
-Figure~\ref{fig:hpctoolkit}(a) shows a calling context for PeleC, an ECP application for adaptive-mesh compressible hydrodynamics code for reacting flows; the highlighted region shows an approximate reconstruction of a GPU calling context tree with multiple inlined GPU device functions.
+Figure~\ref{fig:hpctoolkit}(a) shows a calling context for PeleC, an ECP application for adaptive-mesh compressible hydrodynamics code for reacting flows; the highlighted region shows a reconstruction of GPU calling contexts with multiple inlined GPU device functions.
 
 \item
 The project team enhanced HPCToolkit for collecting and visualizing traces of both CPU and GPU activity.
