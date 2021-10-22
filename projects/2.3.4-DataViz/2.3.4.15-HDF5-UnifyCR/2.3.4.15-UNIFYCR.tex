@@ -1,4 +1,4 @@
-\subsubsection{\stid{4.15} UnifyCR -- A file system for burst buffers} 
+\subsubsection{\stid{4.15} UnifyFS -- A file system for burst buffers} 
 
 \paragraph{Overview} 
 
@@ -28,7 +28,7 @@ manages the file data locally on the compute nodes with high performance.
 
 \begin{figure}[htb]
         \centering
-        \includegraphics[width=3.5in]{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyCR/usingUnifyFS}
+        \includegraphics[width=3.5in]{usingUnifyFS}
         \caption{\label{fig:usingUnifyFS} \textbf{Using UnifyFS} 
 Using UnifyFS from an MPI application is as easy as using the parallel file system. 
 Simply change the file path to point to the UnifyFS mount point \texttt{/unifyfs}, and
@@ -64,7 +64,7 @@ will have major difficulties utilizing these resources.
 \begin{figure}[htb]
         \centering
         %\includegraphics[width=3.5in]{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyFS/UnifyFS-overview}
-        \includegraphics[width=3.5in]{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyCR/UnifyFS-overview}
+        \includegraphics[width=3.5in]{UnifyFS-overview}
         \caption{\label{fig:UnifyFS-overview} \textbf{UnifyFS Overview.} Users can give commands in their batch scripts to launch UnifyFS within
 their allocation. UnifyFS works transparently with POSIX I/O, common I/O libraries, and
 VeloC. Once file operations are intercepted by UnifyFS, they
@@ -97,16 +97,21 @@ it can deliver high performance.
 
 \paragraph{Recent Progress}
 
-Recently, the UnifyFS team has focused on support for I/O libraries and on read performance. 
-For I/O libraries, we evaluated and improved support for HDF5 and MPI-IO. We rigorously 
-tested UnifyFS with extensive test suites from the two I/O libraries and uncovered and
-corrected numerous bugs and issues. We also performed a complete overhaul of our metadata
-infrastructure to improve read performance. With our old infrastructure, read performance
-was limited by the need to look up data locations in a distributed fashion. Now, most
-data lookups can be performed locally, resulting in orders of magnitude improvement
-in read performance.
+In the past year, the UnifyFS team has focused on improving the usability
+and performance of UnifyFS for applications and I/O middleware.
+We evaluated UnifyFS for use by producer-consumer applications, which include
+applications such as climate models that exchange data files between independent
+components such as ``ocean'' and ``atmosphere'', and applications that couple
+traditional HPC simulation with ML analysis. We updated UnifyFS to better support
+these types of applications, including documentation additions and fixes to the
+UnifyFS code base. This year, we also introduced our UnifyFS API which is intended
+to be used by I/O middleware software, e.g., I/O libraries like HDF5. By using this
+API, I/O middleware can have finer control over the workings of UnifyFS and obtain
+better performance. Finally, we also implemented numerous changes and bug fixes
+in preparation for our support of UnifyFS on Frontier. 
 Our source code for UnifyFS is available on 
-GitHub at \url{https://github.com/LLNL/UnifyFS}. 
+GitHub at \url{https://github.com/LLNL/UnifyFS}. Within the last year, we have also deployed UnifyFS on Summit as a production ready module. 
+
 %\begin{figure}[htb]
         %\centering
         %%\includegraphics[width=4in]{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyFS/milestone2}
@@ -120,14 +125,9 @@ GitHub at \url{https://github.com/LLNL/UnifyFS}.
 
 \paragraph{Next Steps}
 
-For our next year's effort, we are focused on delivering an implementation
-of our UnifyFS API that can be used by high level I/O libraries for improved
-performance. We will also turn our attention to portability to pre-exascale 
-platforms. Additionally, we will continue to improve our support for 
-ECP collaborator software including:
-I/O libraries HDF5, MPI-IO, PnetCDF, and ADIOS; improving
-VeloC; and targeting integration with ECP applications such as
-E3SM, GEOS, and Chombo.
-
-
+Our efforts for the next year will be focused on delivering a robust and 
+high-performance implementation of UnifyFS on Frontier. We have begun the work
+of porting to early access systems for Frontier and will continue on this track. 
+We will rigorously test the correctness and performance of UnifyFS and will
+evaluate UnifyFS's performance with ECP applications on Frontier.
 
