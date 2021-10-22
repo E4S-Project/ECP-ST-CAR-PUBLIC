@@ -1,0 +1,99 @@
+% This file was created by tikzplotlib v0.9.2.
+\begin{tikzpicture}
+
+\begin{axis}[
+axis line style={black},
+xlabel={$N$},
+xmin=-0.6, xmax=12.6,
+xlabel near ticks,
+xtick style={color=white!33.3333333333333!black},
+xtick={0,1,2,3,4,5,6,7,8,9,10,11,12},
+xticklabels={\(\displaystyle 2^4\),\(\),\(\displaystyle 2^6\),\(\),\(\displaystyle 2^8\),\(\),\(\displaystyle 2^{10}\),\(\),\(\displaystyle 2^{12}\),\(\),\(\displaystyle 2^{14}\),\(\),\(\displaystyle 2^{16}\)},
+ylabel={Speedup},
+ylabel near ticks,
+%ymin=0.202966825333382, ymax=7.6,
+ytick style={color=white!33.3333333333333!black},
+%yticklabels={,\(\displaystyle {1.0}\),,\(\displaystyle {3.0}\),,\(\displaystyle {5.0}\),,\(\displaystyle {7.0}\),\(\displaystyle {8.0}\)},
+ymode=log,
+log basis y={2},
+ymin=0.3, ymax=8.5,
+ytick={0.5,1,2,4,8},
+log ticks with fixed point,
+yticklabel pos=right,
+width=\textwidth,
+height=0.6\textwidth,
+title={$T=1024$},
+title style={below right,at={(0.05,0.9)}}
+]
+\addplot [semithick, mark=otimes]
+table {%
+0 1.54172560113154
+1 1.65860215053763
+2 1.59782608695652
+3 2.03624161073826
+4 3.17523056653491
+5 3.96593673965937
+6 5.32525951557093
+7 6.72148541114058
+8 6.2743450321305
+9 3.42638125542378
+10 2.32380177063193
+11 1.40163487155345
+12 1.29789579295094
+};
+% \addlegendentry{B1}
+\addplot [semithick, mark=square]
+table {%
+0 0.513372472276582
+1 0.547333333333333
+2 0.599075297225892
+3 0.550828729281768
+4 0.57201646090535
+5 0.835728952772074
+6 1.43811764705882
+7 2.48555411815438
+8 3.56691152986266
+9 2.76931747025673
+10 2.24389385867926
+11 1.37479676536026
+12 1.28436651244046
+};
+% \addlegendentry{B2}
+\addplot [semithick, mark=x]
+table {%
+0 3.30685203574975
+1 2.79770114942529
+2 3.30263157894737
+3 2.75550891920252
+4 2.48282630029441
+5 3.44634377967711
+6 3.23179190751445
+7 2.64840182648402
+8 2.59288461538462
+9 1.89490421158768
+10 1.7509535977484
+11 1.34198274819622
+12 1.29377530790229
+};
+% \addlegendentry{B3}
+\addplot [semithick, mark=*]
+table {%
+0 0.833864844343204
+1 1.06823060410917
+2 1.30601343101343
+3 1.40609367894497
+4 1.4334323922734
+5 1.77639399943391
+6 2.22291134622401
+7 1.9573504027618
+8 1.64384220061375
+9 1.46215812497777
+10 1.27950960037583
+11 1.14186188461619
+12 1.07420840134936
+};
+% \addlegendentry{B4}
+\addplot[gray, dashed] coordinates {(-1,1) (13,1)};
+\end{axis}
+
+\end{tikzpicture}

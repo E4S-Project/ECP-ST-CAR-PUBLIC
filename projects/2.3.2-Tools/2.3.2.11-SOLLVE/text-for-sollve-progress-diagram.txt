@@ -1,0 +1,18 @@
+# Application Requirements
+ - OpenMP Hackathons: application teams include QMCPACK, GridQCD, GAMESS, Kokkos, Force-of-nature
+ - In-depth engagement with application teams using OpenMP, particularly those using LLVM's OpenMP 
+ - OpenMP Performance benchmarks for assessing feature performance in OpenMP implementations 
+ - Contributions to DoE LLVM Spack package
+
+# Specification Evolution
+ - Fall 2021 OpenMP virtual Face-to-Face Meeting 
+ - Release of OpenMP 5.2 Specification (Nov. 2021) with new OpenMP 5.0 Examples and clarificiations in the Specification to improve implementation of the OpenMP Spec, particularly for OpenMP offload features
+
+# Compiler
+
+# Runtime Systems 
+    - Improved BOLT 1.0 runtime with features for nested parallelism and MPI+OpenMP interoperability, integrated into the LLVM OpenMP implementation. 
+    - Prototype runtime library for OpenMP task and loop scheduling strategies on multicore processors of ECP Systems 
+    - Prototype runtime library for OpenMP task-to-device scheduling on heterogeneous processors that provide adaptivity based on state, e.g., occupancies, load, of GPUs.
+
+# Verification and Validation 
