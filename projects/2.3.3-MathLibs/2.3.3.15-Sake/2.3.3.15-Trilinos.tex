@@ -1,0 +1,57 @@
+\subsubsection{\stid{3.15} Sake: Trilinos/PEEKS} \label{subsubsect:trilinos}
+\paragraph{Overview} 
+Trilinos is a large and widely used toolkit for scientific computing, with many users both at DOE labs, in academia, and in industry. 
+This project is focused on making Trilinos ready for exascale. One part is to port a core set of Trilinos packages to relevant architectures 
+(including NVIDIA, AMD, and Intel GPUs). The other part is to design algorithms that work well on accelerators and at large scale (the focus of 
+the PEEKS sub-project).
+
+
+\paragraph{Key  Challenges}
+Developing preconditioned iterative solvers for the US flagship supercomputers 
+deployed in ECP, we acknowledge three major challenges coming from the hardware 
+architecture:
+\begin{enumerate}
+\item 
+Fine-grained parallelism in a single node that has to be exploited efficiently 
+by the iterative solver and the preconditioner.
+\item
+Rising communication and synchronization cost as the
+computational power is growing much faster than memory power, resulting in 
+increased pressure on the bandwidth of all cache/memory levels.
+\end{enumerate}
+
+All challenges require the redesign of existing iterative solvers with respect 
+to higher parallelism, % within all building blocks
+a reduced number of 
+communication and synchronization points, favoring computations over 
+communication, and adopting multiprecision algorithms for efficient hardware 
+utilization. 
+
+\paragraph{Solution Strategy}
+
+The primary thrusts of the PEEKS project are:
+\begin{enumerate}
+   \item \textbf{Pipelined and CA Krylov methods:} 
+    	We realize pipelined and 
+	communication-avoiding Krylov methods in production-quality code, and 
+	we are actively collaborating with the ECP ExaWind project to integrate 
+        our new features into their application~\cite{Yamazaki-lowsynch}. 
+	\item \textbf{Memory Precision Decoupling:}  In collaboration with the ECP 
+	xSDK multiprecision effort, we are working on sparse linear algebra 
+	iterative methods and preconditioners that reduce runtime by compressing 
+	data before invoking memory operations, such as the adaptive precision 
+	block-Jacobi preconditioner~\cite{toms_anzt} and the compressed basis 
+	GMRES~\cite{aliaga2020compressed}. 
+\end{enumerate}
+
+\paragraph{Recent Progress}
+\begin{enumerate}
+\item  TODO
+\end{enumerate}
+
+\paragraph{Next Steps}
+
+Our next efforts are:
+\begin{enumerate}
+	\item TODO
+\end{enumerate}
