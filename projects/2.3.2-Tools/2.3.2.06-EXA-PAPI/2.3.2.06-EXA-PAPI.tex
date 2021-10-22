@@ -108,19 +108,35 @@ Furthermore, PAPI 7.0.0 will release newly developed support for the latest moni
 features on the Intel Gen9 GPUs. 
 This was accomplished under NDA and in very close collaboration with the Intel team. 
 The new PAPI capabilities for monitoring Intel Gen9 include GPU hardware 
-events, and memory performance metrics (bytes read/written/transferred from/to L3).Monitoring of GPU and memory performance counters aids developers in producingmore efficient code by profiling the utilization of the latest GPU resources anddiagnosing performance bottlenecks.The objective of this development was to  
-%a mechanism to collect Intel%GPU performance metrics via PAPIÕs well known interface and without any additional%efforts from the users.%In our approach, through the PAPI component framework, we 
-enable transparent accessto the Gen9 performance and memory metrics via Intel's OneAPI Level-Zero Interface.A unique feature of this development enables users to apply two different collection modes 
+events, and memory performance metrics (bytes read/written/transferred from/to L3).
+Monitoring of GPU and memory performance counters aids developers in producing
+more efficient code by profiling the utilization of the latest GPU resources and
+diagnosing performance bottlenecks.
+The objective of this development was to  
+%a mechanism to collect Intel
+%GPU performance metrics via PAPIÕs well known interface and without any additional
+%efforts from the users.
+%In our approach, through the PAPI component framework, we 
+enable transparent access
+to the Gen9 performance and memory metrics via Intel's OneAPI Level-Zero Interface.
+A unique feature of this development enables users to apply two different collection modes 
 via the PAPI interface:\\
 The Time-based Collection Mode:
 \begin{itemize}
 \item Counter values are aggregated and stored in a buffer.
-\item Counter values can be read at any given time during the execution, which meansperformance counter monitoring is completely autonomous from the kernelsrunning in the GPUs.
+\item Counter values can be read at any given time during the execution, which means
+performance counter monitoring is completely autonomous from the kernels
+running in the GPUs.
 \end{itemize}
-%The Kernel-based Collection Mode:
+%
+The Kernel-based Collection Mode:
 \begin{itemize}
 \item Counter monitoring is per kernel.
-\item Performance counter data is not available during kernel execution but only afterthe kernel finishes.\item In this mode, the Level-Zero API uses internal barriers, which implies, if twokernels overlap, the execution of the second kernel is pushed out until the firstkernel finishes.
+\item Performance counter data is not available during kernel execution but only after
+the kernel finishes.
+\item In this mode, the Level-Zero API uses internal barriers, which implies, if two
+kernels overlap, the execution of the second kernel is pushed out until the first
+kernel finishes.
 \end{itemize}
 
 
@@ -133,7 +149,7 @@ $<$ 7.0 and $\geq$ 7.0.
  
  
  \vspace{10pt}
-Last but not least, the team designed and implemented PAPI support for FUGAKUÕs A64FX 
+Last but not least, the team designed and implemented PAPI support for FUGAKU's A64FX 
 Arm architecture. This work includes the development of new Counter Analysis Toolkit (CAT) 
 benchmarks and refinements of PAPI's CAT data analysis; specifically, the extension of 
 PAPI's CAT with MPI and ``distributed memory''-aware benchmarks and analysis in order to 
