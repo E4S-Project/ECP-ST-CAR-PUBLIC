@@ -7,6 +7,8 @@ the PEEKS sub-project).
 
 
 \paragraph{Key  Challenges}
+The Trilinos software library needs to be adapted to the new architectures. This is a large undertaking as there are many packages. Therefore, we focus on a core subset of Trilinos related to linear algebra and solvers. We are sensitive that Trilinos has a large user base and therefore need to minimize any user interface changes. Performance portability across a wide range of platforms is a key challenge.
+
 Developing scalable iterative (Krylov) solvers for the US leadership supercomputers 
 deployed in ECP, we acknowledge three major challenges coming from the hardware 
 architecture:
@@ -30,14 +32,13 @@ communication and synchronization points, favoring computations over
 communication, and possibly adopting multiprecision algorithms for efficient hardware 
 utilization. 
 
-The Trilinos software itself needs to be adapted to the new architectures. We are sensitive that Trilinos has a large user base and therefore need to minimize any user interface changes. Performance portability across a wide range of pltforms is a challenge.
 
 \paragraph{Solution Strategy}
 
 The primary thrusts of the Trilinos/PEEKS project are:
 \begin{enumerate}
   \item Performance portability:
-        We plan to rely heavily on the Kokkos and KokkosKernels librariesas that provide kernels that are performance portable across a variety of platforms, including CPU and GPU (NVIDIA, AMD, Intel). There is still much porting work, as some packages rely on UVM (Unified Virtual Memory), which is not widely supported.
+        We plan to rely heavily on the Kokkos and Kokkos Kernels libraries as that provide kernels that are performance portable across a variety of platforms, including CPU and GPU (NVIDIA, AMD, Intel). There is still much porting work, as some packages rely on UVM (Unified Virtual Memory), which is not widely supported.
         We will ensure the readiness of the following four solver packages on ECP platforms:
         distributed linear algebra (Tpetra), Krylov solvers (Belos), algebraic preconditioners and smoothers (Ifpack2), 
         and direct solver interfaces (Amesos2).
@@ -59,6 +60,7 @@ More generally, the dependence on UVM posed a risk in term of the solver perform
 we have ensured the Trilinos solver stacks run on the Frontier early access system (Spock) using HIP backend (without UVM) and resolved initial performance problems. Several performance optimizations remain open which we plan to address this year.
 
 \item Polynomial preconditioning: We implemented and deployed a GMRES-based polynomial preconditioner in Trilinos/Belos. This can be used as a preconditioner by itself, as a smoother in multigrid (MueLu), or be combined (nested) with any existing preconditioner. Our code is portable to both CPU and GPU. We showed the method is robust and it does not need any user knowledge of eigenvalues of the matrix/operator, unlike the Chebyshev method. In collaboration with the Exagraph ECP project, it has been integrated into the Sphynx spectral partitioner (Trilinos/Zoltan2).
+
 \item Low-synch orthogonalization: In collaboration with CU Denver and NREL, we developed and implemented a novel low-synch version of Classical Gram-Schmidt (CGS), called DCGS2. By delaying orthonalization and norms, we reduce the synchronization requirement to once per iteration (even with two passes of CGS). The method is more numerically stable than previous attempts at low-synch orthogonalization. Preliminary results on Summit show that the new DCGS2 outperforms the current CGS2 and MGS methods, and achieves up to 66 Gflop/s on 192 GPUs.
 \end{enumerate}
 
@@ -73,7 +75,7 @@ Our next efforts are:
 \item Implement graph assembly on a GPU to enable faster matrix assembly and to avoid data movement between host and device.
 \item Design an unified solver interface to all the Trilinos solvers in order to ease the effort of ECP applications
       to switch between solvers and also to compose different solvers in one framework, both of which are needed for the success of ECP application projects especially when the solver options differ across architectures.
-\item Deploy DCGS2 (or related method) in Trilinos/Belos, likely as an option in GMRES (which is used by many ECP applications).
-\item Study Block Krylov methods, which may be particularly well suited to GPUs, and also reduce communication.
+\item Deploy DCGS2 (or related orthogonalization method) in Trilinos/Belos, likely as an option in GMRES (which is used by many ECP applications).
+\item Study Block Krylov methods, which may be particularly well suited to GPUs, and also appear to reduce communication.
 \end{enumerate}
 
