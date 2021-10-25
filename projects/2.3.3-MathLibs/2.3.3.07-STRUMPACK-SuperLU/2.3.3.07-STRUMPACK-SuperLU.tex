@@ -184,10 +184,18 @@ The other algorithmic changes and the results are detailed below.
 \item We implemented different BLR variants, including left-looking
   (reducing communication), and low-rank update and accumulate
   operations (reducing algorithm complexity).
-\item In addition to Nvidia's GPU support~\cite{ghyselsSTRUMPACKGPU}, STRUMPACK now has
+\item In addition to NVIDIA and AMD GPU support~\cite{ghyselsSTRUMPACKGPU}, STRUMPACK now has
   experimental support for Intel GPUs through SYCL/DPC++ and the oneAPI
   standard's variable sized batched BLAS and LAPACK routines.
 \end{itemize}
+\vspace{-.13in}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.7]{projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/P3_V100.pdf}
+  \vspace{-.13in}
+  \caption{STRUMPACK numerical factorization performance on Summit.}
+  \label{fig:strumpack-parmetis-scaling}
+\end{figure}
 
 \underline{SuperLU}
 \begin{itemize}
