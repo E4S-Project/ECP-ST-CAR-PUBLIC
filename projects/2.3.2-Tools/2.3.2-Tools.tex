@@ -15,19 +15,29 @@ Compilers obviously play a fundamental role in the overall programming environme
 
 \subsubsection{Objectives}
 
-This project will design, develop, and deploy an Exascale suite of development tools for development, analysis, and optimization of applications, libraries, and infrastructure from the programming environments of the project.  The project will seek to leverage techniques for common and identified problem patterns and create new techniques for data exploration related to profiling and debugging and support advanced techniques such as autotuning and compiler integration. We will seek to establish an open-source compiler activity leveraging activities around the LLVM infrastructure. For tools, the overarching goal is to leverage and integrate the data measurement, acquisition, storage, and analysis and visualization techniques being developed in other projects of the software stack.  These efforts will require collaboration and integration with system monitoring and various layers within the software stack.
+This project will design, develop, and deploy an Exascale suite of compilers and development tools for development, analysis, and optimization of applications, libraries, and infrastructure from the programming environments of the project.  
+The project will seek to leverage techniques for common and identified problem patterns and create new techniques for data exploration related to profiling and debugging and support advanced techniques such as autotuning and compiler integration. 
+We will leverage the open-source LLVM compiler ecosystem. 
+For tools, the overarching goal is to leverage and integrate the data measurement, acquisition, storage, and analysis and visualization techniques being developed in other projects of the software stack.  
+These efforts will require collaboration and integration with system monitoring and various layers within the software stack.
 
 
 \subsubsection{Plan}
-Multiple projects will be supported under the tools effort. To ensure relevance to DOE missions, most of these efforts shall be DOE laboratory led and leverage and collaborate with existing activities within the broader HPC community. Initial efforts will focus on identifying the core capabilities needed by the selected ECP applications, components of the software stack, expected hardware features, and the selected industry activities from within the Hardware and Integration focus area. The supported projects will target and implement early versions of their software on both CORAL and APEX systems, with an ultimate target of production-ready deployment on the Exascale systems. Throughout this effort the applications teams and other elements of the software stack will evaluate and provide feedback on their functionality, performance, and robustness. These goals will be evaluated yearly (or more often as needed) based on milestones as well as joint milestone activities shared across the associated software stack activities by AD and HI focus areas.
+Multiple projects will be supported under this effort. To ensure relevance to DOE missions, a majority of these efforts shall be DOE laboratory led, and collaborate with existing activities within the broader HPC community. 
+Initial efforts will focus on identifying the core capabilities needed by the selected ECP applications, components of the software stack, expected hardware features, and the selected industry activities from within the Hardware and Integration focus area. 
+The supported projects will target and implement early versions of their software on both CORAL and APEX systems, with an ultimate target of production-ready deployment on Frontier and Aurora. 
+Throughout this effort the, applications teams and other elements of the software stack will evaluate and provide feedback on their functionality, performance, and robustness. 
+These goals will be evaluated annually at the ST reviews and for milestones.
 
 \subsubsection{Risk and Mitigation Strategies}
 
-A primary risk exists in terms of adoption of the various tools by the broader community, including support by system vendors. Past experience has shown that a combination of laboratory-supported open source software and vendor-optimized solutions built around standard APIs that encourage innovation across multiple platforms is a viable approach, and this will be undertaken. We will track this risk primarily via the risk register.
+A primary risk exists in terms of adoption of the various tools by the broader community, including support by system vendors. Past experience has shown that a combination of laboratory-supported open source software and vendor-optimized solutions built around standard APIs that encourage innovation across multiple platforms is a viable approach, and this will be undertaken. 
+We will track this risk primarily via the risk register.
 
-Given its wide use within a range of different communities, and its modular design principles, the project's open source compiler activities will focus on the use of the LLVM compiler ecosystem as a path to reduce both scope and complexity risks and leverage with an already established path for NRE investments across multiple vendors. The compilers and their effectiveness are tracked in the risk register. 
+Given its wide use within a range of different communities, and its modular design principles, the project's open source compiler activities will focus on the use of the LLVM compiler ecosystem (\url{https://llvm.org/}) as a path to reduce both scope and complexity risks and leverage with an already established path for NRE investments across multiple vendors. 
+The compilers and their effectiveness are tracked in the risk register. 
 %
-In fact, in the past year, ECP has created a fork of the \texttt{llvm-project} upstream repository (see \url{https://github.com/llvm-doe-org}) to capture, integrate, and test LLVM projects, and to serve as a risk mitigation option if other compilers are not working successfully on the target platforms.
+In fact, in 2020, we created a fork of the \texttt{llvm-project} upstream repository (see \url{https://github.com/llvm-doe-org}) to capture, integrate, and test LLVM projects. This repo also serves as a risk mitigation option that can be easily enabled if other compilers are not working successfully on the target platforms.
 
 Another major risk for projects in this area is the lack of low-level access to hardware and software necessary for using emerging architectural features. Many of these nascent architectural features have immature implementations and software interfaces that must be refined prior to release to the broader community. This project should be at the forefront of this interaction with early delivery systems. This risk is also tracked in the risk register for compilers, which are particularly vulnerable.
 
@@ -35,7 +45,9 @@ Another major risk for projects in this area is the lack of low-level access to 
 
 Future architectures are becoming more heterogeneous and complex~\cite{vetter:2018:extreme}. As such, the role of languages, compilers, runtime systems, and performance and debugging tools will becoming increasingly important for productivity and performance portability. 
 %
-In particular, our ECP strategy focuses on improving the open source LLVM compiler and runtime ecosystem; LLVM has gained considerable traction in the vendor software community, and it is the core of many existing heterogeneous compiler systems from NVIDIA, AMD, Intel, ARM, IBM, and others.  We foresee that this trend will continue, which is why we have organized the \tools\ technical area around LLVM-oriented projects.  
+In particular, our ECP strategy focuses on improving the open source LLVM compiler and runtime ecosystem; LLVM has gained considerable traction in the vendor software community, and it is the core of many existing heterogeneous compiler systems from NVIDIA, AMD, Intel, ARM, IBM, and others. 
+Over the past two years, several vendors including IBM and Intel have abandoned their proprietary compiler software in favor of LLVM. 
+We foresee that this trend will continue, which is why we have organized the \tools\ technical area around LLVM-oriented projects.  
 %
 We expect for many of our contributions to LLVM to address these trends for the entire community and will persist long after ECP ends. 
 %
