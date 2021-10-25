@@ -131,7 +131,6 @@ resident on the GPU, including reordering and symbolic analysis.
 %work with ECP application teams to examine their specific problem
 %characteristics
 
-
 \vspace{-10pt}
 \paragraph{Recent Progress}
 %\textit{Describe what you have done recently.  It would be good to have some kind of figure or diagram in this section.}
@@ -151,23 +150,19 @@ problems governed by high frequency indefinite Maxwell equations
 \url{https://github.com/LLNL/hiop/tree/sandbox/matrices/data/acopf_matrices}
 }  %%%% ignored
 
-
-We mainly focus on the multi-GPU developments. For SuperLU, the developments are
-on parallel symbolic
-factorization and triangular solve with one-sided communication using NVSHMEM. All the experiments
-are performed on Summit.
+We mainly focus on the multi-GPU developments. For SuperLU, the new developments are
+on triangular solve with one-sided communication using Nvidia's NVSHMEM and AMD's
+ROCSHMEM (in design stage).
+%All the experiments are performed on Summit.
 % The main algorithmic challenges we have to overcome are: parallel tasks are of non-uniform size,
 % load imbalance, and memory and communication bound operations.
-
 % For STRUMPACK we improved the GPU off-loading code. We ported the
 % preconditioner based on block low-rank compression to distributed
 % memory systems. We developed an interface from Trilinos to STRUMPACK.
-
 For STRUMPACK we further improved performance of the sparse direct
 solver on GPUs, by reducing memory allocations. We reduced the peak
 memory usage of the BLR enabled preconditioner, allowing to solve much
 larger problems.
-
 We also worked with the ECP application ExaSGD team, applying our sparse solvers to
 the linear systems coming from AC optimal power flow problems. The linear systems
 arising from the Interior Point optimization loops are highly ill-conditioned,
@@ -189,24 +184,35 @@ The other algorithmic changes and the results are detailed below.
 \item We implemented different BLR variants, including left-looking
   (reducing communication), and low-rank update and accumulate
   operations (reducing algorithm complexity).
-\item STRUMPACK now has experimental support for Intel GPUs through
-  SYCL/DPC++ and the oneAPI standard's variable sized batched BLAS and
-  LAPACK routines.
+\item In addition to Nvidia's GPU support~\cite{ghyselsSTRUMPACKGPU}, STRUMPACK now has
+  experimental support for Intel GPUs through SYCL/DPC++ and the oneAPI
+  standard's variable sized batched BLAS and LAPACK routines.
 \end{itemize}
 
 \underline{SuperLU}
 \begin{itemize}
-\item Finished the first version of the multi-GPU path-based traversal algorithm for
-  parallel symbolic factorization, including supernode detection algorithm. The new code
-  showed strong scaling up to 31x speedup on 44 Summit GPU nodes.
-\item Implemented the single precision LU factorization with double precision iterative refinement.
-  Initial tests show up to 50-60\% speedup on 1 node Summit using 6 CPU cores and 6 GPUs.
+\item For the multi-GPU sparse triangular solve (SpTRSV), we leverage the advantage of
+  GPU-initiated data transfers of NVSHMEM.
+  %  We create a novel producer-consumer paradigm to manage the computation
+  % and communication in SpTRSV and implement it using two CUDA streams.
+  The new  multi-GPU SpTRSV implementation using two CUDA streams
+  achieves a $3.7\times$ speedup when using twelve GPUs (two nodes of the Summit
+  supercomputer at ORNL) relative to our implementation on a single GPU, and
+  up to $6.1\times$ compared to NVIDIA's cuSOLVER (cuSPARSE csrsv2) over the range of
+  one to eighteen GPUs~\cite{Sptrsv-nvshmem}.
+%\item Implemented the single precision LU factorization with double precision iterative refinement.
+% Initial tests show up to 50-60\% speedup on 1 node Summit using 6 CPU cores and 6 GPUs.
 %  The speedup mainly comes from reduced data transfer / communication.  
-\item Improved the user interface for the 3D code base: developed the new redistribution routine,
-  so that the users do not need to worry about setting up proper submatrices on the 2D layer
-  of the 3D process grid.
+\item In the new v7.0.0 release of SuperLU\_DIST, we released the 3D factorization algorithm,
+  where MPI ranks are arranged as 3D process grid: Px X Py X Pz.  Pz direction is used
+  internally for storing sub-parts of Schur-complement updates. The input \{A, B\} matrices and
+  output X matrix need to reside on Px X Py. We implemented a new interface that enables
+  redistribution of the users matrices between all MPI ranks and the layer Px X Py.
+  The interface is flexible, allows uneven block partition of the user input, and allows separate
+  calls to factorization and triangular solves.
 \end{itemize}
 
+\ignore{
 \vspace{-.13in}
 \begin{figure}[htb]
 %\begin{minipage}[t]{0.48\columnwidth}
@@ -217,15 +223,16 @@ The other algorithmic changes and the results are detailed below.
 %% \end{minipage}
 %% \hfill
 %% \begin{minipage}[t]{0.48\columnwidth}
-\centering
+%  \centering
+% The following are for an earlier versions of CAR  
 %\includegraphics[scale=0.8]{projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/superlu-solve-Summit.pdf}
 %\caption{SuperLU solve on Summit GPU.}
-\includegraphics[scale=0.2]{projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/speedup_SOA.jpg}
-\label{fig:strumpack-metis-scaling}
-\caption{SuperLU symbolic factorization: GPU speedup over CPU, 13 matrices}
+%\includegraphics[scale=0.2]{projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/speedup_SOA.jpg}
+% \caption{SuperLU symbolic factorization: GPU speedup over CPU, 13 matrices}
 %  on Summit GPU nodes; 13 matrices}
 %% \end{minipage}
 \end{figure}
+} %%%% ignored
 
 %%--------------------------------------
 
@@ -238,9 +245,10 @@ The other algorithmic changes and the results are detailed below.
  For STRUMPACK, we will work to improve the performance of the block
  low-rank preconditioner on multi-GPU systems.
 % \item
- For SuperLU, we will work towards release of the GPU-enabled 3D code, including both numerical
- factorization and triangular solve on multi-GPUs, and release of GPU-enabled symbolic
- factorization code.
+ For SuperLU, we will develop a new GPU-friendly meta-data structure for the sparse U matrix,
+ replacing the skyline data structure. That trades increased memory usage for
+ parallelism-friendly memory access, and is will particularly helpful to improve
+ U-solve performance on GPU.
 % \item 
  Furthermore, we will apply the GPTune autotuner developed from xSDK4ECP project to conduct comprehensive
  tuning in the parameter space for both STRUMPACK and SuperLU, for the ECP applications and
@@ -259,6 +267,8 @@ The other algorithmic changes and the results are detailed below.
 \end{itemize}
 } %%%%------ ignored from last period ....
 
+%----------- Oct. 2021, remove FFTX
+\ignore{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% FFTX sub-project %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -292,9 +302,6 @@ First, we are developing a C++ API that expresses high-level components of FFT-b
 
 This approach addresses the challenges given above. The ``whole-algorithm'' approach to expressing and generating optimized code for FFT-based algorithms enables optimizations that are not feasible in the classical library approach; for example, fine-grained interleaving of sub-steps in a multidimensional FFT and parts of the symbol calculation in a convolution, or eliminating unused calculations for padded inputs or pruned outputs. The high-level specification of the algorithms through the FFTX API does not change when moving between platforms, this providing performance portability from the application developer's standpoint. Also, other parts of the toolchain are reused across platforms, such as the higher-level stages of the SPIRAL representation. Finally, the entire SPIRAL and FFTX software stack is open source. SPIRAL is publicly available, as will be various FFTX capabilities as they are completed.
 
-
-
-
 \paragraph{Recent Progress}
 
 We have a complete end-to-end FFTX implementation of the PSATD algorithm for solving Maxwell's equations on CPUs, a key component of the ECP WarpX application. This includes: a FFTX API representation of the PSATD algorithm; SPIRAL code generation of c code; and linking to a version of the WarpX ECP application that uses PSATD, including coupling of FFTX and AMReX data representations. We have performed side-by-side comparisons of the results obtained by the standard FFTW-based WarpX implementation, and that obtained from FFTX, and they agree to within roundoff error.
@@ -306,6 +313,7 @@ We have also developed strategies for obtaining high-performance on multi-gpu an
 \item Code generation for Tulip / Frontier platform, based on the HIP programming tools.
 \item Complete release version, documentation for release.
 \end{itemize}
+} %%%% removed
 
 
 
