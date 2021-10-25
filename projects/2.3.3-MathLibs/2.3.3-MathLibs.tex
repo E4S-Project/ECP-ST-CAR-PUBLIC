@@ -41,9 +41,26 @@ There are a number of foreseeable risks associated with the Mathematical Librari
 \subsubsection{Future Trends}
 Mathematical libraries have been one of the strongest success stories in the scientific software ecosystem.  These libraries encode specialized algorithms on advanced computers that can be the difference between success or not.  Algorithms such as multigrid, highly-tuned dense linear algebra and optimized FFTs, can improve performance by orders of magnitude and reduce the asymptotic algorithmic complexity for users.  We foresee that math libraries will have an ever-growing role in the scientific software ecosystem, as architectures become more challenging for targeting optimization and algorithms require even more concurrency and latency hiding in order to realize performance on modern computer systems.
 
-In addition, we anticipate that new algorithms based on multi-precision arithmetic will further enable performance improvements on compute devices that are optimized for machine learning workloads,
+We anticipate that new algorithms based on multi-precision arithmetic will further enable performance improvements on compute devices that are optimized for machine learning workloads,
 where lower precision can be an order of magnitude faster than double precision.
 A recent paper~\cite{Anztetal2020} surveys the landscape of multi-precision numerical
-linear algebra algorithms.
+linear algebra algorithms. We are actively developing a number of algorithms outlined in that paper to take advantage of hardware speed with lower precision.
+
+Over the course of the development of the xSDK libraries and interactions with the
+ECP applications teams, the need for batched sparse linear algebra (LA) functions
+has emerged in order to make more efficient use of the GPUs for many small and
+sparse linear algebra problems. The broad appeal of the proposed functionalities
+that could be integrated across xSDK libraries represents a unique opportunity in
+terms of avoiding critical performance bottlenecks and integrating algorithmic
+advances across low-level software libraries used in ECP. The lack of the proposed
+new batched sparse LA operations will hinder several AD teams to reach their KPP
+goals. Therefore, in 2021, we started a new activity on batched sparse solvers.
+we will collaborate with ECP industry partners to develop a set of new APIs to
+support required batched sparse LA operations for
+various GPUs. We will then develop the batched sparse linear solvers, both direct
+and iterative, and preconditioners on the GPUs. We will also develop new
+interoperability layers for integration across the applications, solvers, and lower
+level libraries. The planned work will involve the following math libraries: Ginkgo,
+hypre, Kokkos Kernels, MAGMA, PETSc, STRUMPACK, SUNDIALS, SuperLU, and Trilinos.
 
 For a deeper discussion of the futures of ECP Math Libraries efforts, please consult the paper ``Preparing Sparse Solvers for Exascale Computing''~\cite{ECP-Solvers}.
