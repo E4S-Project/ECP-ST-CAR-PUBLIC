@@ -1,0 +1,99 @@
+\subsubsection{\stid{3.15} Sake: Kokkos Kernels} 
+\paragraph{Overview} 
+The Kokkos Kernels~\footnote{https://github.com/kokkos/kokkos-kernels} subproject primarily focuses on performance portable kernels
+for sparse/dense linear algebra, graphs, and machine learning, with emphasis on
+kernels that are key to the performance of
+several ECP applications. We work closely with ECP applications to identify the
+performance-critical kernels and develop portable algorithms for these kernels.
+The primary focus of this subproject is to support ECP application needs, develop new
+kernels needed with an emphasis towards software releases, tutorials, boot camps
+and user support. The Kokkos Kernels project also works closely with several vendors
+(AMD, ARM, Cray, Intel, and NVIDIA) as part of both the ECP collaborations and
+NNSA's Center for Excellence efforts. These collaborations will  enable vendor solutions
+that are targeted towards ECP application needs.
+
+\paragraph{Key  Challenges}
+There are several challenges in allowing ECP applications move to the hardware architectures
+announced in the next few years. We highlight the four primary challenges here:
+\begin{enumerate}
+\item 
+The next three supercomputers that will be deployed will have
+three different accelerators from AMD, Intel and NVIDIA. While we have been expecting diversity of architectures, three
+different architectures in such a short timeframe adds pressure on the portability
+solutions such as Kokkos Kernels to optimize and support the kernels on all the platforms.
+\item
+The design of several ECP applications and a software stack that rely on a component-based
+approach results in an extremely high number of kernel launches on the accelerators, which
+results in the latency costs becoming the primary bottleneck in scaling the applications.
+\item
+The change in the needs of applications from device-level kernels to smaller team-level kernels. Vendor
+libraries are not ready for such a drastic change in software design.
+\item 
+The reliance of ECP applications on certain kernels that do not port well to the  accelerator architectures.
+\end{enumerate}
+
+These challenges require a collaborative effort to explore new algorithmic choices,
+working with the vendors to incorporate ECP needs into their library plans, to develop
+portable kernels from scratch, and to deploy them in a robust software ecosystem. The Kokkos
+Kernels project will pursue all of these choices in an effort to address these challenges.
+
+\paragraph{Solution Strategy}
+
+Our primary solution strategy to address these challenges are:
+\begin{enumerate}
+    \item \textbf{Codesign portable kernels with vendors and applications:}
+    We rely on codesign of Kokkos Kernels implementations for
+    specializations that are key to the performance of ECP applications. This
+    requires tuning kernels even up to the problem sizes that are of interest
+    to our users. Once we have developed a version, we provide these
+    to all the vendors so their teams can optimize these kernels even
+    further in vendor-provided math libraries.
+   \item \textbf{Emphasis on software support and usability:}
+	The Kokkos Kernels project devotes a considerable amount of time working with
+	ECP applications, integrating the kernels into application codes, tuning
+	for application needs, and providing tutorials and user support. We invest
+	in delivering a robust software ecosystem that serves the
+	needs of diverse ECP applications on all platforms of interest.
+   \item \textbf{Invest in algorithmic research to reduce latency costs and new accelerator focused approaches:} 
+   To resolve latency cost issues, the Kokkos Kernels team is considering several solutions from computer science
+   perspectives and also from algorithmic applied mathematics perspectives. 
+   For example, from a computer science perspective, we are focusing on the
+   use of streams or other latency reducing techniques such as cuda graphs. From
+   the applied mathematics perspective we are developing new algorithms such
+   as cluster-based approaches for preconditioners, such as Gauss-Seidel precondtioners,
+   to reduce the number of kernel launches. 
+\end{enumerate}
+
+\paragraph{Recent Progress}
+\begin{enumerate}
+\item Kokkos Kernels has implemented and released its HIP backend to support deployment on early
+access platform Spock. While all of the kernels are available for this backend further work on
+performance improvement and vendor TPL support are forth coming.
+\item New graph algorithm for distance 2 maximum independent set and coarsening have been developed.
+They provide support for the coarsening set of multigrid algorithms on GPUs, and of the applications
+dependent on it such as ExaWind and EMPIRE.
+\item Recently the SYCL backend has been enabled in Kokkos Kernels, it is not currently supporting all
+algorithms (sparse tests are disabled) but provides initial capabilities and will be released in upcoming
+Kokkos Kernels version 3.5.0.
+\item Kokkos Kernels team has developed and integrated tutorial materials to the Kokkos tutorials. The
+tutorials are maintained as a common resource for the entire Kokkos ecosystem.
+\end{enumerate}
+
+\paragraph{Next Steps}
+
+Kokkos Kernels team is focused on:
+\begin{enumerate}
+	\item \textbf{A major software release}: Kokkos ecosystem 4.0 release 
+	will be available to the ECP applications in FY 2022. This includes several new 
+	kernels that are requested by ECP applications, performance improvements of
+	kernels that are already being used by ECP applications and further support for
+        new SYCL and OpenMP Target to enable applications to be tested on Intel architectures.
+	\item \textbf{Developing new sparse batched kernels}: Kokkos Kernels team is working on
+        sparse batched kernels that allow application to solve small linear system that might
+        exist at integration point embeded in larger systems of equations. Such algorithms will
+        support ECP applications Pele and XGC.
+	\item \textbf{Collaboration with vendors}: Kokkos Kernels team is working with vendor
+	libraries team to incorporate ECP application needs in the vendor library roadmap.
+	Conversation regarding batched algorithms is on going and collaboration are being
+        actively leveraged to further prepare the library for ExaScale platforms readiness.
+\end{enumerate}

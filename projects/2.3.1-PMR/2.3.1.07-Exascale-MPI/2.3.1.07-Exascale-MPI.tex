@@ -114,30 +114,36 @@ interfaces for multithreaded MPI communication~\cite{VCI}.
 
 \paragraph{Recent Progress}
 
-The recent release of MPICH 3.4b1 version includes deliverables from the
-major milestones of FY2020. Figure~\ref{fig:fy20} provides the details
-of them. In the first milestone, we created the collective algorithm
-selection framework which allows MPI to choose different algorithm for
-collectives operations based on multiple factors including number of
-processes, network topology and support of hardware acceleration. The
-user of MPICH can provide a configuration file to describe the criteria
-for choosing different collective algorithms. We expect the vendors
-utilizing this capability to provide collective selection strategies
-that is optimized for the target supercomputers. The end-user could also
-generate their own strategies that is fine-tuned to the characteristic
-and needs of their applications.
-In the second milestone, we added the support for GPU in MPI
-communication. This allows a buffer in the GPU memory to be used
-directly in MPI communication operations. MPICH's GPU support can
-utilize the native support of fast GPU communication in hardware while also
-provide a fallback mode for more complex MPI communication pattens. We
-also created a new high-performance datatype engine that further
-utilizes GPU for handling non-contiguous datatype in MPI communication.
+One major achievement of MPICH recently is the support for the newly
+released MPI-4 standard. The MPI-4 standard introduced new ways for
+communication including persistent collective that aims to reduce the
+overhead of repetitively setting up colllective, and partitioned
+communication which aims to improve the performance for multi-threaded
+MPI communication. The MPICH 4.0a1 release has include all the MPI-4 new
+features.
 
-Lastly, we made many efforts in participating the standardization of
-MPI-4 by discussing proposed features and contributing the feedback for
-our users back to the MPI forum. This has led to several new features
-being accepted by the MPI Forum.
+Validation and verification has been an integral part of MPICH project.
+We have made several improvements to the automated testing
+infrastructure for more effective testing. We have also setup continuous
+integration (CI) service with the ECP CI server and use it to test MPICH
+on pre-exascale systems. This allows us to validate and verify MPICH
+with different hardward configuration. Through these new testing
+infrastructures, we have identified new issues which leads to
+optimizations that improves the MPICH performance on pre-exascale
+systems.
+
+Lastly, we focus on better GPU support in MPICH. MPICH is now support
+GPUs from all three vendors (NVIDIA, AMD and Intel). The support for
+GPU communication include a fast path that utilizes the hardware RDMA
+support for GPU memory, and a fallback path for cases like complex
+datatypes which can not be directly handed by hardware RDMA. We have
+also developed prototypes for GPU-stream-triggered operation. It allows
+MPI application to enqueue MPI point-to-point communication to a GPU
+stream or command queue. This allows the GPU stream to be used to manage
+the synchronization between GPU kernels and the MPI communication that
+depends on the result of those kernels. The benefit includes better
+overlapping between computation and communication, and higher GPU
+utilization.
 
 \begin{figure}[htb]
   \centering
@@ -146,13 +152,10 @@ being accepted by the MPI Forum.
 \end{figure}
 
 \paragraph{Next Steps}
-A major focus of the ongoing Exascale MPI efforts is further
-improvements to the MPI+GPU support. This includes support for GPU
-stream triggered MPI operations, optimized support for noncontiguous
-data and software evaluations. Another focus of FY2021 is the
-implementation of new features in MPI-4 standard including persistent
-collective operations. We will also make effort for improving the MPICH
-testing infrastructure by improving the testsuite and promoting
-integration ECP systems to provide better test coverage and a
-close-to-production test environment. This would enhance the readiness
-of MPICH for exascale systems.
+In the next year, we are going to keep optimizing the GPU support in
+MPICH. Plan work includes performance evaluation and improvement on GPU
+communication, support for GPU collectives, and the extending
+GPU-stream-triggered operation to more MPI communication functions.
+We will also expand the software validation and verification work on
+pre-exascale and exascle system to make MPICH perform well on the target
+machines.

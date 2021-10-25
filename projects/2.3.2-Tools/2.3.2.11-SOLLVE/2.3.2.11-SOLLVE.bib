@@ -6,18 +6,6 @@
   note = "[Online; accessed 31-November-2019]"
 }
 
-%This is very old and should not be cited in the document
-%Not cited anywhere in document and shouldn't be.
-@article{exascale-roadmap.ijhpca.2011,
-  title={The international exascale software project roadmap},
-  author={Dongarra, Jack and Beckman, Pete and Moore, Terry and Aerts, Patrick and Aloisio, Giovanni and Andre, Jean-Claude and Barkai, David and Berthou, Jean-Yves and Boku, Taisuke and Braunschweig, Bertrand and others},
-  journal={International Journal of High Performance Computing Applications},
-  volume={25},
-  number={1},
-  pages={3--60},
-  year={2011},
-  publisher={Sage Publications, Inc.}
-}
 
 @inproceedings{thiddenhelper,
 author = {Shilei Tian and Johannes Doerfert and Barbara Chapman},
@@ -35,6 +23,22 @@ booktitle ="{ ACM SRC to be held at SC20}"
 author = {Alok Mishra, Abid M. Malik and Barbara Chapman}, 
 title = "{Extending the LLVM/Clang Framework for OpenMP Metadirective Support}", 
 booktitle = {LLVM HPC Workshop at The International Conference for High-Performance Computing, Networking, Storage, and Analysis (SC20)}
+}
+
+
+@inproceedings{portOmpOff,
+
+title = "{OpenMP Application Experiences: Porting to Accelerated Nodes
+}", 
+
+author = {Seonmyeong Bak and Colleen Bertoni and Swen Boehm and Reuben Budiardja and Barbara Chapman and Johannes Doerfert and Markus Eisenbach and Hal Finkel and Oscar Hernandez and Joseph Huber and Shintaro Iwasaki and Vivek Kale and Paul Kent and JaeHyuk Kwack and Meifeng Lin and Piotr Luszczek and Ye Luo and Buu Pham and Swaroop Pophale and Kiran Ravikumar and Vivek Sarkar and Thomas Scogland and  Shilei Tian and P.K. Yeung}, 
+
+booktitle =  "{Journal of Parallel Computing}",
+
+month = October,
+year = 2021,
+
+doi = {10.1016/j.parco.2021.102856 }
 }
 
 
@@ -309,5 +313,115 @@ month = {6}
   doi       = {10.1007/978-3-030-28596-8\_14},
   timestamp = {Mon, 26 Aug 2019 14:36:19 +0200},
   biburl    = {https://dblp.org/rec/bib/conf/iwomp/0001WLSS19},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@inproceedings{TianUpdateOnIntelCompiler2021,
+  title={An Update on the Intel Compiler},
+  author={Tian, Xinmin},
+  booktitle={OpenMPCon},
+  year={2021}
+}
+
+@inproceedings{DBLP:conf/iwomp/TianCDC21,
+  author    = {Shilei Tian and
+               Jon Chesterfield and
+               Johannes Doerfert and
+               Barbara M. Chapman},
+  editor    = {Simon McIntosh{-}Smith and
+               Bronis R. de Supinski and
+               Jannis Klinkenberg},
+  title     = {Experience Report: Writing a Portable {GPU} Runtime with OpenMP 5.1},
+  booktitle = {OpenMP: Enabling Massive Node-Level Parallelism - 17th International
+               Workshop on OpenMP, {IWOMP} 2021, Bristol, UK, September 14-16, 2021,
+               Proceedings},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {12870},
+  pages     = {159--169},
+  publisher = {Springer},
+  year      = {2021},
+  url       = {https://doi.org/10.1007/978-3-030-85262-7\_11},
+  doi       = {10.1007/978-3-030-85262-7\_11},
+  timestamp = {Thu, 16 Sep 2021 18:08:23 +0200},
+  biburl    = {https://dblp.org/rec/conf/iwomp/TianCDC21.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@inproceedings{kruse2021clangast,
+    author = {Kruse, Michael},
+    title = {Loop Transformations Using Clang’s Abstract Syntax Tree},
+    year = {2021},
+    isbn = {9781450384414},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3458744.3473359},
+    doi = {10.1145/3458744.3473359},
+    booktitle = {50th International Conference on Parallel Processing Workshop},
+    articleno = {21},
+    numpages = {7},
+    keywords = {code generation, Clang, semantic analysis, OpenMP, abstract syntax tree},
+    location = {Lemont, IL, USA},
+    series = {ICPP Workshops '21}
+}
+
+@inproceedings{DBLP:conf/icppw/PatelTDC21,
+  author    = {Atmn Patel and
+               Shilei Tian and
+               Johannes Doerfert and
+               Barbara M. Chapman},
+  _editor    = {Federico Silla and
+               Osni Marques},
+  title     = {{A Virtual {GPU} as Developer-Friendly OpenMP Offload Target}},
+  booktitle = {ICPP},
+  _pages     = {24:1--24:7},
+  _publisher = {{ACM}},
+  year      = {2021},
+  _url       = {https://doi.org/10.1145/3458744.3473356},
+  timestamp = {Tue, 28 Sep 2021 15:02:24 +0200},
+  _biburl    = {https://dblp.org/rec/conf/icppw/PatelTDC21.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@inproceedings{DBLP:conf/icppw/DoerfertHC21,
+  author    = {Johannes Doerfert and
+               Joseph Huber and
+               Melanie Cornelius},
+  editor    = {Federico Silla and
+               Osni Marques},
+  title     = {Advancing OpenMP Offload Debugging Capabilities in {LLVM}},
+  booktitle = {{ICPP} Workshops 2021: 50th International Conference on Parallel Processing,
+               Virtual Event / Lemont (near Chicago), IL, USA, August 9-12, 2021},
+  pages     = {20:1--20:8},
+  publisher = {{ACM}},
+  year      = {2021},
+  url       = {https://doi.org/10.1145/3458744.3473358},
+  doi       = {10.1145/3458744.3473358},
+  timestamp = {Tue, 28 Sep 2021 15:02:24 +0200},
+  biburl    = {https://dblp.org/rec/conf/icppw/DoerfertHC21.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@inproceedings{DBLP:conf/iwomp/HuberWGDH21,
+  author    = {Joseph Huber and
+               Weile Wei and
+               Giorgis Georgakoudis and
+               Johannes Doerfert and
+               Oscar R. Hernandez},
+  editor    = {Simon McIntosh{-}Smith and
+               Bronis R. de Supinski and
+               Jannis Klinkenberg},
+  title     = {A Case Study of LLVM-Based Analysis for Optimizing {SIMD} Code Generation},
+  booktitle = {OpenMP: Enabling Massive Node-Level Parallelism - 17th International
+               Workshop on OpenMP, {IWOMP} 2021, Bristol, UK, September 14-16, 2021,
+               Proceedings},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {12870},
+  pages     = {142--155},
+  publisher = {Springer},
+  year      = {2021},
+  url       = {https://doi.org/10.1007/978-3-030-85262-7\_10},
+  doi       = {10.1007/978-3-030-85262-7\_10},
+  timestamp = {Thu, 09 Sep 2021 13:20:38 +0200},
+  biburl    = {https://dblp.org/rec/conf/iwomp/HuberWGDH21.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }

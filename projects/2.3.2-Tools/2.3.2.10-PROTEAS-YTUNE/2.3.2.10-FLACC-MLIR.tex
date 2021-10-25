@@ -91,8 +91,6 @@ SOLLVE projects.
       implementing this part, a new TableGen backed for directive-based language
       has been contributed upstreamed. This is used by OpenACC and OpenMP for
       both Clang and Flang.
-\item Base of the OpenACC MLIR dialect has been introduced upstream. The OpenACC
-      dialect is part of the core MLIR project.
 \item Discussed Flacc at various ECP, HPC, and LLVM venues.
 \end{enumerate}
 
@@ -102,6 +100,7 @@ SOLLVE projects.
 \begin{enumerate}
 \item Continue the definition of the OpenACC MLIR dialect and complete the
       lowering to it.
-\item Start working on the runtime support for OpenACC.
-\item Work on the lowering from MLIR to LLVM IR and runtime call.
+\item Integration of Flacc runtime support with OpenMPIRBuilder being developed in the broader ECP Project.
+\item Develop mapping of OpenACC runtime calls to OpenMP based on early work in Clacc.
+\item Continue adding support to lower from MLIR to LLVM IR and runtime call.
 \end{enumerate}

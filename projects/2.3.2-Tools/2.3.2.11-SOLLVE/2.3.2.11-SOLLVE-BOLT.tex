@@ -97,22 +97,7 @@ this issue, we have implemented an abstracted threading layer for
 lightweight threads in these MPI runtimes so that users can choose
 OpenMP threads and tasks of BOLT as ``Thread''.
 
-Specifically, we focused on the MPI interoperability with the most
-widely used open-source MPI implementations: MPICH and Open~MPI.  For
-MPICH, we fixed a few bugs regarding synchronization mechanisms, which
-will be included in the MPICH 3.4 release.  In collaboration with the Open MPI
-researchers and the Qthreads researchers at Sandia and Los Alamos
-National Laboratories, we implemented a new thread abstraction layer
-for generic threading runtime support in Open~MPI using the Opal
-Modular Component Architecture.  This highly abstracted threading
-layer has been implemented carefully to minimize the additional
-overheads.  Furthermore, this Opal architecture partly allows the
-programmer to choose an underlying threading library at compile- or
-run-time to provide flexibility.  The performance trade-off has
-been discussed in our work~\cite{ExaMPI20MCAThreads}.  This Open MPI
-interoperability improvement will be included in the Open~MPI 5.0
-release. To ensure availability, we employed a weekly CI testing
-infrastructure for those MPI systems.
+Virtual communication interfaces (VCIs) in MPICH are mapped to logically parallel MPI operations, can benefit both multi-thread and multi-GPU configurations since both rely on VCIs for parallel communication. We developed VCI-aware OpenMP thread scheduling over BOLT via a user-level threading interoperability layer significantly reduces the locking overheads, realizing highly scalable MPI communication. The evaluation using ORNL Spock (Slingshot) shows significant performance improvement.
 
 Our latest BOLT 1.0 release contains a large upgrade to be compatible
 with LLVM OpenMP 10.0, which further improves performance and

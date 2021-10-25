@@ -61,17 +61,13 @@ LLVM code base. The tasks to setup the DOE Fork of LLVM are:
 \item Fork is setup with an automatic mirroring with the upstream repository.
       The mirroring is using GitHub Actions.
 
-\item A GitLab premium instance is running at ORNL and mirrors automatically the
-      GitHub repository. The base continuous integration is running nightly
-      for the main branch of the repository on ExCL machines (Kold and Leconte).
+\item Fork is integrated with E4S releases.
 \end{enumerate}
 
 
 \paragraph{Next Steps}
 
 \begin{enumerate}
-\item Add continuous integration on more hardware (AMD explorer node in ExCL,
-      Summit and Theta)
-\item Enhance the continuous integration with additional LLVM sub-projects.
-\item Add test-suite to the CI (e.g. SOLLVE validation test-suite).
+\item Add continuous integration on more hardware (Most recent versions of Frontier and Aurora test nodes)
+\item Improve test-suite to the CI (e.g. OpenACC tests).
 \end{enumerate}
