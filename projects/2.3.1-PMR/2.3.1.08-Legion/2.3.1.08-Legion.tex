@@ -4,34 +4,31 @@
 This project focuses on the development, hardening and support of the
 Legion Programming System (\url{https://legion.stanford.edu}) with a
 focus on Exascale platforms and workloads that can benefit from
-Legion's features.  At a fundamental level our focus is on the key
-capabilities (e.g. correctness, performance, scalability) of an
-alternative programming model for ECP that seeks to expose additional
-levels of parallelism in applications.  In addition, Legion also
-enables a separation of concerns of the implementation of an
-application from how it is mapped onto a given system architecture.
+Legion's features and capabilities.  At a fundamental level, the
+project focuses s on the key capabilities (e.g. correctness,
+performance, scalability) of an alternative programming model for ECP
+that seeks to expose additional levels of parallelism and provide more
+flexible data-centric abstractions.  In addition, Legion also enables
+a separation of concerns of the implementation of an application from
+how it is mapped onto a given system architecture.
 
-Our efforts are currently focused on addressing bugs, refactoring the
+Our efforts have been focused on addressing bugs, refactoring the
 implementation for improved stability, performance and scaling,
-extending support for the selected exascale platforms (Aurora and
-Frontier), and also expanding the feature set as needed for both
-application and platform nuances.
-
-The Legion Programming System is freely available with an Apache-based
-open source license and is hosted at GitLab:
-
-\begin{quote} 
-  \url{https://gitlab.com/StanfordLegion/legion}
-\end{quote}
+extending support for the selected exascale platforms, and also
+expanding the feature set as needed for both application and
+platform nuances.
 
 \paragraph{Key Challenges}
-While Legion addresses a number of key challenges in improving system
-utilization, some aspects of platform portability, and is becoming
-more widely used, it is still a new programming system and therefore
-there is a cost to rewriting applications.  This aspect makes
-significant adoption a risk within ECP and additional effort is being
-taken to improve stability and find unique use cases.  aspects of performance and scaling to
-match aspects of more mature technologies.
+As with all new approaches to programming high-performance systems,
+there distinct challenge and significant level-of-effort required to
+reach a level of stability, capabilities, and performance to
+establishing acceptance and a stable user base.  In this regard,
+Legion is becoming more widely used outside of ECP for both
+machine-learning and data-centric computation within industry (e.g.,
+NVIDIA and Facebook).  This growing base is providing both additional
+developers and use cases that are helping to stabilize the code as well
+as broaden the scope of testing.  ECP efforts using Legion will
+benefit from this growth and additional external investments.
 
 We have focused much of our efforts on emerging use cases that are
 related to machine learning and data-centric workloads.  These domains
@@ -43,31 +40,41 @@ helped us to increase our overall impact as well focus on areas of
 adoption across more specialized application needs in support of
 machine learning and other data-centric workloads.
 
+The additional scope of maintaining the FlexFlow framework, discussed
+below, represents an additional level of scope that requires efforts
+for hardening, expanding the feature set, and porting to the ECP
+target platforms.  None of this scope was originally planned at the
+outset of ECP. 
+
 \paragraph{Solution Strategy}
-As a collaboration between LANL, Stanford University and R\&D
-efforts at NVIDIA, SLAC, Facebook, MIT, and others.  We are providing
-the overarching implementation of Legion that captures the most stable
-(correct and feature complete) version of the programming system.  In
-addition, we are actively looking for opportunities to educate the
-community about Legion and other data-centric and task-based
-approaches to programming.
+As part of a larger collaboration between LANL, Stanford University,
+NVIDIA, SLAC, Facebook, MIT, and others this project provides the
+overarching implementation of Legion that captures the most stable
+(correct, feature complete, and performant) versions of the programming
+system for ECP's use.  In addition, we are actively looking for
+opportunities to further educate the broader community about Legion
+and general advantages of using data-centric and task-based approaches
+to programming.
 
-We have continued working with ExaFEL (AD 2.2.4.05) and the CANDLE
-project (AD 2.2.4.03) to provide support for Legion.  We also provide
-support and software releases related to the efforts going on within
-LANL's ATDM Programming Models and Runtimes project (part of ST
-2.3.6.01), that refine, identify needs and requirements that are in
-support of Ristra (LANL's National Security application AD 2.2.5.01).
-Our project includes management of the current repository and
-quarterly, or more frequent, releases of Legion to the broader
-community.  We are also supporting approaches that support Legion
+We have continued working with Ristra (AD 2.2.5.01), ExaFEL (AD
+2.2.4.05) and the CANDLE project (AD 2.2.4.03) to provide support for
+Legion.  For all these efforts we provide support, software releases,
+and bug fixes related to both correctness and performance. Our project
+includes management of the current repository and quarterly, or more
+frequent, releases of Legion to the broader community (e.g. NVIDIA,
+Facebook, FlexFlow, etc.).  In addition, we have provided initial
+support for AMD and Intel GPUs, and features that support
 inter-operation with other languages and programming systems --
-e.g. MPI, OpenMP, Kokkos, Fortran, Python.
+e.g. MPI, OpenMP, Kokkos, Fortran, and Python. Finally, we have collaborated
+at the lower levels of the software stack with the GASNet-EX effort (part
+of ST provided
 
-We have continued our work on improving performance and scaling of
-training deep learning applications.  In particular, we are working
-closely with CANDLE's requirements for ML training and inference on
-large DNNs. Our most recent progress is discussed below. 
+As part of the focused work with CANDLE, we are providing additional
+support with the implementation of the FlexFlow deep-learning
+framework that is built on top of Legion.  This framework has proven to
+be significantly faster than industry-provided solutions such as TensorFlow
+and PyTorch -- providing over a 15x reduction in training time on some of
+CANDLE's networks. 
 
 \paragraph{Recent Progress}
 
@@ -75,56 +82,58 @@ We continue to discover and address both performance and scalability
 issues in the runtime.  In addition, for use cases within ECP, and
 also a growing set of users outside of ECP, we have continued to
 identify and address bugs and other issues (e.g. missing features).
+The vast majority of these fixes have been released and are part of
+the Legion releases in use within ECP.
 
-As mentioned above, our we continue to focus on improving training
-times for CANDLE's DNN use cases and also improving developer productivity
-when using Flexflow (the DNN training layer built on top of Legion).  
-We are specifically working to make sure the feature set of FlexFlow system
-provides the necessary functionality and as part of this we have recently
-completed a Python layer for FlexFlow that provides support for the Keras
-(TensorFlow) interface.  This allows TensorFlow programs to be run using
-FlexFlow with very minimal changes to the original Python code.  FlexFlow
-is now available as open source under an Apache License:
+Additional work, some done in collaboration with the GASNet-Ex team
+(part of ST 2.3.1.14), has provided a Legion implementation that
+supports AMD's GPU architectures as well as GPU-to-GPU network-based
+communications.  In addition, the Kokkos interoperability support in
+Legion now also supports AMD's GPU software stack and testing is
+underway with the Ristra team for full support on early access
+test-beds for AMD-based exascale platforms.  Performance debugging will
+be an upcoming activity once appropriate resources are available.
 
-\begin{quote} 
-  \url{https://github.com/flexflow/FlexFlow} 
+Additional work has been done to support Intel's GPUs and all of
+Legion's internal CI tests and small test applications are
+successfully and correctly running on early access systems.
+Performance debugging will be an upcoming activity once appropriate
+resources are available.
+
+We have continued to develop high-level entry points for FlexFlow that
+allow it to seamlessly use code from existing learning frameworks (e.g.,
+Keras, PyTorch, and ONNX).  We currently have versions of Keras/TensorFlow
+networks running correctly and are continuing to make progress on support
+for PyTorch and ONNX.   Additional work has been done to improve performance
+via exposing new levels of parallelism in training networks as well as
+graph-centric optimizations.  Our latest results suggest a 2-3x performance
+boost over previous results for one of CANDLE's example learning networks.
+Like Legion, we currently use a quarterly set of releases for FlexFlow that
+are aligned to leverage features and new capabilities of Legion and the
+underlying software components on the target platforms. 
+
+Both FlexFlow and Legion are open source projects and distributed via GitHub:
+
+\begin{itemize}
+  \item Legion: \url{https://github.com/StanfordLegion/legion/}
+  \item FlexFlow: \url{https://github.com/flexflow/FlexFlow} 
 \end{quote}
-
-We are now starting work on new training networks with CANDLE and also
-working on providing a PyTorch compatibility interface to provide the same
-ability to run widely used Python applications for machine learning using
-Flow and Legion as the underlying runtime systems. 
-
-Finally, we currently have a start on supporting both AMD and Intel
-GPUs.  After AMD deprecated the CUDA Driver API in their HIP software
-layer we had to rewrite a portion of the underlying implementation to
-re-establish AMD support.  This initial work is complete and Legion
-applications are running successfully on currently available AMD GPUs.
-Similar efforts are underway for Intel systems using the oneAPI
-interface.  The initial implementation has run into a few issues
-within Intel's software stack that we are waiting to be resolved.  We
-are on target to successfully run on Intel's stack by late in 2020 or
-early 2021.  We have also completed an additional lower-level
-MPI-based transport layer underneath Legion to provide a level of risk
-mitigation at the lower levels of the Legion runtime (Realm).
 
 \paragraph{Next Steps}
 
 Our plans for the next year are to continue focusing on the challenges
-presented by the upcoming exascale system architectures and on
-hardening and improving the overall performance and scalability of
-Legion.  These efforts will specifically begin to focus on AMD and
-Intel hardware with an eye towards performance at the node level
-(limited by the availability and stability of appropriate hardware
-resources).
+presented by obtaining reliable, high performance versions of Legion and
+FlexFlow on the upcoming exascale system architectures.  
 
-We will continue to work on the Python interfaces for Legion with a
-focus on the Keras and PyTorch features requested by CANDLE.  This
-will include seeking out and improving our outreach.  Our regular open
-source releases of Legion and FlexFlow will continue.  Further work will
-need to be done to focus on bug fixes, improving capabilities, improving
-developer productivity, and addressing performance issues on both existing
-and upcoming platforms.
+We will continue to work on the Python interfaces for Legion (an aspect
+of growing interest from the ExaFEL project for improved productivity)
+and the feature set of FlexFlow requested by CANDLE.  This will include
+seeking out and improving our outreach and leveraging new features of
+Legion exposed by other non-ECP efforts.  Regular open-source releases of
+Legion and FlexFlow will continue, and as we test on the early access
+systems we will continue to focus on bug fixes, improving capabilities and 
+developer productivity, and addressing performance issues. 
+
 
 
 
