@@ -1,17 +1,19 @@
 \subsubsection{\stid {3.01} xSDK Sub-project: multiprecision} 
 \paragraph{Overview} 
-Within the past years, hardware vendors have started designing low precision special function units 
-in response to the demand of the Machine Learning community for high compute power
-in low precision formats. At the same time, the gap between compute power
-on the one hand and memory bandwidth on the other hand keeps increasing, 
-making data access and communication prohibitively expensive compared to arithmetic operations.
-Having the choice between ignoring the hardware trends and continuing the traditional path
-or adjusting the software stack to the changing hardware designs, the ECP
-decided to build a multiprecision focus effort to take on the challenge of designing and engineering novel algorithms capable to exploit the compute power available in low precision and to adjust the communication format to application specific needs.
-As part of the xSDK project, the multiprecision focus effort is a coordinated effort creating synergies via cross-institutional collaboration.
+The multiprecision focus effort is a cross-laboratory effort to develop and deploy production-ready 
+mixed precision algorithms for modern hardware architectures. 
+The focus effort is ECP's response to two trends we see in the evolution of HPC hardware:
+1) An increasing number of processor designs feature low precision special function units 
+to accommodate the demand of the Machine Learning community for high compute power
+in low precision formats;
+2) The gap between compute power on the one hand and memory bandwidth 
+on the other hand keeps increasing, making data access and communication prohibitively 
+expensive compared to arithmetic operations. 
+To address these trends, scientists from ECP partners teamed up to develop strategies and deploy
+production-ready software that reflects the architecture trends in the algorithm design. The multiprecision focus team has bi-weekly virtual meetings in which the progress on the different efforts is presented and discussed. As another integral part of the bi-weekly phone calls, we established a series of short talks where each meeting is commenced by an invited talk presenting an idea, success story, or progress update on mixed precision functionality to the audience. The short talks have quickly become a line-up of well-known researchers from ECP, the global academic HPC community, and industry.
 
 \paragraph{Key Challenges}
-Generally, there exists a strong relationship between the precision used in arithmetic operations and the accuracy of the computed result. Since scientific applications need to provide high quality output, replacing high precision formats with low precision formats throughout a complete application code is generally not feasible. Instead, to utilize lower precision formats, the underlying numerical algorithms have to be redesigned to employ low precision formats for the most time-consuming parts while preserving  high accuracy in the solution. In this context, the arithmetic operations are only one aspect. As the execution time of many scientific applications is dominated by communication and memory access, the algorithm redesign also has to include strategies for compressing data to reduce the pressure on the memory bandwidth. This aspect becomes even more relevant as the arithmetic power continues to grow faster than the memory bandwidth, therewith widening the gap between arithmetic performance and memory performance, see Figure~\ref{fig:xsdk-machinebalance}.
+Generally, there exists a strong relationship between the precision used in arithmetic operations and the accuracy of the computed result. Since scientific applications need to provide high-quality output, replacing high precision formats with low precision formats throughout a complete application code is generally not feasible. Instead, to utilize lower precision formats, the underlying numerical algorithms have to be redesigned to employ low precision formats for the most time-consuming parts while preserving high accuracy in the solution. In this context, arithmetic operations are only one aspect. As the execution time of many scientific applications is dominated by communication and memory access, the algorithm redesign also has to include strategies for compressing data to reduce the pressure on the memory bandwidth. This aspect becomes even more relevant as the arithmetic power continues to grow faster than the memory bandwidth, therewith widening the gap between arithmetic performance and memory performance, see Figure~\ref{fig:xsdk-machinebalance}.
 
 \begin{figure}[htb]
 	\centering
@@ -22,32 +24,35 @@ Generally, there exists a strong relationship between the precision used in arit
 
 
 \paragraph{Solution Strategy}
-In the multiprecision effort, the team assesses current status and functionalities, advances the theoretical knowledge on multiprecision algorithms, designs prototype implementations and multiprecision interoperability layers, deploys production-ready multiprecision algorithms in the xSDK math libraries, ensures multiprecision cross-library interoperability and integrates multiprecision algorithms into ECP application projects. The long list of project activities is organized in a multi-phase approach:
-The first stage is dedicated to the exploration of the design space and existing research efforts focusing on low precision, mixed precision, and extended precision. To this end, the effort  includes internationally-renown external experts for mixed precision algorithms. In the second stage, the multiprecision effort increasingly focuses on developing production code ready to be used in the ECP application projects. Relevant algorithmic functionality includes sparse linear algebra, multigrid methods, preconditioners, iterative solvers, low-rank approximations, and mixed precision machine learning.
-On the hardware side, special focus is put on low-precision special function units like NVIDIA’s tensor cores that -- originally designed for machine learning algorithms -- offer about an order of magnitude higher arithmetic performance than conventional fp64 units. 
-In the third phase of the multiprecision effort, the project team will aid the ECP application projects with the adoption of multiprecision functionality and continue to adapt to new hardware technologies.
+In the multiprecision focus effort, we identified several action lines. These include the development of
+\begin{itemize}
+\item a \textbf{memory accessor} that separates the precision format used in the arithmetic operations from the precision format used for memory operations and communication. This strategy can increase the accuracy of memory-bound low precision algorithms without impacting the performance, or increase the performance for memory-bound high precision algorithms that can tolerate or compensate for some information loss in the memory operations.
+\item \textbf{low precision kernels} using the reduced precision formats introduced for the machine learning community,
+\item \textbf{mixed precision multigrid methods},
+\item production-ready \textbf{mixed precision iterative refinement} variants for dense and sparse direct solvers,
+\item \textbf{mixed precision Krylov} solvers that accelerate the solution process by using a lower precision format for parts of the computations,
+\item \textbf{mixed precision preconditioners} that preserve the preconditioner quality but reduce the preconditioner application cost,
+\item \textbf{mixed precision FFT} algorithms.
+\end{itemize}
+Furthermore, to improve mixed precision interoperability, we investigate how to allow users to combine components from different xSDK libraries in different precision formats.
 
 
 \paragraph{Recent Progress}
-As a first step, the multiprecision team surveyed the state of the art in terms of mixed precision algorithms, low precision and extended precision algorithms, and the algorithmic needs of the ECP application projects. The results of this landscape assessment are made publicly available as ``A Survey of Numerical Methods Utilizing Mixed Precision Arithmetic''~\cite{Anztetal2020}.
-A more compact version of this survey -- exclusively focusing on numerical linear algebra -- has been submitted as a journal article.
+Recent progress includes
+\begin{itemize}
+\item the deployment of accessor-BLAS functionality for CPUs, AMD GPUs, and NVIDIA GPUs based on the memory accessor. This functionally is equivalent to memory-bound low precision BLAS, achieves the same performance, but provides higher numerical accuracy because all arithmetic operations are handled in high precision. Currently supported are the \texttt{dot}, \texttt{gemv}, and \texttt{trsv} kernels on NVIDIA GPUs.
+\item the development of a Compressed Basis (CB-) GMRES solver that can solve linear problems faster than the standard GMRES solver by storing the Krylov basis vectors in lower precision and therewith reducing the main memory access. CB-GMRES solver is a plug-in replacement for standard GMRES as it achieves the same solution approximation accuracy, and all conversion and data compression is handled by the memory accessor and thus hidden from the user.
+\item the deployment of a production-ready mixed precision iterative refinement variant of the GMRES solver that can accelerate time-to-solution.
+\item the prototype implementation of distributed mixed precision iterative refinement solver based on a sparse factorization,
+\item the deployment of a production-ready LU-based mixed precision iterative refinement solvers for AMD GPU architectures.
+\item research on FFT algorithms using lower precision for inter-node communication. 
+\end{itemize}
 
-Based on the findings of the multiprecision landscape assessment, we created a set of cross-institutional focus groups that address different algorithms and aspects of the ECP software ecosystem including dense and sparse direct solvers, eigensolvers, Krylov-based iterative solvers, multigrid methods, preconditioners, Fast Fourier Transform, and machine learning technology. Orthogonal to those, we created focus groups on the design on a memory accessor that separates the arithmetic precision from the communication precision, and the efficient realization of multiprecision basic building blocks like sparse matrix vector multiply.
-In bi-weekly virtual meetings, the progress on the different efforts is presented and discussed as many of these efforts are closely related. As another integral part of the bi-weekly phone calls we established a series of short talks where each meeting is commenced by an invited talk presenting an idea, success story, or progress update on mixed precision functionality to the audience. 
 
-Following the idea of decoupling the memory precision from the arithmetic precision to reduce the pressure on the memory bandwidth, the team released an accessor design document detailing the implementation and usage of a memory accessor that compresses data, e.g. by converting to a lower precision format, before invoking memory operations.
-The document has been made available to the ECP community.
+For a more comprehensive overview of the recent progress, the multiprecision focus team created an ECP report on ``Advances in Mixed Precision Algorithms: 2021 Edition'' that is available to the ECP community in Confluence. A significant portion of the material is currently under consideration for journal publication.
+
 
 \paragraph{Next Steps}
 
-Our next efforts include 
-\begin{itemize}
-    \item the publication of a compacted version of the multiprecision landscape assessement as a scientific journal paper,
-    \item the deployment of the accessor separating memory precision and arithmetic precision in the Ginkgo library with support for AMD GPUs, NVIDIA GPUs, and multicore CPUs,  
-    \item the implementation of compressed basis Krylov solvers that utilize the memory accessor to compact the Krylov search directions,
-    \item the advancement of multiprecision capabilities for solvers, preconditioners, and other ECP-relevant kernels in xSDK libraries, including
-    \subitem - the design and implementation of mixed precision eigensolvers,
-    \subitem - the research and realization of mixed precision multigrid solvers,
-    \subitem - the design and implementation of mixed precision sparse factorizations.
-\end{itemize}
+Our next efforts include the publication of a compacted version of the ECP report on advances in mixed precision algorithms, the deployment of accessor-BLAS for AMD GPUs and multicore CPUs,  and the advancement of multiprecision capabilities for solvers, preconditioners, and other ECP-relevant kernels in xSDK libraries.
 

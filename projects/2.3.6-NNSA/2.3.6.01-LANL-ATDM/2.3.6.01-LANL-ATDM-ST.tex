@@ -30,7 +30,7 @@ with the broader LLVM community and industry.
 
 
 The LANL ATDM \textbf{Cinema} project develops scalable solutions for data analysis as part of the Data and Visualization software stack.
-Cinema is a novel database approach to saving data extracts in situ which are then available for post hoc interactive exploration.  These data extracts can include metadata, parameters, data visualizations, small meshes, output plots, etc.  Cinema workflows enable flexible data analysis using a fraction of the file storage.  Cinema ECP workflows that integrate applications, in situ and post-processing analysis are captured and curated through the Pantheon project, which is focused on reproducible ECP workflows.  By integrating E4S caches of both applications and dependent capabilities (Ascent, etc.), Pantheon workflows can be downloaded, built and run quickly enough to be useful in a variety of applications such as CI, prototyping functionality or testing analyses.  
+Cinema is a novel database approach to saving data extracts in situ which are then available for post hoc interactive exploration.  These data extracts can include metadata, parameters, data visualizations, small meshes, output plots, etc.  Cinema workflows enable flexible data analysis using a fraction of the file storage.  Cinema ECP workflows that integrate applications, in situ and post-processing analysis are captured and curated through the Pantheon project, which is focused on reproducible ECP workflows.  By integrating E4S Spack build caches~\cite{e4s:builds} of both applications and dependent capabilities (Ascent, etc.), Pantheon workflows can be downloaded, built and run quickly enough to be useful in a variety of applications such as CI, prototyping functionality or testing analyses.  
 
 The \textbf{BEE/Charliecloud} subproject is creating software tools to increase portability
 and reproducibility of scientific applications on high performance and cloud
@@ -142,17 +142,17 @@ structures within the LLVM infrastructure to assist with and improve analysis
 and optimization passes. 
 
 \subparagraph{Cinema:}
-The LANL Cinema project is focused on delivering new
-visualization capabilities for creating, analyzing, and managing data for
-Exascale scientific applications and Exascale data centers.
-
 Cinema~\cite{cinema:Ahrens:SC14} is being developed in coordination with
 LANL's ECP application NGC to ensure that data collected during the simulation
 execution is of appropriate frequency, resolution, and viewport for later
-analysis and visualization by scientists. Cinema is an innovative way of
-capturing, storing and exploring extreme scale scientific data. Cinema is
-essential for ECP because it embodies approaches to maximize insight from
-extreme-scale simulation results while minimizing data footprint 
+analysis and visualization by scientists.  
+Cinema is essential for ECP because it embodies approaches to maximize insight from extreme-scale simulation results while minimizing data footprint.
+%Cinema is an innovative way of capturing, storing and exploring extreme scale scientific data. 
+%The LANL Cinema project is focused on delivering new visualization capabilities for creating, analyzing, and managing data forExascale scientific applications and Exascale data centers.
+Cinema capabilities provide scientists more options in analyzing and exploring the results of large simulations by providing a workflow that 1) detects features in situ, 2) captures data artifacts in Cinema databases, 3) promotes post-hoc analysis of the data, and 4) provides data viewers that allow interactive, structured exploration of the resulting artifacts. 
+Cinema database export is part of the extract generator workflow in ParaView/Catalyst and Cinema export is also available via ALPINE's Ascent infrastructure and through VisIt.   
+
+
 
 \subparagraph{Bee/CharlieCloud:}
 The BEE/Charliecloud project is focusing first on providing support for
@@ -200,11 +200,32 @@ and performance.
 
 \subparagraph{Cinema:}
 
-Recent Cinema progress has focused on development of exascale workflows, development of python-based Cinema functionality, and supporting Cinema export capabilities through ALPINE's exascale-capable infrastructure.  ParaView's v5.9 release includes a significant rewrite to create \textit{extract generators} to output images and other extracts.  The creation of Cinema databases is part of the extract generator workflow both in post hoc ParaView usage or via the in situ Catalyst library.  Cinema export is also available via ALPINE's Ascent infrastructure and through VisIt.    
-Cinema capabilities provide scientists more options in analyzing and exploring the results of large simulations by providing a workflow that 1) detects features in situ, 2) captures data artifacts in Cinema databases, 3) promotes post-hoc analysis of the data, and 4) provides data viewers that allow interactive, structured exploration of the resulting artifacts. 
-%
-In our milestones during FY20, we extended two end-to-end reproducible simulation pipelines with ECP applications at scale to generate Cinema databases and ran Cinema-based workflows with Cinema algorithms to produce secondary set of artifacts.  We ran (1) Nyx integrated with Ascent, running an ALPINE adaptive sampling algorithm; and (2) SW4 integrated with Ascent, running a VTK-m isocontour algorithm.   We ran scaling and performance testing for typical ECP-based Cinema use cases.  Lastly we did the annual release of the Cinema toolkit.  Based on user feedback, we  changed the toolkit from a set of viewers and a command line tool to a single Python module that includes current Cinema toolkit components such as viewers, database classes, preliminary Composable Image Sets classes, Jupyter notebook classes, and a small web server to provide a new way to view databases with the existing viewers.  The Cinema Python module is also included in ParaView v5.9. An example of a Jupyter notebook-based approach is shown in Figure~\ref{fig:cinemasci-nyxexample} with an ExaSky:Nyx volume displayed within a notebook workflow.   The Cinema team is working with Exascale science applications to develop in situ and post hoc workflows based on data extracts such as in Figure~\ref{fig:alpine-statistical-feature} where bubbles detected in situ are then analyzed within a Cinema viewer to enable studies of bubble dynamics.  
+Recent Cinema progress this past year has focused on expanding python-based Cinema functionality and the development of the Composable Image Set (CIS) specification. This new CIS specification can be used to save layers of float-value png images that can be combined to generate composited visualizations post hoc in a more flexible and interactive approach.  An example of the new CIS format is shown in Figure~\ref{fig:cinema-cis} using a groundwater data set~\cite{cis:garcia:limestone}.  The two materials in the simulation--stone and water streamlines--are separately saved.  Post hoc, a visualization can be generated by colormapping and shading each layer.  Different layers can be combined to form a composited visualization.
 
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.15\textwidth]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/cinema-cis-stone-coolwarm.png}
+	\includegraphics[width=0.15\textwidth]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/cinema-cis-stone-grayscale.png}
+	\includegraphics[width=0.15\textwidth]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/cinema-cis-streamlines.png}
+	\includegraphics[width=0.15\textwidth]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/cinema-cis-stone-water.png}
+	\caption{
+		In this example of the new Cinema CIS format, a groundwater simulation can be split into water streamlines and stone layers.  From left to right: the stone layer has a cool-warm colomap applied post hoc; the same stone layer in grayscale;  the water streamlines are colormapped in inferno;  the stone layer and the water streamline layers are separately colormapped and then composited to form the final visualization image.  
+		\label{fig:cinema-cis}
+	}
+\end{figure}
+
+The Cinema team has also been collaborating with the E4S team to leverage the E4S SDKs and cached builds to generate reproducible ECP workflows curated via the Cinema/E4S Pantheon project~\cite{pantheon:web}.   These reproducible workflows provide end-to-end pipelines that can demonstrate integrations.   Leveraging Spack-based builds, Pantheon curates the set of tags needed for a working pipeline on a specific exascale platform.  Workflows are saved as a git repository and can be reliably cloned and run.  Figure~\ref{fig:cinema-pantheon} shows the steps in a Nalu-Wind~\cite{naluwind:2020} Pantheon workflow~\cite{pantheon:naluwind} that results in a validated Cinema database.  
+
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/pantheon-workflow.png}
+	\caption{
+		In this example of a curated Pantheon workflow, the Nalu-Wind simulation outputs a data file which is input to a ParaView script that outputs a Cinema database of visualizations that then go through a validation step to verify the correctness of the Cinema database.  
+		\label{fig:cinema-pantheon}
+	}
+\end{figure}
 
 
 \subparagraph{Bee/CharlieCloud}
@@ -260,17 +281,8 @@ also look to add support for lowering to the parallel IR in those
 use cases.
 
 \subparagraph{Cinema:}
-In FY21, Cinema will be hardening the Composable Image Sets format to meet user requests and adding functionality to the Python-based components, demonstrating these capabilities with ATDM/ECP data and applications.  Cinema is focusing on outreach to ECP applications to identify new application workflows that can be reasonably made efficient and working on new analysis methods for Cinema users.
+In FY22, Cinema will be working with our ST partners to deploy additional Cinema functionality, exploring ECP use cases for the new CIS format and delivering reproducible Pantheon workflows that encapsulate integrations with Cinema partners.  
 
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=4in]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/cinema-jnc-nyx-volume.png}
-	\caption{
-		A screenshot of an ECP Nyx simulation in the new jupyter notebook-based cinemasci module.  
-	\label{fig:cinemasci-nyxexample}
-	}
-\end{figure}
 
 \subparagraph{Bee/CharlieCloud}
 A refactoring of BEE to support an open standard is underway. Support for the Open Workflow standard will allow a base on a well defined workflow description language leveraged by other scientific communities. This will then be tested on multiple systems to ensure portability.

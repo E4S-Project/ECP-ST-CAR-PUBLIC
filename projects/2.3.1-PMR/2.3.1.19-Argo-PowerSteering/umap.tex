@@ -70,22 +70,36 @@ programmer. The UMap software architecture is shown in Figure
 
 \paragraph{Recent Progress}
 
-In recent months, we have released UMap v2.1.0 and updated the UMap Spack package with major enhancements to improve load balancing and incorporate features for additional configurability. The new features include a SparseStore handler to optimize access to sparse, randomly accessed persistent data structures. The MetaAllocator Metall developed under the ECP SICM project has been integrated into UMap's SparseStore, enabling persistent heaps. 
+In recent months, we have released MP-UMap, providing multi-process
+support for the UMap facility. MP-UMap enables multiple processes on a
+compute node to share the UMap page buffer so that pages accessed from
+a mapped file are accessible to MPI ranks on the same node. 
 
-UMap now supports a new network-based handler using the ECP Mochi data service to fetch and manage memory pages from remote nodes over the network. UMap also has a new capability to provide region-centric page access profiling from the collaboration with the ECP Caliper project. 
+The LLNL UMap team demonstrated graph analysis algorithms based on
+graph traversal that use the UMap handler.  By integrating with SICM’s
+persistent memory C++ allocator called Metall into UMap, the UMap
+handler provides memory mapped access to very large graphs dynamically
+allocaetd and stored in binary form in one or more file(s). The
+algorithm suite consists of a dynamic graph construction benchmark,
+breadth-first search, connected components, and the ExaGraph miniVite
+benchmark.
 
-We have incorporated UMap into new applications, including the Livermore Metagenomics Toolkit (LMAT), which is being used for COVID research. We designed custom prefetching and eviction policies for LMAT.  The new solution outperforms the system solution in runtime by $5-15\%$ on realistic metagenomic queries and supports high parallelism that cannot be supported efficiently by the system solution. 
+An adaptive buffer management scheme was added to UMap to monitor and
+react at runtime to adjust the page buffer size. With this
+optimization, the page buffer can grow and shrink to reflect memory
+space availability changes.
 
-A paper on the UMap network handler has been accepted and presented at the IEEE SBAC-PAD 2020 conference. An SC20 poster on the UMap SparseStore handler is to appear.
+A paper on UMap was published in IEEE Transactions on Parallel and
+Distributed Systems:  Peng, I.B., Gokhale, M., Youssef, K., Iwabuchi, K. and Pearce, R., 2021. Enabling Scalable and Extensible Memory-mapped Datastores in Userspace. doi: 10.1109/TPDS.2021.3086302
 
 \paragraph{Next Steps}
 In the coming year, we plan to continue outreach to application teams
 within ECP and in the science/data community. This includes
-collaboration with Caliper, Mochi, Exagraph, the LMAT team, and
-with LLNL users of materials and EOS tables. The Exagraph
-collaboration will map persistent data such as binary format graphs
-and intermediate data structures through UMap using the SparseStore
-and Metall. To adapt to dynamic changes in memory resources, an adaptive buffer management will be added to monitor and react at runtime. To support the shared table use case, we will implement a multi-process version of UMap to be used by
-multiple MPI processes on a node to share read-only tables stored in
-persistent memory.
+collaboration with the Umpire team, and with graph algorithm
+developers. We will integrate UMap with Umpire to give applications a
+common API to manage multiple sorts of memories including persistent
+memory through UMap and main CPU and GPU memory resources. The
+Exagraph collaboration will map persistent data such as binary format
+graphs and intermediate data structures through UMap using the
+SparseStore and Metall.
 

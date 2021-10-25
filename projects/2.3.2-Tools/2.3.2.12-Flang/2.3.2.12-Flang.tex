@@ -2,21 +2,23 @@
 
 \paragraph{Overview}
 
-The Flang project provides an open source Fortran
-\cite{iso-fortran-2004} \cite{iso-fortran-2010} \cite{iso-fortran-2018}
-compiler.  The project was formally accepted as a component of the LLVM 
-Compiler Infrastructure last year (see \url{http://llvm.org})~\cite{llvm:homepage} 
-and has merged portions of its initial codebase into the main 
-LLVM repository as of April 2020. Leveraging LLVM, Flang will provide a 
-cross-platform Fortran solution available to ECP and the broader 
+The Flang project provides an open-source Fortran standard 
+\cite{iso-fortran-2004, iso-fortran-2010, iso-fortran-2018}
+compiler front-end for the LLVM Compiler Infrastructure (see
+\url{http://llvm.org})~\cite{llvm:homepage}.  Flang was formally
+accepted as an official component of LLVM in 2019 and merged portions
+of its initial code base into the main LLVM repository in April 2020. 
+Work continues today with a growing set of contributors to the
+code base.  Leveraging LLVM, Flang will provide a
+cross-platform Fortran solution available to ECP and the broader
 international LLVM community. The goals of the project include
-extending support to GPU accelerators and target Exascale systems, and 
-supporting LLVM-based software and tools R\&D of interest to a large 
+extending support to GPU accelerators and target Exascale systems, and
+supporting LLVM-based software and tools of interest to a large
 deployed base of Fortran applications.
 
 LLVM's growing popularity and wide adoption make it an integral part
-of the modern software ecosystem. This project provides the foundation
-for a Fortran solution that will complement and interoperate with the
+of the modern software ecosystem. Flang will provide a foundation
+for Fortran that will complement and interoperate with the
 Clang C/C++ compiler and other tools within the LLVM infrastructure.
 We aim to provide a modern, open-source Fortran implementation that is
 stable, has an active footprint within the LLVM community, and will
@@ -25,30 +27,32 @@ computing community.
 
 \paragraph{Key Challenges}
 Today there are several commercially-supported Fortran compilers,
-typically available on only one or a few platforms.  None of these are
-open source.  While the GNU gfortran open source compiler is available
-on a wide variety of platforms, the source base is not modern
-LLVM-style C++ and the GPL open source license is not compatible with
-LLVM, both of which can impact broader community participation and adoption.
+typically available from one vendor and often for a limited set of
+platforms.  None of these are open source.  While the GNU gfortran compiler is
+open source and available on a wide variety of platforms, the source base is not modern
+LLVM-style C++ and the GPL license is not compatible with
+LLVM.  This places limits on a wide breath of potential collaborations, and thus has an
+impact on broader community participation and adoption.
 
 The primary challenge of this project is to create a source base with
 the maturity, features, and performance of proprietary solutions with
 the cross-platform capability of GNU compilers, and which is licensed
-and coded in a style that will be embraced by the LLVM community.
-Additional challenges come from robustly supporting all Fortran
-language features, programming models, and scalability required for 
-effective use on Exascale systems. 
+and coded in a style that will be embraced by the LLVM community. 
+Additional challenges come from supporting all Fortran
+language features, language extensions (e.g., OpenMP, OpenACC), and
+scalability required for effective use of exascale-class systems. 
 
 \paragraph{Solution Strategy}
 
 With the adoption of Flang into the LLVM community, our strategy
-focuses on building a strong community around it and the development
+focuses on establishing and growing a strong community around it and the development
 and delivery of a solid, alternative Fortran compiler for DOE's
-Exascale platforms.  It is critical that we be good shepherds within
-the broad LLVM community to successfully establish and grow a vibrant
-community for Flang. This external engagement is in the best interest
-of ECP as well as the long-term success of Fortran in the LLVM
-community and the many industry products that rely upon it.
+platforms.  It is critical that we be good shepherds within
+the LLVM community to successfully establish this community for Flang.
+This external engagement is in the best interest
+of ECP as well as the long-term success of Fortran, and enables leveraging
+the significant momentum and strengths of this widely used and accepted
+code base. 
 
 Our path to success will rely on significant testing across not only
 the various facilities but also across a very broad and diverse set of
@@ -61,33 +65,34 @@ and the broader community.
 After several years of effort and support from NNSA, Flang was 
 successfully \emph{``adopted''} by the LLVM community and has transitioned 
 from a stand-alone git repository to one hosted by the main LLVM project.  This 
-represents a significant result and the current code is available via GitHub:
+represents a significant result and the community reviewed and accepted code is
+available via GitHub:
 
 \begin{center}
-\url{https://github.com/llvm/llvm-project/tree/master/flang}
+\url{https://github.com/llvm/llvm-project/}
 \end{center}
 
-The current capabilities of flang include the full Fortran 2018
-standard and OpenMP 5.X syntax and semantics.  As part of the
+The current capabilities of Flang include the parsing and semantic
+analysis of the full Fortran 2018 standard and OpenMP 5.X. As part of the
 development of the parsing and semantic analysis portions of the
-front-end, over five million lines of Fortran code has been
+front-end, over five million lines of Fortran code have been
 successfully processed. Beyond parsing and semantics, we have been
-focusing our efforts on creating a Fortran-centric IR 
-(Fortran IR -- ``FIR'') that leverages recent activities 
+focusing our efforts on creating a Fortran-centric intermediate
+representation (Fortran IR -- ``FIR'') that leverages recent activities
 within Google on 
 \href{Multi-Level Intermediate Representations} 
 {https://www.blog.google/technology/ai/mlir-accelerating-ai-open-source-infrastructure/}
 (MLIR) for use with the implementation of FIR.
-With the development of FIR progressing, we are approaching completion of 
+With the development of FIR progressing, we have completed
 the first full (sequential) compiler with the full set of F77 
-capabilities, and implementations of later standards are expected to 
-follow naturally after that.
+capabilities, and will soon complete the full set of F95 capabilities.
+Implementations of the later standards will follow in chronological order.
 
 \paragraph{Next Steps}
-Our short-term priorities are focused on the completion of the
-sequential compiler, the creation of a significant testing
-infrastructure, and helping to lead the interactions and overall
-discussions within the LLVM community.  Longer term efforts
+Our short-term priorities are focused on up-streaming of the
+sequential compiler with Fortran 95 support, completing implementation of the remaining Fortran standards,
+the creation of a significant testing infrastructure, and helping to play a key role in
+the interactions and overall discussions within the LLVM community.  Longer term efforts
 will shift to support OpenMP 5.X features critical to ECP applications
 on the target Exascale platforms.  We are actively exploring finding a
 common leverage point between Clang's current OpenMP code base and
