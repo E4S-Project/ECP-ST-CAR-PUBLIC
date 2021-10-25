@@ -16,34 +16,36 @@ Our efforts have been focused on addressing bugs, refactoring the
 implementation for improved stability, performance and scaling,
 extending support for the selected exascale platforms, and also
 expanding the feature set as needed for both application and
-platform nuances.
+platform requirements.
 
 \paragraph{Key Challenges}
 As with all new approaches to programming high-performance systems,
-there distinct challenge and significant level-of-effort required to
-reach a level of stability, capabilities, and performance to
-establishing acceptance and a stable user base.  In this regard,
-Legion is becoming more widely used outside of ECP for both
-machine-learning and data-centric computation within industry (e.g.,
+there distinct challenge and a significant level-of-effort required to
+reach a level of stability, capabilities, and performance to establish
+stability, acceptance, and an established user base.  In this
+regard, Legion is becoming more widely used outside of ECP for both
+machine-learning and data-centric workloads within industry (e.g.,
 NVIDIA and Facebook).  This growing base is providing both additional
-developers and use cases that are helping to stabilize the code as well
-as broaden the scope of testing.  ECP efforts using Legion will
-benefit from this growth and additional external investments.
+developers and use cases that are helping to stabilize the code as
+well as broaden the overall scope of testing.  Much like these efforts
+benefit from ECP Legion-centric efforts, ECP is benefiting from this
+growth and additional external investments.
 
-We have focused much of our efforts on emerging use cases that are
-related to machine learning and data-centric workloads.  These domains
-are much easier to have a substantial impact as the application codes
-rely on external tools (e.g. TensorFlow, Python, etc.) vs. years of
-established code written in MPI and/or OpenMP.  We are already seeing
-clear benefits of focusing our efforts in this direction. This has
-helped us to increase our overall impact as well focus on areas of
-adoption across more specialized application needs in support of
-machine learning and other data-centric workloads.
+We have focused much of our efforts on emerging use cases within ECP
+that are a mix of traditional workloads, and those related to machine
+learning (ML) and data-centric computation.  The data-centric and ML
+domains have provided a path for more substantial impact given reliance
+on external tools (e.g. TensorFlow, Python, etc.) vs. years of established code
+written in MPI.  We continue to see clear benefits from focusing our efforts in
+these areas. This has helped us to increase our overall impact as well focus on
+areas of adoption across more specialized application needs that seeks to leverage
+machine learning and related workloads.
 
-The additional scope of maintaining the FlexFlow framework, discussed
-below, represents an additional level of scope that requires efforts
-for hardening, expanding the feature set, and porting to the ECP
-target platforms.  None of this scope was originally planned at the
+The ML component is support primarily via the FlexFlow framework that
+is discussed in more detail below. FlexFlow represents an additional
+level of scope that require its own set of efforts for hardening,
+expanding the feature set, tuning performance, and porting to the ECP
+target platforms.  None of the FlexFlow scope was originally planned at the
 outset of ECP. 
 
 \paragraph{Solution Strategy}
@@ -52,7 +54,7 @@ NVIDIA, SLAC, Facebook, MIT, and others this project provides the
 overarching implementation of Legion that captures the most stable
 (correct, feature complete, and performant) versions of the programming
 system for ECP's use.  In addition, we are actively looking for
-opportunities to further educate the broader community about Legion
+opportunities to further educate the broader community about Legion 
 and general advantages of using data-centric and task-based approaches
 to programming.
 
@@ -117,7 +119,7 @@ Both FlexFlow and Legion are open source projects and distributed via GitHub:
 \begin{itemize}
   \item Legion: \url{https://github.com/StanfordLegion/legion/}
   \item FlexFlow: \url{https://github.com/flexflow/FlexFlow} 
-\end{quote}
+\end{itemize}
 
 \paragraph{Next Steps}
 
