@@ -76,40 +76,76 @@ scalable SDK which can be leveraged by new and existing workflows.
   \caption{ExaWorks Toolkit\label{fig:arch}}
 \end{wrapfigure} 
 
-The goals of the initial phase of the project are to instantiate the ExaWorks community, 
-bringing together workflow tool developers, ECP applications, and DOE compute facility representatives.  Specifically, it will:
-\begin{enumerate}
-    \item Engage the facilities to survey the state of workflow tools and capabilities and ways in which ExaWorks can enhance their capabilities;
-    \item Establish an advisory board composed of representatives of DOE compute facilities, ECP applications, and workflow tools, to guide and advise ExaWorks;
-    \item Survey ECP applications teams to identify the tools currently being used and to identify common challenges and needs;
-    \item Assemble a functional design working group to develop a community-centered draft function design; and
-    \item Collaborate with ECP applications to develop a proof-of-concept integration using a shared functional component as defined by the draft design, in an ECP application.
-\end{enumerate}
+The goals of the first year of the project are to instantiate the ExaWorks SDK, seeding it with
+robust workflow components, explore pairwise-integrations between components, and define
+common component interfaces for shared components.  The project also aims to impact ECP applicaitons and 
+bring together the workflows community, including developers, ECP applications, and DOE compute facility representatives
+to collectively address workflows challenges.
+%.  Specifically, it will:
+% \begin{enumerate}
+%     \item Engage the facilities to survey the state of workflow tools and capabilities and ways in which ExaWorks can enhance their capabilities;
+%     \item Establish an advisory board composed of representatives of DOE compute facilities, ECP applications, and workflow tools, to guide and advise ExaWorks;
+%     \item Survey ECP applications teams to identify the tools currently being used and to identify common challenges and needs;
+%     \item Assemble a functional design working group to develop a community-centered draft function design; and
+%     \item Collaborate with ECP applications to develop a proof-of-concept integration using a shared functional component as defined by the draft design, in an ECP application.
+% \end{enumerate}
 
 \paragraph{Recent Progress}
-In this first period of the project we have
-assembled our advisory committee, 
-started a functional design working group, and distributed a workflows
-survey to the ECP community. The results of this survey are helping
-to prioritize in-person interviews as well as informing the 
-functional design process and helping to identify initial ExaWorks components. 
-Our team have started prototyping efforts to explore 
-component-based approaches in existing workflow systems. Specifically, 
-we have developed prototype Balsam and RADICAL-Pilot executors for Parsl
-which enable Parsl workflows to leverage the resource management 
-capabilities of these external systems.
+% In this period of the project we have
+% assembled our advisory committee, 
+% started a functional design working group, and distributed a workflows
+% survey to the ECP community. The results of this survey are helping
+% to prioritize in-person interviews as well as informing the 
+% functional design process and helping to identify initial ExaWorks components. 
+% Our team have started prototyping efforts to explore 
+% component-based approaches in existing workflow systems. Specifically, 
+% we have developed prototype Balsam and RADICAL-Pilot executors for Parsl
+% which enable Parsl workflows to leverage the resource management 
+% capabilities of these external systems.
+
+
+
+In this period of the project have focused on instantiating the SDK, defining and developing
+the first component interface, working with ECP applicaiton teams, and engaging
+the workflows community. We breifly describe efforts in each area. 
+
+We released the first version of the ExaWorks SDK, after first defining
+community policies (modeled on E4S) and developing continuous integration and packaging
+approaches. We have seeeded the SDK with five workflow technologies 
+that are widely used in ECP applicaitons. We followed a community-based
+approach in which all artifacts are tracked using an open process on GitHub.
+Our packaging solutions allow for portable and reproducible deployment and 
+testing techniques, which vary considerably among workflow tools.  
+We have defined a Fork+Pull model-based GitHub development workflow and and 
+GitHub Actions-based continuous integration testing and deployment for SDK components.
+
+PSI/J
+
+Apps
+
+Community
+
 
 
 \paragraph{Next Steps}
-The remainder of this initial effort focuses on four important areas. 
-First, continuing to grow the ExaWorks community by engaging with ECP 
-applications, facilities, and WMS teams. 
-Second, working with these partners and stakeholders to produce a draft
-functional design document that outlines ExaWorks components
-and potential interfaces to these components. 
-Third, we will produce a report, derived from interviews from 
-the broad ECP community that outlines ECP workflows needs, challenges, 
-and potential solutions. 
-Finally, we will demonstrate the technical feasibility of the 
-ExaWorks approach via application of preliminary components to
-at least one ECP application. 
+% The remainder of this initial effort focuses on four important areas. 
+% First, continuing to grow the ExaWorks community by engaging with ECP 
+% applications, facilities, and WMS teams. 
+% Second, working with these partners and stakeholders to produce a draft
+% functional design document that outlines ExaWorks components
+% and potential interfaces to these components. 
+% Third, we will produce a report, derived from interviews from 
+% the broad ECP community that outlines ECP workflows needs, challenges, 
+% and potential solutions. 
+% Finally, we will demonstrate the technical feasibility of the 
+% ExaWorks approach via application of preliminary components to
+% at least one ECP application. 
+
+
+The next steps for the SDK are to develop and harden deeper 
+integration of our technologies, to extend our CI/CD pipeline to ECP systems,
+and to integrate other community workflows tools.
+Thus far, we have focused on small-scale interoperation, but we plan to extend our solutions to
+ensure scalable integration of the components on pre-exascale and early access exascale
+systems for immediate readiness as exascale systems become available.
+We also plan to apply our SDK to ECP applications to address broad workflow needs.
