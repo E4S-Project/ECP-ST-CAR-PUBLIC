@@ -5,59 +5,67 @@
 % ECP ST Project Overviews: A significant portion of this report includes 2-page synopses of each
 % ECP ST project (Section 4), including a project overview, key challenges, solution strategy, recent progress and next steps
 
-\paragraph{Overview} Exascale computing capacity reinforces the need for workflows and also creates
-a slew of new workflow challenges. Most notably, the increasing scale and
-hardware heterogeneity demands higher level programming environments, such as
-workflows, to enable a broad range of scientists, students, and developers to
-describe complex computational procedures and manage their execution at
-enormous scales in intuitive and productive ways. Further, in addition to the
-changing system architectures, application patterns are also changing: no
-longer is research conducted with a single invocation of a lone executable,
-instead it typically requires orchestration of many applications and scripts,
-executed at various scales across many different resource types, and often
-reliant on machine learning algorithms for guidance. As a result, exascale
-Workflow Management Systems (WMSs) will need to support high performance
-execution of significant numbers of short-duration tasks (e.g., inference
-tasks), efficient scheduling of tasks with varying resource (e.g., single
-core, multiple nodes, and accelerators) and time-sensitive (e.g., coupling
-data analysis with simulations) constraints, and flexible coordination and
-communication patterns between many concurrent jobs and/or tasks.
+\paragraph{Overview} 
+Exascale computers will offer transformative capabilities to combine
+data-driven and learning-based approaches with traditional simulation
+applications to accelerate scientific discovery and insight. These software
+combinations and integrations, however, are difficult to achieve due to
+challenges of coordination and deployment of heterogeneous software components
+on diverse and massive platforms. The ExaWorks project is addressing 
+many of these challenges by co-designing a Software Development Kit (SDK)
+consisting of a wide range of workflow management tools that can be
+composed and interoperate through common interfaces. 
+The project is working to collect an initial
+set of tools, design common interfaces supported, make tools
+easier to apply to complex science challenges, and develop examplar use cases.
+The project is community-centered, embracing the various stakeholders, including
+users, developers, and facility representatives, to 
+sustainably address the requirements of workflows at
+the exascale.
+
+
 
 
 \paragraph{Key Challenges}
 Emerging exascale workflows pose significant challenges to the creation of
 portable, repeatable, and performant workflows. These challenges are both
-technical and non-technical. On the technical side, WMSs are currently
+technical and non-technical. On the technical side, workflow management systems (WMSs) are currently
 incapable of supporting the needs of heterogeneous co-scheduled and
 high-throughput workflows, as well as enabling communication between fine
 grain tasks in dynamic workflows. On the non-technical side, the myriad WMSs
-that exist, lack of reusable WMS components, and the lack of clear user
+that exist, lack of reusable WMS components, and the absence  of clear user
 guidance when selecting a WMS has resulted in a disjoint workflows community
 that tends toward building ad hoc or bespoke solutions rather than adopting
 and extending existing solutions.
 
 Specific challenges include: 
 \begin{enumerate}
-    \item Workflows community: the workflows, applications, and facility communities are disjoint. Efforts are needed to bring these groups together to agree on common workflow components and interfaces, and to work together to develop, integrate, and support these components.
+    \item Workflows community: the workflows, applications, and facility communities are disjoint. 
+    Efforts are needed to bring these groups together to agree on common workflow components and interfaces, 
+    and to work together to develop, integrate, and support these components.
     \item Scheduling: exascale workflows must manage the efficient execution of diverse
     tasks (e.g., in runtime, resource requirements, single/multi-node) with complex interdependencies on increasingly heterogeneous resources. 
-    \item Scale and performance: emerging workflows feature huge ensembles of short-running jobs, which can create millions or even billions of tasks that need to be rapidly scheduled and executed.
-    \item Coordination and communication: workflows depend on coordination between the workflow and the tasks within the workflow, a need that requires efficient exchange of data following various communication patterns.
-    \item Fault tolerance: the enormous number of computing elements and workflow tasks increases the likelihood of encountering faults within a workflow both at the system level and also from the millions of concurrent tasks. 
-    \item Portability: most WMSs are tested on a handful of systems and the frequency by which system hardware and software change makes it impossible to guarantee that a workflow will work on even the same system in the future.
+    \item Scale and performance: emerging workflows feature huge ensembles of short-running jobs, 
+    which can create millions or even billions of tasks that need to be rapidly scheduled and executed.
+    \item Coordination and communication: workflows depend on coordination between the workflow and 
+    the tasks within the workflow, a need that requires efficient exchange of data following various communication patterns.
+    \item Fault tolerance: the enormous number of computing elements and workflow tasks increases 
+    the likelihood of encountering faults within a workflow both at the system level and also from the millions of concurrent tasks. 
+    \item Portability: most WMSs are tested on a handful of systems and the frequency by which
+    system hardware and software change makes it impossible to guarantee that a workflow will work on even the same system in the future.
 \end{enumerate}
 
 \paragraph{Solution Strategy}
-The ExaWorks project will lay the foundation for an inherently
-\textit{new approach} to workflows: establishing the ExaWorks toolkit (see
-Figure~\ref{fig:arch}) by assembling shared components from existing workflow
-projects. The ExaWorks toolkit will provide a robust, well-tested, documented,
-and scalable set of components that can be combined to enable diverse teams to
+The ExaWorks project lays the foundation for an inherently
+\textit{new approach} to workflows: establishing an SDK (see
+Figure~\ref{fig:arch}) by assembling components from existing workflow
+projects and defining new component interfaces. The ExaWorks SDK provides a robust, well-tested, documented,
+and scalable set of tools and components that can be combined to enable diverse teams to
 produce scalable and portable workflows for a wide range of exascale
-applications. Importantly, the project will not create a new workflow system
+applications. Importantly, the project is not creating a new workflow system
 nor does it aim not to replace the many workflow solutions already deployed
 and used by scientists, but rather it will provide well engineered and
-scalable components which can be leveraged by new and existing workflows.
+scalable SDK which can be leveraged by new and existing workflows.
 
 
 \begin{wrapfigure}[15]{r}{0.5\textwidth}
