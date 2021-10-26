@@ -119,11 +119,35 @@ testing techniques, which vary considerably among workflow tools.
 We have defined a Fork+Pull model-based GitHub development workflow and and 
 GitHub Actions-based continuous integration testing and deployment for SDK components.
 
-PSI/J
+Following a community-based approach, we identified our first component interface for
+the SDK: PSI/J, a portability layer across different HPC workload managers 
+allowing workflow developers and users to create portable workflows with a standard API. 
+%Our survey highlighted the challenge of porting workflows as one of the most critical needs for workflow developers and users alike. 
+PSI/J is composed of both a language-agnostic community-defined specification~\cite{jpsi-spec} and the 
+specification's language-specific implementations. 
+As a community, we have focused initially on implementing a PSI/J Python 
+library~\cite{jpsi-python}.   The Python library contains the set of
+core classes defined by the specification, as well as abstract base classes (ABCs) for components 
+that implement functionality specific to different clusters and batch systems.
+The implementation currently supports Slurm, LSF, Cobalt, RADICAL-Pilot, and Flux connectors. 
 
-Apps
+\textbf{Apps}
 
-Community
+\textbf{Community}
+In collaboration with the NSF-funded WorkflowsRI project, we are hosting
+a series of workflows community summits that aim to bring the diverse
+workflows community together. 
+The first summit brought together 48 international participants representing many WMSs, 
+with the goal to identify crucial challenges in the workflows community. 
+The summit considered six broad themes: FAIR workflows, training and education,
+AI workflows, exascale challenges, APIs and interoperability, and developing workflow community. 
+The second summit~\cite{summit_2} focused on technical approaches for realizing 
+many of the challenges identified in the first summit. It included 75 workflows developers %from around the world
+and focused on three core topics: 
+defining common workflow patterns and benchmarks, identifying paths toward interoperability of workflow systems, and improving workflow systems’ interface with legacy and emerging HPC software and hardware.
+We also host an open monthly community meeting that is attended by representatives across
+DOE laboratories.
+
 
 
 
