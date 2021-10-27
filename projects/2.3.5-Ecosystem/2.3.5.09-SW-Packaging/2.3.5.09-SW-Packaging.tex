@@ -102,51 +102,41 @@ support multiple AD software ecosystems.
 \paragraph{Recent Progress}
 
 \begin{enumerate}
-\item Released {\tt archspec}\footnote{https://github.com/archspec/archspec/},
-      a library for labeling and distributing CPU microarchitectures, as a
-      spin-off project from Spack.
+\item Completely reworked Spack's concretizer, developed new code to
+      handle bootstrapping it from binary packages.
 
-\item Developed the {\tt spack containerize} command that enables users to
-      easily build lightweight containers from Spack environments.
+\item Implemented pull request testing across entire Spack project. Packages
+      are built on each pull request now using cloud infrastructure and
+      ECP EA architecture runners.
 
-\item Worked with the E4S team to get E4S packages building on the Ascent
-      machine at OLCF, on NERSC's Cori machine, and in continuous integration in
-      AWS (on optimized {\tt skylake} instances).
+\item Worked with E4S team and ST teams to get E4S packages building on
+      EA systems.
 
-\item Continued to support ECP ST teams and conducted a survey to better
-      understand their usage of Spack.
-
-\item Developed optimized E4S container images for {\tt ppc64le},
-      {\tt x86\_64}, as well as CUDA and ROCm GPUs. Solutions for
-      heterogeneous hardware usage via containers are ahead of available
-      solutions in industry. \footnote{https://hub.docker.com/u/ecpe4s}.
+\item Developed an GitHub bot (``spackbot'') to automatically notify
+      maintainers of changes to their packages and to interact with CI pipelines.
 
 \item Continued to test multiple container runtimes on pre-exascale systems.
+
+\item Investigated unprivileged container builds and wrote result in accepted
+      SC21 paper: ``Minimizing privilege for building HPC containers''.
+
 \end{enumerate}
 
 \paragraph{Next Steps}
 
 \begin{enumerate}
-\item Implement support for running test suites within Spack environments, and
-      develop ways for teams to build portable tests associated with Spack
-      packages (``{\tt spack test}'').
+\item Further integrate testing with CI and rework test dependency model to
+      support more easily building tests after installation.
 
-\item Integrate {\tt spack test} with GitLab continuous integration to display
-      dashboards for E4S tests run on EA systems.
+\item Work with E4S team to provide support for packaging issues on deployed
+      exascale systems.
 
-\item Work with the E4S team to implement initial package smoke tests for E4S
-      on EA systems.
+\item Improve Spack environments and increase build reproducibility.
 
-\item Improve automation on GitHub by implementing a change notification bot
-      for Spack package maintainers, to tell them when others have proposed
-      changes to their packages.
+\item Work with Cray/HPE to improve Spack support for Cray programming environment.
 
-\item Implement pull request testing for Spack GitHub, so that every pull
-      request to Spack has its package builds tested in a sandboxed
-      environment to ensure that the {\tt develop} branch continues to build.
-
-\item Investigate unprivileged container builds at ECP facilities and determine
-      which runtimes provide the best support for this.
+\item Container deep dives with application teams to demonstrate successful
+      and scalable deployment on EA and exascale machines.
 
 \item Continue container training sessions, outreach efforts, and tutorials.
 \end{enumerate}
