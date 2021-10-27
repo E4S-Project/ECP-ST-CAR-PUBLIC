@@ -70,8 +70,7 @@ scalable SDK which can be leveraged by new and existing workflows.
 
 \begin{wrapfigure}[15]{r}{0.5\textwidth}
 \begin{center}
-    \includegraphics[width=0.5\textwidth]{projects/2.3.5-Ecosystem/2.3.5.10-ExaWorks/exaworks.png}
-    %\includegraphics[width=0.4\textwidth]{exaworks.png}
+    \includegraphics[width=0.5\textwidth]{projects/2.3.5-Ecosystem/2.3.5.10-ExaWorks/ExaWorks_Circle.pdf}
   \end{center}
   \caption{ExaWorks Toolkit\label{fig:arch}}
 \end{wrapfigure} 
@@ -131,9 +130,25 @@ core classes defined by the specification, as well as abstract base classes (ABC
 that implement functionality specific to different clusters and batch systems.
 The implementation currently supports Slurm, LSF, Cobalt, RADICAL-Pilot, and Flux connectors. 
 
-\textbf{Apps}
+We have continued to impact ExaLearn and CANDLE through ongoing
+collaborations, and have strengthened collaborations with the ExaAM team. The
+ExaAM workflow is composed of several application codes, each capturing a
+different scale or physics of the problem.  Each stage feeds
+information to the next stage, and iteration can occur across stages.  Some
+stages leverage CPU's and others GPU's. Several stages are themselves small
+workflows typically leveraging the \textit{ensemble} motif. Thus, the ExaAM
+workflow requires integration of multiple physics applications and when
+executed at full scale will require complex orchestration of many
+sub-workflows.  The ExaAM collaboration provides a strong vehicle for co-design and informing the 
+ExaWorks SDK. Initial integration of ExaWorks SDK technologies has shown that
+improvements in throughput are possible with minor changes to existing scripts.
+The ExaAM and ExaWorks teams have identified additional stages in the workflow
+that could benefit by incrementally integrating ExaWorks SDK capabilities to
+improve portability and performance.  In order to facilitate this engagement,
+the ExaAM team has produced an example workflow capability of being executed
+upon ECP CI infrastructure and that will be used to demonstrate integration of additional
+ExaWorks SDK components.
 
-\textbf{Community}
 In collaboration with the NSF-funded WorkflowsRI project, we are hosting
 a series of workflows community summits that aim to bring the diverse
 workflows community together. 
@@ -147,7 +162,6 @@ and focused on three core topics:
 defining common workflow patterns and benchmarks, identifying paths toward interoperability of workflow systems, and improving workflow systems’ interface with legacy and emerging HPC software and hardware.
 We also host an open monthly community meeting that is attended by representatives across
 DOE laboratories.
-
 
 
 
@@ -172,4 +186,12 @@ and to integrate other community workflows tools.
 Thus far, we have focused on small-scale interoperation, but we plan to extend our solutions to
 ensure scalable integration of the components on pre-exascale and early access exascale
 systems for immediate readiness as exascale systems become available.
-We also plan to apply our SDK to ECP applications to address broad workflow needs.
+Finally, we are preparing an SC ExaWorks tutorial which will be a foundational piece of a comprehensive
+SDK documentation effort.
+
+For applications engagement, we plan to build on the ExaAM workflow to explore
+and showcase multiple SDK technologies, and to boot-strap integrated testing of
+the components in a realistic workflow. We will leverage this engagement to
+gain real-world experience in how the SDK can be leveraged by application teams
+and integrated with CI and other infrastructures.  We also plan to apply our
+SDK to ECP applications to address broad workflow needs.
