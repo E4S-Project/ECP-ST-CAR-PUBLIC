@@ -18,10 +18,10 @@ composed and interoperate through common interfaces.
 The project is working to collect an initial
 set of tools, design common interfaces supported, make tools
 easier to apply to complex science challenges, and develop examplar use cases.
-The project is community-centered, embracing the various stakeholders, including
+The project is community centered, embracing the various stakeholders, including
 users, developers, and facility representatives, to 
 sustainably address the requirements of workflows at
-the exascale.
+exascale.
 
 
 
@@ -31,8 +31,8 @@ Emerging exascale workflows pose significant challenges to the creation of
 portable, repeatable, and performant workflows. These challenges are both
 technical and non-technical. On the technical side, workflow management systems (WMSs) are currently
 incapable of supporting the needs of heterogeneous co-scheduled and
-high-throughput workflows, as well as enabling communication between fine
-grain tasks in dynamic workflows. On the non-technical side, the myriad WMSs
+high-throughput workflows, as well as enabling communication between fine-grained
+tasks in dynamic workflows. On the non-technical side, the myriad WMSs
 that exist, lack of reusable WMS components, and the absence  of clear user
 guidance when selecting a WMS has resulted in a disjoint workflows community
 that tends toward building ad hoc or bespoke solutions rather than adopting
@@ -59,12 +59,13 @@ Specific challenges include:
 The ExaWorks project lays the foundation for an inherently
 \textit{new approach} to workflows: establishing an SDK (see
 Figure~\ref{fig:arch}) by assembling components from existing workflow
-projects and defining new component interfaces. The ExaWorks SDK provides a robust, well-tested, documented,
+projects and defining new component interfaces. The ExaWorks SDK provides a robust, well-tested,
+well-documented,
 and scalable set of tools and components that can be combined to enable diverse teams to
 produce scalable and portable workflows for a wide range of exascale
 applications. Importantly, the project is not creating a new workflow system
-nor does it aim not to replace the many workflow solutions already deployed
-and used by scientists, but rather it will provide well engineered and
+nor does it aim to replace the many workflow solutions already deployed
+and used by scientists, but rather it will provide well-engineered and
 scalable SDK which can be leveraged by new and existing workflows.
 
 
@@ -78,8 +79,8 @@ scalable SDK which can be leveraged by new and existing workflows.
 \end{wrapfigure} 
 
 The goals of the first year of the project are to instantiate the ExaWorks SDK, seeding it with
-robust workflow components, explore pairwise-integrations between components, and define
-common component interfaces for shared components.  The project also aims to impact ECP applicaitons and 
+robust workflow component technologiess, explore pairwise integrations between components, and define
+common component interfaces for shared components.  The project also aims to impact ECP applications and
 bring together the workflows community, including developers, ECP applications, and DOE compute facility representatives
 to collectively address workflows challenges.
 %.  Specifically, it will:
@@ -113,7 +114,7 @@ the workflows community. We breifly describe efforts in each area.
 We released the first version of the ExaWorks SDK, after first defining
 community policies~\cite{sdk-policies} (modeled on E4S) and developing continuous integration and packaging
 approaches. We have seeeded the SDK with five workflow technologies 
-that are widely used in ECP applicaitons. We followed a community-based
+that are widely used in ECP applications. We followed a community-based
 approach in which all artifacts are tracked using an open process on GitHub.
 Our packaging solutions allow for portable and reproducible deployment and 
 testing techniques, which vary considerably among workflow tools.  
@@ -194,13 +195,15 @@ of ExaWorks was accepted for the SC21 workshop on workflows
 
 
 The next steps for the SDK are to develop and harden deeper integration of our
-technologies, to extend our CI/CD pipeline to ECP systems, and to integrate
+technologies, to make our SDK available via E4S,
+ to extend our CI/CD pipeline to ECP systems, and to integrate
 other community workflows tools. Thus far, we have focused on small-scale
-interoperation, but we plan to extend our solutions to ensure scalable
+interoperation testing, but we plan to extend our solutions to ensure scalable
 integration of the components on pre-exascale and early access exascale
 systems for immediate readiness as exascale systems become available. Finally,
-we are preparing an SC ExaWorks tutorial which will be a foundational piece of
-a comprehensive SDK documentation effort.
+we are preparing an ExaWorks tutorial at SC21. We will incorporate the
+experiences and lessons learned from this tutorial into our
+user-facing SDK documents.
 
 For applications engagement, we plan to build on the ExaAM workflow to explore
 and showcase multiple SDK technologies, and to boot-strap integrated testing of
