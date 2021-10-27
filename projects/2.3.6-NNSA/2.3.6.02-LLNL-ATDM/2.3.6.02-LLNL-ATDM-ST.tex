@@ -393,26 +393,25 @@ between different parts of the code.
 
 
 \begin{itemize}
-\item Produced two major software releases: Spack 0.14.0, 0.15.0, as well as multiple bug-fix releases.
-\item Developed a new Spack containerize command, which can automatically generate multi-stage container build recipes from a Spack environment.
-\item Completed 100\% file system lock-based parallel build capability for Spack. This capability handles both parallel build use case and on-node synchronization.
-\item Worked with the tri-lab Computing Environment 2 (TCE2) team and code teams to provide Spack support and to add features for these environments. Notable achievements included hardening for Cray platforms, new features in Spack stacks, and GitLab pipeline automation for LC.
-\item Deployed pull request build testing on GitHub for the first time; the entire E4S stack is now built and tested when GitHub pull requests modify parts of it.
+\item Released Spack 0.16.0 and replaced Spack's greedy concretizer algorithm with a
+      much more aggressive solver based on Answer Set Programming.
+\item Major overhaul to smooth developer workflows and allow working directly on
+      checked out code in Spack.
+\item Greatly improved scalability of CI and binary cache creation in Spack.
+\item Hardened GPU support in Spack; updated CUDA and ROCm package superclasses.
 \end{itemize}
 
 \subparagraph{MFEM:}
 
 \begin{figure}[tb]
 \centering
-\includegraphics[width=.4\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/HO-LO}
-\includegraphics[width=.4\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/mfem-gpu}
-\caption{The MFEM team has developed High-Order $\protect\leftrightarrow$ Low-Order Transformations and GPU support for many linear algebra and finite element operations}
+\includegraphics[width=.4\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/mfem-hp-refinement}
+\caption{The MFEM team added support for variable order FEM spaces with general hp-refinement so higher order apps can better adapt to solutions.}
 \end{figure}
 
 Selected recent highlights:
 \begin{itemize}
-\item Completed major software releases: MFEM-4.2, GLVIS-4.0 and MFEM-4.3.
-\item Actively engaged with GPUs and advanced partial assembly algorithms work in MARBL. Demonstrated large-scale GPU performance in ALE hydro in MFEM benchmarks, Laghos, and BLAST on Lassen.
+\item Added capabilities to MFEM for variable-order FEMs paces with general hp-refinement so HO apps can increase efficiency and better adapt to solutions.
 \item Implemented ALE discretization improvements for compressible flow in BLAST, including significant improvements in mesh optimization methods, dynamic Adaptive Mesh Refinement (AMR), and improved transfer between high-order and low-order-refined simulations.
 
 \end{itemize}
@@ -427,11 +426,10 @@ Status of RAJA, Umpire, and CHAI support for exascale platforms.
 \end{figure}
 
 \begin{itemize}
-\item Developed and released support for AMD GPUs (via the HIP programming model) with RAJA, CHAI, and Umpire in preparation for El Capitan.
+\item Updated support for AMD's HIP programming model, hardened support for El Capitan COE machines.
+\item Released new versions of RAJA, Umpire, and CHAI with support for El Capitan COE machines.
+\item Added HIP support to continuous integration using GitLab at LLNL.
 \item Continued to support integration of Umpire into multiple ASC application codes.
-\item Developed and delivered new capabilities to ASC applications in support of ASC milestones and user needs.
-\item Developed prototype of fully overlapped asynchronous GPU kernel execution and data transfer to optimize application performance.
-\item Developed novel memory pool algorithms in Umpire to handle very large allocation counts.
 \end{itemize}
 
 \subparagraph{Flux:}
@@ -442,9 +440,12 @@ Status of RAJA, Umpire, and CHAI support for exascale platforms.
 
 \begin{itemize}
 
-\item Developed hierarchical scheduling tools within Flux via co-design with UQ Pipeline, demonstrating improvements across the entire lifecycle of simulation campaigns; and demonstrated that DYAD can optimize ML workflows by automatically transferring data files using Flux.
-\item Demonstrated that Fluxion, our graph-based scheduler, can uniquely enable key use cases of multitiered storage on El Capitan, driving co-design with HPE; tested AMD GPU scheduling by enabling COVID-19 workflows on Corona; demonstrated the viability of power management within Flux using Variorum, a platform-independent power library; and released MPIBIND-2.
-
+\item Flux was the basis for a workflow of the ECP ExaAM team: ExaConstit.
+\item Improved throughput of ExaAM workflow by 4x using advanced scheduling capabilities within Flux.
+\item Flux-based ML drug design workflow was part of a SC20 COVID-19 Gordon Bell finalist submission.
+\item Faster hierarchical GPU scheduling.
+\item Hardened support for exascale multi-tier storage in Flux' data stagging plugin, integrated
+      into the Fluxion scheduler
 
 \end{itemize}
 
@@ -466,18 +467,16 @@ Status of RAJA, Umpire, and CHAI support for exascale platforms.
 \paragraph{Next Steps} \leavevmode \\
 
 \subparagraph{Spack:}
-In FY21, the team will focus on:
+In FY22, the team will focus on:
 
 \begin{itemize}
-    \item Work with MARBL and other code teams to improve developer workflows support for Spack as a development tool.
-    \item Improve integration testing for LLNL code teams by enabling testing for pull requests on platforms of interest to LC.
-    \item Improve Spack support for GPUs, programming models, and exascale architectures.
+    \item Work to further improve Spack developer workflows and reproducibility.
+    \item Expand on the new concretizer to handle compiler and runtime complexity in the exascale stack.
 \end{itemize}
 
 \subparagraph{MFEM:}
 \begin{itemize}
-\item Develop adaptive discretizations for high-order finite element ATDM applications, including algorithms such as dynamic AMR, mesh optimization, and hp-adaptivity.
-\item Support MFEM-based ATDM applications in their transition to exascale hardware.
+\item Support MFEM-based applications in their transition to exascale hardware.
 \item Continue engagement with ATDM application work, develop mini-apps, and provide support.
 \end{itemize}
 
@@ -485,7 +484,8 @@ In FY21, the team will focus on:
 
 
 \begin{itemize}
-\item Develop and deliver new RAJA capabilities to LLNL codes to support ASC milestone and user requirements, including expanding support for overlapping kernel execution and data transfer and optimized AMD support.
+\item Expand GPU device capabilities in Umpire.
+\item Investigate use of Umpire as GPU offload allocator for RAJA.
 \item Continue to develop and deliver Umpire capabilities to applications in support of ASC milestone and user requirements, including interprocess shared memory to support shared on-node data and expanding functionality available inside GPU kernels.
 \item Continue interactions with El Capitan Center of Excellence (COE) partners to resolve performance and correctness issues identified as application users begin testing on early access hardware.
 
@@ -494,7 +494,10 @@ In FY21, the team will focus on:
 \subparagraph{Flux:}
 
 \begin{itemize}
-\item Demonstrate the scalable end-to-end support within Flux for: 1) smart multitiered storage scheduling and management, 2) CTI-based tool launching, 3) Variorum-enabled power monitoring/capping, 4) more versatile UQ/V\&V/ML workflow scheduling, and 5) DYAD-enabled workflow data scheduling on El Capitan early access systems.
+\item Tuning for multi-tiered storage and power capping on CORAL2 machines.
+\item Tune the Flux common tools interface (CTI) and ensure that it works scalably
+      launching STAT, TotalView, valgrind4HPC, etc.
+\item Tune UQ and ML workflows for CORAL2 applications.
 \end{itemize}
 
 \subparagraph{AID:}
