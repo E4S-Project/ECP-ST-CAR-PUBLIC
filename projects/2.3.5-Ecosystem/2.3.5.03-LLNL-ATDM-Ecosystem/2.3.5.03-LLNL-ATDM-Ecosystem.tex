@@ -59,6 +59,7 @@ running at the facility, but we cannot show all application- and
 facility-level data to all users. We need hardened security and
 fine-grained permissions to ensure that data on Sonar is kept safe.
 
+
 \paragraph{Solution Strategy}
 {\it Spack} addresses HPC software complexity in three ways. First, it
 provides a powerful build system and a domain-specific language for
@@ -149,3 +150,152 @@ means we will be able to match optimized binaries to the machine.
     creating binary packages from such builds. We aim to provide binary
     packages for common configurations of Spack packages.
 \end{enumerate}
+
+\newpage 
+\subsubsection{\stid{5.03} LLNL ATDM SW Ecosystem \& Delivery: Flux}
+
+\paragraph{Overview}
+{\bf Flux} is a next-generation workload management
+framework for HPC~\cite{flux}. Flux maximizes scientific throughput
+by assigning the scientific work requested by HPC users--–also
+known as jobs or workloads--–to available resources that complete
+the work, a method called scheduling. Using its highly scalable
+breakthrough approaches of fully hierarchical scheduling and
+graph-based resource modeling, Flux manages a massive number
+of processors, memory, GPUs, and other computing system
+resources--–a key requirement for exascale computing and beyond. 
+A job is typically expressed in a script that contains
+a formal specification for resource requests, identifies
+applications (for instance, multi-physics simulation software
+to run simultaneously across resources) along with their
+input data and environment, and describes how to deliver
+the output data. Modern scientific computing campaigns
+contain numerous interconnected and dependent tasks with
+disparate resource requirements. The composition of these
+numerous interdependent tasks can be spread across many jobs,
+as well as within each job, and is often referred to as a scientific
+workflow (as distinct from a single job or workload). Assigning
+resources to such modern workflows requires highly scalable
+scheduling as well as performant communication and coordination
+across hundreds of thousands of jobs, which could not be
+accomplished with traditional HPC schedulers. Flux solves this
+critical problem and has provided innovative solutions
+for modern workflows for many scientific and engineering
+disciplines.
+
+\paragraph{Key  Challenges}
+The workload manager is responsible for efficiently
+delivering compute cycles of HPC systems to multiple users while considering their
+diverse resource types---e.g., compute racks and nodes, central and graphics
+processing units (CPUs and GPUs), multi-tiered disk storage
+%
+However, two broad technical trends are making even the best-in-class
+products significantly ineffective.
+%
+The first trend is the evolution of workloads for HPC. With the convergence
+of conventional HPC with new simulation, data analysis, machine learning (ML),
+and artificial intelligence (AI) approaches, researchers are ushering in
+new scientific discoveries. But this evolution also produces computing
+workflows---often comprising many distinct tasks interacting with one
+another---that are far more complex than traditional products
+can sufficiently manage.
+%
+Second, hardware vendors have steadily introduced
+new resource types and constraints into HPC systems.
+Multi-tiered disk storage, CPUs and GPUs,
+power efficiency advancements, and other hardware components have gained
+traction in an era in which no single configuration reigns. Many HPC
+architectures push the frontiers of compute power with hybrid (or
+heterogeneous) combinations of processors.
+The workload management software must manage and consider {\em extremely heterogeneous} computing
+resources and their relationships for scheduling in order to realize a
+system's full potential.
+%
+
+\paragraph{Solution Strategy}
+Flux solves the key technical problems
+that emerge from these trends.
+It combines {\em fully hierarchical resource management}
+with {\em graph-based scheduling} to improve
+the performance, portability, flexibility,
+and manageability of the scheduling
+and execution of both standard and
+complex scientific workflows on a wide range of HPC systems.
+\begin{figure}[ht]
+   \subfloat[Conventional Paradigm]{
+        \begin{minipage}[c][1\width]{
+           0.48\textwidth}
+            \centering
+            \includegraphics[width=1.1\textwidth]{projects/2.3.5-Ecosystem/2.3.5.03-LLNL-ATDM-Ecosystem/Old}
+            \label{fig:old}
+         \end{minipage}}
+  \hfill
+   \subfloat[Emerging Paradigm] {
+         \begin{minipage}[c][1\width]{
+            0.48\textwidth}
+            \centering
+            \includegraphics[width=1.1\textwidth]{projects/2.3.5-Ecosystem/2.3.5.03-LLNL-ATDM-Ecosystem/New}
+            \label{fig:new}
+         \end{minipage}}
+ \caption{An illustration of how the computing resources allocated
+to a job---as granted by the HPC workload manager---differs between
+conventional and emerging scientific workflows. The notional X-axes
+depict the compute node IDs allocated to the job and Y-axes depict
+the IDs of computing resources in each of these nodes. (a) The conventional paradigm
+requires only a single parallel simulation application to run; (b) The emerging paradigm often requires many different types of tasks such as an ensemble of molecular dynamic (MD) parallel simulation applications and another ensemble of docking simulation applications along with {\em in situ} data analysis for the MD ensemble while these tasks are driven by an AI.}
+ \label{fig:layout}
+ \end{figure}
+Figure~\ref{fig:layout} visually contrasts
+the complexity of the conventional and
+new or emerging HPC paradigms in terms of
+how they utilize the resources allocated
+by the system's workload manager.
+Nearly all existing products were designed
+when the workflows were much simpler
+as shown in Figure~\ref{fig:old}.
+Yet, these solutions have significant difficulties with
+the emerging paradigm exemplified
+by Figure~\ref{fig:new},
+as well as with connecting and coordinating jobs.
+These problems have led users to develop their own {\em ad hoc}
+custom scheduling and resource management software or use tools
+that perform only workflow management or only scheduling.
+However, accomplishing sufficient job coordination {\em without}
+first-class support from a workload manager
+like Flux has already proven to be difficult
+for either approach.
+Perhaps more importantly, developing and maintaining {\em ad hoc} management
+software---especially in this era of ever-evolving HPC hardware
+architectures---has quickly become prohibitively expensive for
+supercomputing application teams.
+With Flux, a job script with multiple
+tasks submitted on a heterogeneous HPC system
+remains simple, requiring only a few more lines within
+the script.
+
+
+\paragraph{Recent Progress}
+Spurred by the growing convergence of conventional HPC and new simulation,
+data analysis, and ML/AI techniques, the computational science community
+has been embracing much more diverse workflow solutions than ever before.
+Flux has been able to provide innovative solutions for researchers,
+and our development team has brought a co-design strategy to early
+scientific use cases to improve functionality, performance, and scalability.
+
+\paragraph{Next Steps}
+Development of the system instance of Flux, which will enable it to
+be the primary system workload manager on exascale-computing-class supercomputers
+by 2023, is actively being pursued as additional features
+and performance/scalability tuning, commensurate with the capabilities
+of then these systems, are required.
+\begin{enumerate}
+    \item Add support for HPE's Rabbit-based multi-tiered storage scheduling and management within Flux;
+
+    \item Add support for Common Tools Interface (CTI)-based tool launching to enable HPE's proprietary code-development tools;
+
+    \item Variorum-enabled power monitoring/capping subsystem;
+
+    \item Respond agilely to the emerging needs of existing and new workflow customers. 
+
+\end{enumerate}
+
