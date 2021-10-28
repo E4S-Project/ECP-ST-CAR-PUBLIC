@@ -235,8 +235,9 @@ This ensures that no duplication of effort happens, and makes Kokkos a true inte
 
 Kokkos is used by many applications in production across the entire spectrum of DOE's super computers.
 Support for current production platforms is mature and stable.
-Work on supporting the upcoming Exascale platforms is underway and the primary Kokkos capabilities for AMD GPUs and Intel GPUs are working. 
-Initial application tests were successfully conducted with projects such as EXAALT/LAMMPS, ArborX and Cabana.
+Work on supporting the upcoming Exascale platforms is almost complete, with new backends for AMD GPUs and Intel GPUs working. 
+Initial application tests were successfully conducted with projects such as EXAALT/LAMMPS, ArborX, Trilinos and Cabana.
+Performance optimization work with applications is now ongoing, with a particular focus on the ORNL Frontier super computer.
 
 A training course was developed called "The Kokkos Lectures", which consists of about 15 hours of recorded lessons and over 20 hands-on exercises.
 It is available at \url{https://kokkos.link/the-lectures}.
@@ -248,13 +249,13 @@ Auto-tuning is now available as an integrated capability into Kokkos with user f
 At the C++ committee, the MDSpan proposal is now in wording review - meaning that the technical design is approved. 
 MDSpan will be able to provide all the core capabilities of Kokkos\:\:View.
 This includes compile and runtime extents, customizable layouts, and data access traits.
-The extension to heterogeneous memory can be achieved by trivial extensions. 
+The extension to heterogeneous memory can be achieved by trivial extensions.
 Furthermore, the atomic\_ref proposal was voted into C++20.
 This capability will provide atomic operations on generic allocations as powerful as Kokkos' atomic operations.
 In particular it allows atomic operations on types independent of their size, and not just the ones native in the hardware.
-A very recent development is the proposal for linear algebra functions.
+Another effort making steady progress is the proposal for linear algebra functions.
 It entails functionality covering all of BLAS 1, 2, and 3, but extends it to any scalar types (including mixing of scalar types) and batched operations.
-The proposal was approved by the relevant study groups, as well as the library evolution incubator group.
+The proposal has passed an initial major design review in the committee and is expected to be forwarded for wording review soon.
 The Kokkos team was also able to gain co-authors from NVIDIA, Intel and AMD - providing significant support from the leading hardware vendors.
 
 Implementations of those proposals are now available on GitHub. 
