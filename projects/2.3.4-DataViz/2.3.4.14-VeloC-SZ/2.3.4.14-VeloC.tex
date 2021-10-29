@@ -114,10 +114,10 @@ as analytics or compression).
 We met and closely collaborated with several ECP application teams in
 an effort to address their checkpointing needs. Most of our current
 efforts involve the HACC, LatticeQCD, and EXAALT teams. We also
-started integrating VELOC into NWChemEX. Based on feedback from
-several teams, we extended VELOC to support multiple communication
+started integrating VeloC into NWChemEX. Based on feedback from
+several teams, we extended VeloC to support multiple communication
 protocols that reduce dependencies on external libraries (such as
-Boost) if desired.  Furthermore, we added preliminary support for
+Boost) if desired.  We added preliminary support for
 checkpoint aggregation, which reduces the number of checkpoint files
 from one per rank to a desired smaller number.
 
@@ -130,8 +130,8 @@ from one per rank to a desired smaller number.
 Furthermore, we added several new capabilities. First, we added
 support for \emph{serialization} of C++ objects based on the notion
 of \emph{lambda serializers}, which register a recipe for
-serialization with VELOC that will be used during checkpointing. This
-recipe can be individually tuned for each data structure individually
+serialization with VeloC that will be used during checkpointing. This
+recipe can be individually tuned for each data structure 
 and may potentially mix different serialization libraries within the
 same checkpoint. Second, we added support to run the active backend as
 an application thread within a leading rank on each compute node. This
@@ -142,7 +142,7 @@ In addition, we have added several new features that facilitate better
 integration with the ECP ecosystem. We extended the series of tests
 (originally a minimal set based on Travis and linked with our public
 GitHub repository) to include a comprehensive set of combinations of
-scenarios, both for VELOC and its subcomponents. Furthermore, we
+scenarios, both for VeloC and its subcomponents. Furthermore, we
 devised a series of multi-node tests specifically designed for
 HPC scenarios running on ECP testbeds. These tests were also integrated
 with the continous integration infrastructure maintained by ECP
@@ -152,7 +152,7 @@ OpenHPC distribution.
 
 We also started several exploratory directions that resulted in
 several research publications. Notably, we explored how to integrate
-VELOC with performance-portable asbtractions such as Kokkos. Notably,
+VeloC with performance-portable asbtractions such as Kokkos. Notably,
 we proposed the notion of \emph{resilience portability} based on
 checkpointable memory views, which automates the definition of
 critical regions (otherwise manually identified by
