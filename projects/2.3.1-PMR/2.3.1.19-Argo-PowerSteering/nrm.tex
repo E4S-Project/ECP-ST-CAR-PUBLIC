@@ -40,7 +40,7 @@ in the sense that it performs an active accounting of two types of interfaces
 for those workloads: sensors and actuators. These abstracted components are
 available through an upstream API which enables their discovery and management.
 
-The NRM daemon supports power actuators, as well as` sensors based on CPU counters
+The NRM daemon supports power actuators, as well as sensors based on CPU counters
 and power information. We also provide a simple API that application processes
 can use to periodically update the NRM on their progress. This gives NRM
 reliable feedback on the efficacy of its power policies, and it can also
@@ -55,7 +55,7 @@ the configuration of actuators and active polling sensors based on arbitrary
 executables. The figure on the right shows a reading of NRM's sensor
 outputs for two RAPL sensors along with CPU counter instrumentation. In order
 to provide these capabilities, the NRM daemon manages the launching, management,
-and stopping of parallel workloads through an unified interface. Resources
+and stopping of parallel workloads through a unified interface. Resources
 can be dynamically reconfigured at run time; these interfaces are provided
 for use from applications and from global services.
 
@@ -74,40 +74,48 @@ figure on the left.
 
 \paragraph{Recent Progress}
 
-The NRM daemon has undergone major improvements. In order to improve the
-software quality and overall reliability of NRM, the core business logic
-of the NRM daemon has been externalized in a shared library, written in the
-statically typed language Haskell. This NRM version is pending an upcoming
-release. Our custom CI pipeline also has been improved, with the addition
-of unit tests and enrichment of existing functional tests. We are still in
-the process of leveraging ECP testing infrastructure.
+The NRM daemon continues to undergo major improvements in its interfaces to
+interact with the rest of the system. This includes improvements to the
+upstream API to allow for a passthrough mode, where NRM only manages the
+collection of events from sensors and discovery and management of actuators
+but does not enforce any control policy by itself. This passthrough mode
+was used successfully to explore alternative control schemes inspired by
+autonomic computing and a first integration with GEOPM (acting as the
+global control loop across nodes). These efforts also led to the
+improvement of the python interface offered by NRM.
 
-NRM has recently added support for multi-armed bandit based control policies.
-In order to make this work as robust as possible, it has been
-compartmentalized into a software library (\textit{hbandit}). \textit{hbandit}
-implements statically typed, independently tested versions of the relevant
-machine learning algorithms.
+We continue to improve our support for various sensors expected to be of
+value on exascale systems, with the inclusion of an OMPT interface to
+monitor OpenMP activity in controlled applications similar to our existing
+PMPI support. 
 
-NRM now offers a Python support library for upstream control. This library is
-intended for workload-specific control algorithm experiments.
+Our support for actuators is also growing, with the support for launching
+an arbitrary command as an actuator, including the ability of the command
+to receive information (pid) about an application as arguments. 
 
 We continue supporting the \texttt{libnrm} C library that can be linked to
-applications in order to provide reports on application progress to NRM. We have
-instrumentation for EXAALT, QMCPACK, ExaSMR, AMG, Stream, and CANDLE.
-This capability gives us insight into the effect of our resource management
-policies on the run-time behavior of user codes.
+applications in order to provide reports on application progress to NRM. We
+have recently improved this interface to increase the resolution of the
+timestamps associated with events, allowing for nanosecond precision in the
+monitoring of fast events.
 
 \paragraph{Next Steps}
 
-We are working on a report to showcase the use of NRM's current autonomic
-resource management strategies in the context of workload energy minimization,
-through the use of RAPL control and application feedback.
+We are working on significantly improving the handling of sensor readings
+(events) within the NRM. This includes gathering more metadata about the
+physical location (on the topology) and scope (logic section of
+code/thread/rank) that sensors report information about.  We are also
+looking into a more flexible mechanism to handle smoothing/integration of
+sensor data across time: indeed, a critical component of any control loop
+is its ability to understand how the system behaved since the last control
+action. We are investigating possible designs to allow users to configure
+how such integration should be done, as it currently only allows for
+averaging data across time windows.
 
-We are also working on expanding the set of ECP applications that are
-instrumented to report their progress to NRM, as well as validation of the
-infrastructure on multiple ECP platforms.
+We are also working on slightly modifying the NRM infrastructure to allow
+for it to be installed from Spack, delegating some of its privileged
+operations to external tools (i.e., no admin rights needed anymore in the
+core infrastructure).
 
-We are planning to expand the list of resources managed by NRM by
-adding support for other vendor-specific mechanisms, as well as better
-integration with other ECP system software (job schedulers, application
-tracing, and power interfaces).
+We are planning to expand the list of resources managed by NRM by adding
+support for other vendor-specific mechanisms as well.

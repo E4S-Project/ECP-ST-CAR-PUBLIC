@@ -12,87 +12,69 @@
 %% 	\end{enumerate}
 %% }
 
-
 \paragraph{Overview}
-OpenMP is a directive-based API for intra-node programming that is widely used  in ECP applications. Implementations of OpenMP and  tools to facilitate OpenMP application development.are available in all DOE LCFs.  
-The specification is supported by a stable community of vendors, research labs, and academics who
-participate in the efforts of the  OpenMP Architecture Review Board (ARB) and its Language Committee to evolve its features.
-The mission of the SOLLVE project is to further enhance  OpenMP and its implementations to meet the performance and productivity goals of ECP applications. 
+OpenMP is a directive-based API for intra-node programming that is widely used  to paralellize and accelerate large complex scientific applications including the ones that are of importance to ECP and beyond. Implementations of OpenMP and  tools to facilitate OpenMP application development are available in all DOE LCFs. The specification is supported by a number of community of vendors, research labs, and academics who participate in the efforts of the OpenMP ARB and its Language Committee to evolve its features. The mission of the SOLLVE project is to further enhance OpenMP and its compiler and runtime implementations to meet the performance and productivity goals of ECP applications while these applications are being prepared to run on existing and upcoming large scale computing systems. 
 
-SOLLVE has identified open ECP application software requirements, developed features and/or implementation technology to address them, and created use cases that motivate the need for enhancements. 
- The project continues to identify needs and works to standardize them via 
-%In addition to 
-active participation in the deliberations of the Language Committee.  
-%SOLLVE has moreover produced 
-% prototype
-%implementations of key new features to support their rapid adoption.
+SOLLVE has been identifying OpenMP features and creating implementations to standardize them via active participation in the deliberations of the Language Committee. It is constructing a high-quality, robust OpenMP implementation based on the LLVM compiler. SOLLVE members have been working closely with the application developers in order to understand the needs the gaps in the specification, create use cases to motivate new feature requirements that would enable better parallelization and acceleration along with porting and migration of ECP applications to computing systems. SOLLVE has also been developing a verification and validation (V\&V) suite to assess implementations and enable evaluations by DOE facilities including computing systems from ORNL, Argonne, NERSC as well pre-exascale testbeds, NSF infrastructure like Jeststeam and other academic systems. 
 
-The project is  developing a verification and validation (V\&V) suite to assess implementations and
-enable evaluations by DOE  facilities. It is constructing a high-quality,  robust 
-OpenMP implementation based on the LLVM compiler. 
 %%% BC put in suitable place: resolution of various interoperability 
- SOLLVE plays a critical
-role in specifying, implementing, promoting, and deploying functionality
-that will enable ECP application developers to reach their goals using OpenMP.
-%The project will demonstrate the high impact of new features via their use in selected
-%ECP applications.
+ SOLLVE plays a critical role in specifying, implementing, promoting, and deploying functionality that will enable ECP application developers to reach their goals using OpenMP.
+%The project will demonstrate the high impact of new features via their use in selected ECP applications.
 
-\paragraph{Key  Challenges}
+\paragraph{Key Challenges}
 %\textit{Describe what is hard to do, why it is challenging.}
 %need more features, need more implementations (with quality)
 Gaps in OpenMP functionality exist as a result of the rapid evolution of node architectures and  base programming languages, as well as a lack of focus on performance portability before version 5.0.  
  Since vendor representatives dominate the  OpenMP Language Committee, effort is needed  to secure their support with regard to the scope of the API, as well as  the syntax and semantics of new features.
 
 %large feature set, many new features are important for ECP
-The API has greatly expanded in recent years as some of these gaps are closed, placing a large burden on its implementers. 
-The timely provision of  robust implementations of new features that are critical for ECP is therefore particularly challenging.
+The API has greatly expanded in recent years as some of these gaps are closed, placing a large burden on its developers. The timely provision of robust implementations of new features that are critical for ECP is therefore particularly challenging.
 %%Must we delete this line?
-For performance portability, consistent approaches in multiple implementations is highly desirable. Interoperability concerns have emerged as a  new challenge.
- 
- %need help to get good performance. 
+For performance portability, consistent approaches in multiple implementations is highly desirable. Interoperability concerns have emerged as a new challenge.
 
+ %need help to get good performance. 
 Given the lack of availability of implementations with features that target accelerators, many existing codes have used alternative APIs for GPUs: a significant effort will be required to replace those approaches by OpenMP. A broad effort is required to develop and apply best practices for new features and platforms. 
 
 \paragraph{Solution Strategy}
 We address the challenges by focusing on the following primary activities:
 
 \begin{enumerate}
+
 \item {\bf Application requirements}
-Ongoing in-depth interactions with selected ECP application teams have resulted in a list of required extensions, some of which have been met by the recent 5.0 specification.  New needs are being identified. This work informs all other project activities by producing use cases, detailed feedback and example codes. It moreover contributes to the OpenMP Examples document. 
+Ongoing in-depth interactions with selected ECP application teams have resulted in a list of required extensions, some of which have been met by the recent 5.x specification.  New needs are being identified, including performance of OpenMP features in applications. This work informs all other project activities by producing use cases, detailed feedback and example codes. 
+
 \item {\bf OpenMP specification evolution}
-Members of the SOLLVE project are active participants in the OpenMP Language committee.  The project creates early prototypes for new features based on ECP use cases, develops concrete proposals and submits them for standardization. Several proposed features  were included in OpenMP 5.0, ratified November 2018. More are under development for version 5.1.
+Members of the SOLLVE project are active participants in the OpenMP Language committee. The project creates early prototypes for new features based on ECP use cases, develops concrete proposals and submits them for standardization. Work has also been done to contribute to the OpenMP Examples document in the OpenMP Specification. 
+%Several proposed features were included in OpenMP 5.0, ratified November 2018. More are under development for version 5.1.
+
 \item {\bf LLVM  Compiler}
-SOLLVE implements new OpenMP features in the LLVM compiler and develops analyses and transformations that enhance, and provide consistency to, OpenMP performance. Its open source solutions may be leveraged in vendor compilers.
-The compiler is available on LCF platforms.
-\item {\bf Lightweight OpenMP runtime}
-The BOLT runtime, built upon ultra-lightweight threading, addresses the need for efficient nested parallelism and improved task scheduling, it develops better support for interoperability with MPI. BOLT is integrated and delivered with the project's LLVM compiler. 
-\item {\bf Validation and Verification (V\&V)} 
-A V\&V suite is being implemented that allows vendors, users and facilities to assess the coverage
-and standard compliance of OpenMP implementations. A ticket system for bug reporting and inquiries has also been deployed to facilitate interaction with end users.
+SOLLVE implements new OpenMP features in the LLVM compiler and develops analyses and transformations that enhance, and provide consistency to, OpenMP performance. Its open source solutions may be leveraged in vendor compilers. The compiler is available on LCF platforms.
+
+\item {\bf OpenMP runtime systems} 
+%Work on experimental OpenMP runtime systems provide support during application execution of many features supported in SOLLVE's OpenMP implementation. 
+BOLT, an experimental runtime built upon ultra-lightweight threading, addresses the need for efficient nested parallelism and improved task scheduling, and it develops better support for interoperability with MPI. BOLT is integrated and delivered with the project's LLVM compiler. A prototype library for OpenMP task scheduling across heterogeneous processors is also being investigated. 
+
+\item {\bf Validation and Verification (V\&V)}
+A V\&V suite is being developed that allows vendors, users and facilities to assess the coverage and standard compliance of OpenMP implementations. A ticket system for bug reporting and inquiries has also been deployed to facilitate interaction with end users.
 \item{\bf Training and Outreach}
- Tutorials and webinars are delivered to provide information on OpenMP features and their usage, as well as updating on the status of  %their support in vendor and open source 
+ Tutorials and webinars are delivered to provide information on OpenMP features and their usage, as well as updating on the status of 
  implementations. Deeper interaction with application programmers via hackathons supports the development of ECP codes using all available OpenMP features.
 %  also provides immediate feedback to compiler and tool developers as the application teams experiment with the use of new features.  
 \end{enumerate}
 %%revision needed starting here: publications from IWOMP, Lingda, etc.
 
-
 \paragraph{Recent Progress}
-Figure \ref{fig:sollve-update} shows the latest progress on the 5 core SOLLVE
-thrust areas. The {\bf training and outreach} activity is a
-cross-cutting effort which is supported by resources from SOLLVE and  ECP Broader Engagement,
- with contributions by external collaborators, notably Lawrence Berkeley National
-Laboratory.   
+Figure \ref{fig:sollve-update} shows the latest progress on the 5 core SOLLVE thrust areas. The {\bf training and outreach} activity is a
+cross-cutting effort which is supported by resources from SOLLVE and ECP Broader Engagement, with contributions by external collaborators, notably Lawrence Berkeley National Laboratory.   
 %Oak Ridge and Delaware are not external so I commented this out in the hope it can benefit the figure
 %project and
 %external partners, namely collaborators from Lawrence Berkeley National
 %Laboratory, Oak Ridge, University of Delaware and other academic institutions.
-A number of articles have also been published
-as part of the SOLLVE
+A number of articles have also been published as part of the SOLLVE
 effort~\cite{openmp-tr6,zinenko.cc.2018,vandv2019,
 tregion, Mishra:2019:KFA:3314872.3314915, udm, loopTransPragmas,ompautotuneFramework, osti_1559911, 
 DBLP:conf/iwomp/ScoglandSOHES19, DBLP:conf/iwomp/0001WLSS19,
-DBLP:conf/iwomp/KaleIKKC19, Bak2019OptimizedEO, lsrt, boltPACT19, machlearnoffload, DBLP:conf/sc/MishraLKFC17, Bak2019OptimizedEO}.
+DBLP:conf/iwomp/KaleIKKC19, Bak2019OptimizedEO, lsrt, boltPACT19, machlearnoffload, DBLP:conf/sc/MishraLKFC17, Bak2019OptimizedEO, portOmpOff,kruse2021clangast}.
 
 %DBLP:conf/iwomp/SreenivasanJHBS19,
 %% The value that SOLLVE brings to ECP is observed in the ease of leveraging
@@ -104,6 +86,7 @@ DBLP:conf/iwomp/KaleIKKC19, Bak2019OptimizedEO, lsrt, boltPACT19, machlearnofflo
 \includegraphics[width=1.0\linewidth,height=9.1cm]{projects/2.3.2-Tools/2.3.2.11-SOLLVE/SOLLVE-progress}
 \caption{\label{fig:sollve-update}SOLLVE thrust area updates}
 \end{figure}
+
 %\textit{Describe what you have done recently.  It would be good to have some kind of figure or diagram in this section.}
 
 \paragraph{Next Steps}
@@ -111,13 +94,13 @@ The following next steps are planned:
 \begin{itemize}
 \item Applications: Continue to interact with ECP applications teams, evaluate implementations of new features and explore new requirements; identify best practices for the use of OpenMP on accelerators;
 
-\item OpenMP specification: Continue work toward the next version of the standard via ECP-motivated feature development and participation in the OpenMP Language Committee: version 5.1 is underway and due for release November 2020;
+\item OpenMP specification: Continue work toward the next version of the standard via ECP-motivated feature development and participation in the OpenMP Language Committee: version 5.2 is underway and due for release November 2021;
 
 \item LLVM compiler: Improve performance of device offloading and optimize generation of code within target devices; generalize to enable reuse across multiple offloading architectures; develop infrastructure to support integration of Fortran front end; increase parallel region performance; implementation of OpenMP 5.1 loop transformations;
 
-\item OpenMP runtime: Provide support for 5.0 spec; address broader set of interoperability challenges including MPI+OpenMP codes using BOLT; address advanced tasking requirements; 
+\item OpenMP runtime: Provide support for 5.x spec; address broader set of interoperability challenges including MPI+OpenMP codes using BOLT; address advanced tasking requirements, including on heterogenous nodes of ECP Systems.
 
-\item V\&V suite: Continue expanding the coverage of the V\&V Suite, with focus on 5.0 features and additions and corrections to 4.5 tests as OpenMP implementations mature; expand Fortran tests; work with ARB Examples Committee; improve ALCF toolchains; more vendor interactions.
+\item V\&V suite: Continue expanding the coverage of the V\&V Suite, with focus on 5.1 features along with additions and corrections to 4.5 and 5.1 tests as OpenMP implementations mature; expand Fortran tests; work with ARB Examples Committee; improve ALCF toolchains; more vendor interactions.
 \end{itemize} 
 
 %\textit{Describe what you are working on next.}

@@ -1,8 +1,9 @@
 \subsubsection{\stid{2.10} PROTEAS-TUNE: LLVM} 
+\label{sec:PROTEAS_TUNE_LLVM}
 
 \paragraph{Overview}
 
-LLVM, winner of the 2012 ACM Software System Award, has become an integral part of the software-development ecosystem for optimizing compilers, dynamic-language execution engines, source-code analysis and transformation tools, debuggers and linkers, and a whole host of programming-language and toolchain-related components. Now heavily used in both academia and industry, where it allows for rapid development of production-quality tools, LLVM is increasingly used in work targeted at high-performance computing. LLVM components are integral parts of the programming environments on our upcoming Exascale systems, and smaller-scale systems as well, being not only popular open-source dependencies, but are critical parts of the commercial toolchains provided by essentially all relevant vendors.
+LLVM, winner of the 2012 ACM Software System Award, has become an integral part of the software-development ecosystem for optimizing compilers, dynamic-language execution engines, source-code analysis and transformation tools, debuggers and linkers, and a whole host of programming-language and toolchain-related components. Now heavily used in both academia and industry, where it allows for rapid development of production-quality tools, LLVM is increasingly used in work targeted at HPC. LLVM components are integral parts of the programming environments on our upcoming Exascale systems, and smaller-scale systems as well, being not only popular open-source dependencies, but are critical parts of the commercial toolchains provided by essentially all relevant vendors.
 
 \paragraph{Key Challenges}
 
@@ -23,8 +24,8 @@ We are developing two significant enhancements to LLVM's core infrastructure, an
 \item Enhancements to LLVM's loop-optimization infrastructure to allow the direction of a sequence of loop transformations to loop nests, exposing these features to users through Clang pragmas (in addition to being available at an API level to tools such as autotuners), enabling those transformations to execute as specified, and otherwise enhancing the loop-optimization infrastructure.
 \end{itemize}
 
-As part of this project, we're investigating both fundamental intermediate
-representation (IR) level enhancements (as part of the Kitsune development), as
+As part of this project, we're investigating both fundamental 
+IR level enhancements (as part of the Kitsune development), as
 well as runtime call aware optimizations that deal with the classical lowering
 of parallelism into runtime calls. The latter mechanism is being implemented
 upstream as an OpenMP optimization pass, while the Kitsune work is, at present,
@@ -52,18 +53,13 @@ view. Our approach was already discussed with the community and needs to be
 further refined and tested.
 
 For loop optimizations, we have implemented several new features in LLVM and
-Clang, including the OpenMP 5.1 ``tile'' directive and clang pragma syntax for
-exploration of future transformations not yet available through the OpenMP
-standard. Most of these enhancements are in papers
-(~\cite{kruse2018user,kruse2018loop} and in several forums directly to the LLVM
-community.
+Clang, including the OpenMP 5.1 ``tile'' directive and the ``unroll'' directive~\cite{kruse2021openmpbooth}.
+We also continued development of the OpenMPIRBuilder which refactors Clang's OpenMP lowering such that is can also be used from MLIR, specifically Flang.
+The OpenMPIRBuilder now also supports OpenMP 5.1 loop transformations and Clang can make use of either of the two lowering paths~\cite{kruse2021clangast}.
 
-In a more forward looking approach we prototyped a loop-hierarchical IR for
-LLVM which we also present and discuss in various LLVM community forums.
-
-To facilitate autotuning (ref. Section \ref{sec:PROTEAS_TUNE_AUTOTUNING}), we
-implemented a loop nest information extraction tool for
-LLVM-IR~\cite{kruse2020search}.
+To facilitate autotuning (ref. Section \ref{sec:PROTEAS_TUNE_AUTOTUNING}), we further
+enhanced the semantics-preserving implementation of loop transformations using Polly~\cite{wu2021autotuning}.
+Additional supported loop transformations include array packing, unroll, unroll-and-jam, loop distribution and fusion.
 
 We have developed a prototype C++ compiler, based on Clang, supporting an
 extension that enables programmers to embed (domain specific) languages inside
@@ -72,6 +68,11 @@ Clang plugin to bridge the gap between classical code, e.g., C or C++, and code
 written in a different language, e.g., a quantum or tensor domain specific
 language (DSL). The latter two examples have been successfully prototyped as
 well.
+
+In support of the Clacc project~\ref{s:clacc}, we developed a compiler
+pass from a subset of OpenACC to Tapir, building on the Kitsune
+project. This enables optimizations and alternative backends to the
+primary compilation path of Clacc.
 
 All our efforts have also been featured in many talks, tutorials, and so on at
 LLVM developers' meetings over the last couple of years.
@@ -92,6 +93,12 @@ Parallelism specific optimizations will further be improved through Attributor
 enhancements upstream and more capabilities for the OpenMP-aware aware
 optimization pass. Generalization of the latter to other parallel models is
 planned as well.
+
+Building on existing and in-progress MLIR efforts, e.g.
+FLACC~\ref{s:flacc} and Kitsune, we will develop Tapir backends for
+multiple parallel MLIR dialects, including the OpenACC MLIR dialect.
+This should show the advantages of multiple levels of parallelism
+awareness in compiler representations.
 
 To enable optimizations across the host-device boundary we are continuing to
 work on heterogeneous LLVM-IR modules in order to integrate them into upstream

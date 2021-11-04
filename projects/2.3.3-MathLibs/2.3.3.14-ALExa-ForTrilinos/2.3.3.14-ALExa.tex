@@ -4,11 +4,11 @@
 \paragraph{Overview}
 
 The ALExa project ({\sl Accelerated Libraries for Exascale}) focuses on
-preparing the ArborX, DTK, Tasmanian, and ForTrilinos libraries for exascale
+preparing the ArborX, DataTransferKit (DTK), Tasmanian, and ForTrilinos libraries for exascale
 platforms and integrating these libraries into ECP applications.
 These libraries deliver capabilities identified as needs of ECP applications:
 %
-(1) the ability the perform performance portable spatial searches between
+(1) the ability to execute performance portable spatial searches between
 arbitrary sets of distributed geometric objects (ArborX);
 %
 (2) the ability to transfer computed
@@ -24,7 +24,7 @@ optimization and efficient multi-physics simulations in projects such as
 ExaStar (Tasmanian); and
 %
 (4) the ability to automatically interface Fortran-based codes to existing
-large and complex C/C++ solftware libraries, such as Trilinos advanced solvers
+large and complex C/C++ software libraries, such as Trilinos advanced solvers
 that can utilize next-generation platforms.
 
 
@@ -116,7 +116,7 @@ Applied to Trilinos, it generates object-oriented Fortran 2003 interface code
 that closely mirrors the Trilinos C++ API.
 
 {\it Significance:}
-The Exascale Computing Project (ECP) requires the successful transformation and
+The ECP requires the successful transformation and
 porting of many Fortran application codes in preparation for ECP platforms. A
 significant number of these codes rely upon the scalable solution of linear and
 nonlinear equations. The Trilinos Project contains a large and growing
@@ -210,19 +210,20 @@ a C++ code base with extensive unit testing on multiple platforms.  Trilinos
 packages are used to support interpolation methods.  Kokkos is used to achieve
 performance portability across accelerated platforms.
 
-{\bf Tasmanian:} The C++ kernels within Tasmanian (currently tuned for Nvidia
-Volta architecture) are templated exposing numerous performance tweaks and
-tuning parameters that can be adjusted to perform well on a corresponding AMD
-system.
-The kernels also need to be ported to DPC++/SYCL to allow for the utilization
-of Intel GPUs. Tasmanian requires a general GPU-BLAS interface that can
+{\bf Tasmanian:} The C++ CUDA/HIPO kernels within Tasmanian are templated exposing
+numerous performance tweaks and tuning parameters that can be adjusted to
+perform well on a corresponding Nvidia/AMD system.
+The kernels are also ported to DPC++/SYCL to allow for the utilization
+of Intel GPUs. Tasmanian also links to general GPU-BLAS interfaces that can
 utilize any of the accelerated backends, e.g., cuBlas, rocBlas, MKL and MAGMA.
 
 {\bf ForTrilinos:}
 ForTrilinos defines several SWIG-Fortran modules that generate Fortran-2003
 interfaces to C++ Trilinos solver classes. ForTrilinos provides a
 ``high-level'' interface for applications to access nonlinear and eigenvalue
-solvers in addition to low-level Trilinos classes.
+solvers in addition to low-level Trilinos classes. The SWIG-Fortran methodology
+is applicable to other ECP projects and has been used strategically to provide
+low-maintenance Fortran wrappers for several other ST codes.
 
 %----------------------------------------
 
@@ -230,48 +231,31 @@ solvers in addition to low-level Trilinos classes.
 
 \indent
 
-{\bf ArborX:} Collaboration with partner application ExaSky (WBS 2.2.3.02)
-resulted in significant advances for the in-situ density-based clustering
-algorithm (halo finding) using Nvidia GPUs.
+{\bf ArborX:} The team developed several new features in ArborX to support
+applications. For the analysis of the cosmological data in the ExaSky
+project, we developed a fast performance-portable algorithm to compute DBSCAN
+(Density-based spatial clustering of applications with noise) clustering. It
+speeds up the halo-finding algorithm (one of the most expensive elements in the
+cosmological analysis pipeline) by more than $15\times$. For the stretched
+inclined geometries of the wind turbine simulations in the ExaWind project,
+ArborX now provides a new k-DOP bounding volume.
 
-\begin{figure}[htb]
-        \centering \includegraphics[width=4.0in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/arborx_hacc_progress.png} \caption{\label{fig:arborx-hacc}
-        ArborX progress on halo finding algorithm on Nvidia Volta. The baseline
-        is a serial implementation of CosmoTools. Numbers indicate speedup
-        compared to the baseline. The solid lines show improvements that were
-        already merged. Dashed lines show improvements that are in active
-        development. }
-\end{figure}
+{\bf Tasmanian:} Work with partner application ExaStar (2.2.3.01) performed
+multiphysics simulations on OLCF Summit using the Nvidia Volta GPUs.
+The Fortran interface of Tasmanian was extended (using Swig-Fortran)
+to expose the necessary C++ methods. Utilizing the GPUs yields a near 10x
+performance boost, which is consistent with the Tasmanian stand-alone test
+indicating that the Thornado-Tasmanian interface does not incur appreciable
+overhead.
 
-{\bf DTK:} DTK's build system has been rewritten. DTK now depends on Trilinos
-instead of being built as an external package. DTK is now a separate package in
-spack. In the future this will allow a decoupling between Trilinos version and
-DTK version. A new spline interpolation method has been added.
-
-{\bf Tasmanian:} Work with partner application ExaStar (2.2.3.01) created a
-reduced representation of neutrino opacities used by the Thornado simulation
-software. The classical representation uses dense tables that do not fit in
-GPU memory and lead to unnecessary and expensive data movement for each time-step.
-The reduced representation by Tasmanian preserved the accuracy of the simulations
-and dramatically reduces the memory footprint by removing redundancies
-and exploiting smoothness in the data.
-
-\begin{figure}[htb]
-        \centering
-        \includegraphics[width=2.5in]{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/tasmanian_exastar}
-\caption{\label{fig:tasmanian-exastar}
-		The resulting neutrino and antineutrino distributions in a deleptonization
-		wave simulation using sparse grid opacities, which require only 6\% of
-		the memory used in the dense approach, with relative $L^2$ error less than 1\%.}
-\end{figure}
-
-{\bf ForTrilinos:}
-As with DTK, ForTrilinos now has an independent build system with Trilinos as a
-dependency. This improves robustness of the build and makes ForTrilinos
-available to app developers even if a system installation of Trilinos does not
-enable Fortran. ForTrilinos is now independently available through the Spack
-package manager. New ST libraries including Tasmanian have been wrapped with the
-SWIG-Fortran utility.
+{\bf ForTrilinos:} This year has focused on wrapping up development of
+ForTrilinos and applying SWIG-Fortran to other ECP projects. We released Flibcpp
+1.0.0, a set of Fortran interfaces to the C++ standard library to supplement
+ForTrilinos. We released ForTrilinos 2.0.0 based on ForTrilinos 13. New
+documentation for Flibcpp and SWIG-Fortran were published as ORNL technical
+memoranda. SWIG-Fortran gained support for C and C++ complex numbers.
+We applied SWIG-Fortran to other ECP projects and C/C++ libraries, generating
+Fortran wrappers for METIS/ParMETIS, STRUMPACK, and Tasmanian.
 
 %----------------------------------------
 
@@ -279,20 +263,21 @@ SWIG-Fortran utility.
 
 \indent
 
-{\bf ArborX:} Incorporate non axis-aligned bounding volumes to accommodate
-stretched inclined geometries such as those coming from wind turbine
-simulations from ExaWind (WBS 2.2.2.01). Further improve performance of
-density-based algorithms.
+{\bf ArborX:} Continue improving performance of both the core and
+application-specific kernels and algorithms on all available accelerators.
+Expand search algorithms to accommodate multi-dimensional data.
 
 {\bf DTK:} Continue performance engineering campaign and deploy in a variety of
 applications.
 
-{\bf Tasmanian:} Port the surrogate evaluation kernels to AMD and Intel
-GPUs and optimize the performance on the next generation architectures
-(including next generation Nvidia GPUs).
+{\bf Tasmanian:} Tune the existing GPU kernels on the next generation
+GPU architectures from Nvidia, AMD and Intel.
+Extend the Tasmanian-libEnsemble integration to allow for advanced workflow
+management of libEnsemble (2.3.3.06) to be coupled with the asynchronous sampling
+methods within Tasmanian.
 
-{\bf ForTrilinos:} Extend ForTrilinos native Fortran interface documentation and
-prioritize Fortran app customer needs. Integrate SWIG into ECP ST projects that
-desire Fortran interfaces.
+{\bf ForTrilinos:} Complete documentation for ForTrilinos native Fortran
+interface. Continue maintenance and support for ForTrilinos, SWIG-Fortran, and
+related Fortran interfaces for other ECP projects.
 
 %----------------------------------------

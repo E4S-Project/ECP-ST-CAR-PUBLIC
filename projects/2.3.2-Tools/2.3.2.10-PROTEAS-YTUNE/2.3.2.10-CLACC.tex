@@ -1,6 +1,6 @@
 \subsubsection{\stid{2.10} PROTEAS-TUNE - Clacc: OpenACC in Clang and LLVM}\label{s:clacc}
 
-\newcommand{\todo}[1]{\textbf{\textcolor{red}{#1}}}
+%\newcommand{\todo}[1]{\textbf{\textcolor{red}{#1}}} use todonotes package
 
 \paragraph{Overview}
 
@@ -18,30 +18,31 @@ heterogeneous accelerators.  Championed by institutions like NVIDIA,
 PGI, and ORNL, OpenACC has evolved into one of the most portable and
 well recognized programming models for accelerators today.
 
-Despite the importance of OpenACC, the only non-academic open-source OpenACC
-compiler cited by the OpenACC website is GCC \cite{openaccOrgTools}.
-However, GCC has lagged behind commercial compilers, such as PGI's, in
-providing production-quality support for the latest OpenACC specifications
+Despite the importance of OpenACC, the only non-academic open-source
+OpenACC compiler cited by the OpenACC website is
+GCC \cite{openaccOrgTools}.  However, GCC has lagged behind commercial
+compilers, such as NVIDIA's, in providing production-quality support
+for the latest OpenACC specifications
 \cite{openACCValidationSuite}.  Moreover, GCC is known within the compiler
-community to be challenging to extend and, especially within the DOE, is
-losing favor to Clang and LLVM for new compiler research and development
-efforts.
+community to be challenging to extend and, especially within the DOE,
+is losing favor to Clang and LLVM for new compiler research and
+development efforts.
 
-\textit{Clacc}~\cite{clacc:2018:denny} is a major component of the
-PROTEAS-TUNE project.  Overall, the goal is to build on Clang and LLVM
-to develop an open-source, production-quality OpenACC compiler
-ecosystem that is easily extensible and that utilizes the latest
-research in compiler technology.  Such an ecosystem is critical to the
-successful acceleration of ECP applications using modern HPC hardware.
-The PROTEAS-TUNE objectives for Clacc are:
+\textit{Clacc}~\cite{clacc:2018:denny} is a major component of
+PROTEAS-TUNE.  Overall, the goal is to build on Clang and LLVM to
+develop an open-source, production-quality OpenACC compiler ecosystem
+that is easily extensible and that utilizes the latest research in
+compiler technology.  Such an ecosystem is critical to the successful
+acceleration of ECP applications using modern HPC hardware.  The
+PROTEAS-TUNE objectives for Clacc are:
 
 \begin{enumerate}
 
 \item Develop production-quality, standard-conforming OpenACC
-compiler and runtime support as an extension of Clang and LLVM.  Two
-compilation modes are being developed: (a) traditional mode, which
-produces a binary, and (b) source-to-source mode, which produces
-OpenMP source.
+compiler, runtime, and profiling support as an extension of Clang and
+LLVM.  Two compilation modes are being developed: (a) traditional
+mode, which produces a binary, and (b) source-to-source mode, which
+produces OpenMP source.
 
 \item As part of the design, leverage the Clang ecosystem to enable
 the future construction of source-level OpenACC tools, such as pretty
@@ -66,20 +67,21 @@ parallel programming communities.
 standards-conforming OpenACC compiler and runtime support is a large
 undertaking.  Complicating that undertaking further is the need for
 optimization strategies that are competitive with existing commercial
-compilers, such as PGI's, which have been developed over many years
+compilers, such as NVIDIA's, which have been developed over many years
 since before the conception of the OpenACC standard.
 
-\item \textbf{Source-to-Source:} Source-to-source translation to
-OpenMP significantly reduces the effort to implement OpenACC and
-offers additional capabilities, such OpenACC support for proprietary
-OpenMP compilers.  However, a known issue with Clang is that its AST,
-the source-level representation, was designed to be immutable.
-Moreover, the AST represents the source after preprocessor expansions,
-which harm readability and can prevent compilation with other
-compilers.  Finally, sophisticated analyses and optimizations are
-critical for lowering OpenACC's descriptive language to the more
-prescriptive language of OpenMP, but these are best implemented at the
-level of LLVM IR not the Clang AST.
+\item \textbf{Source-to-Source:} Lowering OpenACC to OpenMP
+significantly reduces the effort to implement OpenACC and offers
+additional capabilities, such OpenACC support for proprietary OpenMP
+compilers.  However, not all OpenACC features are actually
+representable in OpenMP.  Moreover, there are several challenges from
+Clang's AST, the source-level representation.  First, it was designed
+to be immutable.  Second, the AST represents the source after
+preprocessor expansions, which harm readability and can prevent
+compilation with other compilers.  Third, sophisticated analyses and
+optimizations are critical for lowering OpenACC's descriptive language
+to the more prescriptive language of OpenMP, but these are best
+implemented at the level of LLVM IR not the Clang AST.
 
 \item \textbf{Production-Quality:} Clang and LLVM are sophisticated tools
 with a complex codebase and a large team of developers who diligently screen
@@ -143,29 +145,24 @@ OpenACC.
 \setcounter{enumi}{2}
 
 \item To handle Clang's immutable AST, Clacc's design includes a
-TransformACCToOMP component that reuses a Clang feature called
-TreeTransform, which was originally designed for C++ template
-specializations.
+TransformACCToOMP component, which reuses Clang's TreeTransform
+feature, which was originally designed for C++ template
+specialization.
 
 \item To avoid preprocessor expansions in source-to-source mode, Clacc
-includes a RewriteOpenACC component that reuses a Clang feature called
-Rewrite.
+includes a RewriteOpenACC component, which reuses a Clang feature
+called Rewrite.
 
-\item To utilize LLVM IR analyses and optimizations, we are
-investigating ongoing efforts toward a parallel LLVM IR.  Clacc could
-use such an IR as a code generation target for OpenACC, either
-directly or after translation to OpenMP extensions Clacc would
-introduce to support OpenACC's descriptive features.
+\item To represent OpenACC features not covered by the OpenMP
+standard, Clacc is developing original OpenMP extensions.  To utilize
+LLVM IR analyses and optimizations, Clacc first translates OpenACC to
+our extended OpenMP, which Clacc then translates to LLVM IR.
 
 \item To stage our development effort, we are initially implementing
 Clacc with two simplifications: we are implementing a prescriptive
 OpenACC interpretation for correct behavior, and we are implementing
 for C.  We will then extend Clacc with necessary analyses for a
 descriptive interpretation and for C++.
-
-\item To ensure Clacc's successful implementation and eventual acceptance
-upstream, we continue design discussions with the Clang and LLVM
-communities via mailing lists and other relevant forums.
 
 \item Throughout Clacc development, we are continuously integrating the
 latest upstream Clang and LLVM changes, and we are running and
@@ -182,21 +179,25 @@ behavior and good performance.
 
 \begin{enumerate}
 \item
-  Extended Clacc to support additional features, including various
-  OpenACC directives and clauses related to data motion and OpenACC
-  Profiling Interface features motivated by integration with TAU.
+  Extended Clacc to support additional OpenACC features, most notably
+  the OpenACC runtime library routines, but also various directives,
+  clauses, environment variables, and associated profiling interface
+  functionality.  Developed various OpenMP extensions to support this
+  work.
 \item
-  Designed and prototyped various OpenMP extensions to support the
-  above, including OMPT extensions.
+  Extended Clacc's OpenACC support to AMD GPU offload, and extended
+  the LLVM DOE Fork's CI infrastructure to test Clacc on relevant
+  platforms, including AMD GPUs and OLCF's Ascent.
 \item
-  Developed Gitlab CI config for x86\_64, ppc64le, and nvptx64,
-  including a Summit node, on ORNL's ExCL cluster.
+  Contributed to Clang and LLVM, including LLVM testing infrastructure
+  support and original OpenMP extensions required for OpenACC support.
+  Contributed to the OpenACC and OpenMP specifications.
 \item
-  Performed preliminary GPU evaluation using SPEC ACCEL benchmarks.
-\item
-  Contributed numerous improvements to Clang and LLVM, including
-  OpenMP and LLVM testing infrastructure improvements, and to the
-  OpenACC specification.
+  Collaborated with the OpenACC organization to invite broader
+  participation in OpenACC LLVM development.  Efforts include docs for
+  the LLVM DOE Fork to guide potential collaborators, co-mentoring a
+  Google Summer of Code student, and organizing an OpenACC in LLVM
+  mini-workshop.
 \end{enumerate}
 
 
@@ -209,5 +210,5 @@ behavior and good performance.
   pursue OpenACC optimizations and C++ support.
 \item
   Continue contributions to upstream Clang and LLVM and to the OpenACC
-  specification.
+  and OpenMP specifications.
 \end{enumerate}

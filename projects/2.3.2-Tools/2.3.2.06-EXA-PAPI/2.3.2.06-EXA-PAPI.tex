@@ -11,15 +11,13 @@
 %the relationships between software performance and hardware events. 
 %These relationships provide a critical step toward improving performance.
 
-The Exa-PAPI 
-project is developing a new C++ Performance API (PAPI++) software package 
-from the ground up that offers a standard interface and methodology for using
+The Exa-PAPI project is developing new performance counter monitoring 
+capabilities as well as power management support for novel and advanced 
+ECP hardware, and software technologies.
+Exa-PAPI builds upon classic-PAPI functionality and strengthens its path to
+exascale with a standard interface and methodology for using
 low-level performance counters in CPUs, GPUs, on/off-chip memory, interconnects, 
 and the I/O system, including energy/power management. 
-PAPI++ is building upon classic-PAPI functionality and strengthening its path to
-exascale with a more efficient and flexible software design, one that takes 
-advantage of C++'s object-oriented nature but preserves the low-overhead 
-monitoring of performance counters and adds a vast testing suite.
 
 In addition to providing hardware counter-based information, a standardizing layer 
 for monitoring software-defined events (SDE) is being incorporated that exposes 
@@ -27,7 +25,8 @@ the internal behavior of runtime systems and libraries, such as communication an
 math libraries, to the applications. As a result, the notion of performance events is 
 broadened from strictly hardware-related events to include software-based 
 information. Enabling monitoring of both hardware and software events provides 
-more flexibility to developers when capturing performance information.
+more flexibility to scientific application developers when capturing performance 
+information.
 
 
 \paragraph{Key Challenges}
@@ -77,95 +76,111 @@ performance events that can be measured during execution.
 %components targeted at the deep and heterogeneous memory hierarchies that we
 %are already seeing in new architectures.
 
-In summary, the team will be channeling the monitoring capabilities of hardware 
-counters, power usage, software-defined events into a robust PAPI++ software 
-package. PAPI++ is meant to be PAPI's replacement---with a more flexible and 
-sustainable software design.
+In summary, the team is channeling the monitoring capabilities of hardware 
+counters, power usage, software-defined events into a robust PAPI software 
+package. 
+%PAPI++ is meant to be PAPI's replacement---with a more flexible and 
+%sustainable software design.
+%
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.88\linewidth]{projects/2.3.2-Tools/2.3.2.06-EXA-PAPI/papi_sde.pdf}
+\caption{Existing PAPI SDE C API and new SDE C++ API.}
+\label{fig:papi_sde}
+\end{center}
+\end{figure}
 
 
 \paragraph{Recent Progress}
 
-The Exa-PAPI team shipped the PAPI 6.0.0 release on March 4, 2020. This release 
-includes a new API for Software Defined Events (SDEs), a major revision of the 
-high-level API, and several new components, including ROCm and ROCm\_{SMI} for AMD GPUs, 
-powercap\_{ppc} and sensors\_{ppc} for IBM Power9 and later, the SDE component to expose 
-software-defined events through the standard PAPI interface, and the IO component that 
-exposes I/O statistics exported by the Linux kernel. 
+The Exa-PAPI team is in the process to prepare a major release---PAPI 7.0.0---scheduled
+to be shipped in November 2021. For this release, the team has  
+designed and developed a C++ API for utilizing PAPI's software-defined events (SDEs) 
+from within third-party libraries and applications that are written in C++. 
+This is a major addition to the already implemented and released 
+C and FORTRAN APIs for the PAPI SDE functionality (shipped with PAPI 6.0.0 in 
+March 2020). The example code in Figure~\ref{fig:papi_sde} demonstrate  the 
+C and C++ API for PAPI SDEs. 
+%
 
 \vspace{10pt}
-Furthermore, PAPI 6.0.0 ships CAT, a new Counter Analysis Toolkit that assists with native 
-performance counter disambiguation through micro-benchmarks. 
-Performance in different CPU architectures can be monitored by reading the occurrences 
-of various hardware events. However, from architecture to architecture, it is not clear which 
-native hardware events are indexed by which event names, making it difficult for the 
-performance analyst to understand how to measure specific events.
-To alleviate this difficulty, CAT aims to measure the occurrences of events through a series 
-of benchmarks, classify particular events of interest via data analysis of the patterns of 
-event occurrences, and allow its users to discover the high-level meaning of native events.
+Furthermore, PAPI 7.0.0 will release newly developed support for the latest monitoring
+features on the Intel Gen9 GPUs. 
+This was accomplished under NDA and in very close collaboration with the Intel team. 
+The new PAPI capabilities for monitoring Intel Gen9 include GPU hardware 
+events, and memory performance metrics (bytes read/written/transferred from/to L3).
+Monitoring of GPU and memory performance counters aids developers in producing
+more efficient code by profiling the utilization of the latest GPU resources and
+diagnosing performance bottlenecks.
+The objective of this development was to  
+%a mechanism to collect Intel
+%GPU performance metrics via PAPIÕs well known interface and without any additional
+%efforts from the users.
+%In our approach, through the PAPI component framework, we 
+enable transparent access
+to the Gen9 performance and memory metrics via Intel's OneAPI Level-Zero Interface.
+A unique feature of this development enables users to apply two different collection modes 
+via the PAPI interface:\\
+The Time-based Collection Mode:
+\begin{itemize}
+\item Counter values are aggregated and stored in a buffer.
+\item Counter values can be read at any given time during the execution, which means
+performance counter monitoring is completely autonomous from the kernels
+running in the GPUs.
+\end{itemize}
 %
-The examples in Figure~\ref{fig:cat_flops} show the results from the CAT floating-point tests used to 
-verify single- and double-precision FLOP counters on three different CPU architectures 
-(Intel Broadwell, Intel Skylake, IBM POWER9 CPU). Our paper~\cite{toolsWS-2020-09} discussed 
-how to monitor bandwidth and arithmetic intensity with PAPI and CAT.
-%
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=0.7\linewidth]{projects/2.3.2-Tools/2.3.2.06-EXA-PAPI/cat-DP-flops-arch-comparison-1.pdf}
-\caption{FLOPs validation on Broadwell, Skylake, and POWER9.}
-\label{fig:cat_flops}
-\end{center}
-\end{figure}
-%\vspace{-8pt}
+The Kernel-based Collection Mode:
+\begin{itemize}
+\item Counter monitoring is per kernel.
+\item Performance counter data is not available during kernel execution but only after
+the kernel finishes.
+\item In this mode, the Level-Zero API uses internal barriers, which implies, if two
+kernels overlap, the execution of the second kernel is pushed out until the first
+kernel finishes.
+\end{itemize}
 
 
-
-%\vspace{10pt}
-For the refactoring PAPI to PAPI++ effort, the Exa-PAPI team circulated a survey to the ECP 
-applications (AD) and software technology (ST) teams to assess their needs and requirements 
-for hardware and software performance counter functionality. A white paper~\cite{PWN-2020-01} has been released, 
-describing our survey findings and articulating research priorities for the development of the new 
-PAPI++ software package.
-In July 2020, a second white paper~\cite{PWN-2020-07} has been released, describing our roadmap for 
-refactoring PAPI to PAPI++. The objective of these documents is to describe the current design of the
-classic PAPI framework in conjunction with its limitations and sustainability challenges, as well as identify 
-and articulate opportunities and possible implementations and C++ features for PAPI++ to provide support 
-for the simultaneous measurement of data from multiple counter domains.
-
-
+\vspace{10pt}
+Another major change in PAPI 7.0.0 is the refactoring of the PAPI CUDA component and 
+new developments to support NVIDIA compute capability 7.0 and greater. This required
+the use of the CUDA/CUPTI 11 Profiling and Perfworks APIs. The PAPI CUDA component 
+has been redesigned so that it works in equal measure for NVIDIA compute capabilities 
+$<$ 7.0 and $\geq$ 7.0. 
+ 
+ 
+ \vspace{10pt}
+Last but not least, the team designed and implemented PAPI support for FUGAKU's A64FX 
+Arm architecture. This work includes the development of new Counter Analysis Toolkit (CAT) 
+benchmarks and refinements of PAPI's CAT data analysis; specifically, the extension of 
+PAPI's CAT with MPI and ``distributed memory''-aware benchmarks and analysis in order to 
+stress all cores/node. The CAT analysis of the A64FX raw hardware counters resulted in the 
+definition of 36 new PAPI presets for FUGAKU users.
+ 
+ 
 
 \paragraph{Next Steps}
 
 Our next efforts will focus on:
 \begin{enumerate}
-\item \textbf{Production-ready CMake build system for PAPI++:} 
-		Implementation of a production-ready CMake build system for PAPI++ .  
-		We will build on the prototype CMake implementation from classic PAPI (produced in STTO09-103), 
-		and use the "PAPI Red Team" input and feedback for implementing a CMake build system for the new 
-		PAPI++ framework and its component.
+\item \textbf{Modernize atomics and reduce overhead in PAPI:} 
+	When PAPI calls are made from within different thread contexts, PAPI uses internal 
+	mechanisms for guaranteeing thread safety. 
+	Atomic operations have a central role in these mechanisms, since they introduce less 
+	overhead than mutexes. 
+	However, the support for atomic operations in the current PAPI framework is limited, 
+	and many opportunities are missed. Projects such as ``the atomic\_ops library'' offer a 
+	much wider support for atomic operations, which the team plans to leverage in PAPI.
+
 %
-\item \textbf{Transition from PAPI's C framework to the new PAPI++ framework implemented in C++}: 
-		Implementation of the modular structure of the new PAPI++ framework that includes a new 
-		C++ API in addition to the traditional C and Fortran APIs to preserve backward-compatibility. 
-		Focus will be on the implementation of the PAPI++ core and modular framework that is 
-		architecture-neutral. We will build on the design and prototype implementation from STTO09-105. 
-		A beta release for early users will be planned as completion criteria. It will allow us to follow an 
-		iterative and incremental software development process early in the design cycle before 
-		adding all of the 30+ PAPI components to the new PAPI++ framework.
+\item \textbf{Improved multi-threading and OpenMP support in PAPI}: 
+	Beyond the atomic operations for guaranteeing correctness, PAPI will modernize 
+	support for threads. PAPI was originally designed in a time when threads were exotic, 
+	and OpenMP was nonexistent. The Exa-PAPI team will improve the interoperability with 
+	thread systems and OpenMP in particular.
+
 %
-\item \textbf{Development of a C++ API for PAPI's stand-alone SDE library}:
-		In addition to the already implemented and released C and FORTRAN APIs for the PAPI 
-		software-defined event (SDE) functionality (release with STTO09-104), we will develop a 
-		C++ API for the stand-alone SDE library while maintaining its traditional APIs. The goal is 
-		to achieve consistency by providing all three APIs (C++ , C, FORTRAN) across all PAPI++ 
-		modules. This effort involves transitioning PAPI SDE to the new PAPI++ package.
-%
-%\item \textbf{Transition PAPI's non-CPU components to the new PAPI++ software}:
-%		Finalize the modular structure of the PAPI++ framework and transition the 
-%		architecture-dependent (CPU, GPU, network, power, etc) PAPI components to the new 
-%		PAPI++ implementation. New modules, enabling performance counter monitoring for novel 
-%		and advanced ECP hardware and software technologies, will be developed in parallel and 
-%		added incrementally with regular testing as new components are developed. This incremental 
-%		process exposes performance problems or other issues early and allows them to be addressed 
-%		in isolation. This effort involves a managed transition away from our legacy PAPI software while 
-%		continuing to add support for new ECP hardware.
+\item \textbf{Development of PAPI support for new ECP hardware}:
+	Development of new PAPI components, as well as new features in current PAPI 
+	components due to underlying vendor interface updates. Development of new PAPI 
+	presets (predefined events) for newly released hardware.
 \end{enumerate}

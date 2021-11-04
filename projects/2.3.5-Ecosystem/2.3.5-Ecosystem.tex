@@ -6,15 +6,15 @@
 The focus of this effort is on the ``last mile'' delivery of software that is intended to be supported by DOE Facilities and/or vendor offerings. The scope of this effort breaks down into the following key areas:
 \begin{itemize}
 	\item Hardening and broad ST and facility adoption of Spack for easy build of software on all target platforms
-        \item Delivery of formal software releases (Extreme-Scale Scientific Software Stack, or E4S) in multiple packaging formats technologies -- from-source builds, modules, and containers
-	\item Oversight of the ST SDKs (Software Development Kits) developed in all five ST L3 areas, with a goal of ensuring the SDKs are deployed as production-quality products at the Facilities, and available to the broader open-source HPC community through coordinated releases
+        \item Delivery of formal software releases (E4S) in multiple packaging formats technologies -- from-source builds, modules, and containers
+	\item Oversight of the ST SDKs developed in all five ST L3 areas, with a goal of ensuring the SDKs are deployed as production-quality products at the Facilities, and available to the broader open-source HPC community through coordinated releases
 	\item Development of testing infrastructure (e.g., Continuous Integration) in collaboration with HI 2.4.4 (Software Deployment at the Facilities) for use by ECP teams at the Facilities
 	\item Development and hardening of methods for software deployment through the use of container technology
 	\item Development and hardening of a toolkit of reusable components for scientific workflow management systems
 	\item Informal partnerships with the Linux Foundation's OpenHPC project for potential broader deployment of ST technologies in the OpenHPC ecosystem
 \end{itemize}
 
-A major goal of ST is to ensure that applications can trust that ST products will be available on DOE Exascale systems in a production-quality state, which implies robust testing, documentation, and a clear line of support for each product. This will largely be an integration effort building on both the SDKs project elements defined in each ST L3 area, and tight collaboration and coordination with the Hardware Integration L3 area for Deployment of Software on Facilities (WBS 2.4.4). We will work to develop, prototype, and deliver foundational infrastructure for technologies such as continuous integration and containers in tight collaboration with our DOE facility partners. The ultimate goal is ensuring that the ECP software stack is robustly supported, as well as finding a reach into the broader HPC open-source community -- both of which provide the basis for long-term sustainability required by applications, software, Facilities, and vendors who rely upon these products.
+A major goal of ST is to ensure that applications can trust that ST products will be available on DOE Exascale systems in a production-quality state, which implies robust testing, documentation, and a clear line of support for each product. This will largely be an integration effort building on both the SDKs project elements defined in each ST L3 area, and tight collaboration and coordination with the HI L3 area for Deployment of Software on Facilities (WBS 2.4.4). We will work to develop, prototype, and deliver foundational infrastructure for technologies such as continuous integration and containers in tight collaboration with our DOE facility partners. The ultimate goal is ensuring that the ECP software stack is robustly supported, as well as finding a reach into the broader HPC open-source community -- both of which provide the basis for long-term sustainability required by applications, software, Facilities, and vendors who rely upon these products.
 
 Spack has broad adoption in the open-source community as an elegant solution toward solving many of the challenges presented by building software with many dependencies. Spack is one of the most visible outward-facing products in this L3 area, and is the basis for the SDK and E4S efforts.
 
@@ -27,7 +27,7 @@ Given the project timelines and requirements of production systems at our Facili
 This area will focus on all aspects of integration of the ECP software stack embodied in E4S and the development of SDK Community Policies, and building the workflows community and deploying a toolkit of hardened, reusable components for workflow management systems, with a focus on putting the infrastructure in place (in partnership with HI and the SDKs) for production-quality software delivery through technologies such as Spack, continuous integration, and containers. 
 
 \subsubsection{Plan}
-Version 1.2 of the Extreme-Scale Scientific Software Stack (E4S) was released in October, which includes 67 ST products that have Spack packages. This release is downloadable from DockerHub under the ecpe4s area.  The E4S Spack Build Cache now includes binaries for ppc64le as well as x86\_64 and includes over 22,000 total binaries.  The E4S containers now support custom images for ECP applications, such as WDMApp and Pantheon.  A regular cadence of E4S releases will continue, with updated ST products, broader facility adoption, and potentially inclusion in vendor offerings.
+Version 21.08 of the E4S was released in August 2021, which includes 88 ST products that have Spack packages. This release is downloadable from DockerHub under the ecpe4s area.  The E4S Spack Build Cache now includes binaries for ppc64le as well as x86\_64 and includes over 53,000 total binaries.  The E4S containers now support custom images for ECP applications, such as WDMApp, ExaWind, and Pantheon.  A regular cadence of E4S releases will continue, with updated ST products, broader facility adoption, and potentially inclusion in vendor offerings.
 
 In close coordination with E4S, a number of SDKs are being developed across the other L3 ST areas, building on the years of experience the xSDK (Math Libraries).  These SDKs will become a prime vehicle for our delivery strategy, while also providing ST products with a standard set of community policies aimed at robust production-ready software delivery.  In October 2020, Version 1 of the E4S Community Policies was announced. The E4S Community Policies will serve as membership criteria for E4S member packages.  The E4S Community Policies will continue to evolve as we work toward release of Version 2 of them.
 
@@ -48,7 +48,7 @@ We filled a gap in the ST portfolio by instantiating a new project on scientific
 
 \subsubsection{Future Trends}
 
-Software development kits will gain further traction in their communities as the benefits of 
+SDKs will gain further traction in their communities as the benefits of 
 interoperability and community policies are demonstrated.  We believe these processes will
 become embedded into the communities and become one of the lasting legacies of ECP and
 critical for sustainability beyond ECP.

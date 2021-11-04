@@ -12,61 +12,55 @@ We are working with multiple ECP application teams, including ExaSky cosmology t
 
 SZ faces several key challenges:
 \begin{itemize}
+\item \textbf{Improving Prediction Accuracy} The core step in SZ is the point-wise data prediction for different datasets. The higher the prediction accuracy, the higher the compression quality in general. However, how to design an effective predictor that can adapt to diverse datasets is very challenging.
 \item \textbf{Parameter tuning}: One challenge in optimizing lossy compression for scientific applications is the large
 diversity of scientific data, dimensions, scales, and dynamic data changes in both space and time. Each application requires specific parameters tuning and in some cases, a specific compression pipeline, which is non-trivial to implement.
-\item \textbf{Implementation \& optimization over GPU}: A second challenge is the sophisticated design in different stages of the SZ (such as data prediction, Huffman tree construction, Huffman encoding), which makes the development of efficient GPU kernels non-trivial. 
-\item \textbf{Diverse integration schemes}: A third challenge is the diversity of the integration schemes for the different ECP client applications: HACC integrates SZ in a proprietary I/O library (GIO), Exafel integrates SZ directly in the LCLS data processing pipeline. GAMESS integrates SZ in the application directly replacing some code sections. NWChem-X integrates SZ for checkpoint/restart. 
+\item \textbf{Implementation \& optimization over GPU}: The third challenge is the sophisticated design in different stages of the SZ (such as data prediction, Huffman tree construction, Huffman encoding), which makes the development of efficient GPU kernels non-trivial. 
+\item \textbf{Diverse integration schemes}: The fourth challenge is the diversity of the integration schemes for the different ECP client applications: HACC integrates SZ in a proprietary I/O library (GIO), Exafel integrates SZ directly in the LCLS data processing pipeline. GAMESS integrates SZ in the application directly replacing some code sections. EXAALT integrates SZ for saving storage space.
 \item \textbf{Portable support for GPU}: Optimization of SZ for Aurora and Frontier requires writing portable accelerator codes that are non trivial for complex compression pipeline. 
 \item \textbf{Improve development robustness and testability}: The SZ testing infrastructure (unit test, correctness test, performance test, regression test, continuous integration) will need to be adapted and its performance optimized for the new C++ implementation. A template based approach must be used to improve robustness, debugging and testability.
 \end{itemize}
 
 \paragraph{Solution Strategy}
 
-As for the first challenge, we keep a close communication with ECP application users to understand their specific demands on the lossy compression. For instance, we have a weekly meeting with ECP application teams to discuss the required error bounds, compression speed and quality and integration. We also exploit an adaptive prediction method to optimize the compression quality for diverse datasets. 
-%We are also designing and integrating a control loop capable of adjusting compression parameters from user set constraints, in order to find the betsfit configurations based on user's data fidelity requirement. The automatic part of the tuning will use optimization techniques to explore a large potential configuration space.
+As for the first two challenges, we develop a novel, adaptive predictor based on a dynamic spline interpolation which is combined with the classic Lorenzo predictor, such that the rate distortion (bit rate vs. data distoriton PSNR) can be improved significantly.
 
-As for the second challenge, we keep exploring the new strategies to improve the GPU kernel performance for different stages of SZ. This requires in-depth understanding of SZ compression principles, the pros and cons of each step and thorough knowledge about efficient GPU kernel implementation.  
+As for the third challenge, we keep exploring the new strategies to improve the GPU kernel performance especially for bottleneck stages of cuSZ -- GPU version of SZ. This requires in-depth understanding of the bottleneck of cuSZ and numerous performance tuning tests to explore new strategies.   
 
-As for the third challenge, we refactor SZ in C++, starting from the current C version. This refactoring is the perfect occasion to implement a new more modular design of SZ, capable of integrating more stages in the compression pipeline and of selecting compression stages based on specific application data features.
+As for the fourth challenge, we refactor SZ in C++, starting from the current C version. This refactoring is the perfect occasion to implement a new more modular design of SZ, capable of integrating more stages in the compression pipeline and of selecting compression stages based on specific application data features.
 
-Concerning the fourth challenge, we are in contact with ALCF and OLCF as well as with vendors to access simulators and early systems that will help to optimize the accelerator implementations. The portable GPU implementation of SZ relies on Kokkos.
+Concerning the fifth challenge, we are in contact with ALCF and OLCF as well as with vendors to access simulators and early systems. We also develop the portable GPU implementation of SZ for different GPUs by leveraging corresponding libraries/toolkits such as oneAPI and HIP.
 
-Concerning the robustness and testability, we are continuously developing and improving it. We will need to adapt it for C++ as part of the SZ refactoring. We will use ECP testing environment when it becomes available. We also often discuss potential solutions with application teams when needed. 
-
-%As for the last challenge, our weekly meetings with the application teams provide us a clear understanding of the integration pathway as well as the expected performance. 
+We are continuously improving the robustness and testability. We integrated SZ into ORNL CI environment, and often discuss potential issues with application teams when needed. 
 
 \paragraph{Recent Progress}
 
-We have created an official website (http://szcompressor.org) to organize different versions/products of SZ (such as CPU version, GPU version). The current flagship products include CPU version of SZ (the classic C version), composable version of SZ (a.k.a., SZ3 in C++), CUDA version of SZ, and Kokkos version of SZ. They are all open source libraries under the BSD3 license.
+We summarize all 10+ different versions of SZ in our official website (http://szcompressor.org), including CPU version, GPU version, customize version for applications such as EXAALT and GAMESS. 
+%Specifically, The flagship products include CPU version of SZ (the classic C version), composable version of SZ (a.k.a., SZ3 in C++), dynamic interpolation based SZ -- Interp-SZ (particularly effective for Seismic imaging data and turbulent flow data), CUDA version of SZ -- cuSZ, Kokkos version of SZ, ultrafast version of SZ -- SZx, specific version customized for GAMESS -- Pastri-SZ, specific version customized for ExaFEL -- Roibin-SZ, specific version customized for ExaLT -- MMD-SZ, FPGA version of SZ -- waveSZ, etc. 
 
-The CPU version of SZ is the classic state-of-the-art version (a.k.a., SZ 2), whose latest version number is 2.1.10. We keep improving SZ 2 to fit user's diverse requirements from different applications. For example, the new features in 2.1.10 include:  the support of user-parameters in python binding particularly for EXAFEL, support for compressing data according to the highest dimension for the specific 3D datasets with high smoothness on the highest dimension; support for fix-value-range; support for printing the statistics related to compression for a better understanding of the compressbility. %SZ 2 has been tested or integrated in many ECP applications, such as HACC, NYX, EXAALT, NWCHEM, and QMCPACK. 
+We significantly improved compression quality and performance for SZ. (1) We improved the rate distortion significantly by a dynamic spline interpolation method, which is particularly effective in compressing smooth datasets with wave patterns such as turbulent flow data and quantum chemistry data (QMCPack). (2) We customized an effiicent error-bounded lossy compressor - called MMD-SZ for molecular dynamics (MD) applications such as LAMMPS and ExaALT, by leveraging the potential data characteristics of MD simulation datasets. The compression ratio has been improved by about 100+\% over the generic version of SZ. 
 
-SZ 3 breaks down different stages of SZ to form a loosely-coupled model, such that the users can construct a new compressor by customizing each compression step conveniently. By leveraging SZ 3, the new compression method (published in HPDC2020) leverages a more advanced prediction method by combining the second-order Lorenzo and second-order regression. %Figure \ref{fig:sz-principle} (a) illustrates the design overview of the new compressor based on the SZ model and Figure \ref{fig:sz-principle} (b) demonstrates the significant improvement in compression ratio. 
-The compression ratio can be improved by 51\% with the same data distortion level (PSNR) for the ECP QMCPack application dataset.  
+We have developed SZ3, which breaks down different stages of SZ to form a loosely-coupled model, such that the users can construct a new compressor by customizing each compression step conveniently. %By leveraging the SZ3 to compose new compression pipeline, we have successfully developed MMD-SZ for MD simulation datasets, which can improve the compressio ratio by 100+\% with the same distortion, and also improved the compression quality significantly for Advanced photon Source (APS) datasets.
 
-%\begin{figure}[htb]
-%\centering
-%\includegraphics[width=2.8in]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/autotune-arc.eps}
-%\includegraphics[width=2in]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/qmcpackbig-a.eps}
-%\vspace{-2mm}
-%	\caption{\label{fig:sz-principle} SZ with 2nd-order predictors and its improvement on rate distortion for QMCPack}
-%\end{figure}
+We also significantly improved the GPU kernel performance of SZ's compression stage. We have released the cuda-based SZ (cuSZ) 0.2.9.1 and tested its performance on V100 GPU and A100 GPU. We identified that the bottleneck of cuSZ is its Huffman encoding stage and dictionary encoding stage. (1) We develop an efficient parallel codebook construction on GPUs that scales effectively with the number of input symbols. (2) We propose a novel reduction based encoding scheme that can efficiently merge the codewords on GPUs. (3) We optimize the overall GPU performance by leveraging the state-of-the-art CUDA APIs such as Cooperative Groups. (4) We evaluate our Huffman encoder thoroughly using six real-world application datasets on two advanced GPUs and compare with our implemented multi-threaded Huffman encoder. Experiments show that our solution can improve the encoding throughput by up to 5.0$\times$ and 6.8$\times$ on NVIDIA RTX 5000 and V100, respectively. Figure \ref{fig:sz-huffman} illustrates the parallel design of the Huffman encoding in cuSZ. 
+\begin{wrapfigure}{l}{0.47\textwidth}
+  \includegraphics[width=0.4\textwidth]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/SZ-Huffman}
+  \caption{Parallelism implemented for Huffman coding’s subprocedures (kernels).
+``sequential” denotes that only 1 thread is used due to data dependency.
+``coarse-grained” denotes that data is explicitly chunked. ``fine-grained” denotes
+that there is a data-thread mapping with little or no warp divergence.}%
+  \label{fig:sz-huffman}%
+\end{wrapfigure}
 
-We also significantly improved the GPU kernel performance of SZ. We have released the cuda-based SZ (cuSZ) 0.1.1 and tested its performance on V100 GPU (adopted by Summit). The cuSZ is optimized on each compression stage in the SZ framework, including the data prediction, quantization, and Huffman encoding. Specifically, we developed a dual-quantization scheme to entirely remove the data dependency in the prediction step of SZ such that this step can be performed efficiently on GPUs. We developed an efficient customized Huffman coding for the SZ compressor on GPUs. We implemented cuSZ using CUDA and optimized its performance by improving the utilization of GPU memory bandwidth. Figure \ref{fig:cuSZ:arch} presents the design overview, and the technical details can be found in our paper published in PACT2020. Experiments on V100 GPU show that the overall compression performance reaches up to 37GB/s based on both HACC and NYX simulation datasets.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/200718_workflow.pdf}
-  \caption{cuSZ: Design Overview}%
-  \label{fig:cuSZ:arch}%
-  \vspace{-2mm}
-\end{figure}
+We also signficantly improved the GPU kernel performance for SZ's overall workflow and decompression stage in particular. (1) We propose an efficient compression workflow to adaptively perform run-length encoding and/or variable-length encoding. (2) We derive Lorenzo reconstruction in decompression as multidimensional partial-sum computation and propose a fine-grained Lorenzo reconstruction algorithm for GPU architectures. (3) We carefully optimize each kernel by leveraging state-of-the-art CUDA parallel primitives. (4) We evaluate the new version of cuSZ using seven real-world HPC application datasets on V100 and A100 GPUs. Experiments show the new implementation improves the compression throughputs and ratios by up to 18.4$\times$ and 5.3$\times$, respectively on the tested datasets.
 
-We also developed the first prototype of kSZ (short for kokkosSZ), and compared its performance to cuSZ (the CUDA version of SZ) on Summit with CUDA GPUs (i.e., NVIDIA Tesla V100) at OCLF. Kokkos provides a good abstraction for both parallel execution of code and data management, which can be used to support portable implementation across different accelerator technologies. The kSZ exhibits performance very similar ($\sim$1\% difference) to cuSZ based in our experiments on Summit.
-%Kokkos now can use OpenMP/Pthreads/CUDA (officially released) and OpenMPTarget/oneAPI as backend programming models, so kSZ is able to run on different supercomputers systems each with different GPUs. 
+Experiments on A100 GPU show that cuSZ's overall performance reaches up to 84$\sim$92GB/s based on both HACC and NYX datasets.
 
-%We also have a good progress on the integration of SZ into EXAALT project. We have developed a multi-level cache system, which exhibits on  
+We ported cuSZ in active development onto the new backend: native DPC++, for the A21 platform. 
+DPC++ along with oneAPI SDK serves as the native programming language on A21 system. From DPC++ setup, we successfully executed our prototype kernels that can partially match the native CUDA kernel executed on NVIDIA V100.
 
-\paragraph{Next Steps} Our next efforts are: (1) Improve compression quality and performance for both cuSZ and kSZ, as well as their stability, (2) keep refactoring SZ in C++ (the first version will be released in Jan, 2021), (3) keep working on the compression quality improvement and integration of SZ in more ECP applications such as EXAALT, and (4) evaluate the portable GPU version of SZ on more ECP platforms.
+We developed CI for SZ on ORNL CI environment and also added smoke test to Spack for SZ. 
 
-%\textbf{Support advanced error controls allowing the user to specify relative error bounds and to control the error distribution.} We will write a report describing the integration of additional error controls (relative error bound and control of error distribution) in SZ.
+\paragraph{Next Steps} Our next efforts include: (1) Improve compression quality and performance for cuSZ, (2) Keep working on the compression quality improvement and integration of SZ in more ECP applications such as ExaFEL and EXAALT, and (3) evaluate the portable GPU version of SZ on ECP platforms.
+

@@ -9,6 +9,12 @@ distributed systems, and a productivity toolbox that comprises a development
 framework for the support of multiple Domain Specific Languages (DSLs) and
 extensions, with debugging, trace collection, and analysis tools.
 %
+\begin{wrapfigure}[17]{l}{.45\linewidth}
+\includegraphics[scale=0.3]{projects/2.3.1-PMR/2.3.1.09-ParSEC/PaRSEC-diagram.png}
+\caption{PaRSEC\label{fig:parsec} modular framework allows each
+component to be dynamically activated.}
+\end{wrapfigure}
+%
 The PaRSEC project team is dedicated to solving two challenging and
 interdependent problems facing the ECP developer community: First, how to create
 an execution model that enables developers to express as much parallelism as
@@ -19,12 +25,6 @@ provide and sustain a performance benefit by increasing the scientific
 productivity of the application developers, not only for the ECP target
 environments but for the foreseeable future.
 
-\begin{wrapfigure}[17]{l}{.45\linewidth}
-\includegraphics[scale=0.3]{projects/2.3.1-PMR/2.3.1.09-ParSEC/PaRSEC-diagram.png}
-\caption{PaRSEC architecture\label{fig:parsec} based on a modular framework where each
-component can be dynamically activated as needed.}
-\end{wrapfigure}
-%
 PaRSEC is an open source, community-based implementation of a generic task-based
 runtime that is freely available, and used by an increasing number of software
 libraries.
@@ -44,7 +44,7 @@ efficient and Exascale-ready programming paradigms.
 \paragraph{Key Challenges}
 %\textit{Describe what is hard to do, why it is challenging.}
 
-As Exascale platforms delivery become a closer deadline, a increasing number of
+As Exascale platforms delivery become a closer deadline, an increasing number of
 aspects of the hardware and software environment still pose challenges. First
 and foremost, keeping pace with the architectural changes on current and future
 platforms requires changes not only on how we take advantage of the hardware
@@ -55,7 +55,12 @@ computational capabilities (accelerators) will continue to increase, while the
 currently available programming paradigms are still struggling with parallelism
 at the node level.
 
-\paragraph{Solution Strategy}
+\begin{wrapfigure}{l}{.45\linewidth}
+\centering\includegraphics[width=.9\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/irr-bs-gemm-combined.pdf}
+\caption{Time to solution and Performance as a function of the number
+  of V100 GPUs on Summit, for the molecule
+  $C_{65}H_{132}$\label{fig:irrbsgemm}}
+\end{wrapfigure}\paragraph{Solution Strategy}
 %\textit{Describe your basic strategy for addressing the challenges.}
 The approach followed in PaRSEC is to provide a low-level, flexible and dynamic
 runtime able not only to schedule tasks at the node level, but to handle data
@@ -63,8 +68,8 @@ transfers between different memory (both inter- and intra-nodes), memory
 hierarchies, heterogeneous architectures with support for accelerators with a
 simple programming scheme. The proposed approach envisions a middle-ground
 solution, addressing both hardware and software challenges. At the hardware
-level a team of dedicated developers extends PaRSEC to map it's capabilities to
-the hardware and to improve it's scalability and performance. At the upper
+level a team of dedicated developers extends PaRSEC to map its capabilities to
+the hardware and to improve its scalability and performance. At the upper
 software level the runtime interactions are through Domain Specific Languages
 with the target domain scientists in mind, that will facilitate the expression
 of algorithmic parallelism with familiar constructs mapped on the exposed
@@ -78,34 +83,12 @@ complexity~\cite{lorapo-protools,BLR_LU,parsec_pdgemm}.
 % In this model, PaRSEC remains in full control of data tracking and
 % allocation on the managed accelerator.
 
-\paragraph{Recent Progress}
-
-The software release (2020.10) provides many new additions to the low-level task
-runtime, supports for a number of hardware capabilities (multi-stream GPU, NVLink,
-P9 atomic ops, ARM SVE support), brings significant improvements to the performance
-and scalability of the runtime, and addresses many pending issues.
-%
-% The installation system has been improved to take advantage of the latest
-% capability of CMake, and scripts for seamless integration in the ECP software
-% ecosystem (via SPack). Significant improvements have also been added on the
-% performance and scalability of the runtime, as shown by the results below.
-%
-On the software quality side, the PaRSEC runtime has been evaluated and amended
-to compile and run on all pre-Exascale platforms (ALCF Mira, Theta; OLCF
-Summit), as well as some early platforms based on the new ARM architecture.
-PaRSEC now includes a Spack definition file to ease the deployment on
-future target systems as part of the system software xSDK effort.
 
 %
 % Recent work: irregular block-sparse GEMM on Summit
 %
 
-\begin{wrapfigure}{l}{.45\linewidth}
-\centering\includegraphics[width=.9\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/irr-bs-gemm-combined.pdf}
-\caption{Time to solution and Performance as a function of the number
-  of V100 GPUs on Summit, for the molecule
-  $C_{65}H_{132}$\label{fig:irrbsgemm}}
-\end{wrapfigure}
+
 The PaRSEC team, in collaboration with NWChemEx project researchers,
 developed an efficient and portable tensor product algorithm
 specifically designed for the computational chemistry domain needs on
@@ -118,6 +101,11 @@ dimensions, such that none of the input matrices could fit in the
 aggregated memory of all GPUs. The algorithm and a deeper analysis of
 the results are described in~\cite{parsec::rr::irrbs}.
 
+\begin{wrapfigure}[16]{l}{.45\linewidth}
+\vspace*{-2em}\centering\includegraphics[scale=0.50]{projects/2.3.1-PMR/2.3.1.09-ParSEC/slate_updated_nacl.pdf}
+  \caption{Comparison of DPLASMA and SLATE Cholesky factorization over PaRSEC with
+           SLATE and ScaLAPACK on 64 nodes 12 cores each\label{fig:slate-parsec}}
+\end{wrapfigure}
 Figure~\ref{fig:irrbsgemm} shows a strong scaling performance
 evaluation of this algorithm, when applied to the main tensor product
 required by the CCSD method to simulate the electronic structure from
@@ -149,16 +137,12 @@ times slower.
 % End
 %
 
-\begin{wrapfigure}[16]{l}{.45\linewidth}
-\vspace*{-1em}\centering\includegraphics[scale=0.50]{projects/2.3.1-PMR/2.3.1.09-ParSEC/slate_updated_nacl.pdf}
-  \caption{Comparison of DPLASMA and SLATE Cholesky factorization over PaRSEC with
-           SLATE and ScaLAPACK on 64 nodes 12 cores each\label{fig:slate-parsec}}
-\end{wrapfigure}
+
 An important aspect of the DTE project is to define and prototype scalable
 domain specific languages that enable a productive expression of parallelism for
 end-user communities. PaRSEC presents multiple programming interfaces
 (Parameterized Task Graphs for maximum parallelism, the popular serial task
-insertion dataflow model to provide direct access to the runtime). In addition
+insertion dataflow model to provide direct access to the runtime). In addition,
 the DTE team is in close contact with application teams to define parallel
 abstractions that are suitable for their domain usage. Notably, the PaRSEC team
 has ongoing collaboration with the SLATE linear algebra package and NWChemEx and
@@ -183,7 +167,7 @@ runtime, the Dynamic Task Discovery (DTD) an approach similar to
 OpenMP but working on a distributed setting, and a version of the
 SLATE library where instead of relying on explicit parallelism
 (OpenMP) and communications (MPI) it rely on implicit dependencies
-qmanagement via PaRSEC.
+management via PaRSEC.
 
 
 % side including the integration of SLATE and PaRSEC. Two domain
@@ -250,7 +234,7 @@ used on the GPU tests.
 %
 In all cases, the performance achieved by running ScaLAPACK over
 DPLASMA is more than 90\% the performance of native DPLASMA.  For the
-CPU-only experiments, the usage of the DPLASMA wrapper introduces an
+CPU-only experiments, the usage of the DPLASMA wrapper introduces a
 speedup of 1.73x for GEMM (minimum 1.64x, maximum 1.88x) and 1.49x for
 POTRF (minimum 1.27x, maximum 1.71x) .  When exploiting also the GPUs
 of the computation nodes, the performance is increased by 16.75x for
@@ -269,11 +253,86 @@ in important performance benefits.
 % End
 %
 
+
+\paragraph{Recent Progress}
+
+The software release (2021.10) provides many new additions to the low-level task
+runtime, supports for a number of hardware capabilities (AMD GPUs, new device
+architecture to support Intel GPUs, new communication subsystem to better
+employ RDMA communications), brings significant improvements to the performance
+and scalability of the runtime, and addresses many pending issues. PaRSEC
+is used as the default low level task runtime for MADNESS on ECP machines.
+MADNESS is the task interface and manager used by many of the applications
+in the NWChemEx ECP project. The PaRSEC implementation of the TTG DSL has
+been greatly improved, reaching performance comparable to other PaRSEC DSLs
+and the state of the art, enabling the wide distribution of this DSL. GPU
+support has been extended to the DTD DSL, enabling experiments with other
+ECP applications.
+
+%
+% The installation system has been improved to take advantage of the latest
+% capability of CMake, and scripts for seamless integration in the ECP software
+% ecosystem (via SPack). Significant improvements have also been added on the
+% performance and scalability of the runtime, as shown by the results below.
+%
+On the software quality side, the PaRSEC runtime has been evaluated
+and amended to compile and run on all Early Access System (Arcticus
+and Spock), as well as some early platforms based on the new ARM
+architecture.  PaRSEC is installable through Spack on all ECP platforms,
+and available as a system module on Spock.
+
+%
+% TTG
+%
+Template Task Graph (TTG) is a new DSL co-developed with members of
+the NWChemEx team, to address issues in the other DSLs available in
+PaRSEC. TTG mixes the concept original to PaRSEC of a Parameterized
+Task Graph (PTG) to expose a concise and efficient representation of
+the DAG of tasks, with the dynamicity and data-dependence capabilities
+of the Dynamic Task Discovery paradigm that is most often used to
+express task-based systems. A static graph of task classes is built
+by the program at compile time, but the tasks belonging to this graph
+are only instantiated at runtime. The originality of TTG lies
+in the fact that task instantiation in TTG is by nature capable of
+managing data dependency (i.e. depending on the computation itself a
+task may or may not become instantiated), and fully distributed.
+Tasks are instantiated by other tasks, while unrolling the graph of
+task classes, and they do not require to expose a global knowledge on
+the DAG, making the approach more scalable than usual DAG discovery.
+
+\begin{wrapfigure}{l}{.45\linewidth}
+\centering\includegraphics[width=.9\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/dpotrf-ttg/dpotrf_1403612-page3.pdf}
+\caption{Performance comparison between DPLASMA (PTG DSL), the TTG implementation, and ScaLAPACK, of the Cholesky factorization (double precision), for a fixed amount of memory per node (weak scaling).\label{fig:parsec:dpotrfttg:weakscale}}
+\end{wrapfigure}
+In the context of this collaboration, the PaRSEC team has provided
+an efficient implementation of the TTG interface on top of the
+PaRSEC runtime.
+Figure~\ref{fig:parsec:dpotrfttg:weakscale} shows a performance
+comparison on a 5,632 dual-socket 64-core AMD EPYC 7742 nodes equipped
+with 256 GB main memory and connected through a Mellanox Infiniband
+HDR 200 fabric, from 1 to 256 nodes (representing 15,360 cores in
+total). We compare the TTG implementation of the dense Cholesky
+factorization with the pdpotrf routines available in DPLASMA (thus
+with the PTG implementation of the same algorithm), and in ScaLAPACK.
+Each process holds a constant amount of memory, representing a
+submatrix of $30k\times 30k$ elements. Each node runs 8 processes, and
+each process is allocated 16 cores. With this weak-scaling experiment,
+we observe that TTG behaves as efficiently and consistently as PTG. At
+15,360 cores, the TTG implementation even goes slightly faster than
+the PTG one, due to a better scheduling of the communications that are
+discovered in a different order. Both task-based and PaRSEC-based
+implementations go significantly faster than ScaLAPACK, which is the
+expected behavior for a machine with so many cores per node.
+
+%
+% HIP / ROCM
+%
+
 \paragraph{Next Steps}
 %\textit{Describe what you are working on next.}
 % Improve DTE accelerator support and interoperability with other
 % programming models
-To provide programmers with more supervision over how accelerators are
+To provide programmers with more control over how accelerators are
 integrated and used by the runtime, a need to provide finer control of the
 resource usage by the runtime system has arisen. We are developing new APIs to
 allow the programmers to advise the runtime system with respect to data
