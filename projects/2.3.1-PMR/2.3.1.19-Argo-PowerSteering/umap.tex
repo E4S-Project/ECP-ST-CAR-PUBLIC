@@ -44,7 +44,7 @@ We prioritize four design choices for UMap based on surveying
 realistic use cases. First, we choose to implement UMap as a
 user-level library so that it can maintain compatibility with the
 fast-moving Linux kernel without the need to track and modify for
-frequent kernel updates. Also, we employ the recent userfaultfd 
+frequent kernel updates. Also, we employ the recent \texttt{userfaultfd} 
 mechanism, rather than the signal handling + callback function approach
 to reduce overhead and performance variance in multi-threaded
 applications. Third, we target an adaptive solution that sustains
@@ -56,8 +56,8 @@ even when data accesses to pages are skewed. UMap dynamically balances
 workloads among all service threads to eliminate bottleneck on serving
 hot pages. Finally, for flexible and portable tuning on different
 computing systems, UMap provides both API and environmental controls
-to enable configurable page sizes, eviction strategy, application-
-specific prefetching, and detailed diagnosis information to the
+to enable configurable page sizes, eviction strategy,
+application-specific prefetching, and detailed diagnosis information to the
 programmer. The UMap software architecture is shown in Figure
 \ref{fig:umaparch}.
 
