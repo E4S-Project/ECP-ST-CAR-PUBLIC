@@ -1,9 +1,9 @@
 \subsubsection{\stid{5.01} Software Development Kits} \label{subsubsect:ecosystem-sdk}
 
-\paragraph{Overview} The ST SDK project supports a set of activities focused on 
+\paragraph{Overview} The ST SDK project supports a set of activities focused on:
 \begin{itemize}
-\item establishing Community Policies aimed at increasing the interoperability between and sustainability of ST software packages, using the xSDK~\cite{xsdk:homepage} community package and installation policies~\cite{xsdk-policies:homepage} as a model.
-\item coordinating the delivery of ECP ST products through the E4S~\cite{e4s:homepage}, a comprehensive and coherent set of software tools, to all interested stakeholders on behalf of ECP ST, including ECP applications and the broader open source community.
+\item Establishing Community Policies aimed at increasing the interoperability between and sustainability of ST software packages, using the xSDK~\cite{xsdk:homepage} community package and installation policies~\cite{xsdk-policies:homepage} as a model.
+\item Coordinating the delivery of ECP ST products through the E4S~\cite{e4s:homepage}, a comprehensive and coherent set of software tools, to all interested stakeholders on behalf of ECP ST, including ECP applications and the broader open source community.
 \end{itemize}
 
 An ECP ST SDK is a collection of related software products (called packages) where coordination across package teams will improve usability and practices and foster community growth among teams that develop similar and complementary capabilities.  SDKs have the following attributes:
@@ -11,10 +11,10 @@ An ECP ST SDK is a collection of related software products (called packages) whe
 \item Domain scope: Collection makes functional sense.
 \item Interaction model: How packages interact; compatible, complementary, interoperable.
 \item Community policies: Value statements; serve as criteria for membership.
-\item Community interaction: Communication between teams. Bridge culture. Common vocabulary.
-\item Meta-infrastructure: Encapsulates, invokes build of all packages (Spack), shared test suites.
-\item Coordinated plans: Inter-package planning. Does not replace autonomous package planning.
-\item Community outreach: Coordinated, combined tutorials, documentation, best practices.
+\item Community interaction: Communication between teams; bridge culture; common vocabulary.
+\item Meta-infrastructure: Encapsulates; invokes build of all packages (Spack); shared test suites.
+\item Coordinated plans: Inter-package planning -- does not replace autonomous package planning.
+\item Community outreach: Coordinated, combined tutorials; documentation; best practices.
 \end{itemize}
 
 The SDK project is needed within ECP because it will make it simpler for ECP applications to access required software dependencies on ECP target platforms and drastically lower the cost of exploring the use of additional ECP ST software that may be of benefit. In addition, the SDK effort will decrease the ECP software support burden at the major computing facilities by ensuring the general compatibility of ST packages within a single software environment, providing tool support for the installation of ST packages on facility machines, communicating common requirements for ST software and facilitating the set up of CI testing at the Facilities. This project works closely with the HI 2.4.4 \textit{Deployment of Software at the Facilities} project.
@@ -35,7 +35,7 @@ Recognizing the release readiness and broader maturity differences between ECP S
 
 E4S release 1.0 was announced in November 2019 on the external E4S website~\cite{e4s:homepage}. The release supports 50 ST products under Linux x86\_64. In February 2020, E4S release 1.1 extended support to both NVIDIA and AMD GPUs with the inclusion of CUDA and ROCm in a single image under Linux x86\_64. Release 1.1 also introduced support for the Linux ppc64le platform that supports CUDA 10.1. E4S releases contain HPC as well as AI/ML software including TensorFlow and PyTorch. The E4S DocPortal, accessible from the E4S website, was created to rake information from E4S product GitHub pages and provide it in a single location with the most up-to-date information about releases, installation instructions, etc. The E4S validation testsuite~\cite{e4s:validation} was introduced with support for LLVM and other ST products.
 
-In August 2021, E4S v21.08 included x86\_64 and ppc64le Docker and Singularity images with 88 E4S products. It included the DOE fork of LLVM compilers as well as E4S products built using these compilers. E4S images with support for three GPU architectures (Intel, AMD, and NVIDIA) are now available for download on DockerHub under the ecpe4s area and are released on the E4S website. These images support Intel oneAPI, AMD ROCm, and NVIDIA NVHPC and CUDA. The E4S Spack Build Cache now includes binaries for ppc64le as well as x86\_64 and includes over 53,000 total binaries (see Figure~\ref{fig:e4s-build-cache}. E4S containers now support custom images for ECP applications such as WDMapp (see Figure~\ref{fig:SpackBuildCacheWDMapp}), Nalu-Wind (see Figure~\ref{fig:E4SImageOnAWS}, and the Pantheon project (see Figure~\ref{fig:PantheonE4S}). The WBS 2.3.6.01 LANL ATDM Software Technologies project highlights the integration of Nalu-Wind and Cinema in a curated Pantheon workflow using an E4S build cache. The E4S build cache has improved the build times for these codes significantly. 
+In August 2021, E4S v21.08 included x86\_64 and ppc64le Docker and Singularity images with 88 E4S products. It included the DOE fork of LLVM compilers as well as E4S products built using these compilers. E4S images with support for three GPU architectures (Intel, AMD, and NVIDIA) are now available for download on DockerHub under the ecpe4s area and are released on the E4S website. These images support Intel oneAPI, AMD ROCm, and NVIDIA NVHPC and CUDA. The E4S Spack Build Cache now includes binaries for ppc64le as well as x86\_64 and includes over 53,000 total binaries (see Figure~\ref{fig:e4s-build-cache}). E4S containers now support custom images for ECP applications such as WDMapp (see Figure~\ref{fig:SpackBuildCacheWDMapp}), Nalu-Wind (see Figure~\ref{fig:E4SImageOnAWS}), and the Pantheon project (see Figure~\ref{fig:PantheonE4S}). The WBS 2.3.6.01 LANL ATDM Software Technologies project highlights the integration of Nalu-Wind and Cinema in a curated Pantheon workflow using an E4S build cache. The E4S build cache has improved the build times for these codes significantly. 
 \begin{figure}
         \centering
         \includegraphics[width=0.82\linewidth]{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/E4S_WDMApp}
