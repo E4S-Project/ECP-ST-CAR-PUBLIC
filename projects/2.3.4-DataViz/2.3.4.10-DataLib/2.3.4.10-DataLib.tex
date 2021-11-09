@@ -121,60 +121,7 @@ to address identified issues in our technologies as appropriate.
 
 \paragraph{Recent Progress}
 
-\emph{STDM12-22:} Deliver Darshan/HDF and CAR input, establish calls with Mochi
-users. Discussion occurred with ExaHDF team regarding their understanding of
-interesting HDF access characteristics. Basic Darshan capabilities for tracking
-HDF dataset use have been implemented in a (public) branch of Darshan for
-inclusion in a future release.
-
-Unify, DataSpaces, and VeloC teams were contacted regarding regular
-communication. All teams were interested in a quarterly "open call" for all
-Mochi users. The first of these is planned for April and will be advertised on
-the mochi-devel mailing list. DataSpaces and VeloC teams were also interested
-in regular one-on-one calls. We will be meeting with the VeloC team in person
-next week to discuss cadence of these. We have the first one-on-one call with
-the DataSpaces team on Feb. 14. B. Robey is in touch with Ristra and ExaFEL. 
-
-\emph{STDM12-23:} Analyze HDF use and improve Mochi services for ECP
-applications. Characterize performance and overhead of HDF use in specific ECP
-codes: we have been focusing on the FleCSI synthetic I/O benchmark developed
-for Ristra. A number of improvements have been made as a result of this work,
-including adjusting to use of collective metadata operations under HDF5, which
-help performance of this application use case. This exercise has led us to
-further consider how to improve how we present the new HDF5 data that can be
-captured as a result of our prior work (STDM12-22).
-
-A synthetic benchmark has been developed that stores FleCSI data for Ristra in
-the HDF format. This benchmark is being used as a test environment for new
-output options for Ristra. The code, known as the flecsi-hdf5proxy, is
-available in the flecsi-incubator project. Our work in this benchmark has
-formed the basis for the Ristra HDF I/O design. Departing from the traditional
-approach of developing a proxy application for an already implemented
-capability, the initial version of the flecsi-hdf5proxy was developed prior to
-any implementation within Ristra codes. This allowed rapid design space
-exploration prior to implementation in a production code base and a more rapid
-development cycle in Ristra.
-
-Early in the year, we initiated discussions with the CODAR team building
-Chimbuko, an effort to create a provenance and performance analysis service for
-HPC. Through discussion on their use case, we determined that a new Mochi
-microservice was needed. The Sonata microservice has been developed to provide
-convenient storage and processing of their JSON record data.
-
-\emph{STDM12-24:} Improve HDF use in ECP code, deliver report on Mochi use and
-CAR input. Regarding HDF performance, a summary was compiled, including some
-discussion of PnetCDF performance, which is still critical to E3SM. Additional
-notes on improving HDF performance can be found in our meeting notes.
-
-Regarding Mochi use, feedback was compiled from our many users into a Mochi
-Customer Responses document, available in Jira.  Regarding Ristra, the merged
-HDF proxy is in github as part of the FleCSI incubator.
-
-Regarding CAR input, we have gathered initial data from ALCF, NERSC, and OLCF
-and identified personnel through which updates can be obtained as we get closer
-to the next CAR deliverable. 
-
-\emph{STDM12-25:} Deliver design of HDF5 VOL plug-in and improve I/O
+\emph{HDF5 VOL Plug-in.} Deliver design of HDF5 VOL plug-in and improve I/O
 capabilities for ECP application. HDF5 VOL design is complete, and we have an
 initial prototype with which we are performing early performance testing. The
 design document and developer notes will be attached to the end of this report
@@ -190,20 +137,36 @@ stores the offsets of specific datasets in the metadata table, allowing one to
 skip over unrelated datasets when looking for specific log entries. We’re
 investigating the storage of metadata in memory, for performance reasons.
 
-I/O Improvement in E3SM. We have previously extracted an I/O kernel from the
-E3SM code, and we are now working on a branch of this code that can write
-directly into HDF51. As background, the netCDF4 API is missing a key capability
-to describe I/O to multiple datasets as a single operation, and this limits the
-performance of netCDF4 for many scientific codes regardless of the underlying
-I/O API being used (e.g., PnetCDF, HDF). The E3SM team is aware of this
-deficiency, but to our knowledge there is no plan to address it at this time.
-Meanwhile, the HDF Group has been looking at multi-dataset writes of this type,
-although it is unclear when the capability might be made part of a production
-release. Never the less, working around the netCDF4 deficiencies allows us to
-isolate HDF performance/API challenges from the higher-level netCDF4 ones, and
-allows us to better explore our HDF VOL implementation.
+New optimizations have been made in the HDF VOL implementation, notably compression
+of dataset metadata, that allow this implementation to perform faster than our
+own PnetCDF implementation (and much faster than default HDF5 or netCDF-4).
 
-I/O Improvement in xRAGE. Many applications use HDF5 to write extremely large
+\emph{I/O Improvement in E3SM.}
+%
+We have previously extracted an I/O kernel from the E3SM code, and
+we are now working on a branch of this code that can write directly
+into HDF5. As background, the netCDF4 API is missing a key capability
+to describe I/O to multiple datasets as a single operation, and
+this limits the performance of netCDF4 for many scientific codes
+regardless of the underlying I/O API being used (e.g., PnetCDF,
+HDF). The E3SM team is aware of this deficiency, but to our knowledge
+there is no plan to address it at this time.  Meanwhile, the HDF
+Group has been looking at multi-dataset writes of this type, although
+it is unclear when the capability might be made part of a production
+release. Never the less, working around the netCDF4 deficiencies
+allows us to isolate HDF performance/API challenges from the
+higher-level netCDF4 ones, and allows us to better explore our HDF
+VOL implementation.
+
+Recently we have evaluated ``blob'' style storage for E3SM, which
+is a method of storing data without transforming into the global
+ordering desired for analysis. We have found that this method is
+competitive with ADIOS results seen elsewhere, reducing the need
+for the E3SM team to continue development of new ADIOS options.
+
+\emph{I/O Improvement in xRAGE.}
+*
+Many applications use HDF5 to write extremely large
 single files used for checkpoint restart and/or data analysis. Even on
 pre-exascale systems such as Sierra it can be difficult to achieve high
 performance (bandwidth) for these workloads. Applications writing single shared
@@ -217,25 +180,71 @@ stacks. LANL has begun using Darshan on Sierra for a variety of applications
 including the xRAGE application and have worked with the DataLib team to
 identify potential bottlenecks in this and other applications.
 
-\paragraph{Next Steps}
+\emph{I/O Improvement in CODAR.}
+%
+Early in the year, we initiated discussions with the CODAR team building
+Chimbuko, an effort to create a provenance and performance analysis service for
+HPC. Through discussion on their use case, we determined that a new Mochi
+microservice was needed. The Sonata microservice has been developed to provide
+convenient storage and processing of their JSON record data. We continue to work with
+the CODAR team to address scalability concerns and enable their Chimbuko service
+to hit production goals.
 
-Our plan for FY21 includes:
-\emph{STDM12-32:} Evaluate HDF prototype and build new Darshan capabilities. We
-will build a DAOS module and continue evaluation of HDF VOL prototype,
-adjusting design in response.
-
-\emph{STDM12-33:} Hold Mochi boot camp and release HDF VOL prototype. We will
-hold a Mochi training session, likely at the Annual Meeting, and we will
-release the HDF VOL prototype with a Spack package for others to work with.
-
-\emph{STDM12-34:} Enhance HDF VOL implementation and evaluate Darshan and Mochi
+\emph{Reducing Darshan Overheads.} Enhance HDF VOL implementation and evaluate
+Darshan and Mochi
 performance. We will revisit Darshan overheads on flagship platforms to ensure
 correctness and low-overhead operation, and we will incorporate new
 enhancements into the HDF VOL implementation for further evaluation. We will
 also perform a performance evaluation of key Mochi use cases on available test
 hardware.
 
-\emph{STDM12-35:} Deliver UCX plug-in for Mercury in support of ECP
-applications and services. We will provide a tested UCX plug-in for Mercury,
-tuned for performance on ECP relevant platforms (e.g., Summit test systems),
-with appropriate nightly tests.
+This work uncovered some overheads in how we capture timing information
+on platforms such as Theta. Workarounds were developed to keep
+Darshan overheads in the noise for all but the most degenerate I/O
+use cases (e.g., single-byte writes via stdio).
+
+\emph{UCX Support for Mercury.} We delivered UCX plug-in for Mercury
+in support of ECP applications and services: a tested UCX plug-in
+for Mercury, tuned for performance on ECP relevant platforms (e.g.,
+Summit test systems), with appropriate nightly tests. Our colleagues
+working on DAOS have begun testing with this implementation with
+promising early results.
+
+\paragraph{Next Steps}
+
+Our near-term plan includes:
+% \emph{STDM12-32:} Evaluate HDF prototype and build new Darshan capabilities. We
+% will build a DAOS module and continue evaluation of HDF VOL prototype,
+% adjusting design in response.
+
+% \emph{STDM12-33:} Hold Mochi boot camp and release HDF VOL prototype. We will
+% hold a Mochi training session, likely at the Annual Meeting, and we will
+% release the HDF VOL prototype with a Spack package for others to work with.
+
+% \emph{STDM12-34:} Enhance HDF VOL implementation and evaluate Darshan and Mochi
+% performance. We will revisit Darshan overheads on flagship platforms to ensure
+% correctness and low-overhead operation, and we will incorporate new
+% enhancements into the HDF VOL implementation for further evaluation. We will
+% also perform a performance evaluation of key Mochi use cases on available test
+% hardware.
+
+\emph{STDM12-36:} The ROMIO team will implement a new plug-in for
+UnifyFS, revisit the ROMIO implementation overall to reduce
+synchronization costs, and work with the HDF5 and UnifyFS teams to
+benchmark and document the performance of these optimizations and
+possible next steps.
+
+\emph{STDM12-37:} We will evaluate and improve HDF VOL performance
+on latest available platforms, re-architect Darshan analysis tools
+using Python to be both more user friendly and more amenable to
+learning methods, and enhance Mochi benchmarks and improve performance
+for latest platforms based on STDM12-34 analysis.
+
+\emph{STDM12-38:}
+We will prepare materials and engage in outreach for DataLib software
+at ECP Annual or similar event, refine and enhance Darshan
+DAOS and HDF modules on latest available platforms, deep dive
+on performance of ATDM code (TBD) with HDF VOL, and develop
+new PnetCDF benchmark in conjunction with ECP user and analyze performance.
+
+
