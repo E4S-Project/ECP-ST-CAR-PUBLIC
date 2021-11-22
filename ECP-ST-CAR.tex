@@ -1,12 +1,12 @@
 
 \documentclass{ecpreport-publicv1}
-%\usepackage{draftwatermark}
+\usepackage{draftwatermark}
 \usepackage{wrapfig}
 \usepackage{subfig}
 \usepackage{xcolor,colortbl}
 \usepackage{array}
 \usepackage{float} %added to wrangle tables and figures
-\usepackage{todonotes} %added todonotes for hardcopy notes and to span repos -STC
+\usepackage{todonotes}[disable] %added todonotes for hardcopy notes and to span repos -STC
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \definecolor{Gray}{gray}{0.85}
 \definecolor{LightCyan}{rgb}{0.88,1,1}
@@ -77,16 +77,16 @@
   \and Todd Munson, Software Ecosystem \& Delivery Lead
   \and Kathryn Mohror, NNSA ST Lead}
 \ifpublic
-\title{ECP Software Technology Capability Assessment Report--Public}
+\title{ECP Software Technology Capability Assessment Report--Public--DRAFT}
 \else
 \title{ECP Software Technology Capability Assessment Report--Internal}
 \fi
 %\date{\today}
-\date{November 15, 2021}
+\date{November 22, 2021}
 %\wbs{2.3}
 \ifpublic
-\id{ECP-RPT-ST-0002-2021--Public}
-\reportnum{ECP-RPT-ST-0002-2021--Public}
+\id{ECP-RPT-ST-000X-2021--Public--DRAFT}
+\reportnum{ECP-RPT-ST-000X-2021--Public--DRAFT}
 \else
 \id{ECP-RPT-ST-0002-2021--Internal}
 \reportnum{ECP-RPT-ST-0002-2021--Internal}
@@ -115,7 +115,7 @@
   1.5 & February 1, 2019 & \textit{Second release} \\\hline
   2.0 & February 1, 2020 & \textit{Third release} \\\hline
   2.5 & November 19, 2020 & \textit{Fourth release}\\\hline
-  3.0 & November 15, 2021 & \textit{Fifth release} \\\hline
+  3.0 & November 22, 2021 & \textit{Fifth release--DRAFT} \\\hline
 \end{revlog}
 
 %%---------------------------------------------------------------------------%%
