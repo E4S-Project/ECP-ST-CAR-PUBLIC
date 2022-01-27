@@ -44,7 +44,7 @@ efficient and Exascale-ready programming paradigms.
 \paragraph{Key Challenges}
 %\textit{Describe what is hard to do, why it is challenging.}
 
-As Exascale platforms delivery become a closer deadline, an increasing number of
+As we get closer to the delivery of Exascale platforms, an increasing number of
 aspects of the hardware and software environment still pose challenges. First
 and foremost, keeping pace with the architectural changes on current and future
 platforms requires changes not only on how we take advantage of the hardware
@@ -93,7 +93,7 @@ The PaRSEC team, in collaboration with NWChemEx project researchers,
 developed an efficient and portable tensor product algorithm
 specifically designed for the computational chemistry domain needs on
 top of the PaRSEC runtime. This includes an efficient matrix product
-operation for hybrid architectures, like Summit, with an irregularly
+operation for hybrid architectures (such as Summit) with an irregularly
 blocked, block-sparse representation of matrices. Moreover, the
 requirements on this implementation were extremely strict, the
 matrices are rectangular and extremely large in at least one of their
@@ -102,10 +102,11 @@ aggregated memory of all GPUs. The algorithm and a deeper analysis of
 the results are described in~\cite{parsec::rr::irrbs}.
 
 \begin{wrapfigure}[16]{l}{.45\linewidth}
-\vspace*{-2em}\centering\includegraphics[scale=0.50]{projects/2.3.1-PMR/2.3.1.09-ParSEC/slate_updated_nacl.pdf}
+\vspace*{-1.5em}\centering\includegraphics[scale=0.50]{projects/2.3.1-PMR/2.3.1.09-ParSEC/slate_updated_nacl.pdf}
   \caption{Comparison of DPLASMA and SLATE Cholesky factorization over PaRSEC with
            SLATE and ScaLAPACK on 64 nodes 12 cores each\label{fig:slate-parsec}}
 \end{wrapfigure}
+
 Figure~\ref{fig:irrbsgemm} shows a strong scaling performance
 evaluation of this algorithm, when applied to the main tensor product
 required by the CCSD method to simulate the electronic structure from
@@ -159,7 +160,7 @@ algorithm.
 
 Figure~\ref{fig:slate-parsec} compares different implementation of the
 Cholesky factorization. On one side we have two reference
-implementation for distributed linear algebra, ScaLAPACK and the
+implementations for distributed linear algebra, ScaLAPACK and the
 current version of the SLATE library (using OpenMP for intra-node
 parallelism and MPI for communications). On the other side we have two
 DSL expressing the same algorithm but using PaRSEC as the underlying
