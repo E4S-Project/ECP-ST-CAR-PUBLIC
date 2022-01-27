@@ -122,6 +122,18 @@ There are some caveats, however.
 It requires a ROCm 5.0 pre-release and the latest head of Kokkos.
 There is also currently an issue with linking the rendering library, which is being looked into.
 
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=3in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-spock-timing.png}
+  \caption{Performance improvement of VTK-m's unstructured gradient benchmark under Kokkos.}
+  \label{fig:VTKmPerf}
+\end{figure}
+
+The VTK-m team has also been working with the Kokkos team to improve performance while using Kokkos to drive devices, which is necessary for AMD GPUs.
+During this time, a performance issue for estimating gradients in unstructured grids was found.
+The VTK-m and Kokkos teams worked together to identify a register spilling problem in one of the GPU kernels.
+The kernel launch parameters for this case, and a 12-fold improvement for this algorithm was observed on Spock.
+
 \paragraph{Next Steps}
 The VTK-m team is focused on ensuring success with our KPP-3 metric.
 To ensure this, our next efforts include:
