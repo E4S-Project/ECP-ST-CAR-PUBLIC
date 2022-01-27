@@ -1,38 +1,38 @@
-\subsubsection{\stid{4.15} UnifyFS -- A file system for burst buffers} 
+\subsubsection{\stid{4.15} UnifyFS -- A file system for burst buffers}
 
-\paragraph{Overview} 
+\paragraph{Overview}
 
-The view of storage systems for HPC is changing rapidly. Traditional, 
-single-target parallel file systems have reached their cost-effective 
-scaling limit. As a result, hierarchical storage systems are being designed 
-and installed for our nation's next-generation leadership class systems. 
-Current designs employ “burst buffers” as a fast cache between compute 
-nodes and the parallel file system for data needed by running jobs and 
-workflows. Burst buffers are implemented as compute-node local storage 
-(e.g., SSD) or as shared intermediate storage (e.g., SSD on shared burst 
+The view of storage systems for HPC is changing rapidly. Traditional,
+single-target parallel file systems have reached their cost-effective
+scaling limit. As a result, hierarchical storage systems are being designed
+and installed for our nation's next-generation leadership class systems.
+Current designs employ “burst buffers” as a fast cache between compute
+nodes and the parallel file system for data needed by running jobs and
+workflows. Burst buffers are implemented as compute-node local storage
+(e.g., SSD) or as shared intermediate storage (e.g., SSD on shared burst
 buffer nodes).
 
 Because burst buffers present an additional complexity to effectively
-using supercomputers, we developed UnifyFS, a user-level file system, 
-highly-specialized for shared file access on HPC systems with distributed 
-burst buffers.  UnifyFS addresses a major usability 
+using supercomputers, we developed UnifyFS, a user-level file system,
+highly-specialized for shared file access on HPC systems with distributed
+burst buffers.  UnifyFS addresses a major usability
 factor of current and future systems, because it enables
-applications to gain the performance advantages from distributed burst buffers 
+applications to gain the performance advantages from distributed burst buffers
 while providing ease of use similar to that of a parallel file system.
-To use UnifyFS from within an MPI application, one only needs to change 
-the paths for files that the application uses from the parallel file system 
+To use UnifyFS from within an MPI application, one only needs to change
+the paths for files that the application uses from the parallel file system
 to the mount point for UnifyFS, \texttt{/unifyfs}. Then the application
 performs I/O as it normally would, using POSIX I/O or a high level I/O library, e.g.,
-HDF5 or MPI-IO. The UnifyFS library intercepts all I/O operations and 
+HDF5 or MPI-IO. The UnifyFS library intercepts all I/O operations and
 manages the file data locally on the compute nodes with high performance.
 
 \begin{figure}[htb]
         \centering
         \includegraphics[width=3.5in]{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyCR/usingUnifyFS}
-        \caption{\label{fig:usingUnifyFS} \textbf{Using UnifyFS} 
-Using UnifyFS from an MPI application is as easy as using the parallel file system. 
+        \caption{\label{fig:usingUnifyFS} \textbf{Using UnifyFS}
+Using UnifyFS from an MPI application is as easy as using the parallel file system.
 Simply change the file path to point to the UnifyFS mount point \texttt{/unifyfs}, and
-then perform I/O as normal.} 
+then perform I/O as normal.}
 \end{figure}
 
 
@@ -57,9 +57,9 @@ sharing will not be easily portable across multiple DOE systems with
 different burst buffer architectures, further increasing programming
 complexity to support shared files.
 
-For the reasons outlined above, it is clear that without software support 
+For the reasons outlined above, it is clear that without software support
 for distributed burst buffers, applications
-will have major difficulties utilizing these resources. 
+will have major difficulties utilizing these resources.
 
 \begin{figure}[htb]
         \centering
@@ -81,9 +81,9 @@ their jobs from their batch scripts. Once UnifyFS is instantiated, user
 applications can read and write shared files to the mount point just like
 they would the parallel file system. File operations to the UnifyFS
 mount point will be intercepted and handled with specialized optimizations
-that will deliver high I/O performance. 
+that will deliver high I/O performance.
 
-Because bulk-synchronous I/O dominates the 
+Because bulk-synchronous I/O dominates the
 I/O traffic most HPC systems, we target our approach at
 those workloads. Examples of bulk-synchronous I/O include checkpoint/restart
 and periodic output dumps by applications. Thus, UnifyFS  addresses a major usability
@@ -108,9 +108,9 @@ UnifyFS code base. This year, we also introduced our UnifyFS API which is intend
 to be used by I/O middleware software, e.g., I/O libraries like HDF5. By using this
 API, I/O middleware can have finer control over the workings of UnifyFS and obtain
 better performance. Finally, we also implemented numerous changes and bug fixes
-in preparation for our support of UnifyFS on Frontier. 
-Our source code for UnifyFS is available on 
-GitHub at \url{https://github.com/LLNL/UnifyFS}. Within the last year, we have also deployed UnifyFS on Summit as a production ready module. 
+in preparation for our support of UnifyFS on Frontier.
+Our source code for UnifyFS is available on
+GitHub at \url{https://github.com/LLNL/UnifyFS}. Within the last year, we have also deployed UnifyFS on Summit as a production ready module.
 
 %\begin{figure}[htb]
         %\centering
@@ -123,11 +123,16 @@ GitHub at \url{https://github.com/LLNL/UnifyFS}. Within the last year, we have a
 %\end{figure}
 %
 
+The UnifyFS team has also made progress on the EAS systems for Frontier. As of
+this writing, the team has successfully built and run UnifyFS at small scale
+on Spock. The tests completed without errors and exhibited expected performance.
+We have begun testing on Crusher and will continue that effort.
+
 \paragraph{Next Steps}
 
-Our efforts for the next year will be focused on delivering a robust and 
+Our efforts for the next year will be focused on delivering a robust and
 high-performance implementation of UnifyFS on Frontier. We have begun the work
-of porting to early access systems for Frontier and will continue on this track. 
+of porting to early access systems for Frontier and will continue on this track.
 We will rigorously test the correctness and performance of UnifyFS and will
 evaluate UnifyFS's performance with ECP applications on Frontier.
 
