@@ -61,7 +61,7 @@ including contiguous and non-contiguous remote memory access (RMA) operations su
 and atomic updates. Some of these models also include support for remote function invocation.
 GASNet-EX~\cite{gasnet-lcpc18} is a communications library that provides the foundation for implementing
 PGAS models, and is the successor to the widely-deployed GASNet library.
-We are building on nearly 20 years of experience with the GASNet~\cite{gasnet-site,gasnet-spec}
+We are building on over 20 years of experience with the GASNet~\cite{gasnet-site,gasnet-spec}
 communication layer to provide production-quality implementations that include
 improvements motivated by
 technology trends and application experience.  
@@ -156,6 +156,36 @@ improvements to InfiniBand support which (1) reduce memory consumption at large
 job sizes and (2) improve scaling to large thread counts in multi-threaded
 clients.  Other recent tuning efforts have reduced the overheads for put, get
 and atomic updates in intra-node shared memory.
+
+\paragraph{Preliminary Results on Early Access Systems}
+
+Early access to OLCF's HPE Cray EX systems, Spock and Crusher, have helped our
+team to pursue support in GASNet-EX for their respective networks (Slingshot-10
+and Slingshot-11) and for efficient RMA transfers to and from AMD GPUs.
+
+Experiences on OLCF's Spock system helped to enable the recent addition of
+memory kinds support for the UCX network API and for GPUs using the AMD HIP API.
+In particular, use of the ``ROCmRDMA'' technology allows network hardware to
+perform RMA operations to and from memory on AMD GPUs without staging through
+buffers in host memory.
+%
+Microbenchmarks collected on Spock of RMA put operations from local host memory
+to remote GPU memory show bandwidth peaking to the same 11.4GiB/s as for
+transfers in either direction between host memory at both ends.
+Meanwhile, RMA get operations from remote GPU memory to local host memory reach
+a peak bandwidth of 9.3GiB/s.  
+%
+Figure~\ref{fig:upcxx-spock} in Section~\ref{subsubsect:upcxx}
+shows preliminary results for a UPC++ benchmark run on Spock, which illustrate
+how leveraging the new ROCmRDMA support in GASNet-EX translates into significant
+performance gains over the prior implementation approach.
+
+Early experiences on OLCF's Crusher system are driving development of support
+for the HPE Slingshot-11 network.  This work is anticipated to appear in the
+Spring 2022 release of GASNet-EX.  Preliminary results have demonstrated the
+ability of GASNet-EX to effectively utilize all four network interfaces in a
+Crusher node, and to deliver peak RMA bandwidths competitive with those HPE
+has reported for their MPI on comparable transfers.
 
 \paragraph{Next Steps}
 

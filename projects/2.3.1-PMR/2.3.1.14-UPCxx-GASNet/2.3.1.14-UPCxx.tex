@@ -122,7 +122,7 @@ unifying the expression of data transfer among the various memories in a
 heterogeneous system, these abstractions enable ECP
 applications to utilize accelerators within UPC++'s PGAS model.  The
 abstraction enables hardware offload (when available) of device data transfers,
-eliminating the need for the application to stage transfers through
+eliminating the need to stage transfers through
 intermediate buffers in host memory.
 The global pointer representation transparently tracks device information,
 eliminating the need for expensive address space queries in critical paths.
@@ -132,7 +132,7 @@ have hardened and tuned the implementation.
 
 \textbf{2. Training and Outreach.}
 The UPC++ team continues outreach efforts, including a half-day UPC++
-tutorial to appear at SC21 (for the second consecutive year).
+tutorial at SC21~\cite{sc21-upcxx-tutorial} (for the second consecutive year).
 
 \textbf{3. Productivity and Performance.}
 Having completed the core specification and implementation of UPC++, we have
@@ -141,15 +141,50 @@ especially in response to stakeholder feedback.  The most significant
 examples are deployment of eager notification~\cite{pawatm21-upcxx-as_eager} 
 and instruction-level tuning along common critical paths.
 
+\paragraph{Preliminary Results on Early Access Systems}
+
+We are using OLCF's Spock (HPE Cray EX) system to implement support in UPC++ for efficient RMA
+operations targeting the memory in GPUs using the AMD HIP API.  This work
+leverages recently completed work in GASNet-EX which uses the ``ROCmRDMA''
+technology to allow network hardware to perform RMA operations to and from
+memory on AMD GPUs without staging through buffers in host memory.  This work is
+anticipated to appear in the Spring 2022 release of UPC++.
+
+\begin{figure}[htb]
+  \centering
+  \captionsetup{width=0.85\linewidth}
+  \includegraphics[width=0.72\textwidth]{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/upcxx-spock.pdf}
+  \caption{Preliminary flood bandwidth on OLCF's Spock of RMA put operations from
+           local host memory to remote GPU memory, implemented with and without
+           use of the ROCmRDMA capability in GASNet-EX, along with the bandwidth ratio.}
+  \label{fig:upcxx-spock}
+\end{figure}
+
+Figure~\ref{fig:upcxx-spock} shows preliminary results of this work.  Solid
+lines show the flood bandwidth of put operations from local host memory to
+remote GPU memory, collected using the work-in-progress to support AMD GPUs in
+UPC++.  The `X' symbols mark data with ROCmRDMA support enabled in GASNet-EX,
+while `O' symbols mark data with that support disabled.  In the latter case,
+UPC++ uses the HIP API to stage GPU data through host memory at the remote
+host.  The dashed line shows the ratio on
+a linear scale, highlighting the magnitude of the improvement which is not
+immediately evident on the logarithmic bandwidth scale.  For transfer
+sizes up to 16KiB the improvement is over 10x.  For smaller transfers the
+improvement can be nearly 60x, and for larger transfers the improvement is consistently over
+1.5x.  Benchmark results for a get operation which fetches from remote GPU
+memory are qualitatively similar.
+
 \paragraph{Next Steps}
 
 The planned work for the near-term future includes the following:
 
 \textbf{1. Memory Kinds.}
 We will continue development of memory kinds.  The
-implementation, currently targeting the hardware in Summit, will be extended to
-include other accelerators scheduled to appear in early exascale systems.
-As with Summit, transfers will be offloaded to available hardware capabilities
+past releases of UPC++ targeted the hardware in Summit, while the Spring 2022
+release is anticipated to extend support to the hardware in OLCF's Spock
+and Crusher systems.  Additional future work will
+include other accelerators scheduled to appear in DOE's exascale systems.
+For all accelerators, transfers will be offloaded to available hardware capabilities
 by leveraging the parallel efforts in GASNet-EX.
 
 \textbf{2. Productivity and Performance.}
