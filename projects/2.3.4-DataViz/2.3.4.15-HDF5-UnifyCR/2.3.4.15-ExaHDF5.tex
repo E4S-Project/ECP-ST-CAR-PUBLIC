@@ -65,6 +65,8 @@ The ExaIO HDF5 team has been working with various applications in the ECP portfo
 %\emph{Asynchronous I/O}
 %The ExaIO-HDF5 team evaluated the asynchronous I/O VOL connector on Cori at NERSC and on Summit at OLCF with several I/O kernels and ECP application I/O benchmarks. Experimental results show that asynchronous I/O can effectively mask the I/O cost when the application is idle or performing non-I/O operations. 
 
+The ExaIO HDF5 team has been building and testing the new HDF5 features on various EAS systems including Perlmutter, Spock, Crusher, and Presque. The asynchronous I/O and cache VOL features, and the \emph{h5bench} were successful in building. All small-scale tests passed with the ``develop'' branch of HDF5. 
+
 \paragraph{Next Steps}
 
-The ExaIO HDF5 team is developing subfiling for reducing locking and contention on parallel file systems,  fine-tuning asynchronous I/O and the Cache VOL connectors for caching and prefetching, and supporting ECP AD and ST teams and facilities in improving the overall performance of HDF5. The team is also working on tuning parallel compression and developing multi-dataset I/O API in HDF5. 
+The ExaIO HDF5 team is developing subfiling for reducing locking and contention on parallel file systems,  fine-tuning asynchronous I/O and the Cache VOL connectors for caching and prefetching, and supporting ECP AD and ST teams and facilities in improving the overall performance of HDF5. The team is also working on tuning parallel compression and developing multi-dataset I/O API in HDF5. The team will continue testing and measuring performance benefits on EAS systems. 
