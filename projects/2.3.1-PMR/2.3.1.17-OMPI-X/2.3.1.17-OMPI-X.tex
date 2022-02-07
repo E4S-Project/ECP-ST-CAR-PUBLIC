@@ -228,3 +228,22 @@ will also need to be supported.  Additionally, we will be in a much better posit
 embodied in MPI 4.0, but who have been reluctant to adopt them until they were officially part of the standard.  
 We will likewise continue to identify and improve performance and scalability bottlenecks and drive forward on
 the core themes outlined in our Solution Strategy.
+
+\paragraph{Early Access System Experience}
+Most of the early access systems have utilized InfiniBand interconnects, which are well-supported 
+by Open MPI (the HPE Slingshot-10 interconnect is also InfiniBand).  The Frontier test and development
+system Crusher was the first system available with the new Slingshot-11 network.  A subset of the
+OMPI-X team obtained access to Crusher in December, and have been working to port Open MPI to
+the SS-11 interconnect.  The basic approaches available leverage either Open Fabric providers or
+the UCX communication infrastructure, or some combination.
+So far, we've confirmed basic point-to-point functionality using the HPE-provided
+CXI Open Fabric provider, and partial intra-node shared memory functionality through the 
+UCX communications framework.
+We plan to continue exploring all three paths until we arrive at a solution that provides full functionality
+with the expected performance.
+
+The Qthreads user-level lightweight threading package is not dependent on the network, nor on the GPUs
+so it is easier to port.  It has been confirmed to work on Spock (the Frontier early access system).
+Challenges getting the Qthreads team access to ANL early access systems have delayed demonstration
+of the functionality there, but we do not anticipate any problems.  The team just recently obtained
+access to Arcticus and plans to test Qthreads there shortly.
