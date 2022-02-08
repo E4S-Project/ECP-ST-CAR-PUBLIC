@@ -243,7 +243,20 @@ The other algorithmic changes and the results are detailed below.
 } %%%% ignored
 
 %%--------------------------------------
+\paragraph{Preliminary Experiences on Early Access systems}
+In the past year, we have ported both STRUMPACK and SuperLU to Spock using
+HIP/ROCm backend. For STRTUMPACK, we observed that Spock single MI100 (ROCm 4.2) GPU
+is usually slower than Summit single V100 GPU, can be 1.9x slower. For SuperLU,
+the single GPU performance is comparable on Spock MI100 and Summit V100.
+Using 16 Spock GPUs, we observed 2x speedup over CPU-only SuperLU code.
 
+More recently, we started working on Crusher. The following are preliminary
+ressults. For both STRUMPACK and SuperLU, the Crusher single MI250X is consistently
+faster than the Spock MI100, up to 85\%.
+We also ran SuperLU on multiple Crusher nodes, up to 8 nodes with 64 GPUs, and
+found that the parallel scaling is close to that on Spock.
+
+%%--------------------------------------
 \vspace{-.135in}
 \paragraph{Next Steps} Our future efforts will focus on the following areas:
 %\textit{Describe what you are working on next.}
