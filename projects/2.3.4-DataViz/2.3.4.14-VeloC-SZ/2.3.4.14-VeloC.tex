@@ -109,7 +109,7 @@ combination of resilience strategies, as well as, to customize their
 checkpointing pipeline (e.g., add new post-processing operations such
 as analytics or compression).
 
-\paragraph{Recent Progress}
+\paragraph{Recent Progress.}
 
 We met and closely collaborated with several ECP application teams in
 an effort to address their checkpointing needs. Most of our current
@@ -127,50 +127,64 @@ from one per rank to a desired smaller number.
   \label{fig:veloc:arch}%
 \end{wrapfigure}
 
-Furthermore, we added several new capabilities. First, we added
-support for \emph{serialization} of C++ objects based on the notion
-of \emph{lambda serializers}, which register a recipe for
-serialization with VeloC that will be used during checkpointing. This
-recipe can be individually tuned for each data structure 
-and may potentially mix different serialization libraries within the
-same checkpoint. Second, we added support to run the active backend as
-an application thread within a leading rank on each compute node. This
-approach eliminates the need to deploy an active backend on each
-compute node separately.
+In terms of capabilities, we refactored the VELOC code to abstract all
+interactions with external storage in the code, which allows flexible
+support to persist checkpoints on a variety of options in addition to
+conventional POSIX-based parallel file systems. In particular, to
+illustrate this capability, we added support for DAOS, an object-based
+store developed by Intel and planned to be used by the Aurora
+supercomputer. This paves the way to include support for other
+object-based and persistent key-value stores, likely to become popular
+in the future and developed by the vendors and/or the HPC community.
 
-In addition, we have added several new features that facilitate better
-integration with the ECP ecosystem. We extended the series of tests
-(originally a minimal set based on Travis and linked with our public
-GitHub repository) to include a comprehensive set of combinations of
-scenarios, both for VeloC and its subcomponents. Furthermore, we
-devised a series of multi-node tests specifically designed for
-HPC scenarios running on ECP testbeds. These tests were also integrated
-with the continous integration infrastructure maintained by ECP
-(which runs in parallel with our Travis integration). Finally, we
-are also providing a Spack installation package that is part of the
-OpenHPC distribution.
+Second, we continued our efforts to provide an incremental
+checkpointing capability in VELOC for HPC applications that need to
+checkpoint data structures that change only partially between the
+checkpoint requests.  Our proposal is exploring hash-based
+de-duplication to optimize the trade-off between reducing checkpoint
+sizes at the expense of identifying and consolidating the increments
+in a heterogeneous environment (GPU + CPU).  This has two advantages:
+(1) it produces smaller checkpoints, which saves storage space across
+the whole heterogenous storage stack; (2) it improves checkpointing
+performance by reducing the data transfer overheads, which impact both
+the blocking phase and the asynchronous operations.
 
-We also started several exploratory directions that resulted in
-several research publications. Notably, we explored how to integrate
-VeloC with performance-portable asbtractions such as Kokkos. Notably,
-we proposed the notion of \emph{resilience portability} based on
-checkpointable memory views, which automates the definition of
-critical regions (otherwise manually identified by
-users)~\cite{PortResEuroPar21}. This research effort continues with
-additional support for incremental checkpointing based on
-deduplication techniques applied to the memory views. Furthermore, we
-proposed several checkpoint aggregation techniques specifically
-designed for the asynchronous mode of operation that allows the
-application to continue running. In this context, we have explored a
-strategy based on parallel POSIX writes to disjoint offsets in the
-same file, as well as a strategy based on MPI-IO. A publication that
-summarizes our findings is under preparation.
+Third, we continued working on the checkpoint aggregation, which allows
+N local files produced during the blocking phase of VELOC to be aggregated
+asynchornously into M files on the external storage. Since state of
+art aggregation approaches (e.g. MPI-IO) are designed for collective
+blocking I/O, we developed our own algorithms to enable asynchronous
+aggregation. In particular, we proposed a decoupled peer-to-peer
+leader election algorithm that allows independent groups of (potentially
+remote) ranks to consolidate their data on a single rank, which is then
+responsible to write a single file to the PFS.
 
-\paragraph{Next Steps}
-We are working towards several goals: (1) more advanced checkpoint
-aggregation techniques; (2) support for key-value stores as an
-alternative to parallel file systems, notably DAOS; (3) continue
-hardening the integration with existing ECP applications and automated
-testing infrastructure.  In parallel, we will continue to collaborate
-with the ECP application teams to address new requirements should they
+\paragraph{Testing, Continuous Integration, and Experience on Early Access Systems.}
+We continued working towards new features that facilitate better
+integration with the ECP ecosystem. We extended the test suite of
+VELOC (runnable both independently and with continuous integration) to
+include more comprehensive set of combinations of scenarios, both for
+VELOC and its subcomponents. In particular, we added support for
+testing the refactored VELOC code that allows multiple options for
+external storage and its new DAOS support. Furthermore, we
+experimented with VELOC at small scale on various early testbeds
+encouraged for use by the ECP community. Notably, we experimented on
+Spock, a proxy to Frontier hosted at ORNL. From the VELOC perspective,
+it features both high performance memories and local storage
+(NVMe-based SSD), while persistent storage is provided through a PFS
+mount point. Despite the instability of the software stack on this
+testbed, we successfully tested VELOC with the standard battery of
+tests and confirmed its correctness at small scale. Presque (ANL) is
+another platform we targeted as it provides access to a DAOS
+deployment. We were successful in running the refactored version of
+VELOC to checkpoint small data sizes, but encountered issues with DAOS
+(reported to Intel) when using larger checkpoint sizes.
+
+\paragraph{Next Steps.}
+We are working towards several goals: (1) refine incremental
+checkpointing techniques; (2) refine asynchronous checkpoint
+aggregation techniques; (3) continue hardening the integration with
+existing ECP applications; (4) test VELOC on more ECP testbeds, in
+particular CRUSHER. In parallel, we will continue the collaboration
+with the ECP application teams to address new requirements as they
 arise.
