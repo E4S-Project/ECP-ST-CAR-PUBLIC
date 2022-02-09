@@ -1,7 +1,6 @@
 \subsubsection{\stid{2.11} Argobots: Flexible, High-Performance Lightweight Threading }
 
 \paragraph{Overview}
-
 Efficiently supporting massive on-node parallelism demands highly
 flexible and lightweight threading and tasking runtimes. At the
 same time, existing lightweight abstractions have shortcomings while
@@ -17,7 +16,6 @@ framework that manages hardware resources more efficiently and reduce
 interference with co-located applications.
 
 \paragraph{Key Challenges}
-
 Several user-level threading and tasking models have been proposed in
 the past to address the shortcomings of OS-level threads, primarily
 with respect to cost and flexibility. Their lightweight nature and
@@ -36,7 +34,6 @@ MTAAP09_Porterfield, WMPP05_Cuvillo, IntelOMP, Nanos++, LCPC96_Kale,
 PACT14_Treichler} are tailored to specific environment.
 
 \paragraph{Solution Strategy}
-
 Argobots offers a carefully designed execution model that balances
 generality of functionality with providing a rich set of controls to
 allow specialization by end users or high-level programming models
@@ -103,7 +100,7 @@ threads lowers the cost of OpenMP threading and tasking.  The Argobots
 project continues to improve interoperability with communication
 layers such as MPI runtimes (e.g., MPICH and Open~MPI) and Margo, a
 Mercury RPC over Argobots.  To help their performance analysis, our
-latest Argobots 1.1a1 release includes a lightweight yet powerful
+latest Argobots 1.1 release includes a lightweight yet powerful
 profiling interface, which helps runtime developers pinpointing a
 performance problem in these systems.  I/O service is one of the most
 important application areas for Argobots. Intel DAOS, a next-
@@ -119,14 +116,6 @@ architectures with special optimizations for Intel/AMD x86/64,
 ARMv8-A, and POWER 8 and 9. Argobots can be compiled with numerous C
 compilers including GCC, Clang, ICC (Intel), XLC (IBM), PGCC (PGI),
 Solaris Studio (Oracle), and Arm C Compiler for HPC (ARM).
-
-The innovative design and implementation of Argobots are highly
-recognized.  Argobots was named a finalist for the 2020 R\&D 100
-Awards.  The prestigious R\&D 100 competition, sponsored by R\&D
-Magazine, recognizes the 100 most innovative technologies of the
-previous year.  Argobots, a lightweight and highly flexible
-multithreading framework, was chosen as a finalist for the 2020 R\&D
-100 Awards.
 
 \paragraph{Next Steps}
 

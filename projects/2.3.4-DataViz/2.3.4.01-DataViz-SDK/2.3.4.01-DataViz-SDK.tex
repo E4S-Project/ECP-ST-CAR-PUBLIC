@@ -5,55 +5,62 @@
 
 The Data \& Visualization (DataViz) SDK aims to create a production-quality infrastructure necessary to manage, share, and facilitate data analysis of mission-critical codes at scale. The project focuses on community development and a commitment to success via quality improvement policies, better build and deployment processes, and the ability to use diverse, independently developed DataViz SDK projects, in combination, for data analysis and visualization problems.
 
-The DataViz SDK's responsibility is to coordinate the disparate documentation, development, testing, deployment activities, and develop the necessary tooling and shared infrastructure to serve these goals. This coordination's resulting product is a unified set of usable, standardized, and interoperable packages ready for the upcoming exascale machines. We have designed the efforts to support the DataViz SDK to fit within the overarching goal to leverage and integrate data management, analysis, and visualization techniques developed across the ECP ST ecosystem to support scientific discovery and understanding.
+The DataViz SDK's responsibility is to coordinate the development, testing, and deployment activities for the suite of projects across the ECP Data \& Visualization area as it applies to cross-project interoperability, and develop the necessary tooling and shared infrastructure to serve these goals. This coordination's resulting product is a unified set of usable, standardized, and interoperable packages ready for the upcoming exascale machines. We have designed the efforts to support the DataViz SDK to fit within the overarching goal of leveraging and integrating data management, analysis, and visualization techniques developed across the ECP ST ecosystem to support scientific discovery and understanding.
 
 In addition, DataViz SDK provides a capability supporting collaborative analysis and visualization software development, helping independent teams accelerate the adoption of best practices, enabling interoperability of independently developed software, and improving developer productivity and sustainability of the software products.
 
 \paragraph{\textbf{Key Challenges}}
 \paragraph{}
 
-Scientists and engineers from various research cultures and significantly different software engineering maturity levels develop Data \& Visualization software packages. In addition to the challenges outlined in Section~\ref{subsubsect:ecosystem-sdk}, ECP Data \& Visualization software packages will use different combinations of dependency software in various configurations. Visualization applications and libraries, in particular, utilize lower-level graphics libraries from an OpenGL stack needing reliably mapped to a diverse set of underlying hardware.  These applications demand the deployment infrastructure support the appropriate combination of software and hardware-based rendering on NVIDIA, AMD, or Intel GPUs and accelerated offscreen rendering APIs like EGL.  Requirements such as these place the DataViz SDK between the hardware teams and the analysis and visualization software developers preparing to run on new architectures yet delivered by ECP.
+Scientists and engineers from various research cultures and significantly different software engineering maturity levels develop Data \& Visualization software packages. In addition to the challenges outlined in Section~\ref{subsubsect:ecosystem-sdk}, ECP Data \& Visualization software packages will use different combinations of dependency software in various configurations. Visualization applications and libraries, in particular, utilize lower-level graphics libraries from an OpenGL stack needing to be reliably mapped to a diverse set of underlying hardware.  These applications demand the deployment infrastructure supporting the appropriate combination of software and hardware-based rendering on NVIDIA, AMD, or Intel GPUs and accelerated offscreen rendering APIs like EGL.  Requirements such as these place the DataViz SDK between the hardware teams and the analysis and visualization software developers preparing to run on new architectures yet delivered by ECP.
 
-DataViz SDK software packages also have, on average, a much deeper dependency chain than is typical within HPC.  As of this writing, an optimized set of twelve ECP DataViz SDK packages requires over 160 dependencies.  Many packages share these dependencies, each with their own set of constraints.  This combination presents a unique challenge to ensure compatibility, interoperability, and reliability of the entire stack as a whole, beyond the individual packages.
+DataViz SDK software packages also have, on average, a much deeper dependency tree than is typical within HPC.  As of this writing, the optimized set of thirteen ECP DataViz SDK packages requires over 201 dependencies.  Many packages share these dependencies, each with their own set of constraints.  This combination presents a unique challenge to ensure compatibility, interoperability, and reliability of the entire stack as a whole, beyond the individual packages.
 
 \paragraph{\textbf{Solution Strategy}}
 \paragraph{}
 
 First, the DataViz SDK solution strategy involves pursuing usability, standardization, interoperability, and sustainability goals through a set of community policies to improve software practices. The DataViz SDK community policy tasks have required us to define a common terminology for effective communication.
 
-Second, we leverage shared infrastructure, such as the Spack~\cite{gamblin+:sc15} package manager and CI testing at ECP facilities. We built the SDK release and delivery deployment goals on Spack as a unifying package manager, while our reliability and sustainability goals benefit from and leverage the facilities' CI testing infrastructure. 
+Second, we leverage shared infrastructure, such as the Spack~\cite{gamblin+:sc15} package manager and CI testing at ECP facilities. We have built the SDK release and delivery deployment goals on Spack as a unifying package manager, while our reliability and sustainability goals benefit from and leverage a combination of CI testing infrastructure from upstream Spack, DOE facilities, and dedicated project resources.
 
-Finally, we define a set of spack meta-packages, ecp-vis-sdk and ecp-io-sdk, to enable the delivery of ECP targeted configurations of data and visualization packages through E4S.  These meta-packages establish dependencies for the packages within the DataViz SDK, and serve as the backbone of our interoperability testing and deployment efforts. 
-
+Finally, we define a spack meta-package, ecp-data-vis-sdk, to enable the delivery of ECP targeted configurations of data and visualization packages through E4S.  The meta-package establish dependencies for the packages within the DataViz SDK, and serves as the backbone of our interoperability testing and deployment efforts. It enables the coincident optimized deployment of the diverse set of packages in the ECP Data \& Visualization portfolio:
 \begin{itemize}
-\item ecp-vis-sdk includes data analysis and visualization packages such as ASCENT, Catalyst, Cinema, ParaView, VTK-m along with data reduction and compression libraries like SZ, and ZFP.
-\item ecp-io-sdk includes input and output (I/O) services like ADIOS, Darshan, hdf5, parallel-netcdf, unifyfs, and veloc.
- \end{itemize}
+\item Visualization tools and libraries
+  \begin{itemize}
+  \item ASCENT, Catalyst, Cinema, ParaView, and VTK-m
+  \end{itemize}
+\item Data reduction and compression libraries
+  \begin{itemize}
+  \item SZ and ZFP
+  \end{itemize}
+\item I/O and data service libraries
+  \begin{itemize}
+  \item ADIOS, Darshan, HDF5, PNetCDF, UnifyFS, VeloC
+  \end{itemize}
+\end{itemize}
 
 \noindent
-The packages contained in the two meta-packages represent software at different maturity and readiness for release. The early release strategy was to push product readiness for inclusion in the E4S releases by assisting packages with Spack packaging and CI testing. We will continue to evolve the maturity level and interoperability of the packages while preparing for subsequent releases.
+The packages contained in the meta-package are able to be deployed in a way that enables all of the appropriate features for each package when the others are present and in a way that satisfies one anothers dependencies. The release strategy in the early efforts of the SDK was to push product readiness for inclusion in the E4S releases by assisting individual packages with Spack packaging and CI testing. With that effectively achieved in the early efforts of the SDK our focus has now shifted to the collective interoperable deployment and testing of all the packages on targeted ECP platforms of interest.
 
 \paragraph{\textbf{Recent Progress}}
 \paragraph{}
 
-In pursuit of establishing a baseline set of software quality across the entire ECP ST area, the SDK projects have been collectively developing a set of community policies a given package must adhere to be an E4S member package.  These community policies cover areas including publicly accessible documentation, mandatory spack packaging, testing practices, and other policy areas.  The DataViz SDK has played an active role in this panel by proposing new policies, refining language on official policies, and soliciting community feedback.  We are nearing a final set of initial guidelines required by the E4S project for packages to be accepted as a first-class E4S Member Package.  These community policies intended to be an ongoing collaborative effort to elevate the standard of software quality, reliability, and sustainability for the entire ECP software ecosystem.
+% \textit{SENSEI}
 
-In addition, recent progress included the completion of the following three milestones during the fiscal year 2020.
+\textit{Integration with upstream Spack CI} The spack package manager is the distribution mechanism of choice for ECP.  To ensure reliability for it's packages the spack project has developed a CI capability for specific package collections of interest to be built and validated in every pull request.  Through coordination with the spack project, the DataVis SDK has integrated it's spack meta-package as one of the primary pipelines of interest for the spack project. As a result, the packages and dependencies enabled by the DataVis SDK are validated for build correctness on every change and addition to spack.
 
-\textit{STDV01-06} --- Improved CI capabilities. During this milestone, we worked to ensure that all of the packages within the DataViz SDK were utilizing Continuous Integration in some way as part of their development workflow and software process. While the packages span a wide range of maturity and robustness of the software process, they all have incorporated at least a baseline CI capability (some far more extensive than others). Most leverage a public cloud CI like Travis or GitHub Actions, while others rely on internal resources from an internal GitLab or BitBucket ser er. We also improved the spack packaging for several of the SDK projects and integrated the remaining projects into the SDK meta-packages.
-
-\textit{STDV01-08} --- HDF Virtual Object Layer Architecture (VOL) documentation and ECP HPC-CI integration. During this time, we worked directly within the ADIOS and VTK-m projects to enable the newly developed ECP HPC-CPI capability. These two projects served as early adopters of the Gitlab-CI environment running directly on HPC resources at ORNL. The SDK coordinated directly with ORNL facilities personnel to debug the CI environment worked to identify issues other Data \& Viz projects are likely to encounter, and develop the initial capability for ADIOS and VTK-m. From this work, the SDK can assist other data and visualization projects in implementing the ECP HPC CI capability through both guidance and best practice recommendation and direct technical development assistance.
-
-\textit{STDV01-14} --- Optimized Spack configurations and CI. The default configuration of most spack packages is intended to produce the most compatible version, but not necessarily the most optimal for large scale HPC. In particular, packages may have key features disabled by default essential to HPC, such as MPI support and FORTRAN language bindings. The two meta-packages were enhanced to ensure that an optimized configuration explicitly targets ECP target platforms for every direct data and visualization package dependency.
+\textit{Deployment on Spock} The Frontier system at OLCF is scheduled to come online by the end of 2021 or early 2022. In preparation we have targeted Spock, the testing and development environment for Frontier, for an initial full deployment of the DataVis SDK.  We have now successfully been able to deploy the ecp-data-vis-sdk meta-package on the Spock system using the Cray Programming Environment with both GNU and Cray compilers while enabling twelve distinct Data \& Vis packages.  This will minimize the effort needed to deploy on Frontier when it comes online.
 
 \paragraph{\textbf{Next Steps}}
 \paragraph{}
 
 We highlight our next steps in the follow on project milestones.
 
-\textit{STDV01-17} --- Cross SDK CI testing. The focus of this release is to demonstrate successful interoperable CI testing. The DataViz SDK is building out a CI infrastructure to allow all ST products within the Data \& Visualization focus area to be regularly built and tested with each other to ensure interoperability. This milestone is to have the CI system running with as many ST products in the DataViz SDK successfully building together, satisfying each other's dependencies.
+\textit{STDV01-38} --- Implement and test accelerator variants in the SDK: The initial SDK package lacks the necessary features to enable and propagate GPU features for the packages.  We will implement and test GPU options in the SDK for each of the accelerator platforms of interest (AMD, NVIDIA, and Intel) and ensure they are consistently and reliably applied to the DataVis SDK pacakges.
 
-\textit{STDV01-29} --- Hardening to ensure SENSEI is deployable and reliable at scale. Establishing Spack recipes for the SENSEI software coupled with the hardening of the in transit code-base will go a long way in mitigating the risks associated with availability and defects for ECP applications. 
+\textit{STDV01-39} --- Deployment of the SDK into E4S: We will integrate the ecpdata-vis-sdk spack meta-package into the E4S distribution and it will become the provider-of-choice for the ECP Data \& Visualization packages it supports.  This will ensure that E4s will provide the most effective and useful configurations of these packages.
+
+\textit{STDV01-40} --- Deployment of the SDK in facility environments: We will deploy the full SDK on the various ECP platforms available in production.  This will ensure that when Data \& Vis packages are provided via spack by facilities then they are in the most effective and useful configuration possible for their users.
 
 \paragraph{HDF5}
 \paragraph{Overview}

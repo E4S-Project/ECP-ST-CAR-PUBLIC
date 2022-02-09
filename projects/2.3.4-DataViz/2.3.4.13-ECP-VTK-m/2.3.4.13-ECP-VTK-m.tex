@@ -80,6 +80,60 @@ The following features have been completed in the FY20 fiscal year.
   As the underlying implementation of geometry processing and rendering in Ascent, VTK-m provides in situ visualization to WarpX simulations as shown in Figure \ref{fig:VTKmRecent}.
 \end{itemize}
 
+\paragraph{Preliminary Experiences on Early Access systems}
+The ECP/VTK-m team has made significant progress toward supporting visualization on the Spock early access system for Frontier during FY21.
+At the beginning of FY21, the team could compile a VTK-m smoke test with HIP and run it on an AMD GPU.
+This demonstrated running a VTK-m ``worklet'' (the encapsulation of a GPU kernel) on the GPU.
+This required resolving lots of special templating within the VTK-m software and was an achievement in its own right.
+
+However, at the beginning of FY21, most of the features of VTK-m had to be disabled.
+This included mesh structures, filtering, and rendering, which comprises the major functionality implemented within the toolkit.
+FY21 included a major overhaul of the problematic features that were preventing operation on AMD hardware.
+The biggest change was the removal of virtual methods.
+VTK-m's use of virtual methods was problematic for all GPU types and some required features were not supported on AMD.
+The removal of virtual methods required careful consideration of compiled data types that could no longer be hidden behind virtual method interfaces.
+New techniques to reduce template code paths needed to be designed.
+Another big overhaul was in the classes managing arrays.
+Array handles were redesigned to use buffer management of un-typed arrays.
+This moved much of the array management into libraries where they did not have to be recompiled for every use of every type.
+It also provided some more efficient ways to manage the allocation and transfer of data.
+
+In addition to these internal changes, the VTK-m team worked closely with the Kokkos team and had regular meetings with AMD engineers.
+Progress required changes to VTK-m, Kokkos, HIP, and compilers.
+Here is a selection of links to software updates that were required.
+
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+\item\url{https://github.com/kokkos/kokkos/issues/3431}
+\item\url{https://gitlab.kitware.com/vtk/vtk-m/-/merge_requests/2282}
+\item\url{https://gitlab.kitware.com/vtk/vtk-m/-/merge_requests/2276}
+\item\url{https://github.com/ROCm-Developer-Tools/HIP/pull/2183}
+\item\url{https://github.com/spack/spack/pull/19816}
+\item\url{https://github.com/kokkos/kokkos/issues/3581}
+\item\url{https://github.com/kokkos/kokkos/pull/3953}
+\item\url{https://gitlab.kitware.com/cjy7117/vtk-m/-/tree/hip-support}
+\item\url{https://reviews.llvm.org/D112733}
+\end{itemize}
+
+Currently, VTK-m with its test suite can be compiled on Spock.
+There are some caveats, however.
+It requires a ROCm 5.0 pre-release and the latest head of Kokkos.
+There is also currently an issue with linking the rendering library, which is being looked into.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=3in]{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/VTKm-spock-timing.png}
+  \caption{Performance improvement of VTK-m's unstructured gradient benchmark under Kokkos.}
+  \label{fig:VTKmPerf}
+\end{figure}
+
+The VTK-m team has also been working with the Kokkos team to improve performance while using Kokkos to drive devices, which is necessary for AMD GPUs.
+During this time, a performance issue for estimating gradients in unstructured grids was found.
+The VTK-m and Kokkos teams worked together to identify a register spilling problem in one of the GPU kernels.
+The kernel launch parameters for this case, and a 12-fold improvement for this algorithm was observed on Spock.
+
 \paragraph{Next Steps}
 The VTK-m team is focused on ensuring success with our KPP-3 metric.
 To ensure this, our next efforts include:
@@ -88,7 +142,7 @@ To ensure this, our next efforts include:
 \item \textbf{Satisfy Needs of ECP Applications:}
   The VTK-m team's KPP-3 milestones hinge on applications using VTK-m code in a useful way.
   To ensure that VTK-m is satisfying the needs of ECP applications, the team will making modifications as needed.
-  The initial focus will be with the WarpX, WDM, MFIX, and Nyx applications.
+  The initial focus will be with the WarpX, WDMApp, MFiX-Exa, and Nyx applications.
 \item \textbf{Porting to Exascale Architecture:}
   As Frontier becomes available, the VTK-m team will ensure that the software compiles, runs, and performs well on the platform.
 \item \textbf{Ease of Adoption:}

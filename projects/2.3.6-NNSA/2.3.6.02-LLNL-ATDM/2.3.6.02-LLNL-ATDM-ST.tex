@@ -88,39 +88,34 @@ by several ECP application and library projects, including: LLNL ATDM
 application, GEOS (Subsurface), SW4 (EQSIM), MFEM (CEED co-design),
 DevilRay (Alpine), and SUNDIALS.
 
-\textbf{Flux}~\cite{Ahn:2014:Flux,FluxSC18} is a next-generation resource
-management and scheduling software framework under active development at
-LLNL. This ECP project significantly augments the design and development
-of this framework to address two specific technical challenges pertaining
-to exascale computing.
+\textbf{Flux}~\cite{flux,flux-fgcs:2020} is a next-generation workload management
+framework for HPC. Flux maximizes scientific throughput
+by scheduling the scientific work requested by HPC users--–also
+known as jobs or workloads.  Using its highly scalable
+breakthrough approaches of fully hierarchical scheduling and
+graph-based resource modeling, Flux manages a massive number
+of processors, memory, GPUs, and other computing system
+resources--–a key requirement for exascale computing and beyond.
+A job is typically expressed in a script that contains
+a formal specification for resource requests, identifies
+applications (for instance, multi-physics simulation software
+to run simultaneously across resources) along with their
+input data and environment, and describes how to deliver
+the output data. Modern scientific computing campaigns
+contain numerous interconnected and dependent tasks with
+disparate resource requirements.
+The composition of these
+numerous interdependent tasks can be spread across many jobs,
+as well as within each job, and is often referred to as a scientific
+workflow (as distinct from a single job or workload). Scheduling
+resources to such modern workflows requires highly scalable
+scheduling as well as performant communication and coordination
+across hundreds of thousands of jobs, which could not be
+accomplished with traditional HPC schedulers. Flux solves this
+critical problem and has provided innovative solutions
+for modern workflows for many scientific and engineering
+disciplines.
 
-\begin{enumerate}
-\item Provide Flux as a portable user-level scheduling solution for complex
-      exascale workflows
-
-\item Provide capabilities for co-scheduling, high throughput, task
-      coordination, and high portability.
-
-\item Develop a resource model capable of portably representing job
-      requirements of exascale systems.
-
-\item Provide Flux as the system resource manager and scheduler for exascale
-      systems.
-\end{enumerate}
-
-Major efforts include developing and deploying additional capabilities
-such as management and scheduling of a diverse set of emerging workflows
-as well as a diverse set of exascale resources (e.g., power and burst
-buffers). The project strives to do this through co-design efforts with
-major workflow management software development teams within ASC (i.e.,
-LLNL’s UQPipeline), ECP/ATDM programs, and exascale computing hardware
-vendors themselves. Because Flux’s design allows it to be used as a
-user-space scheduling tool, it is suitable for co-development with other
-workflow systems that require advanced scheduling capabilities. As a
-system tool, it is a potential replacement for resource managers such as
-SLURM, providing more advanced scheduling capabilities with full
-awareness of resources beyond just nodes and CPUs (e.g., filesystems,
-power, accelerators).
 
 \textbf{AID} (Advanced Infrastructure for Debugging) provides an advanced
 debugging, code-correctness and testing toolset to facilitate
@@ -219,21 +214,34 @@ integrate each framework, at their own pace, with a minimal set of code
 modifications.
 
 \subparagraph{Flux:}
-Exascale resource management is particularly complex as it requires us to
-manage both the complexity of workloads (workflows, jobs, and services)
-as well as the increasing complexity of exascale machines themselves.
-Exascale systems may have diverse node types with CPUs, GPUs, burst
-buffers, and other independently allocatable hardware resources. Jobs
-must be mapped to these systems generically -- one application must be
-able to run portably {\it and} with high performance or throughput on
-{\it any} exascale machine.  Flux aims to save application developers the
-pain of configuring and setting up their applications and workflows
-across multiple machine, and to enable massive ensembles and workflows to
-run scalably on these machines.
+The workload manager is responsible for efficiently
+delivering compute cycles of HPC systems to multiple users while considering their
+diverse resource types---e.g., compute racks and nodes, central and graphics
+processing units (CPUs and GPUs), multi-tiered disk storage
+However, two technical trends are making even the best-in-class
+products significantly ineffective on exascale computing systems.
+The first trend is the evolution of workloads for HPC. With the convergence
+of conventional HPC with new simulation, data analysis, machine learning (ML),
+and artificial intelligence (AI) approaches, researchers are ushering in
+new scientific discoveries. But this evolution also produces computing
+workflows---often comprising many distinct tasks interacting with one
+another---that are far more complex than traditional products
+can sufficiently manage.
+Second, hardware vendors have steadily introduced
+new resource types and constraints into HPC systems.
+Multi-tiered disk storage, CPUs and GPUs,
+power efficiency advancements, and other hardware components have gained
+traction in an era in which no single configuration reigns. Many HPC
+architectures push the frontiers of compute power with hybrid (or
+heterogeneous) combinations of processors.
+The workload management software must manage and consider {\em extremely heterogeneous} computing
+resources and their relationships for scheduling in order to realize a
+system's full potential.
+
 
 \subparagraph{AID:}
 Debugging parallel applications running on supercomputers is extremely
-challenging.  greater challenges.  Supercomputers may contain very high
+challenging.  Supercomputers may contain very high
 numbers of compute cores and multiple GPUs, and applications running on
 such systems must rely on multiple communication and synchronization
 mechanisms as well as compiler optimization options to effectively
@@ -326,27 +334,65 @@ libraries allow applications to work correctly and performantly even if
 some functionality from OpenMP, CUDA, threading, etc. is missing.
 
 \subparagraph{Flux:}
-Flux implements {\it hierarchical} scheduling.  Ultimately, it will be
-usable either as a full system resource manager, {\it or} as a scheduler
-for a single workflow {\it within} another allocation, {\it or} as both.
-Flux allows application-level workloads to choose their own scheduling
-policies and to specify concisely and portably the types of resources
-they need to run on a range of machines.  Unlike prior approaches like
-SLURM, which use a one-size-fits-all scheduling and job management
-approach, Flux allows the system to set global allocation policies, but
-users can instantiate their own schedulers and request specific resources
-within an allocation.  With Flux, users have the control over policy and
-scalability that was previously only tunable at the system level.
+Flux combines {\em fully hierarchical resource management}
+with {\em graph-based scheduling} to improve
+the performance, portability, flexibility,
+and manageability of the scheduling
+and execution of both standard and
+complex scientific workflows on a wide range of HPC systems.
+\begin{figure}[ht]
+   \subfloat[Conventional Paradigm]{
+        \begin{minipage}[c][1\width]{
+           0.48\textwidth}
+            \centering
+            \includegraphics[width=1.1\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/Old}
+            \label{fig:old}
+         \end{minipage}}
+  \hfill
+   \subfloat[Emerging Paradigm] {
+         \begin{minipage}[c][1\width]{
+            0.48\textwidth}
+            \centering
+            \includegraphics[width=1.1\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/New}
+            \label{fig:new}
+         \end{minipage}}
+ \caption{An illustration of how the computing resources allocated
+to a job---as granted by the HPC workload manager---differs between
+conventional and emerging scientific workflows. The notional X-axes
+depict the compute node IDs allocated to the job and Y-axes depict
+the IDs of computing resources in each of these nodes. (a) The conventional paradigm
+requires only a single parallel simulation application to run; (b) The emerging paradigm often requires many different types of tasks such as an ensemble of molecular dynamic (MD) parallel simulation applications and another ensemble of docking simulation applications along with {\em in situ} data analysis for the MD ensemble while these tasks are driven by an AI.}
+ \label{fig:layout}
+ \end{figure}
+Figure~\ref{fig:layout} visually contrasts
+the complexity of the conventional and
+new or emerging HPC paradigms in terms of
+how they utilize the resources allocated
+by the system's workload manager.
+Nearly all existing products were designed
+when the workflows were much simpler
+as shown in Figure~\ref{fig:old}.
+Yet, these solutions have significant difficulties with
+the emerging paradigm exemplified
+by Figure~\ref{fig:new},
+as well as with connecting and coordinating jobs.
+These problems have led users to develop their own {\em ad hoc}
+custom scheduling and resource management software or use tools
+that perform only workflow management or only scheduling.
+However, accomplishing sufficient job coordination {\em without}
+first-class support from a workload manager
+like Flux has already proven to be difficult
+for either approach.
+Perhaps more importantly, developing and maintaining {\em ad hoc} management
+software---especially in this era of ever-evolving HPC hardware
+architectures---has quickly become prohibitively expensive for
+supercomputing application teams.
+With Flux, a job script with multiple
+tasks submitted on a heterogeneous HPC system
+remains simple, requiring only a few more lines within
+the script.
 
 \subparagraph{AID:}
-
-\begin{figure}[htb]
-\centering
-\includegraphics[width=\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/pruners}
-\caption{
-STAT, Archer, NINJA, and FliT: a continuum of debugging tools for exascale.
-}
-\end{figure}
 
 Debugging a parallel code can be extremely difficult, and the most
 exhaustive approaches for finding errors can require a large amount of
@@ -393,26 +439,25 @@ between different parts of the code.
 
 
 \begin{itemize}
-\item Produced two major software releases: Spack 0.14.0, 0.15.0, as well as multiple bug-fix releases.
-\item Developed a new Spack containerize command, which can automatically generate multi-stage container build recipes from a Spack environment.
-\item Completed 100\% file system lock-based parallel build capability for Spack. This capability handles both parallel build use case and on-node synchronization.
-\item Worked with the tri-lab Computing Environment 2 (TCE2) team and code teams to provide Spack support and to add features for these environments. Notable achievements included hardening for Cray platforms, new features in Spack stacks, and GitLab pipeline automation for LC.
-\item Deployed pull request build testing on GitHub for the first time; the entire E4S stack is now built and tested when GitHub pull requests modify parts of it.
+\item Released Spack 0.16.0 and replaced Spack's greedy concretizer algorithm with a
+      much more aggressive solver based on Answer Set Programming.
+\item Major overhaul to smooth developer workflows and allow working directly on
+      checked out code in Spack.
+\item Greatly improved scalability of CI and binary cache creation in Spack.
+\item Hardened GPU support in Spack; updated CUDA and ROCm package superclasses.
 \end{itemize}
 
 \subparagraph{MFEM:}
 
 \begin{figure}[tb]
 \centering
-\includegraphics[width=.4\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/HO-LO}
-\includegraphics[width=.4\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/mfem-gpu}
-\caption{The MFEM team has developed High-Order $\protect\leftrightarrow$ Low-Order Transformations and GPU support for many linear algebra and finite element operations}
+\includegraphics[width=.4\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/mfem-hp-refinement}
+\caption{The MFEM team added support for variable order FEM spaces with general hp-refinement so higher order apps can better adapt to solutions.}
 \end{figure}
 
 Selected recent highlights:
 \begin{itemize}
-\item Completed major software releases: MFEM-4.2, GLVIS-4.0 and MFEM-4.3.
-\item Actively engaged with GPUs and advanced partial assembly algorithms work in MARBL. Demonstrated large-scale GPU performance in ALE hydro in MFEM benchmarks, Laghos, and BLAST on Lassen.
+\item Added capabilities to MFEM for variable-order FEMs paces with general hp-refinement so HO apps can increase efficiency and better adapt to solutions.
 \item Implemented ALE discretization improvements for compressible flow in BLAST, including significant improvements in mesh optimization methods, dynamic Adaptive Mesh Refinement (AMR), and improved transfer between high-order and low-order-refined simulations.
 
 \end{itemize}
@@ -427,24 +472,19 @@ Status of RAJA, Umpire, and CHAI support for exascale platforms.
 \end{figure}
 
 \begin{itemize}
-\item Developed and released support for AMD GPUs (via the HIP programming model) with RAJA, CHAI, and Umpire in preparation for El Capitan.
+\item Updated support for AMD's HIP programming model, hardened support for El Capitan COE machines.
+\item Released new versions of RAJA, Umpire, and CHAI with support for El Capitan COE machines.
+\item Added HIP support to continuous integration using GitLab at LLNL.
 \item Continued to support integration of Umpire into multiple ASC application codes.
-\item Developed and delivered new capabilities to ASC applications in support of ASC milestones and user needs.
-\item Developed prototype of fully overlapped asynchronous GPU kernel execution and data transfer to optimize application performance.
-\item Developed novel memory pool algorithms in Umpire to handle very large allocation counts.
 \end{itemize}
 
 \subparagraph{Flux:}
-\begin{figure}[tb]
-\centering
-\includegraphics[width=\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/flux-resource-model.pdf}
-\end{figure}
 
 \begin{itemize}
-
-\item Developed hierarchical scheduling tools within Flux via co-design with UQ Pipeline, demonstrating improvements across the entire lifecycle of simulation campaigns; and demonstrated that DYAD can optimize ML workflows by automatically transferring data files using Flux.
-\item Demonstrated that Fluxion, our graph-based scheduler, can uniquely enable key use cases of multitiered storage on El Capitan, driving co-design with HPE; tested AMD GPU scheduling by enabling COVID-19 workflows on Corona; demonstrated the viability of power management within Flux using Variorum, a platform-independent power library; and released MPIBIND-2.
-
+\item Flux was the basis for a workflow of ECP ExaAM (ExaConstit) in improving its throughput by 4x.
+\item Flux-based ML drug design workflow was part of a SC20 COVID-19 Gordon Bell finalist submission.
+\item Optimization of Flux enabled the MuMMI workflow to run across the full scale of Summit at ORNL.
+\item Added support for exascale multi-tier storage in Flux' data stagging plugin and the Fluxion scheduler.
 
 \end{itemize}
 
@@ -466,18 +506,16 @@ Status of RAJA, Umpire, and CHAI support for exascale platforms.
 \paragraph{Next Steps} \leavevmode \\
 
 \subparagraph{Spack:}
-In FY21, the team will focus on:
+In FY22, the team will focus on:
 
 \begin{itemize}
-    \item Work with MARBL and other code teams to improve developer workflows support for Spack as a development tool.
-    \item Improve integration testing for LLNL code teams by enabling testing for pull requests on platforms of interest to LC.
-    \item Improve Spack support for GPUs, programming models, and exascale architectures.
+    \item Work to further improve Spack developer workflows and reproducibility.
+    \item Expand on the new concretizer to handle compiler and runtime complexity in the exascale stack.
 \end{itemize}
 
 \subparagraph{MFEM:}
 \begin{itemize}
-\item Develop adaptive discretizations for high-order finite element ATDM applications, including algorithms such as dynamic AMR, mesh optimization, and hp-adaptivity.
-\item Support MFEM-based ATDM applications in their transition to exascale hardware.
+\item Support MFEM-based applications in their transition to exascale hardware.
 \item Continue engagement with ATDM application work, develop mini-apps, and provide support.
 \end{itemize}
 
@@ -485,7 +523,8 @@ In FY21, the team will focus on:
 
 
 \begin{itemize}
-\item Develop and deliver new RAJA capabilities to LLNL codes to support ASC milestone and user requirements, including expanding support for overlapping kernel execution and data transfer and optimized AMD support.
+\item Expand GPU device capabilities in Umpire.
+\item Investigate use of Umpire as GPU offload allocator for RAJA.
 \item Continue to develop and deliver Umpire capabilities to applications in support of ASC milestone and user requirements, including interprocess shared memory to support shared on-node data and expanding functionality available inside GPU kernels.
 \item Continue interactions with El Capitan Center of Excellence (COE) partners to resolve performance and correctness issues identified as application users begin testing on early access hardware.
 
@@ -494,7 +533,10 @@ In FY21, the team will focus on:
 \subparagraph{Flux:}
 
 \begin{itemize}
-\item Demonstrate the scalable end-to-end support within Flux for: 1) smart multitiered storage scheduling and management, 2) CTI-based tool launching, 3) Variorum-enabled power monitoring/capping, 4) more versatile UQ/V\&V/ML workflow scheduling, and 5) DYAD-enabled workflow data scheduling on El Capitan early access systems.
+\item End to end demonstration of HPE's Rabbit-based multi-tiered storage scheduling and management.
+\item Tune support for Common Tools Interface (CTI)-based tool launching to enable HPE's proprietary code-development tools such as Valgrind4HPC and ATP.
+\item Variorum-enabled power monitoring/capping subsystem including power swing analysis.
+\item Respond agilely to the emerging needs of existing and new advanced workflow customers.
 \end{itemize}
 
 \subparagraph{AID:}

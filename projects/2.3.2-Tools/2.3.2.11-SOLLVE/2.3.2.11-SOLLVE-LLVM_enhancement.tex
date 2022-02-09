@@ -1,0 +1,37 @@
+\subsubsection{\stid{2.11} Building tools to detect and debug bugs and performance issues with OMP offloading}
+
+\paragraph{Overview}
+Starting from the 4.0 version, OpenMP has introduced a new feature, \textit{target offloading}, which enables programmers to leverage additional computing ``devices'' connected to the host (e.g., GPU, application-specific accelerator).
+With a group of hardware-agnostic constructs (\textit{device directives}), target offloading makes it possible to write accelerated OpenMP applications in a performance-portable manner. However, concurrency bugs and performance issues may still arise due to  incorrect usage of device directives. 
+Our group at Georgia Tech has conducted a comprehensive study of such issues~\cite{yu2020study}. We found that most of these issues are related to the data mappings between the host and target device.
+For example, incorrect data mappings can lead to uninitialized memory accesses or even buffer overflow on the target device. In addition, programmers may also declare data mappings that incur unnecessary time and memory overhead due to redundant copies.
+
+To help programmers detect and debug these concurrency bugs and performance issues, we have developed a toolset for OpenMP applications including:
+\begin{itemize}
+    \item OMPSan~\cite{barua2019ompsan}, a static analyzer that can report all suspicious data mappings that may lead to concurrency bugs and memory issues;
+    \item ARBALEST~\cite{yu2021arbalest}, a dynamic analyzer that can pinpoint incorrect data mappings that result in concurrency bugs or memory issues at runtime;
+    \item OmpMemOpt~\cite{barua2020ompmemopt}, a static optimizer identifies redundant data mappings and replaces them by more optimized data mappings.
+\end{itemize}
+
+\paragraph{Key Challenges}
+With respect to incorrect data mappings, multiple kinds of bugs may arise at runtime, such as use of uninitialized memory, use of stale data, buffer overflow, and data race. Currently, there exists no tool that can recognize all these bugs' behavior. 
+Even if programmers apply multiple analysis tools when testing a single OpenMP application, some incorrect data mappings may still be missed since they may only trigger bugs in a specific thread interleaving.
+On the other hand, detecting redundant data mappings may also be challenging. OpenMP utilizes a reference-count algorithm to manage the lifecycle of each data mapping. Memory transfer is only carried out when a data mapping is first encountered.
+The analysis tool needs to correctly model this reference-count-based mechanism and all memory accesses related to data mappings to determine whether a data mapping is redundant.
+
+\paragraph{Solution Strategy}
+As a static analysis tool, OMPSan~\cite{barua2019ompsan} compares the def-use information in an OpenMP application with the application's serial-elision version. OMPSan assumes that the serial-elision version contains the correct def-use information. Any inconsistent def-use chain incurred by data mappings can be statically reported as a potential bug.
+
+ARBALEST is a dynamic analysis tool designed for incorrect data mappings. It is an extension to the Archer data race detector~\cite{atzeni2016archer}. ARBALEST leverages a state-transition diagram to record the state of each data mapping, i.e., whether the memory section on the host/target device has a valid value. ARBALEST also utilizes the happens-before relations maintained by Archer to detect conflicting memory accesses when the runtime conducts memory transfer for a data mapping.
+According to the evaluation in~\cite{yu2021arbalest}, ARBALEST can accurately identify all incorrect data mappings with acceptable time and memory overhead.
+
+OmpMemOpt\cite{barua2020ompmemopt} is a static optimizer that can generate optimal data mappings for an OpenMP application. 
+The optimization framework in OmpMemOpt casts the problem of detection and removal of redundant data movements into a partial redundancy elimination (PRE) problem and applies
+the lazy code motion technique to optimize these data movements.
+The evaluation on ten benchmarks shows that OmpMemOpt achieved a geometric speedup of 2.3x, and reduced on average 50\% of the total bytes transferred between the host and GPU.
+
+\paragraph{Recent Progress}
+We have achieved a number of publications for the toolset. OMPSan has been presented at IWOMP 2019 and was selected as the best paper award recipient in that two workshops. The other two papers on ARBALEST and OmpMemOpt were presented at IPDPS 2021 and Euro-Par 2020 respectively.
+
+\paragraph{Next Steps}
+We are working with the LLVM OpenMP subcommunity to develop a new version of ARBALEST. The new implementation will be built on the latest LLVM and apply a number of optimization techniques to reduce the time overhead. Besides, we are also helping improve the OpenMP Tool Interface design based on our experience of developing analysis tools.

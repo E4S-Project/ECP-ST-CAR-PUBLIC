@@ -3,12 +3,13 @@
 \paragraph{Key  Challenges:}
 Programmer productivity and performance portability are two of the most important challenges facing users of future exascale computing platforms. Application developers targeting ECP architectures will find it increasingly difficult to meet these two challenges without integrated capabilities that allow for flexibility, composability, and interoperability across a mixture of programming, runtime, and architectural components. 
 
+
 \paragraph{Solution Strategy:}
 The PROTEAS-TUNE project was formed as a strategic response to this challenge. (The PROTEAS-TUNE project is the result of merger in FY20 of two previous ECP projects: PROTEAS [PROgramming Toolchain for Emerging Architectures and Systems] and Y-Tune: Autotuning for Cross-Architecture Optimization and Code Generation.) 
 This project has three high-level goals. First, PROTEAS-TUNE will provide a programming pathway to anticipated exascale architectures by addressing programmability and portability concerns of emerging technology trends seen in emerging architectures. In particular, the project focuses on improvements to LLVM and OpenACC. Additionally, the team has significant experience with CUDA, OpenCL, and other programming models that will enable ECP applications teams to explore programming options to find the most effective and productive approaches without constraining programming models or software solutions. Second, PROTEAS-TUNE will prototype an integrated programming framework strategy will deliver solutions on these emerging architectures that will be further refined for these architectural capabilities, and make sure that they transition to vendors, standards activities, applications, and facilities. Thirdly, PROTEAS-TUNE includes autotuning which makes it possible to separate a high-level C/C++/FORTRAN implementation from architecture-specific implementation (OpenMP, OpenACC, CUDA, etc.), optimization, and tuning. It also provides a flexible programming framework and integrated toolchain that will provide ECP applications the opportunity to work with programming abstractions and to evaluate solutions that address the exascale programming challenges they face. 
 
 
-Specifically, the PROTEAS-TUNE focuses on seven thrusts to improve capabilities and performance portability for applications on exascale architectures: 
+Specifically, the PROTEAS-TUNE focuses on several thrusts to improve capabilities and performance portability for applications on exascale architectures: 
 
 \begin{itemize}
 \item 
@@ -27,13 +28,19 @@ Specifically, the PROTEAS-TUNE focuses on seven thrusts to improve capabilities 
 \item 
     Develop and implement portable software abstractions (Papyrus) for managing persistent memory;
 \item 
-    Aggressively engage applications, SDK, vendor, and software teams to demonstrate and deploy; and,
+    Contribute to the SYCL programming model by developing a representative benchmark suite and evaluating SYCL implementation readiness across relevant architectures;
+\item 
+    Aggressively engage applications, SDK, vendor, and software teams to demonstrate and deploy;
 \item
-    in collaboration with SOLLVE and Flang, develop a DOE ECP fork of LLVM that will be the clearinghouse for ECP modifications of LLVM  (see \url{https://github.com/llvm-doe-org}).
+    in collaboration with SOLLVE and Flang, develop a DOE ECP fork of LLVM that will be the clearinghouse for ECP modifications of LLVM  (see \url{https://github.com/llvm-doe-org}); and,
+\item
+    benchmarking and development of SYCL implementations across ECP platforms.
     
 \end{itemize}
 
-Importantly, the team’s solutions are based on significant, continuing work with LLVM, OpenACC, OpenMP, ARES HLIR, OpenARC, TAU, SuRF and CHiLL. The team has extensive experience and a demonstrated track record of accomplishment in all aspects of this proposed work including existing software deployments, interaction with application teams, vendor interaction, and participation in open source community and standards organizations. Also, the team champions its successful solutions in ECP procurements, community standards, and open-source software stacks, like LLVM, in order to improve their use.
+Importantly, the team’s solutions are based on significant, continuing work with LLVM, OpenACC, OpenMP, ARES HLIR, OpenARC, TAU, SuRF and CHiLL. 
+The team has extensive experience and a demonstrated track record of accomplishment in all aspects of this proposed work including existing software deployments, interaction with application teams, vendor interaction, and participation in open source community and standards organizations. 
+Also, the team champions its successful solutions in ECP procurements, community standards, and open-source software stacks, like LLVM, in order to improve their use.
 
 %\paragraph{Key  Challenges:}
 %Programmer productivity and performance portability are two of the most important challenges facing applications targeting future Exascale computing platforms. Application developers targeting evolving ECP architectures will find it increasingly difficult to meet these dual challenges without help from integrated capabilities that allow for flexibility, composability, and interoperability across a mixture of programming, runtime, and architectural components. In particular, an integrated programming toolchain is critical for Exascale delivery. First, it will provide a programming pathway to anticipated Exascale architectures by addressing programmability and portability concerns of emerging technology trends seen in pre-procurement machines. It will also enable ECP applications teams to explore programming options to find the most effective and productive approaches without constraining programming models or software solutions. Second, an integrated programming framework strategy will deliver solutions that will be further refined for the architecture capabilities known to be in the system procurement. This is essential for maintaining developer productivity and attaining performance portability as ECP requirements evolve.
@@ -78,9 +85,8 @@ Our recent work has focused on six topics:
 
     \item Improving LLVM. In collaboration with numerous other ECP projects, PROTEAS is contributing improvements to the LLVM compiler infrastructure. These improvements include simple bugfixes to the existing infrastructure, monitoring Flang progress, developing Clacc (see \S\ref{s:clacc}), developing Flacc (See \S\ref{s:flacc}), and developing a DOE ECP fork of LLVM for our work.
     
-    \item Papyrus~\cite{Kim:2017:DIP,Kim:2017:PHP} for portability across NVM architectures. 
-Develop a portable interface to NVM architectures to provide massive, persistent data structures as required by many applications.
-See \S\ref{s:papyrus}.
+    \item SYCL evaluation. 
+    Our SYCL evaluation identified significant differences in the performance of various SYCL implementations, and we continue to improve our SYCL benchmark suite. See \S\ref{s:sycl}.
 
     \item Outreach and collaboration with ECP applications teams. 
     We have interacted with over a dozen applications teams to help prepare their applications for ECP. See \S\ref{s:clacc}, \S\ref{s:papyrus}, and \S\ref{subsubsect:tau}.
@@ -96,10 +102,11 @@ Our next efforts are:
     
     \item Flacc. Continue developing OpenACC support by finishing the development of the  OpenACC dialect for MLIR and beginning to develop the runtime system on the existing LLVM OpenMP infrastructure.
     
-	\item Papyrus. Improve support for versioning and other performance improvements.
-    
     \item Tau. Improve performance instrumentation for deep memory hierarchies in Tau, focusing primarily on various GPUs and emerging NVM.
     
-    \item ECP LLVM fork. Finish consolidation of ECP activities into the ECP LLVM fork, and start basic support for continuous integration.
+    \item ECP LLVM fork. Improve support for continuous integration of the ECP LLVM fork.
+
+    \item SYCL evaluation. 
+    Continue to improve our SYCL benchmark suite and work with researchers and vendors to enhance SYCL options for ECP users. See \S\ref{s:sycl}.
 
 \end{enumerate}

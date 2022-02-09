@@ -1,8 +1,8 @@
-\subsubsection{\stid{1.14} UPC++} 
+\subsubsection{\stid{1.14} UPC++\label{subsubsect:upcxx}} 
 \paragraph{Overview} 
-The Lightweight Communication and Global Address Space Support project (Pagoda)
-is developing UPC++~\cite{upcxx-site}, a C++ library
-supporting Partitioned Global Address Space (PGAS) programming~\cite{upcxx-ipdps19,upcxx-spec}.
+
+UPC++~\cite{upcxx-site} is a C++ library
+supporting Partitioned Global Address Space (PGAS) programming~\cite{upcxx-ipdps19,upcxx-guide,upcxx-spec}.
 The current UPC++ v1.0 (distinct from an earlier prototype designated V0.1
 \cite{zheng:ipdps14}) is distinguished by three guiding principles.
 First, all communication is \emph{asynchronous}, allowing overlap of computation and
@@ -19,34 +19,27 @@ and Remote Procedure Calls (RPC)
 are composable and fit naturally within the context of modern C++.
 
 UPC++ is needed for ECP because it delivers low-overhead communication,
-embracing interest by vendors in the PGAS model to
-efficiently match RDMA capabilities of modern
-network hardware and on-chip communication between distinct address
+efficiently embracing PGAS support offered by modern systems,
+such as Remote Direct Memory Access (RDMA) offload capabilities of modern
+network hardware and native on-chip communication between distinct address
 spaces.  
-Because ECP applications rely on irregular representations
-to improve accuracy and conserve memory, the UPC++ library provides
-an essential ingredient for the ECP software stack.  It enables
-effective scaling of exascale software by reducing the work funneled
-to lightweight cores, avoiding the overhead of long, branchy serial
-code paths, and providing efficient fine-grained communication.  The
-importance of these properties is reinforced by application trends;
-many ECP applications require the use of irregular data structures such as 
-adaptive meshes, sparse
-matrices, particles, or similar techniques, and also perform load balancing.  UPC++'s
-low-overhead communication mechanisms can maximize injection rate and
-network utilization, tolerate latency through overlap, streamline
-unpredictable communication events, minimize synchronization,
-leverage hardware support for communication involving accelerator memory,
-and efficiently support small- to medium-sized messages arising in such
-applications.  UPC++ enables the ECP software stack to exploit
-the best-available communication mechanisms, including novel features
-being developed by vendors.
-UPC++ provides seamless and efficient multithreading support,
-offering a complementary and
-interoperable approach to ``MPI + X'', enabling developers to
+UPC++'s low-overhead communication mechanisms can maximize injection rate and
+network utilization, tolerate latency through overlap, streamline unpredictable
+communication events, minimize synchronization, leverage hardware support for
+communication involving accelerator memory, and efficiently support small- to
+medium-sized messages arising in many applications.
+The importance of these properties is reinforced by application trends; many
+ECP applications require the use of irregular data structures such as adaptive
+meshes, sparse matrices, particles, or similar techniques, and also perform
+dynamic load balancing.
+Because of such trends, the UPC++ library provides an essential ingredient for
+the ECP software stack; enabling it to exploit the best-available communication
+mechanisms, including novel features being developed by vendors.  UPC++
+provides seamless and efficient multithreading support, offering a
+complementary and interoperable approach to ``MPI + X'', enabling developers to
 focus their effort on optimizing performance-critical communication.
 
-\paragraph{Key  Challenges}
+\paragraph{Key Challenges}
 
 As a result of technological trends, the cost of data motion is steadily increasing relative to that of computation.  To reduce communication costs, we need to 
 reduce the software overheads and hide communication latency behind available computation. UPC++ addresses both strategies.
@@ -64,51 +57,60 @@ The UPC++ project has two primary thrusts:
 
 % Non-use of a enumerated environment is intentional, due to excessive whitespce
 
-\textbf{1. Increased performance through reduced communication costs:} The
-UPC++ programmer can expect communication to run at close to hardware speeds.
-Asynchronous execution enables an application to hide communication behind
-available computation.
+\textbf{1. Increased performance through reduced communication costs:} 
+%The UPC++ programmer can expect communication to run at close to hardware speeds.
+UPC++ leverages the underlying GASNet-EX communication library to deliver efficient, low-overhead RMA and RPC on HPC systems.
+This includes accelerated transfers to and from GPU memory.
+UPC++ features encourage aggressively asynchronous execution,
+enabling applications to overlap the latency of communication with
+available computation or additional communication.
 
-\textbf{2. Improved productivity:}  UPC++'s treatment of asynchronous
-execution relies on futures and promises, and these simplify the management of
+\textbf{2. Improved productivity:} UPC++'s treatment of asynchronous
+execution utilizes futures and promises, which simplify the management of
 asynchrony.
+The \texttt{upcxx::copy} API provides concise expression of RMA involving any
+combination of shared host and GPU memory, without the need for the application
+to stage GPU data through host memory buffers.
 
-The PGAS one-sided RMA communication employed by UPC++
-benefits application  performance by mapping tightly onto the RDMA mechanisms
+The PGAS model and one-sided RMA communication offered by UPC++
+benefit application performance by mapping tightly onto the RDMA mechanisms
 supported by the network hardware. GASNet-EX provides the
-thin middleware
-needed to enable this model to run at close to hardware speeds, across platforms ranging from laptops to supercomputers.
-One-sided communication also has another benefit:
-it decouples synchronization from data motion,
-avoiding the fine-grained synchronization overheads of message-passing.
+thin middleware needed to implement RMA efficiently on a variety of platforms,
+from laptops to supercomputers.
+One-sided communication provides an additional benefit of
+decoupling synchronization from data motion,
+avoiding the fine-grained synchronization overheads of message passing.
 
 UPC++'s Remote Procedure Call (RPC)
 enables the programmer
-to execute procedure calls on remote processors.
+to easily execute code on remote processes.
 RPC is useful in managing access to complicated irregular data structures,
 and in expressing asynchronous task execution, where communication patterns
 are data-dependent and hence difficult to predict.
 
-As one example of how our approach is applicable to real problems
-we have implemented a distributed hash table, which serves as a proxy
-for a key phase in the HipMer application of the Exabiome Project (WBS~2.2.4.04).
-This implementation scales efficiently
-to a large number of processors. RPC was observed to simplify the implementation
-considerably, by avoiding data hazards without the need for locking.
-Figure~\ref{fig:dht} illustrates the benefits of the UPC++ model 
-in a weak scaling study up to 34,816 processes on the KNL partition of NERSC's Cori.
+As one example of how our approach is applicable to real application kernels,
+we modified a GPU-enabled 3D heat conduction example from a Kokkos tutorial to
+convert the inter-node communication from MPI message passing to UPC++
+RMA~\cite{pawatm21-upcxx-kokkos}.  The primary goal of this study was to
+demonstrate that comparable programming effort with UPC++ and MPI could yield
+comparable performance. However the finding was that with both versions written
+na\"{\i}vely, the UPC++ RMA version gave measurably superior performance.
+Figure~\ref{fig:paw21_interop_strong_scaling} shows a strong scaling study on
+OLCF's Summit, comparing performance using 
+CUDA-aware IBM Spectrum MPI versus UPC++ with the CUDA memory kind.
 
-
-\begin{wrapfigure}[17]{L}{.44\linewidth}
-  \vspace{-1.5em}
+\begin{figure}[htb]
   \centering
-      \includegraphics[scale=0.70]{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/all-cori-knl-out-inserts-wait.png}
-  \caption{Weak scaling of distributed hash table insertion on the KNL partition of NERSC's Cori platform. The dotted line represents one node.}
-  \label{fig:dht}
-\end{wrapfigure}
+  \captionsetup{width=0.85\linewidth}
+  \includegraphics[width=0.72\textwidth]{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/paw21_interop_strong_scaling1.pdf}
+  \caption{Mean run time per step (lower is better) in a strong scaling study
+    comparing UPC++ (solid series) and MPI versions (dashed series) of a
+    GPU-enabled 3D heat conduction example code, run on OLCF's Summit for three
+    problem sizes (given as length of one edge of the cubic domain).}
+  \label{fig:paw21_interop_strong_scaling}
+\end{figure}
 
 
-\vspace{-2em}
 \paragraph{Recent Progress}
 
 The most notable work in the past year has been in three areas:
@@ -120,40 +122,69 @@ unifying the expression of data transfer among the various memories in a
 heterogeneous system, these abstractions enable ECP
 applications to utilize accelerators within UPC++'s PGAS model.  The
 abstraction enables hardware offload (when available) of device data transfers,
-eliminating the need for the application to stage transfers through
+eliminating the need to stage transfers through
 intermediate buffers in host memory.
 The global pointer representation transparently tracks device information,
 eliminating the need for expensive address space queries in critical paths.
 Support for such offload on the OLCF's
-Summit has been demonstrated in an October 2020 memory kinds prototype
-distributed to our stakeholders.
+Summit was initially demonstrated in October 2020, and subsequent releases
+have hardened and tuned the implementation.
 
 \textbf{2. Training and Outreach.}
-In the past year, the UPC++ team has increased focus on outreach.  This includes
-presenting four training events, and preparation of a fifth to appear at SC20.
-A two-hour ``Birds of a Feather'' event in August 2020 introduced current and
-potential UPC++ users to the authors of successful UPC++-based applications.
-Circulation of working group drafts of proposed enhancements has
-been valuable to both the UPC++ team and our stakeholders to agree upon design
-in advance of implementation.
+The UPC++ team continues outreach efforts, including a half-day UPC++
+tutorial at SC21~\cite{sc21-upcxx-tutorial} (for the second consecutive year).
 
 \textbf{3. Productivity and Performance.}
 Having completed the core specification and implementation of UPC++, we have
 shifted focus toward addressing improvements to productivity and performance,
 especially in response to stakeholder feedback.  The most significant
-example is addition of support for non-trivial serialization of
-user-defined types, providing concise syntax for the common cases and
-robust, extensible mechanisms for more complex ones.
+examples are deployment of eager notification~\cite{pawatm21-upcxx-as_eager} 
+and instruction-level tuning along common critical paths.
+
+\paragraph{Preliminary Results on Early Access Systems}
+
+We are using OLCF's Spock (HPE Cray EX) system to implement support in UPC++ for efficient RMA
+operations targeting the memory in GPUs using the AMD HIP API.  This work
+leverages recently completed work in GASNet-EX which uses the ``ROCmRDMA''
+technology to allow network hardware to perform RMA operations to and from
+memory on AMD GPUs without staging through buffers in host memory.  This work is
+anticipated to appear in the Spring 2022 release of UPC++.
+
+\begin{figure}[htb]
+  \centering
+  \captionsetup{width=0.85\linewidth}
+  \includegraphics[width=0.72\textwidth]{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/upcxx-spock.pdf}
+  \caption{Preliminary flood bandwidth on OLCF's Spock of RMA put operations from
+           local host memory to remote GPU memory, implemented with and without
+           use of the ROCmRDMA capability in GASNet-EX, along with the bandwidth ratio.}
+  \label{fig:upcxx-spock}
+\end{figure}
+
+Figure~\ref{fig:upcxx-spock} shows preliminary results of this work.  Solid
+lines show the flood bandwidth of put operations from local host memory to
+remote GPU memory, collected using the work-in-progress to support AMD GPUs in
+UPC++.  The `X' symbols mark data with ROCmRDMA support enabled in GASNet-EX,
+while `O' symbols mark data with that support disabled.  In the latter case,
+UPC++ uses the HIP API to stage GPU data through host memory at the remote
+host.  The dashed line shows the ratio on
+a linear scale, highlighting the magnitude of the improvement which is not
+immediately evident on the logarithmic bandwidth scale.  For transfer
+sizes up to 16KiB the improvement is over 10x.  For smaller transfers the
+improvement can be nearly 60x, and for larger transfers the improvement is consistently over
+1.5x.  Benchmark results for a get operation which fetches from remote GPU
+memory are qualitatively similar.
 
 \paragraph{Next Steps}
 
 The planned work for the near-term future includes the following:
 
 \textbf{1. Memory Kinds.}
-We will continue development of the October 2020 memory kinds prototype.  The
-implementation, currently targeting the hardware in Summit, will be extended to
-include other accelerators scheduled to appear in the early Exascale systems.
-As with Summit, transfers will be offloaded to available hardware capabilities
+We will continue development of memory kinds.  The
+past releases of UPC++ targeted the hardware in Summit, while the Spring 2022
+release is anticipated to extend support to the hardware in OLCF's Spock
+and Crusher systems.  Additional future work will
+include other accelerators scheduled to appear in DOE's exascale systems.
+For all accelerators, transfers will be offloaded to available hardware capabilities
 by leveraging the parallel efforts in GASNet-EX.
 
 \textbf{2. Productivity and Performance.}
@@ -163,5 +194,5 @@ and/or beneficial.  Similarly, we will continue to work with stakeholders to
 identify and implement features which improve productivity.
 
 \textbf{3. Outreach.}
-We will continue to hold training events for users of UPC++ and circulate
-working group drafts of productivity features (above) to solicit feedback.
+We will continue to engage with our users, such as by circulation of working
+group drafts of new features to solicit feedback.

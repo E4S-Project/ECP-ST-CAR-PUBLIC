@@ -109,15 +109,15 @@ combination of resilience strategies, as well as, to customize their
 checkpointing pipeline (e.g., add new post-processing operations such
 as analytics or compression).
 
-\paragraph{Recent Progress}
+\paragraph{Recent Progress.}
 
 We met and closely collaborated with several ECP application teams in
 an effort to address their checkpointing needs. Most of our current
 efforts involve the HACC, LatticeQCD, and EXAALT teams. We also
-started integrating VELOC into NWChemEX. Based on feedback from
-several teams, we extended VELOC to support multiple communication
+started integrating VeloC into NWChemEX. Based on feedback from
+several teams, we extended VeloC to support multiple communication
 protocols that reduce dependencies on external libraries (such as
-Boost) if desired.  Furthermore, we added preliminary support for
+Boost) if desired.  We added preliminary support for
 checkpoint aggregation, which reduces the number of checkpoint files
 from one per rank to a desired smaller number.
 
@@ -159,7 +159,7 @@ leader election algorithm that allows independent groups of (potentially
 remote) ranks to consolidate their data on a single rank, which is then
 responsible to write a single file to the PFS.
 
-\paragraph{Testing, Continuous Integration, and Experience on Early Access Systems}
+\paragraph{Testing, Continuous Integration, and Experience on Early Access Systems.}
 We continued working towards new features that facilitate better
 integration with the ECP ecosystem. We extended the test suite of
 VELOC (runnable both independently and with continuous integration) to
@@ -180,7 +180,7 @@ deployment. We were successful in running the refactored version of
 VELOC to checkpoint small data sizes, but encountered issues with DAOS
 (reported to Intel) when using larger checkpoint sizes.
 
-\paragraph{Next Steps}
+\paragraph{Next Steps.}
 We are working towards several goals: (1) refine incremental
 checkpointing techniques; (2) refine asynchronous checkpoint
 aggregation techniques; (3) continue hardening the integration with

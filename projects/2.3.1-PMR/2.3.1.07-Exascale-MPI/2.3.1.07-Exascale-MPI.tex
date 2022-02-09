@@ -14,10 +14,10 @@ continuous improvement of the performance and capabilities of the
 MPICH software to meet the demands of ECP and other broader DOE
 applications, (2) coordinate vendor and supercomputing center
 interactions to ensure efficient solutions to applications, and (3) be
-involved in the MPI forum and standardization efforts to ensure
+involved in the MPI Forum and standardization efforts to ensure
 continuity of the work beyond this project.
 
-MPICH team is involved in the formation of the MPI Forum and have been
+The MPICH group was involved in the formation of the MPI Forum and has been
 deeply involved in defining the MPI standard since 1992. MPICH has
 helped prototype and define the majority of the features in the MPI
 standard. As such, MPICH has been one of the most influential pieces of
@@ -26,8 +26,8 @@ community. MPICH has been adopted by leading vendors into their own
 derivative implementations. Examples include Intel (for Intel MPI), Cray
 (for Cray MPI), IBM (for IBM PE MPI), Mellanox (for MLNX-MPI), Microsoft
 (for MS-MPI), and Ohio State University (for MVAPICH). MPICH and its
-derivatives are exclusively used in 7 of the top 10 supercomputers in
-the world today. MPICH is the recipient of a number of awards including
+derivatives are routinely used in the majority of the top 10 supercomputers in
+the world. MPICH is the recipient of a number of awards including
 an R\&D 100 award.
 
 \paragraph{Key Challenges}
@@ -46,7 +46,7 @@ these systems. The key challenges are:
   OpenACC and emerging asynchronous task models);
 
 \item Scalability and performance over complex
-  architectures~\cite{Perf1, Perf2, FT2, Perf4} (including high core
+  architectures~\cite{FT2, Perf1, Perf2, Perf4} (including high core
   counts, processor heterogeneity and heterogeneous memory);
 
 \item Software overheads that are exacerbated by lightweight cores and
@@ -99,18 +99,18 @@ Exascale MPI fault tolerance efforts~\cite{FT1, FT2} started with
 support for handling noncatastrophic errors in MPI. The second effort
 included defining the scope of errors in MPI, a prerequisite for
 user-level failure mitigation. Other efforts in this direction
-includes standardizing these efforts in MPI and evaluating application
+include standardizing these efforts in MPI and evaluating application
 suitability for fault tolerance.
 
-Exascale MPI+X hybrid programming developed firstly with effort in
+Exascale MPI+X hybrid programming efforts involved
 improving interoperation of MPICH with threads~\cite{interthread}.
 Secondly, we developed the work-queue data transfer model for
 multithreaded MPI communication~\cite{workq}. We have included support
 for interaction of MPICH with user-level thread (ULT)
 libraries~\cite{ULT}, primarily targeting Argobots and the BOLT
-runtime~\cite{BOLT}.  Other issues that are being looked at include the
-investigation and evaluation on multiple virtual communication
-interfaces for multithreaded MPI communication~\cite{VCI}.
+runtime~\cite{BOLT}.  Other issues being investigated include the
+design and evaluation of multiple virtual communication
+interfaces (VCIs) for multithreaded MPI communication~\cite{VCI}.
 
 \paragraph{Recent Progress}
 
@@ -119,43 +119,45 @@ released MPI-4 standard. The MPI-4 standard introduced new ways for
 communication including persistent collective that aims to reduce the
 overhead of repetitively setting up colllective, and partitioned
 communication which aims to improve the performance for multi-threaded
-MPI communication. The MPICH 4.0a1 release has include all the MPI-4 new
+MPI communication. The MPICH 4.0a1 release has include all the new MPI-4 
 features.
 
-Validation and verification has been an integral part of MPICH project.
+Validation and verification has been an integral part of the MPICH project.
 We have made several improvements to the automated testing
-infrastructure for more effective testing. We have also setup continuous
-integration (CI) service with the ECP CI server and use it to test MPICH
+infrastructure for more effective testing. We have also setup a continuous
+integration (CI) service with the ECP CI server, and we use it to test MPICH
 on pre-exascale systems. This allows us to validate and verify MPICH
-with different hardward configuration. Through these new testing
-infrastructures, we have identified new issues which leads to
-optimizations that improves the MPICH performance on pre-exascale
+with different hardward configurations. Through these new testing
+infrastructures, we have identified new issues and developed
+optimizations that have improved the performance of MPICH on pre-exascale
 systems.
 
-Lastly, we focus on better GPU support in MPICH. MPICH is now support
+Lastly, we focus on better GPU support in MPICH. MPICH now supports
 GPUs from all three vendors (NVIDIA, AMD and Intel). The support for
-GPU communication include a fast path that utilizes the hardware RDMA
+GPU communication includes a fast path that utilizes the hardware RDMA
 support for GPU memory, and a fallback path for cases like complex
-datatypes which can not be directly handed by hardware RDMA. We have
-also developed prototypes for GPU-stream-triggered operation. It allows
-MPI application to enqueue MPI point-to-point communication to a GPU
+datatypes which cannot be directly handed by hardware RDMA. We have
+also developed prototypes for GPU-stream-triggered operations, which allow
+an MPI application to enqueue MPI point-to-point communication to a GPU
 stream or command queue. This allows the GPU stream to be used to manage
 the synchronization between GPU kernels and the MPI communication that
 depends on the result of those kernels. The benefit includes better
 overlapping between computation and communication, and higher GPU
 utilization.
 
-\begin{figure}[htb]
-  \centering
-  \includegraphics[width=6in]{projects/2.3.1-PMR/2.3.1.07-Exascale-MPI/MPICH-recent-milestones.pdf}
-  \caption{\label{fig:fy20}Major MPICH milestones completed in fiscal year 2020}
-\end{figure}
+%\begin{figure}[htb]
+%  \centering
+%  \includegraphics[width=6in]{projects/2.3.1-PMR/2.3.1.07-Exascale-MPI/MPICH-recent-milestones.pdf}
+%  \caption{\label{fig:fy20}Major MPICH milestones completed in fiscal year 2020}
+%\end{figure}
 
 \paragraph{Next Steps}
-In the next year, we are going to keep optimizing the GPU support in
-MPICH. Plan work includes performance evaluation and improvement on GPU
-communication, support for GPU collectives, and the extending
-GPU-stream-triggered operation to more MPI communication functions.
+In the next year, we plan to continue optimizing the GPU support in
+MPICH. Planned work includes performance evaluation and improvement of GPU
+communication, support for GPU collectives, and  extending
+GPU-stream-triggered operations to more MPI communication functions.
 We will also expand the software validation and verification work on
-pre-exascale and exascle system to make MPICH perform well on the target
-machines.
+pre-exascale and exascale systems to make MPICH perform well on the target
+machines. We will also continue our close collaboration with the
+vendors, Intel and Cray, to ensure that high-quality MPICH-based MPI implementations
+(Intel MPI and Cray MPI) are available on the exascale platforms.
