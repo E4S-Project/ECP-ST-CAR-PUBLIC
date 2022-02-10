@@ -126,3 +126,56 @@ Our next efforts are:
 		with the ECP CEED cluster, we will design problem-specific mixed
 		precision preconditioners for matrix-free finite element simulations.
 \end{enumerate}
+
+
+\paragraph{Early Access Systems (EAS) Experiences}
+Due to its backend model, Ginkgo has successfully been extended to HIP, with
+support fully released in version 1.2.0 in July 2020 and DPC++ released in
+version 1.4.0 in August 2021. The Ginkgo team has been able to continue the
+development of these backends, work on new experimental features (e.g., batched
+and distributed), and improve existing functionality performance when needed, in
+particular thanks to EAS availability with the Perlmutter, JLSE Arcticus, Spock
+and Crusher machines. In the following, we report results obtained on the EAS
+Crusher for the main Ginkgo functionality.
+
+On the EAS Crusher system, we evaluate the performance of some of Ginkgo's
+iterative solvers and their essential building block, the Sparse Matrix-Vector
+product operation (SpMV), on one GCD of a MI250X.~\footnote{For platform
+  details, we refer to
+  \href{https://docs.olcf.ornl.gov/systems/crusher_quick_start_guide.html}{ORNL
+    Crusher Documentation} and
+  \href{https://www.amd.com/system/files/documents/amd-cdna2-white-paper.pdf}{AMD
+    CDNA-2 Architecture Whitepaper}.} In these figures, each dot is a matrix
+from the SuiteSparse Matrix Collection\footnote{\url{https://sparse.tamu.edu/}}.
+In Figure~\ref{fig:gko-crusher-spmv} we show the bandwidth of the Ginkgo SpMV
+operation with the CSR and ELL formats. For matrices with a large nonzero count,
+both SpMV formats reach up to 87\% of the 1.6~TB/s peak bandwidth for one GCD.
+In Figure~\ref{fig:gko-crusher-solvers} we benchmark the bandwidth of the CG,
+and GMRES solvers. For each matrix and solver combination, we select the fastest
+SpMV format available in Ginkgo. In this case, the CG solver reaches a bandwidth
+of up to 75\% of the theoretical peak, while GMRES has a slightly lower
+efficiency.
+
+
+% \begin{figure}[!h]
+%   \centering
+%   \begin{tabular}{lr}
+%     \includegraphics[width=.36\columnwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/ginkgo_eas/bw_csr_spmv.pdf}
+%     \includegraphics[width=.36\columnwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/ginkgo_eas/bw_ell_spmv.pdf}
+%   \end{tabular}
+%   \caption{Bandwidth of the Ginkgo CSR (left), and ELL (right) SpMVs on one GCD
+%     of the Crusher MI250X GPUs.}
+%   \label{fig:gko-crusher-spmv}
+% \end{figure}
+
+% \begin{figure}[!h]
+%   \centering
+%   \begin{tabular}{lr}
+%     \includegraphics[width=.36\columnwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/ginkgo_eas/bw_cg_solver.pdf}
+%     &
+%     \includegraphics[width=.36\columnwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/ginkgo_eas/bw_gmres_solver.pdf}
+%   \end{tabular}
+%   \caption{Bandwidth of the Ginkgo CG (left) and GMRES (right) solvers on one
+%     GCD of the Crusher MI250X GPUs.}
+%   \label{fig:gko-crusher-solvers}
+% \end{figure}
