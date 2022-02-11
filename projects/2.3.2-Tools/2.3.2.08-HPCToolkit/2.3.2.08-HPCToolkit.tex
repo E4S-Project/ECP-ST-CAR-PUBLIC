@@ -127,6 +127,31 @@ profile of PeleC.
 \label{fig:hpctoolkit}
 \end{figure}
 
+\paragraph{Preliminary Experiences on Early Access systems}
+\begin{description}
+\item[HPCToolkit]
+The project team is working to deliver tracing and profiling of GPU activity atop AMD's {\tt rocTracer} API and to assess GPU kernel activity using hardware counters using AMD's {\tt rocProfiler} API. 
+HPCToolkit builds and runs on the Spock and Crusher early access systems. 
+At present, the project team is working closely with AMD to 
+resolve issues measuring GPU-accelerated
+applications with the {\tt rocTracer} and {\tt rocProfiler} APIs
+by providing test cases that highlight issues of concern.
+
+In addition, the project team has been collaborating with AMD to develop
+support for monitoring the performance of OpenMP offload in the
+runtime for AMD's AOMP compiler. The code is integrated into AMD's development
+branch and has been submitted upstream
+for integration into LLVM OpenMP.  A development branch of HPCToolkit
+uses this support to attribute GPU activity to OpenMP {\tt target}
+regions. The HPCToolkit project team is working to integrate this 
+emerging capability into a forthcoming release.
+\item[Dyninst]
+Dyninst builds and runs on the Spock and Crusher early access systems. 
+HPCToolkit uses Dyninst to analyze AMD CPU binaries to attribute 
+performance measurements to source code contexts, 
+including functions, loops, and lines.   
+\end{description}
+
 \paragraph{Next Steps}
 \begin{itemize}
 
