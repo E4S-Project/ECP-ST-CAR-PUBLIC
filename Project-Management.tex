@@ -54,7 +54,7 @@ The first set of E4S community policies~\cite{e4s:policies} was adopted in Octob
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.9\linewidth]{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/E4S_buildcache_Oct21}
+	\includegraphics[width=0.9\linewidth]{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/E4S_buildcache_Feb22}
 	\caption{Using Spack build cache features, E4S builds can be accelerated via cached binaries for any build signature that Spack has already seen. Between September 2020 and September 2021, more than 31,000 binaries were added to the cache.}
 	\label{fig:e4s-build-cache}
 	\todo[inline]{Please add a ref to this figure in the narrative.}
@@ -74,8 +74,8 @@ The E4S effort is described in further detail in Sections~\ref{subsubsect:sdks} 
 One opportunity for a large software ecosystem project such as the ECP ST is to foster increased collaboration, integration, and interoperability among its funded efforts. Part of the ECP ST design is the creation of SDKs.  SDKs are collections of related software products, called \textit{packages}, in which coordination across package teams will improve usability and practices and foster community growth among teams that develop similar and complementary capabilities. SDKs have the following attributes.
 
 \begin{enumerate}
-	\item \textbf{Domain scope:} Each SDK will comprise packages whose capabilities are within a natural functionality domain. Packages within an SDK provide similar capabilities that can enable leveraging of common requirements, design, testing, and similar activities. Packages could have a tight complementary so that ready composability is valuable to the user.
-	\item \textbf{Interaction models:} This is how packages within an SDK interact with each other. Interactions include common data infrastructure, or the seamless integration of other data infrastructures, and access to capabilities from one package for use in another.
+	\item \textbf{Domain scope:} Each SDK will comprise packages whose capabilities are within a natural functionality domain. Packages within an SDK provide similar capabilities that can enable leveraging of common requirements, design, testing, and similar activities. Packages could have a tight complementarity so that ready composability is valuable to the user.
+	\item \textbf{Interaction models:} This is how packages within an SDK interact with each other. Packages may be compatible, complementary, and/or interoperable. Interoperability includes common data infrastructure, or the seamless integration of other data infrastructures, and access to capabilities from one package for use in another.
 	\item \textbf{Community policies:} These include expectations for how package teams will conduct activities, the services they provide, the software standards they follow, and other practices that can be commonly expected from a package in the SDK.
 	\item \textbf{Meta-build system:} This includes robust tools and processes to build from source, install, and test the SDK with compatible versions of each package. This system sits on top of the existing build, install, and test capabilities for each package.
 	\item \textbf{Coordinated plans:} Development plans for each package will include efforts to improve SDK capabilities and lead to better integration and interoperability.
@@ -86,7 +86,7 @@ SDKs provide an aggregation of software products that have complementary or simi
 %\end{table}
 
 \paragraph{ECP ST SDKs}
-As part of the delivery of ECP ST capabilities, the team will establish and grow a collection of SDKs. The new layer of aggregation that SDKs represent is important for improving all aspects of product development and delivery. The communities that will emerge from SDK efforts will lead to better collaboration and higher quality products. Established community policies will provide a means to grow SDKs beyond the ECP to include any relevant external effort. The meta-build systems based on Spack will play an important role in managing the complexity of building the ECP ST software stack by providing a new layer in which versioning, consistency, and build options management can be addressed at a mid-scope below the global build of ECP ST products.
+As part of the delivery of ECP ST capabilities, the team will establish and grow a collection of SDKs. The new layer of aggregation that SDKs represent is important for improving all aspects of product development and delivery. The communities that will emerge from SDK efforts will lead to better collaboration and higher quality products. Established community policies will provide a means to grow SDKs beyond the ECP to include any relevant external effort. The meta-build configurations based on Spack will play an important role in managing the complexity of building the ECP ST software stack by providing a new layer in which versioning, consistency, testing, and build options management can be addressed at a mid-scope below the global build of ECP ST products.
 Each of the five ECP ST L3 areas has an SDK project. These projets shepherd five of the six SDKs, along with the products not associated with an SDK. The other SDK, the new Computational Workflows SDK, is overseen by the ExaWorks project. Section~\ref{subsubsect:ecosystem-sdk} provides an update on the progress in defining SDK groupings. For visibility, the same diagram is provided in Figure~\ref{fig:sdk-definition1-0}.
 
 \begin{figure}[htb]
