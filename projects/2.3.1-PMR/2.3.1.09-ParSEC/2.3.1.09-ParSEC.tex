@@ -355,15 +355,14 @@ more challenging application pattern, we ran the irregular tensor contraction op
 from the MPQC chemistry ECP application. On this application, we showed a
 very high rate of execution on multiple GPU accelerators, even when the sparsity
 pattern of the data is high.
-%TODO: add figures if we receive approval from OLCF 
 
 \begin{figure}
 \centering
-\includegraphics[width=.45\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/dgemm_spock.pdf}
-\includegraphics[width=.45\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/dpotrf_spock.pdf}
-\includegraphics[width=.45\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/dpotrf_spock_x4.pdf}
-\includegraphics[width=.45\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/mpqc_spock.pdf}
-\caption{Performance of PaRSEC on AMD accelerated system OLCF Spock.NOTE: FIGURES WILL BE ADDED WHEN OLCF APPROVES PULBIC RELEASE OF THE RESULTS.\label{fig:parsec:spock}}
+\includegraphics[width=.45\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/spock-gemm-pbscal1.pdf}
+\includegraphics[width=.45\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/spock-po-pbscal1.pdf}
+\includegraphics[width=.45\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/spock-po-pbscal4.pdf}
+\includegraphics[width=.45\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/spock-mqpc-density1.pdf}
+\caption{Performance of PaRSEC on AMD accelerated system OLCF Spock.\label{fig:parsec:spock}}
 \end{figure}
 
 %Porting to Crusher has started in recent weeks.
