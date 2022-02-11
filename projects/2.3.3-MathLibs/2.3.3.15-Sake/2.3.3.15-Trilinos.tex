@@ -59,17 +59,17 @@ More generally, the dependence on UVM posed a risk in term of the solver perform
 \item HIP backend support:
 we have ensured the Trilinos solver stacks run on the Frontier early access system (Spock) using HIP backend (without UVM) and resolved initial performance problems. Several performance optimizations remain open which we plan to address this year.
 
-\item Polynomial preconditioning: We implemented and deployed a GMRES-based polynomial preconditioner in Trilinos/Belos. This can be used as a preconditioner by itself, as a smoother in multigrid (MueLu), or be combined (nested) with any existing preconditioner. Our code is portable to both CPU and GPU. We showed the method is robust and it does not need any user knowledge of eigenvalues of the matrix/operator, unlike the Chebyshev method. In collaboration with the Exagraph ECP project, it has been integrated into the Sphynx spectral partitioner (Trilinos/Zoltan2).
+%\item Polynomial preconditioning: We implemented and deployed a GMRES-based polynomial preconditioner in Trilinos/Belos. This can be used as a preconditioner by itself, as a smoother in multigrid (MueLu), or be combined (nested) with any existing preconditioner. Our code is portable to both CPU and GPU. We showed the method is robust and it does not need any user knowledge of eigenvalues of the matrix/operator, unlike the Chebyshev method. In collaboration with the Exagraph ECP project, it has been integrated into the Sphynx spectral partitioner (Trilinos/Zoltan2).
 
-\item Low-synch orthogonalization: In collaboration with CU Denver and NREL, we developed and implemented a novel low-synch version of Classical Gram-Schmidt (CGS), called DCGS2. By delaying orthonalization and norms, we reduce the synchronization requirement to once per iteration (even with two passes of CGS). The method is more numerically stable than previous attempts at low-synch orthogonalization. Preliminary results on Summit show that the new DCGS2 outperforms the current CGS2 and MGS methods, and achieves up to 66 Gflop/s on 192 GPUs.
+\item Low-synch orthogonalization: In collaboration with CU Denver and NREL, we developed and implemented a novel low-synch version of Classical Gram-Schmidt (CGS), called DCGS2. By delaying orthogonalization and norms, we reduce the synchronization requirement to once per iteration (even with two passes of CGS). The method is more numerically stable than previous attempts at low-synch orthogonalization. Preliminary results on Summit show that the new DCGS2 outperforms the current CGS2 and MGS methods, and achieves up to 66 Gflop/s on 192 GPUs. A version of this method is currently being integrated into Trilinos/Belos.
 \end{enumerate}
 
 \paragraph{Preliminary Experiences on Early Access systems}
 
 The team has been actively using the Frontier early access system (Spock) for initial solver performance tuning with the AMD GPUs.
-The early access has allowed us to identify the performance issues in some of our computational kernels
+The early access has allowed us to identify the performance issues in some of the Trilinos computational kernels
 and resolve some of the issues.
-We have also built our Trilinos solvers on Crusher and now looking to
+We have also built our Trilinos solvers on Crusher and are now looking to
 further optimize the solver performance (e.g., using rocBLAS/rocSparse).
 
 
@@ -84,7 +84,7 @@ Our next efforts are:
 \item Implement graph assembly on a GPU to enable faster matrix assembly and to avoid data movement between host and device.
 \item Design an unified solver interface to all the Trilinos solvers in order to ease the effort of ECP applications
       to switch between solvers and also to compose different solvers in one framework, both of which are needed for the success of ECP application projects especially when the solver options differ across architectures.
-\item Deploy DCGS2 (or related orthogonalization method) in Trilinos/Belos, likely as an option in GMRES (which is used by many ECP applications).
+\item Deploy new orthogonalization method (DCGS2 or similar) in Trilinos/Belos, likely as an option in GMRES (which is used by several ECP applications).
 \item Study Block Krylov methods, which may be particularly well suited to GPUs, and also appear to reduce communication.
 \end{enumerate}
 
