@@ -34,7 +34,7 @@ libraries.
 The project focuses on providing a stable and efficient infrastructure for quick
 prototyping of different approaches to define task-based languages able to
 exploit the full range of capabilities of Exascale platforms. Without such a
-project, and based on the current state of task-based runtimes, potential users
+project, and based on the current state of task-based runtime, potential users
 will be stuck either in fixed programming paradigms, or with a particular,
 potentially less efficient, mix of programming languages. The DTE project
 provides means to maintain a high competitiveness in the field leading to more
@@ -276,11 +276,12 @@ ECP applications.
 % ecosystem (via SPack). Significant improvements have also been added on the
 % performance and scalability of the runtime, as shown by the results below.
 %
-On the software quality side, the PaRSEC runtime has been evaluated
-and amended to compile and run on all Early Access System (Arcticus
+On the software portability and quality side, the PaRSEC runtime has been evaluated
+and updated to compile and run on all Early Access System (Arcticus
 and Spock), as well as some early platforms based on the new ARM
 architecture.  PaRSEC is installable through Spack on all ECP platforms,
-and available as a system module on Spock.
+and available as a system module on Spock. More information about the early
+access platforms support in Section~\ref{sec:parsec_early_access}.
 
 %
 % TTG
@@ -328,6 +329,66 @@ expected behavior for a machine with so many cores per node.
 %
 % HIP / ROCM
 %
+\paragraph{Deployment on Early Access Systems\label{sec:parsec_early_access}}
+
+The PaRSEC runtime as well as its dependent applications can compile and 
+execute on the Spock early access system (EAS). Recent updates have identified
+the root cause of prior difficulties with using atomic operations with the 
+default compiler (LLVM-clang-13), which can now be safely used. The GNU compilers had been validated to be correct since last march.
+%
+The PaRSEC runtime can take advantage of the MI100 AMD accelerators (it uses the ROCM
+software package to orchestrate host-device data transfer), and applications
+using PaRSEC (e.g., DPLASMA dense linear algebra package, Massively Parallel Quantum Chemistry MPQC) have been modified to use rocsolver/rocblas
+kernels. The performance of some of the kernels provided from rocsolver/rocblas 
+has been found to be underperforming compared to theoretical peak, notably some
+of the one-sided factorization in rocsolver. Despite these early system limitations, the PaRSEC
+runtime is able to achieve a large proportion of peak performance on AMD
+accelerated nodes. In addition to single-accelerator support, we validated the
+multi-GPU scalability of PaRSEC on the DGEMM operation (dense matrix-matrix multiply),
+where we have witnessed that the PaRSEC
+version operates at the same rate as the rocblas DGEMM (as expected), and 
+scales almost perfectly up to 4 GPUs. Similarly, the DPOTRF operation (LLT Cholesky factorization)
+also shows very good multi-GPU scaling, and PaRSEC outperforms by
+several order of magnitudes the performance of the rocsolver kernel. Performance of
+the LLT factorization has also been verified to scale to multiple nodes. Looking at a
+more challenging application pattern, we ran the irregular tensor contraction operation
+from the MPQC chemistry ECP application. On this application, we showed a
+very high rate of execution on multiple GPU accelerators, even when the sparsity
+pattern of the data is high.
+%TODO: add figures if we receive approval from OLCF 
+
+\begin{figure}
+\centering
+\includegraphics[width=.45\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/dgemm_spock.pdf}
+\includegraphics[width=.45\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/dpotrf_spock.pdf}
+\includegraphics[width=.45\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/dpotrf_spock_x4.pdf}
+\includegraphics[width=.45\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/mpqc_spock.pdf}
+\caption{Performance of PaRSEC on AMD accelerated system OLCF Spock.NOTE: FIGURES WILL BE ADDED WHEN OLCF APPROVES PULBIC RELEASE OF THE RESULTS.\label{fig:parsec:spock}}
+\end{figure}
+
+%Porting to Crusher has started in recent weeks.
+The general software environment on Crusher being very similar to Spock, compiling PaRSEC
+on Crusher required only minor adaptation of the build scripts (so as to find
+and load the correct software dependencies from system-installed software).
+PaRSEC has been verified to run on Crusher with basic correctness tests on up to 4 nodes, 
+with multiple GPUs.
+
+On both Crusher and Spock, we identified a limitation of the libSCI BLAS library:
+it would not allow calling into BLAS operations from all cores when running one thread per-
+core. This limitation has been communicated to the OLCF support team, but has not been
+resolved thus far. Our mitigation strategy has been to compile our own copy of OpenBLAS as 
+a substitute that can support enough threads to access the BLAS library.
+
+We have also validated that PaRSEC deploys on Nvidia based DOE pre-exascale systems 
+Perlmutter and Summit. All features of PaRSEC are supported on these machines, 
+and performance has been validated to be consistent with expectations on a wide range
+of applications.
+
+Deployment on Intel Xe systems has been tested on the Yarrow system. We
+also used Yarrow to develop an Xe specific device that manages host-device
+memory movement. Deployment on the Arcticus EAS is ongoing. We verified that
+the software can compile and are running basic tests with CPU workloads to verify
+correctness.
 
 \paragraph{Next Steps}
 %\textit{Describe what you are working on next.}
