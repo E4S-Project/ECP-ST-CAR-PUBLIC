@@ -50,9 +50,10 @@ Members of the SOLLVE project are active participants in the OpenMP Language com
 \item {\bf LLVM  Compiler}
 SOLLVE implements new OpenMP features in the LLVM compiler and develops analyses and transformations that enhance, and provide consistency to, OpenMP performance. Its open source solutions may be leveraged in vendor compilers. The compiler is available on LCF platforms.
 
+
 \item {\bf OpenMP runtime systems} 
 %Work on experimental OpenMP runtime systems provide support during application execution of many features supported in SOLLVE's OpenMP implementation. 
-BOLT, an experimental runtime built upon ultra-lightweight threading, addresses the need for efficient nested parallelism and improved task scheduling, and it develops better support for interoperability with MPI. BOLT is integrated and delivered with the project's LLVM compiler. A prototype library for OpenMP task scheduling across heterogeneous processors is also being investigated. 
+BOLT, an experimental runtime built upon ultra-lightweight threading, addresses the need for efficient nested parallelism and improved task scheduling, and it develops better support for interoperability with MPI. BOLT is integrated and delivered with the project's LLVM compiler. A prototype runtime library for OpenMP loop scheduling across heterogeneous processors on a node is also being investigated. 
 
 \item {\bf Validation and Verification (V\&V)}
 A V\&V suite is being developed that allows vendors, users and facilities to assess the coverage and standard compliance of OpenMP implementations. A ticket system for bug reporting and inquiries has also been deployed to facilitate interaction with end users.
@@ -71,7 +72,7 @@ cross-cutting effort which is supported by resources from SOLLVE and ECP Broader
 %external partners, namely collaborators from Lawrence Berkeley National
 %Laboratory, Oak Ridge, University of Delaware and other academic institutions.
 A number of articles have also been published as part of the SOLLVE
-effort~\cite{openmp-tr6,zinenko.cc.2018,vandv2019,
+effort~\cite{9669317, openmp-tr6,zinenko.cc.2018,vandv2019,
 tregion, Mishra:2019:KFA:3314872.3314915, udm, loopTransPragmas,ompautotuneFramework, osti_1559911, 
 DBLP:conf/iwomp/ScoglandSOHES19, DBLP:conf/iwomp/0001WLSS19,
 DBLP:conf/iwomp/KaleIKKC19, Bak2019OptimizedEO, lsrt, boltPACT19, machlearnoffload, DBLP:conf/sc/MishraLKFC17, Bak2019OptimizedEO, portOmpOff,kruse2021clangast}.
@@ -84,7 +85,7 @@ DBLP:conf/iwomp/KaleIKKC19, Bak2019OptimizedEO, lsrt, boltPACT19, machlearnofflo
 
 \begin{figure}[t]
 \includegraphics[width=1.0\linewidth,height=9.1cm]{projects/2.3.2-Tools/2.3.2.11-SOLLVE/SOLLVE-progress}
-\caption{\label{fig:sollve-update}SOLLVE thrust area updates}
+\caption{\label{fig:sollve-update} SOLLVE thrust area updates}
 \end{figure}
 
 %\textit{Describe what you have done recently.  It would be good to have some kind of figure or diagram in this section.}
@@ -98,13 +99,12 @@ The following next steps are planned:
 
 \item LLVM compiler: Improve performance of device offloading and optimize generation of code within target devices; generalize to enable reuse across multiple offloading architectures; develop infrastructure to support integration of Fortran front end; increase parallel region performance; implementation of OpenMP 5.1 loop transformations;
 
-\item OpenMP runtime: Provide support for 5.x spec; address broader set of interoperability challenges including MPI+OpenMP codes using BOLT; address advanced tasking requirements, including on heterogenous nodes of ECP Systems.
+\item OpenMP runtime: Provide support for 5.x spec; address broader set of interoperability challenges including MPI+OpenMP codes using BOLT; address advanced tasking requirements, including on heterogeneous nodes of ECP Systems.
 
 \item V\&V suite: Continue expanding the coverage of the V\&V Suite, with focus on 5.1 features along with additions and corrections to 4.5 and 5.1 tests as OpenMP implementations mature; expand Fortran tests; work with ARB Examples Committee; improve ALCF toolchains; more vendor interactions.
 \end{itemize} 
 
 %\textit{Describe what you are working on next.}
-
 %\item Applications: Continue to interact with ECP applications teams, evaluate implementations of new features and explore new requirements; 
 % create mini-apps to help evaluate OpenMP accelerator support; 
  %identify best practices for the use of OpenMP on accelerators;

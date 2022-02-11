@@ -1,0 +1,282 @@
+
+  \definecolor{col0o}{RGB}{0,146,146}
+  \colorlet{col0}{col0o!80}
+  \definecolor{col1o}{RGB}{182,109,255}
+  \colorlet{col1}{col1o!70}
+  \definecolor{col2}{RGB}{219,209,0}
+  \definecolor{col3}{RGB}{255,182,119}
+  \definecolor{col8}{RGB}{182,255,219}
+  \definecolor{col5}{RGB}{36,255,36}
+  \definecolor{col6}{RGB}{182,219,255}
+  \definecolor{col7}{RGB}{255,109,182}
+  \definecolor{col18}{RGB}{255,255,109}
+  \definecolor{col9}{RGB}{73,0,146}
+  \definecolor{col10}{RGB}{146,73,0}
+  \definecolor{col11}{RGB}{146,0,0}
+  \definecolor{col12}{RGB}{0,109,219}
+  \definecolor{col13}{RGB}{0,73,73}
+  \definecolor{col14}{RGB}{73,0,73}
+  \definecolor{col15}{RGB}{73,73,0}
+  \definecolor{col16o}{RGB}{255,36,36}
+  \colorlet{col16}{col16o!80}
+  \definecolor{col17o}{RGB}{36,36,255}
+  \colorlet{col17}{col17o!50}
+  \definecolor{col4}{RGB}{255,182,219}
+  
+  \definecolor{Maroon}{HTML}{990000} 
+
+\begin{figure}[h!]
+  \vspace*{3mm}
+  \centering
+
+\resizebox{\linewidth}{!}{%
+  %\includegraphics{includes/openmc.pdf}
+
+\begin{tikzpicture}
+\begin{axis}[
+    compat=newest,
+    enlarge y limits={rel=0.20},
+    enlarge x limits={abs=0.5},
+    ybar,
+    ymode = log,
+    log basis y = 10,
+    bar width=40,
+    xtick={1,2,3,4,5},
+    xticklabels={CPU\\32 cores, A100 initial\\ performance, A100 after application-\\compiler co-design\\ (OpenMC + LLVM), A100 after further\\ algorithmic changes\\ (OpenMC team), AMD MI100 perf-\\ormance latest\\ OpenMC + LLVM},
+    xtick style={draw=none},
+    xticklabel style={align=center,font=\small},
+    %xmajorticks=false,
+    ymajorgrids=true,
+    ylabel={particles/sec},
+    %ylabel style = {align=center,at={(-0.08,0.5)}},
+    %yminorgrids=true,
+    grid style=dashed,
+    height=7cm,
+    width=18cm,
+    visualization depends on ={y \as \y},
+    visualization depends on ={rawy \as \rawy},
+    %log ticks with fixed point,
+    every node near coord/.append style = {
+      %name=a\coordindex,
+      %font=\small,
+      /pgf/number format/fixed,
+      %fill=white,
+      %yshift=-2pt,
+      %inner sep=0pt,
+    },
+    every axis plot/.append style={
+      bar shift=0pt,
+    },
+  ]
+\addplot[
+    %nodes near coords,
+    %point meta=rawy,
+    nodes near coords={%
+      \begingroup%
+        % this group is merely to switch to FPU locally.
+        % Might be unnecessary, but who knows.
+        \pgfkeys{/pgf/fpu}%
+        \pgfmathparse{\pgfplotspointmeta<4}%
+        \global\let\issmall=\pgfmathresult%
+        \pgfmathparse{\pgfplotspointmeta==0}%
+        \global\let\iszero=\pgfmathresult%
+        \pgfmathparse{\pgfplotspointmeta==1}%
+        \global\let\isone=\pgfmathresult%
+      \endgroup%
+      \pgfmathfloatcreate{0}{0.0}{0}%
+      \let\ZERO=\pgfmathresult%
+      \pgfmathfloatcreate{1}{1.0}{0}%
+      \let\ONE=\pgfmathresult%
+      \color{black}%
+      \ifx\iszero\ONE%
+      {%
+        \hspace*{-5mm}%
+        \global\let\ycoord=\ZERO%
+        \textbf{OoM}%
+      }%
+      \else%
+        \ifx\isone\ONE%
+        {%
+          \textbf{base}
+          \global\let\ycoord=\ZERO%
+        }%
+        \else%
+          \ifx\issmall\ONE%
+          {%
+            %\global\let\ycoord=\ZERO
+            \textbf{\phantom{,}\pgfmathprintnumber[precision=2]{\rawy}\phantom{,}}%
+          }%
+          \else%
+            %\hspace*{-12mm}
+            %\hspace*{-4mm}
+            %\global\let\ycoord=\rawy
+            %\colorbox{white}{%
+              \textbf{\pgfmathprintnumber[precision=2]{\rawy}}%
+            %}
+          \fi%
+        \fi%
+      \fi%
+    },
+    every node near coord/.append style = {
+        name=a\coordindex,
+        /pgf/number format/fixed,
+        yshift=0.5pt,
+        fill=white,
+        inner sep=0pt,
+    },
+    fill=Maroon,
+  ]
+  coordinates {
+(2,602)
+(3,58529)
+(4,349685)
+};
+
+\addplot[
+    %nodes near coords,
+    %point meta=rawy,
+    nodes near coords={%
+      \begingroup%
+        % this group is merely to switch to FPU locally.
+        % Might be unnecessary, but who knows.
+        \pgfkeys{/pgf/fpu}%
+        \pgfmathparse{\pgfplotspointmeta<4}%
+        \global\let\issmall=\pgfmathresult%
+        \pgfmathparse{\pgfplotspointmeta==0}%
+        \global\let\iszero=\pgfmathresult%
+        \pgfmathparse{\pgfplotspointmeta==1}%
+        \global\let\isone=\pgfmathresult%
+      \endgroup%
+      \pgfmathfloatcreate{0}{0.0}{0}%
+      \let\ZERO=\pgfmathresult%
+      \pgfmathfloatcreate{1}{1.0}{0}%
+      \let\ONE=\pgfmathresult%
+      \color{black}%
+      \ifx\iszero\ONE%
+      {%
+        \hspace*{-5mm}%
+        \global\let\ycoord=\ZERO%
+        \textbf{OoM}%
+      }%
+      \else%
+        \ifx\isone\ONE%
+        {%
+          \textbf{base}
+          \global\let\ycoord=\ZERO%
+        }%
+        \else%
+          \ifx\issmall\ONE%
+          {%
+            %\global\let\ycoord=\ZERO
+            \textbf{\phantom{,}\pgfmathprintnumber[precision=2]{\rawy}\phantom{,}}%
+          }%
+          \else%
+            %\hspace*{-12mm}
+            %\hspace*{-4mm}
+            %\global\let\ycoord=\rawy
+            %\colorbox{white}{%
+              \textbf{\pgfmathprintnumber[precision=2]{\rawy}}%
+            %}
+          \fi%
+        \fi%
+      \fi%
+    },
+    every node near coord/.append style={
+        /pgf/number format/fixed,
+        yshift=0.5pt,
+        fill=white,
+        inner sep=0pt,
+    },
+    fill=col6,
+  ]
+  coordinates {
+(1,54913)
+};
+\addplot[
+    %nodes near coords,
+    %point meta=rawy,
+    nodes near coords={%
+      \begingroup%
+        % this group is merely to switch to FPU locally.
+        % Might be unnecessary, but who knows.
+        \pgfkeys{/pgf/fpu}%
+        \pgfmathparse{\pgfplotspointmeta<4}%
+        \global\let\issmall=\pgfmathresult%
+        \pgfmathparse{\pgfplotspointmeta==0}%
+        \global\let\iszero=\pgfmathresult%
+        \pgfmathparse{\pgfplotspointmeta==1}%
+        \global\let\isone=\pgfmathresult%
+      \endgroup%
+      \pgfmathfloatcreate{0}{0.0}{0}%
+      \let\ZERO=\pgfmathresult%
+      \pgfmathfloatcreate{1}{1.0}{0}%
+      \let\ONE=\pgfmathresult%
+      \color{black}%
+      \ifx\iszero\ONE%
+      {%
+        \hspace*{-5mm}%
+        \global\let\ycoord=\ZERO%
+        \textbf{OoM}%
+      }%
+      \else%
+        \ifx\isone\ONE%
+        {%
+          \textbf{base}
+          \global\let\ycoord=\ZERO%
+        }%
+        \else%
+          \ifx\issmall\ONE%
+          {%
+            %\global\let\ycoord=\ZERO
+            \textbf{\phantom{,}\pgfmathprintnumber[precision=2]{\rawy}\phantom{,}}%
+          }%
+          \else%
+            %\hspace*{-12mm}
+            %\hspace*{-4mm}
+            %\global\let\ycoord=\rawy
+            %\colorbox{white}{%
+              \textbf{\pgfmathprintnumber[precision=2]{\rawy}}%
+            %}
+          \fi%
+        \fi%
+      \fi%
+    },
+    every node near coord/.append style={
+        /pgf/number format/fixed,
+        yshift=0.5pt,
+        fill=white,
+        inner sep=0pt,
+    },
+    fill=col3,
+  ]
+  coordinates {
+  (5,93918)
+};
+\end{axis}
+
+\draw[ultra thick,->,shorten <=1mm,shorten >=3mm] ($(a0.south east) + (3mm,0mm)$) -- node[midway,above,rotate=55,fill=white,inner sep=1pt,yshift=2pt] {97x} ($(a1.south west) + (-0.5mm,1mm)$);
+\draw[ultra thick,->,shorten <=1mm,shorten >=3mm] ($(a1.south east) + (3mm,0mm)$) -- node[midway,above,rotate=30,fill=white,inner sep=1pt,yshift=2pt] {6x} (a2.south west);
+
+\end{tikzpicture}
+}
+
+\vspace*{-2mm}
+
+\caption{
+  Performance results for the OpenMC~\cite{romano2013openmc} OpenMP offloading code that simulates transport of neutral particles using the Monte Carlo methodology.
+  The application is part of the ExaSMR ECP project and known for its proxy applications (XSBench~\cite{XS_Tramm_2014} and RSBench~\cite{RS_Tramm_2014}).
+  Results show the almost 100x speedup achieved by co-optimizing the full OpenMC application with the LLVM compiler for OpenMP offloading on NVIDIA A100 GPUs.
+  In the process, changes to both OpenMC and LLVM were made, and the latter were often triggered via command line options or assumptions.
+  Guided by compiler remarks, other applications could benefit similarly and with far less involvement from a compiler developer---but only if the remarks, and later the suggested code changes, are clear, actionable, and effective.
+ For context, we also present the AMD MI100 numbers obtained with the latest versions
+ of OpenMC and the LLVM/Clang compiler.
+ Since the LLVM/OpenMP offloading backend for AMD GPU is new and only recently became stable, we expect substantial performance improvements as we start our tuning efforts.
+ Even without, we believe the results shows how performance portability is certainly
+ within reach for a full application using the LLVM/OpenMP offloading environment. \\
+  The data for the figure was generated and generously provided by John Tramm.
+}
+
+  \label{fig:openmc}
+  %\vspace*{-2mm}
+  \vspace*{2mm}
+\end{figure}
