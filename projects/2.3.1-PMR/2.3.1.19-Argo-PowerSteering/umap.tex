@@ -73,7 +73,26 @@ programmer. The UMap software architecture is shown in Figure
 In recent months, we have released MP-UMap, providing multi-process
 support for the UMap facility. MP-UMap enables multiple processes on a
 compute node to share the UMap page buffer so that pages accessed from
-a mapped file are accessible to MPI ranks on the same node. 
+a mapped file are accessible to MPI ranks on the same node. MP-UMap is
+implemented as 
+a collection of libraries that allows multiple processes to share a
+single file-backed UMap buffer. Just like UMap, it uses user-space
+page fault handler based on the userfaultfd Linux feature (starting
+with 4.3 linux kernel). The use case is to have a multi-process
+application accessing a large file through cached pages,
+i.e. out-of-core execution using memory map. Presently, userfaultfd
+does not support Write-Protection(WP) of shared memory, which limits
+MP-UMap to read-only applications. However, we have identified an
+experimental Linux kernel
+https://github.com/xzpeter/linux/tree/uffd-wp-shmem-hugetlbfs-v4 where
+WP capability is being actively developed. Our feasibility
+investigation has shown that this experimental version will help us in
+upgrading MP-UMap's capability to support read-write
+applications. Thus, going forward we will require capability of
+running such experimental Linux versions on EAS platforms to test/use
+advanced capabilities like MP-UMap. Ultimately, as has happened
+previously, we have helped push adoption of the experimental feature
+into the mainstream linux distribution.
 
 The LLNL UMap team demonstrated graph analysis algorithms based on
 graph traversal that use the UMap handler.  By integrating with SICM’s
@@ -82,7 +101,12 @@ handler provides memory mapped access to very large graphs dynamically
 allocaetd and stored in binary form in one or more file(s). The
 algorithm suite consists of a dynamic graph construction benchmark,
 breadth-first search, connected components, and the ExaGraph miniVite
-benchmark.
+benchmark. Combined use of UMap and Metall require the write-protect
+feature of userfaultfd, which is available in the linux 5.10 kernel
+and beyond. Currently this version is not available on EAS
+machines. Having EAS nodes with newer kernel versions would help with
+testing and CI of Metall+UMap enabled ExaGraph applications that have
+been demonstrated.
 
 An adaptive buffer management scheme was added to UMap to monitor and
 react at runtime to adjust the page buffer size. With this
@@ -90,16 +114,39 @@ optimization, the page buffer can grow and shrink to reflect memory
 space availability changes.
 
 A paper on UMap was published in IEEE Transactions on Parallel and
-Distributed Systems:  Peng, I.B., Gokhale, M., Youssef, K., Iwabuchi, K. and Pearce, R., 2021. Enabling Scalable and Extensible Memory-mapped Datastores in Userspace. doi: 10.1109/TPDS.2021.3086302
+Distributed Systems:  Peng, I.B., Gokhale, M., Youssef, K., Iwabuchi,
+K. and Pearce, R., 2021. Enabling Scalable and Extensible
+Memory-mapped Datastores in Userspace. doi: 10.1109/TPDS.2021.3086302
+
+\paragraph{EAS Experiences}
+
+UMap and MP-UMap have been demonstrated on Frontier architecture EAS
+systems. No porting was required as UMap in read-only mode runs on the
+standard system software stack. Specifically, UMap was run on a node
+of Redwood, an El Capitan COE machine.
+
+  UMap-MP was run Spock as documented in the STPR19-19 Milestone
+  report. Functionality of MP-UMap APIs were tested a Spock Compute
+  Node with test apps and scripts available at:
+https://github.com/LLNL/umap/tree/mpumap/tests/umap-service.
+
+The full UMap and MP-UMap functionality cannot be run on EAS systems
+until the Linux kernel is upgraded to 5.10 for UMap and 5.14 for MP-UMap.
 
 \paragraph{Next Steps}
 In the coming year, we plan to continue outreach to application teams
-within ECP and in the science/data community. This includes
-collaboration with the Umpire team, and with graph algorithm
-developers. We will integrate UMap with Umpire to give applications a
-common API to manage multiple sorts of memories including persistent
-memory through UMap and main CPU and GPU memory resources. The
-Exagraph collaboration will map persistent data such as binary format
-graphs and intermediate data structures through UMap using the
-SparseStore and Metall.
+within ECP and in the science/data community. We are in collaboration
+with the Umpire team and are integrating UMap with Umpire, a new
+capability to be delivered in FY22. UMap with Umpire will give
+applications a common API to manage multiple sorts of memories
+including persistent memory through UMap and main CPU and GPU memory
+resources. The Exagraph collaboration is in progress. Selected
+Exagraph algorithms can memory map persistent data such as
+binary format graphs and intermediate data structures through UMap
+using the SparseStore and Metall.
+
+Recognizing that new forms of memory will be available for Exascale
+architectures, we are enhancing the core UMap handler to exploit a
+multi-tier memory hierarchy in which pages can migrate between
+capacity/latency tiers.
 
