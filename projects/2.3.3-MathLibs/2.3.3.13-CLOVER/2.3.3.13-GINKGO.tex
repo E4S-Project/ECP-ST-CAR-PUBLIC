@@ -104,7 +104,7 @@ portability, modularity, extensibility, and hardware-aware algorithm design.
   \item The Ginkgo team successfully employed the batched iterative solvers for
 		the hydrodynamic problems arising in the PeleLM
 		simulations and the gyrokinetic problems arising in the
-		XGC simulations.
+		XGC simulations~\cite{batched-scala2021}.
 \end{enumerate}
 
 
@@ -136,7 +136,7 @@ development of these backends, work on new experimental features (e.g., batched
 and distributed), and improve existing functionality performance when needed, in
 particular thanks to EAS availability with the Perlmutter, JLSE Arcticus, Spock
 and Crusher machines. In the following, we report results obtained on the EAS
-Crusher for the main Ginkgo functionality.
+Crusher for some of the single node Ginkgo functionality.
 
 On the EAS Crusher system, we evaluate the performance of some of Ginkgo's
 iterative solvers and their essential building block, the Sparse Matrix-Vector
@@ -151,10 +151,13 @@ In Figure~\ref{fig:gko-crusher-spmv} we show the bandwidth of the Ginkgo SpMV
 operation with the CSR and ELL formats. For matrices with a large nonzero count,
 both SpMV formats reach up to 87\% of the 1.6~TB/s peak bandwidth for one GCD.
 In Figure~\ref{fig:gko-crusher-solvers} we benchmark the bandwidth of the CG,
-and GMRES solvers. For each matrix and solver combination, we select the fastest
-SpMV format available in Ginkgo. In this case, the CG solver reaches a bandwidth
-of up to 75\% of the theoretical peak, while GMRES has a slightly lower
-efficiency.
+and GMRES solvers. For each matrix and solver combination, Ginkgo's benchmarking 
+setup first runs the SpMV benchmark, selects the fastest matrix format for the matrix
+in question and runs the solver benchmark. This solver benchmark consists of 10000
+unpreconditioned iterations for each solver type and all results are normalized over a
+single iteration. We see that the CG solver reaches a bandwidth of up to 80\% of the
+theoretical peak, while on average GMRES can have a slightly lower efficiency and be
+more affected by the sparsity pattern of the matrix.
 
 
 % \begin{figure}[!h]
@@ -163,7 +166,7 @@ efficiency.
 %     \includegraphics[width=.36\columnwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/ginkgo_eas/bw_csr_spmv.pdf}
 %     \includegraphics[width=.36\columnwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/ginkgo_eas/bw_ell_spmv.pdf}
 %   \end{tabular}
-%   \caption{Bandwidth of the Ginkgo CSR (left), and ELL (right) SpMVs on one GCD
+%   \caption{Achieved Bandwidth (GB/s) of the Ginkgo CSR (left), and ELL (right) SpMV operations on one GCD
 %     of the Crusher MI250X GPUs.}
 %   \label{fig:gko-crusher-spmv}
 % \end{figure}
@@ -175,7 +178,7 @@ efficiency.
 %     &
 %     \includegraphics[width=.36\columnwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/ginkgo_eas/bw_gmres_solver.pdf}
 %   \end{tabular}
-%   \caption{Bandwidth of the Ginkgo CG (left) and GMRES (right) solvers on one
+%   \caption{Achieved Bandwidth (GB/s) of the Ginkgo CG (left) and GMRES (right) solvers on one
 %     GCD of the Crusher MI250X GPUs.}
 %   \label{fig:gko-crusher-solvers}
 % \end{figure}
