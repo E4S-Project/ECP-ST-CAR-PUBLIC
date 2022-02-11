@@ -1,15 +1,15 @@
 \subsubsection{\stid{3.15} Sake Sub-project: Kokkos Kernels} \label{subsubsect:kokkoskernels}
 \paragraph{Overview} 
-The Kokkos Kernels~\footnote{https://github.com/kokkos/kokkos-kernels} subproject primarily focuses on performance portable kernels
-for sparse/dense linear algebra, graphs, and machine learning, with emphasis on
-kernels that are key to the performance of
+The Kokkos Kernels~\footnote{https://github.com/kokkos/kokkos-kernels} subproject primarily
+focuses on performance portable kernels for sparse/dense linear algebra, graphs, and machine
+learning, with emphasis on kernels that are key to the performance of
 several ECP applications. We work closely with ECP applications to identify the
 performance-critical kernels and develop portable algorithms for these kernels.
 The primary focus of this subproject is to support ECP application needs, develop new
 kernels needed with an emphasis towards software releases, tutorials, boot camps
 and user support. The Kokkos Kernels project also works closely with several vendors
-(AMD, ARM, Cray, Intel, and NVIDIA) as part of both the ECP collaborations and
-NNSA's Center for Excellence efforts. These collaborations will  enable vendor solutions
+(AMD, ARM, HPE/Cray, Intel, and NVIDIA) as part of both the ECP collaborations and
+NNSA's Center for Excellence efforts. These collaborations will enable vendor solutions
 that are targeted towards ECP application needs.
 
 \paragraph{Key  Challenges}
@@ -23,13 +23,13 @@ different architectures in such a short timeframe adds pressure on the portabili
 solutions such as Kokkos Kernels to optimize and support the kernels on all the platforms.
 \item
 The design of several ECP applications and a software stack that rely on a component-based
-approach results in an extremely high number of kernel launches on the accelerators, which
+approach results in an extremely high number of kernels launches on the accelerators, which
 results in the latency costs becoming the primary bottleneck in scaling the applications.
 \item
 The change in the needs of applications from device-level kernels to smaller team-level kernels. Vendor
 libraries are not ready for such a drastic change in software design.
 \item 
-The reliance of ECP applications on certain kernels that do not port well to the  accelerator architectures.
+The reliance of ECP applications on certain kernels that do not port well to the accelerator architectures.
 \end{enumerate}
 
 These challenges require a collaborative effort to explore new algorithmic choices,
@@ -60,24 +60,34 @@ Our primary solution strategy to address these challenges are:
    For example, from a computer science perspective, we are focusing on the
    use of streams or other latency reducing techniques such as cuda graphs. From
    the applied mathematics perspective we are developing new algorithms such
-   as cluster-based approaches for preconditioners, such as Gauss-Seidel precondtioners,
+   as cluster-based approaches for preconditioners, such as Gauss-Seidel preconditioners,
    to reduce the number of kernel launches. 
 \end{enumerate}
 
 \paragraph{Recent Progress}
 \begin{enumerate}
-\item Kokkos Kernels has implemented and released its HIP backend to support deployment on early
-access platform Spock. While all of the kernels are available for this backend further work on
-performance improvement and vendor TPL support are forth coming.
-\item New graph algorithm for distance 2 maximum independent set and coarsening have been developed.
-They provide support for the coarsening set of multigrid algorithms on GPUs, and of the applications
-dependent on it such as ExaWind and EMPIRE.
-\item Recently the SYCL backend has been enabled in Kokkos Kernels, it is not currently supporting all
-algorithms (sparse tests are disabled) but provides initial capabilities and will be released in upcoming
-Kokkos Kernels version 3.5.0.
-\item Kokkos Kernels team has developed and integrated tutorial materials to the Kokkos tutorials. The
-tutorials are maintained as a common resource for the entire Kokkos ecosystem.
+\item New batched linear solver algorithms are being developed in support of ECP applications (Pele, XGC).
+Specifically, a preconditioned batched GMRES is now available and provides good performance on multiple GPU
+architectures of interest to ECP.
+\item Support for block sparse row matrices (BsrMatrix) is now available and associated matrix-vector
+operation is available. Additional performance improvements are expected for the BsrMatrix mat-vec.
+\item Further progress on the SYCL backend has been made and are available in the develop branch of
+our repository. These changes will be included in release 3.6.0 and will result in further performance
+portability for the libraries and applications we support (Trilinos, PETSc, ExaWind).
+\item Kokkos Kernels team is currently updating documentation and wiki pages to keep up with release 3.6.0
+new features. Adjustments to tutorial are being made when necessary to ensure the new capabilities are
+advertised appropriately.
 \end{enumerate}
+
+\paragraph{Preliminary Experiences on Early Access systems}
+Kokkos Kernels engages all ECP facilities to ensure the library development is taking into account
+the specificities of all the architectures applications will encounter. Some of the recent developments
+include the development of new performance algorithms that leverage tensor core capabilities of
+Nvidia V100 on Summit and A100 on Perlmutter. New support for rocBLAS and rocSPARSE has been deployed
+and tunning for our Kernels on the HIP backend has been performed. These have been tested on EAS Spock
+and Crusher at OLCF. Finally regular meetings are held with Argonne and Intel staff to ensure that the
+library is deployed on JLSE Arcticus and provides adequate capabilities to users. These meetings have
+resulted in significant improvements for our SYCL backend support.
 
 \paragraph{Next Steps}
 
@@ -88,12 +98,11 @@ Kokkos Kernels team is focused on:
 	kernels that are requested by ECP applications, performance improvements of
 	kernels that are already being used by ECP applications and further support for
         new SYCL and OpenMP Target to enable applications to be tested on Intel architectures.
-	\item \textbf{Developing new sparse batched kernels}: Kokkos Kernels team is working on
-        sparse batched kernels that allow application to solve small linear system that might
-        exist at integration point embeded in larger systems of equations. Such algorithms will
-        support ECP applications Pele and XGC.
-	\item \textbf{Collaboration with vendors}: Kokkos Kernels team is working with vendor
-	libraries team to incorporate ECP application needs in the vendor library roadmap.
-	Conversation regarding batched algorithms is on going and collaboration are being
-        actively leveraged to further prepare the library for ExaScale platforms readiness.
+	\item \textbf{Developing new sparse batched and block sparse kernels}: The team continues
+        to work on sparse batched linear algebra kernels and associated dense batched kernels.
+        Additionally, more support for BsrMatrix is forthcoming with Matrix-Matrix multiplication,
+        Jacobi and Gauss-Seidel algorithms.
+	\item \textbf{Collaboration with vendors and facilities}: Kokkos Kernels' team is
+        continually working with vendors and facilities to improve the software environment
+        on available supercomputers and early access systems.
 \end{enumerate}
