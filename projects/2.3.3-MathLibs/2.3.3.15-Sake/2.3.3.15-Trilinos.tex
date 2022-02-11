@@ -68,7 +68,10 @@ we have ensured the Trilinos solver stacks run on the Frontier early access syst
 
 The team has been actively using the Frontier early access system (Spock) for initial solver performance tuning with the AMD GPUs.
 The early access has allowed us to identify the performance issues in some of the Trilinos computational kernels
-and resolve some of the issues.
+and resolve some of the issues
+(e.g., please see Kokkos-Kernels PR \#1050, where the time to solution
+for solving a Nalu-Wind momentum problem was improved by $220\times$
+on Spock by tuning performance of BLAS kernels).
 We have also built our Trilinos solvers on Crusher and are now looking to
 further optimize the solver performance (e.g., using rocBLAS/rocSparse).
 
