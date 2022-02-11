@@ -246,7 +246,7 @@ The other algorithmic changes and the results are detailed below.
 \paragraph{Preliminary Experiences on Early Access Systems}
 In the past year, we have ported both STRUMPACK and SuperLU to Spock using
 HIP/ROCm backend. For STRUMPACK, we observed that Spock single MI100 (ROCm 4.2) GPU
-is usually slower than Summit single V100 GPU, can be 1.9x slower. For SuperLU,
+is usually slower than Summit single V100 GPU; it can be 1.9x slower. For SuperLU,
 the single GPU performance is comparable on Spock MI100 and Summit V100.
 Using 16 Spock GPUs, we observed 2x speedup over CPU-only SuperLU code.
 
