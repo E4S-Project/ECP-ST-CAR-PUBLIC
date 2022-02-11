@@ -64,6 +64,15 @@ we have ensured the Trilinos solver stacks run on the Frontier early access syst
 \item Low-synch orthogonalization: In collaboration with CU Denver and NREL, we developed and implemented a novel low-synch version of Classical Gram-Schmidt (CGS), called DCGS2. By delaying orthonalization and norms, we reduce the synchronization requirement to once per iteration (even with two passes of CGS). The method is more numerically stable than previous attempts at low-synch orthogonalization. Preliminary results on Summit show that the new DCGS2 outperforms the current CGS2 and MGS methods, and achieves up to 66 Gflop/s on 192 GPUs.
 \end{enumerate}
 
+\paragraph{Preliminary Experiences on Early Access systems}
+
+The team has been actively using the Frontier early access system (Spock) for initial solver performance tuning with the AMD GPUs.
+The early access has allowed us to identify the performance issues in some of our computational kernels
+and resolve some of the issues.
+We have also built our Trilinos solvers on Crusher and now looking to
+further optimize the solver performance (e.g., using rocBLAS/rocSparse).
+
+
 \paragraph{Next Steps}
 Our next efforts are:
 \begin{enumerate}
