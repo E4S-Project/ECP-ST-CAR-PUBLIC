@@ -1,6 +1,7 @@
 %\newpage
 \subsubsection{\stid{3.13} CLOVER Sub-project: SLATE}\label{subsubsect:slate}
 
+%-------------------------------------------------------------------------------
 \paragraph{Overview}
 
 SLATE (Software for Linear Algebra Targeting Exascale)
@@ -90,6 +91,7 @@ Standardized solutions for GPU acceleration are still in flux.
 
 \end{enumerate}
 
+%-------------------------------------------------------------------------------
 \paragraph{Solution Strategy}
 
 \begin{enumerate}
@@ -124,6 +126,7 @@ at HPE Cray, IBM, Intel, NVIDIA, AMD, and ARM.
 
 \end{enumerate}
 
+%-------------------------------------------------------------------------------
 \paragraph{Recent Progress}
 
 \begin{enumerate}
@@ -169,6 +172,39 @@ eigenvectors.
 Developments are documented in SLATE Working Notes\footnote{
 \url{http://www.icl.utk.edu/publications/series/swans}}.
 
+%-------------------------------------------------------------------------------
+\paragraph{Preliminary Experiences on Early Access systems}
+
+The SLATE team has been using the Early Access Systems to port SLATE to
+the AMD ROCm and Intel oneAPI GPU architectures. This includes machines
+with pre-release hardware and software, as well as the recent Spock and
+Crusher machines with AMD CPU and GPU hardware at Oak Ridge National
+Laboratory. We have used these engagements to benchmark early versions
+of the system software stack, and reported various performance and
+correctness issues to AMD, Intel, and Cray. Early results on Spock in
+Figure~\ref{fig:slate-spock-gemm} show the SLATE matrix multiply
+(\verb+dgemm+) achieves good performance using multiple nodes and
+multiple GPUs. We have also demonstrated the Cholesky, LU, and QR
+factorizations (\verb+dpotrf+, \verb+dgeqrf+, \verb+dgetrf+) in
+Figure~\ref{fig:slate-spock-trf}, and are continuing work to tune the
+performance, particularly of communication since AMD has made direct
+GPU-to-GPU MPI communication efficient.
+
+\begin{figure}
+    \centering
+    % \the\textwidth  % 469.75502pt
+    \subfloat[][SLATE matrix multiply]{
+        \label{fig:slate-spock-gemm}
+        \includegraphics[width=0.45\textwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/slate-spock-gemm}
+    }
+    \subfloat[][SLATE factorizations]{
+        \label{fig:slate-spock-trf}
+        \includegraphics[width=0.45\textwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/slate-spock-trf}
+    }
+    \caption{Performance on Spock (4 nodes, 16 AMD MI100 GPUs).}
+\end{figure}
+
+%-------------------------------------------------------------------------------
 \paragraph{Next Steps}
 
 \begin{enumerate}
