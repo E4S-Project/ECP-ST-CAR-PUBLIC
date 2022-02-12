@@ -35,6 +35,9 @@ The new design focuses on stability and scalability so that applications can rel
 For interoperability with the other main I/O library used in the ECP program, HDF5, we have added compatibility in various ways.
 ADIOS has an engine to write/read HDF5 files using the original HDF5 library linked with ADIOS. A user can just change an option to switch from ADIOS-BP output to HDF5 output. On the other hand, ADIOS provides an HDF5-VOL layer, so that an HDF5 application can choose ADIOS as the underlying driver to write ADIOS-BP files from an application using HDF5. 
 
+\paragraph{Early Access Systems}
+
+We have built ADIOS on EAS systems of Frontier and Aurora. For Frontier, we need to update ADIOS to work properly with the CXI libfabric provider from Cray, which is a new provider not seen before on existing systems. We are also developing the support for GPU-aware I/O on the AMD GPUs. For Aurora, we have developed a DAOS transport for ADIOS I/O to be able to write/read data on the DAOS filesystem. 
 
 \paragraph{Next Steps}
 In the sixth year of the project we will be focusing on testing, scaling and optimizing ADIOS (storage IO, in situ and code coupling services) on the new Frontier exascale computer, with its multi-tier Lustre storage system, local-node storage, and the Slingshot network. We will primarily focus to deliver ADIOS services to our ECP application partners working on their KPP-1 goals on Frontier. 
