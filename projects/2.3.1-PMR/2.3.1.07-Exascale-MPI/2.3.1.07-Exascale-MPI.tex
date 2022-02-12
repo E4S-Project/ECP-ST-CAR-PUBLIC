@@ -117,22 +117,12 @@ interfaces (VCIs) for multithreaded MPI communication~\cite{VCI}.
 One major achievement of MPICH recently is the support for the newly
 released MPI-4 standard. The MPI-4 standard introduced new ways for
 communication including persistent collective that aims to reduce the
-overhead of repetitively setting up colllective, and partitioned
+overhead of repetitively setting up collective, and partitioned
 communication which aims to improve the performance for multi-threaded
-MPI communication. The MPICH 4.0a1 release has include all the new MPI-4 
+MPI communication. The MPICH 4.0 release has include all the new MPI-4 
 features.
 
-Validation and verification has been an integral part of the MPICH project.
-We have made several improvements to the automated testing
-infrastructure for more effective testing. We have also setup a continuous
-integration (CI) service with the ECP CI server, and we use it to test MPICH
-on pre-exascale systems. This allows us to validate and verify MPICH
-with different hardward configurations. Through these new testing
-infrastructures, we have identified new issues and developed
-optimizations that have improved the performance of MPICH on pre-exascale
-systems.
-
-Lastly, we focus on better GPU support in MPICH. MPICH now supports
+We focus on better GPU support in MPICH. MPICH now supports
 GPUs from all three vendors (NVIDIA, AMD and Intel). The support for
 GPU communication includes a fast path that utilizes the hardware RDMA
 support for GPU memory, and a fallback path for cases like complex
@@ -144,6 +134,24 @@ the synchronization between GPU kernels and the MPI communication that
 depends on the result of those kernels. The benefit includes better
 overlapping between computation and communication, and higher GPU
 utilization.
+
+\paragraph{Testing, Continuous Integration, and Experience on Early
+Access Systems}
+
+Validation and verification has been an integral part of the MPICH
+project. We have made several improvements to the automated testing
+infrastructure for more effective testing. Specifically, we added the
+support for testing with GPU buffers for all three GPU vendors. It
+enables us to test MPI communications with different combinations of CPU
+and GPU buffer including inter-process communication between multiple
+GPUs on the same node. We regularly test MPICH using both Spock and
+Arcticus to evaluation and verify the new features and optimizations
+that targets the upcoming exascale systems. We have also setup a
+Continuous Integration (CI) configuration to automate part of the test.
+These testing and verification helped us identify problems early and
+provides the necessary environment for experiments. It also simplifies
+our collaborations with vendor partners that we have similar hardware
+setup for testing on issues of common interests.
 
 %\begin{figure}[htb]
 %  \centering
