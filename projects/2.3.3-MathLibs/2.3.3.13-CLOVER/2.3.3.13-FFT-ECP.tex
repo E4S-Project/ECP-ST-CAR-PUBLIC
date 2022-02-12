@@ -125,9 +125,7 @@ through heFFTe backends to support various ECP applications.
 \textbf{Autotuning:}
 Performance portability will be addressed through use of standards (like 1D FFTs 
 from vendors), portable linear algebra (LA) using MAGMA~\cite{Tomov_2010_pcsa}, 
-and parameterized versions that will be tuned across architectures. We have extensive 
-expertise and well proven track record in the development and use of autotuning techniques 
-for important LA kernels~\cite{Nath2010,Kurzak2012gemmfermi}. 
+and parameterized versions that will be autotuned across architectures~\cite{Nath2010,Kurzak2012gemmfermi}.
 \end{enumerate}
 
 \paragraph{Recent Progress}
@@ -143,14 +141,15 @@ HeFFTe was also integrated in CoPA projects and ExaAM/Meumapps with new applicat
 optimizations, tuning, and added Intel GPU support. 
 HeFFTe 2.2 concentrated on adding support and optimization of the HIP and Intel GPU backends to 
 heFFTe. HeFFTe's functional and performance portability on these architectures and
-multicore CPUs was established~\cite{hpec21}, as well as ease of integration in the ECP applications 
-using heFFTe. 
+multicore CPUs was established~\cite{hpec21}.
+% , as well as ease of integration in the ECP applications using heFFTe. 
 Multidimensional FFTs for 
 fast discrete convolution, cosine (DCT), and sine (DST) transforms were also added with support 
 for Nvidia, AMD, 
 and Intel GPUs. HeFFTe has demonstrate very good strong scalability and performance that is 
 close to 90\% of the roofline peak on the newly added in heFFTe v2.2 R2C, C2R, convolution,
 DCS and DST transformations~\cite{heffte-pact21,heffte-iccs20} (see Figure~\ref{fig:fft-ecp-progress}). 
+
 An FFT benchmark for a number of FFT libraries, including a design study and evaluation of FFT 
 codes used in the ECP applications, was also developed~\cite{fftbenchmark}.
 
@@ -158,7 +157,7 @@ codes used in the ECP applications, was also developed~\cite{fftbenchmark}.
    \centering
 %   \includegraphics[width=0.55\textwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/heFFTeAcceleration}~~~
    \includegraphics[width=0.32\textwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/heFFTeStrongScalability}
-   \includegraphics[width=0.65\textwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/heffte_conv_dst}
+   \includegraphics[width=0.66\textwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/heffte_conv_dst}
     \caption{\label{fig:fft-ecp-progress}
     %{\bf Left}: heFFTe acceleration of $1024^3$ FFT on 4 Summit nodes.
     %            Note: nodal computations are accelerated $43\times$. 
@@ -171,15 +170,31 @@ codes used in the ECP applications, was also developed~\cite{fftbenchmark}.
     }
 \end{figure}
 
+\paragraph{Preliminary Experiences on Early Access systems} 
+HeFFTe is building and passing tests and benchmarks on all Early Access systems (EAS). 
+Current focus in particular is on improving the performance on the Spock and Crusher EAS that
+feature AMD GPUs. The benefits of the latest addition to heFFTe -- batched multidimensional 
+FFT functionalities -- are illustrated in Figure~\ref{fig:fft-batched} running on Spock for application 
+sizes as needed in the NwChemEx ECP project.
+
+\begin{figure}[htb]
+   \centering
+   \includegraphics[width=0.55\textwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/batchedFFT-Spock.pdf}
+    \caption{\label{fig:fft-batched}
+    Speedup of batching FFTs using heFFTe on Spock.
+    Shown is strong scalability of batched vs. not batched FFTs of 
+    size $32^3$, which are realistic application sizes as needed in NwChemEx.
+    }
+\end{figure}
+
 
 \paragraph{Next Steps}
-Next steps of work are adding multidimensional batched FFTs and optimizations.
-This will include support for AMD, Nvidia, and Intel GPUs.
-Further integration and use will be added to CoPA applications and the ExaAM project.
+%Further integration and use will be added to CoPA applications and the ExaAM project.
+Next steps of work are adding mixed-precision algorithms and approximate FFTs that 
+allow trade-off of speed vs. accuracy.
 Autotuning framework that hides backend selection and other parameters from users
-will be added, as well as improved GPU-aware MPI Alltoallv routines, mixed-precision, 
-and approximate FFTs. Existing FFT libraries will be evaluated through the FFT 
+will be added, as well as improved GPU-aware MPI Alltoallv routines. 
+Existing FFT libraries will be evaluated through the FFT 
 benchmark~\cite{fftbenchmark}.
 
-
-
+\newpage
