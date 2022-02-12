@@ -99,6 +99,20 @@ have recently improved this interface to increase the resolution of the
 timestamps associated with events, allowing for nanosecond precision in the
 monitoring of fast events.
 
+\paragraph{Preliminary Experiences on Early Access Systems}
+
+We developed the Argo power management glue layer for Intel discrete GPUs
+(APMIDG), which can communicate with NRM to manage the power consumption of
+Intel discrete GPUs. It allows us to simultaneously measure the power
+consumption, current frequency, and temperature of Intel discrete GPUs on
+different domains (if available on target hardware). It also allows us to
+control the power capping and the frequency range. We verified its power
+management capabilities on Intel Arctic Sound GPUs, available as Aurora
+Early Access Systems. In addition, we will verify the capabilities of Intel
+Ponte Vecchio GPUs (Aurora GPUs) as soon as they become available. The
+source code of APMIDG is maintained at \url{https://github.com/anlsys/apmidg},
+which contains only public information.
+
 \paragraph{Next Steps}
 
 We are working on significantly improving the handling of sensor readings
