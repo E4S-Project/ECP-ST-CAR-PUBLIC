@@ -29,9 +29,24 @@ For our unstructured AMG solver BoomerAMG, we had implemented suitable CUDA kern
 \centering
 	\includegraphics[width=3in]{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/spock-AMG-PCG.png}
 	%\includegraphics[width=3in]{spock-AMG-PCG.png}
-	\caption{\label{fig:Spock-AMG} Total times (setup plus solve times) on 2 nodes of Spock using AMG-PCG with aggressive coarsening and multi-pass interpolation for a 3D diffusion problem with a 27-point stencil on a $n \times n \times n$ grid. The CPU runs were performed with 8 MPI tasks with 16 OpenMP threads per MPI task, the GPU runs were performed on 8 AMD GPUs.}
+	\caption{\label{fig:Spock-AMG} Total times (setup plus solve times) on 2 nodes of Spock using AMG-PCG with aggressive coarsening and multi-pass interpolation for a 3D diffusion problem with a 27-point stencil on a $n \times n \times n$ grid. The CPU runs were performed with 8 MPI tasks with 16 OpenMP threads per MPI task, the GPU runs were performed on 8 AMD MI100 GPUs.}
 
 \end{figure}
+
+\begin{figure}[bth]
+\centering
+	\includegraphics[width=5in]{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/crusher-AMG-PCG.png}
+	%\includegraphics[width=5in]{crusher-AMG-PCG.png}
+	\caption{\label{fig:crusher-AMG} Setup, solve times and Speedups of GPU over CPU performance on 1 node of Crusher using AMG-PCG with three different settings for a 3D diffusion problem with a 27-point stencil on a $n \times n \times n$ grid. The CPU runs were performed with 64 MPI tasks, the GPU runs were performed on 8 AMD MI250 GPUs. Solid lines use the GPU default settings, whereas dashed and dotted lines use in addition one level of aggressive coarsening with two-stage and multipass interpolation, respectively.}
+
+\end{figure}
+
+\paragraph{Early Access System Experiences}
+
+We have tested {\sl hypre} performance on both Spock, see Figure \ref{fig:Spock-AMG}, and Crusher.  Figure \ref{fig:crusher-AMG} 
+shows the Setup and Solve times for three different settings of AMG for increasing $n$ of a 3D diffusion problem on a $n \times n \times n$ grid. Both CPU and GPU runs use the same settings. Solid lines use the default AMG settings, whereas dashed and dotted lines use one level of aggressive coarsening with two-stage and multipass interpolation, respectively. While generally systems in application problems would be in the range of up to $n=300$, we here continue to increase the problem size until the GPU runs reach the memory limit to demonstrate memory usage for these different AMG settings. This is reached first for the default version, which requires a lot of memory, but also achieves the lowest number of iterations, followed by the use of aggressive coarsening with two-stage interpolation. The use of one level of aggressive coarsening combined with multipass interpolation allows solving the largest system illustrated using GPUs, since it has lower memory requirements at the cost of having the worst convergence.  
+
+{\sl Hypre} release v2.24.0 contains support for Intel GPUs for the structured interface and solvers via SYCL and Kokkos and for the solve phase of unstructured solvers via SYCL. All these features have been tested on Arcticus.
 
 \paragraph{Next Steps}
 
