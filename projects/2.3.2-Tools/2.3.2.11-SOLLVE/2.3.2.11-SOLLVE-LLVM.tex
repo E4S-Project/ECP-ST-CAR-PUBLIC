@@ -14,12 +14,8 @@ OpenMP lowering for GPUs together with OpenMP-aware optimizations.
 
 \paragraph{Key Challenges}
 
-As most of the computational power is within GPUs, it is imperative for performance (per watt) to keep them occupied with productive work at all times.
-A meaningful approach is to perform as many computations as possible simultaneously.
-Even Nvidia Fermi GPUs, which have been on the market for ten years, allow for concurrent execution of up to 16 GPU kernels on a single device.
-Asynchronous offloading is a promising technique to achieve such concurrency as it allows a single CPU thread to overlap memory movement, GPU computation, and the preparation of new GPU tasks on the CPU.
-Costly stalls between GPU computations, a.k.a. \emph{kernels}, are avoided and the hardware can start the execution of an already prepared kernel as soon as the ones currently executed stop utilizing the entire device.
-OpenMP supports asynchronous offloading through the \lstinline|nowait| clause on \lstinline|target| directives, though compiler support still varies.
+As most of the computational power is within GPUs, it is imperative for performance (per watt) to keep them occupied with productive work at all times. A meaningful approach is to perform as many computations as possible simultaneously. Even Nvidia Fermi GPUs, which have been on the market for ten years, allow for concurrent execution of up to 16 GPU kernels on a single device. Asynchronous offloading is a promising technique to achieve such concurrency as it allows a single CPU thread to overlap memory movement, GPU computation, and the preparation of new GPU tasks on the CPU.
+Costly stalls between GPU computations, a.k.a. \emph{kernels}, are avoided and the hardware can start the execution of an already prepared kernel as soon as the ones currently executed stop utilizing the entire device. OpenMP supports asynchronous offloading through the \lstinline|nowait| clause on \lstinline|target| directives, though compiler support still varies.
 
 There are two existing designs that can do asynchronous offloading: regular task and detachable task.
 The regular task design is easy to implement, potentially even without compiler support, but it will fail to achieve the goal if there are no threads available to perform the offloading concurrently, which sometimes is unrealistic and restrictive.
@@ -52,8 +48,7 @@ A special \lstinline{hht_task} is used and executed by an hidden helper thread w
 \label{fig:target_task_intro_split_hht}
 \end{figure}
 
-Our results show the hidden helper task design gains up to $6.7\times$ improvement on Summit supercomputer, and also provides comparable speedup to the commercial IBM XL C/C++ compiler.
-Most important, our design provides more functionalities and it can be used even if the native runtime has no asynchronous offloading capabilities.
+Our results show the hidden helper task design gains up to $6.7\times$ improvement on Summit supercomputer, and also provides comparable speedup to the commercial IBM XL C/C++ compiler. Most important, our design provides more functionalities and it can be used even if the native runtime has no asynchronous offloading capabilities.
 
 \begin{figure}[hbt!]
 \centering
@@ -67,13 +62,25 @@ Most important, our design provides more functionalities and it can be used even
 In recent work we implemented loop transformation constructions introduced in OpenMP 5.1~\cite{kruse2021openmpbooth,kruse2021clangast}, asynchronous offloading for OpenMP~\cite{thiddenhelper}, efficient lowering of idiomatic OpenMP code to GPUs (under review),  OpenMP-aware compiler optimizations with informative and actionable remarks for users (under review), a portable OpenMP device (=gpu) runtime written in OpenMP 5.1 (including atomic support)~\cite{DBLP:conf/iwomp/TianCDC21}, a virtual GPU as debugging friendly
 offloading target on the host~\cite{DBLP:conf/icppw/PatelTDC21}, improved diagnostics and execution information~\cite{DBLP:conf/icppw/DoerfertHC21,DBLP:conf/iwomp/HuberWGDH21}.
 
+We redone the OpenMP GPU code generation in LLVM/Clang~\cite{OpenMPEncoding} to improve performance and correctness.
+This work was complemented by a new LLVM/OpenMP GPU device runtime that helps us further close the performance gap compared to CUDA and other kernel languages~\cite{NewOpenMPRT}.
+Various efforts in improving development and debugging have also been integrated into LLVM/OpenMP~\cite{DBLP:conf/icppw/DoerfertHC21,DBLP:conf/icppw/PatelTDC21}.
+
 We implemented hidden helper task design in LLVM/OpenMP.
 Most of our work \cite{DBLP:conf/iwomp/TianCDC21} (except device side dependence resolution) have been upstream and already part of LLVM since 12.0.
 Recently Intel also adopted our design and implementation in Intel's latest OpenMP compiler \cite{TianUpdateOnIntelCompiler2021}.
 
+\begin{figure}[tb]
+\centering
+\subfloat[][Unrolling on AMD EPIC 7532 CPU] ]{\includegraphics[width=0.5\textwidth]{projects/2.3.2-Tools/2.3.2.11-SOLLVE/unroll.pdf}}%
+\subfloat[][Tiling on Intel i5-9400F CPU compared to chunking]{\includegraphics[width=0.5\textwidth]{projects/2.3.2-Tools/2.3.2.11-SOLLVE/tiling.pdf}}
+\caption{Performance-Impact of loop transformations on CPUs}
+\label{fig:unrolltile}
+\end{figure}
+
 The loop transformation constructs implemented in Clang include the \emph{unroll} and \emph{tile} directives.
-We demonstrate how these make speedup in the vicinity of 3x (tiling) and 20\% become
-low-hanging fruits by just adding a directive~\cite{kruse2021openmpbooth}.
+We demonstrate how these make speedup in the vicinity of 3x (tiling on GPU) and an additional 20\% become
+low-hanging fruits by just adding a directive~\cite{kruse2021openmpbooth} as illustrated in \autoref{fig:unrolltile}.
 There are actually two implementations, one AST-based and a second using the OpenMPIRBuilder that can also be used other compilers such as Flang~\cite{kruse2021clangast}.
 
 Testing of OpenMP offloading for NVIDIA and AMD GPUs has been added to LLVM's Continuous Integration infrastructure.
@@ -88,13 +95,23 @@ offload via our development branch of LLVM/Clang.
 
 \begin{figure}[hbt!]
 \centering
-\includegraphics[width=0.95\linewidth]{projects/2.3.2-Tools/2.3.2.11-SOLLVE/LLVM-Implementation-Figures/LLVM-opt-kernel-times.jpg}
+\includegraphics[width=0.95\linewidth]{projects/2.3.2-Tools/2.3.2.11-SOLLVE/LLVM-opt-kernel-times.jpg}
 \caption[]{Kernel times for different ECP proxy apps when compiled with OpenMP offloading and CUDA. For the former differently optimized versions are shown and the results of a close to LLVM upstream branch is marked explicitly. All times are normalized against LLVM 12 OpenMP offloading performance.}
 \label{fig:kernel_times}
 \end{figure}
 
-LLVM/Clang 13.0.0 has been officially released on October 4 which includes most of the aforementioned improvements.
+LLVM/Clang 13.0.0 has been officially released on October 4 2021 which includes most of the aforementioned improvements. The branch for LLVM/Clang 14.0.0 has been branched-off the development repository and is expected to be released March 15 2022.
 
+
+\paragraph{Case study: LLVM/OpenMP performance for OpenMC}
+
+We intensified our work with the OpenMC team on their portable OpenMP implementation of a Monte Carlo code.
+Most recent results obtained with LLVM/OpenMP show how our compile enhancements and application engagement improve performance manifold.
+Further, the early results on AMD GPUs are very promising and indicate that performance portability is achievable with LLVM/OpenMP.
+The performance evolution through our collaboration is summarized in \autoref{fig:openmc}. JLSE testbeds from Argonne National Lab have been used for these results.  
+A more detailed report was recently accepted to the PHYSOR conference.
+
+\include{projects/2.3.2-Tools/2.3.2.11-SOLLVE/LLVM-Implementation-Figures/openmc}
 
 \paragraph{Next Steps}
 We will keep working on supporting more new OpenMP 5.1 features in LLVM.
@@ -107,3 +124,22 @@ To avoid redundant development of two OpenMP implementations, we will mature the
 Improvements to the OpenMP offloading ecosystem are planned, e.g., to extend the remote offloading capabilities we introduced and to further improve development and debugging of OpenMP GPU applications.
 
 More OpenMP-aware optimizations are expected to materialize as we get the last OpenMP benchmarks on par with CUDA performance. We also plan to invest time in generic GPU optimizations soon.
+
+We will implement proof-of-concept implementations of loop transformations that are planned for OpenMP 6.0, such as loop interchange, reversal, fusion, fission and index set splitting.
+
+
+\paragraph{Experiences on Early Access Systems}
+
+%The SOLLVE team has implemented and optimized an OpenMP offload version of AutoDock-GPU based on a OpenMP CPU OpenMP tasking version, 
+
+AutoDock-GPU is an application code for molecular docking often used to solve problems in the domains of biology and AI/ML on supercomputers including DoE's supercomputers, and it has recently (in 2020 and 2021) been used as the driver for simulations run on supercomputers for developing COVID-19 therapeutics~\cite{legrand2020gpu}. AutoDock-GPU uses OpenMP offload features to run on a single GPU and has the ability for parallelize and schedule computation across multiple GPUs on a node through OpenMP. The OpenMP offload implementation of AutoDock-GPU was developed by members of the SOLLVE team. The application code has been experimented with using LLVM 12 OpenMP and LLVM 13 OpenMP on one node of the Spock Early Access System provided by ECP. Note that the LLVM 13 results were not in our SOLLVE FY21 Program Review slides and we only showed LLVM 12 then.
+
+Figure~\ref{fig:llvmadspck} shows the wall clock timings of AutoDock-GPU when using 3 different sizes of ligands on one GPU of Spock, under LLVM OpenMP 12 and LLVM OpenMP 13. The results show that LLVM 13 OpenMP (rocm4.5) improves performance over LLVM 12 OpenMP (rocm4.2) of the AutoDock-GPU for the largest problem size, i.e., the 3er5 ligand, by 16.56\%. The results show that the LLVM OpenMP implementation version generally has an impact to performance and suggests has a larger impact with larger problem size for this application. 
+
+\begin{figure}[h!]
+    \centering
+    \subfloat[One GPU. \label{fig:llvmadspck}] {\includegraphics[scale=0.5]{projects/2.3.2-Tools/2.3.2.11-SOLLVE/one_gpu_spock.png}}\subfloat[One node (four GPUs). \label{fig:mgpuSpock} ]{\includegraphics[scale=0.5]{projects/2.3.2-Tools/2.3.2.11-SOLLVE/multi_gpu_spock.png}}
+    \caption{Running AutoDock-GPU with LLVM's OpenMP on Spock.} 
+\end{figure}
+
+Figure~\ref{fig:mgpuSpock} shows results for strategies for an OpenMP parallelization of AutoDock-GPU (using an assortment of the three ligands in Figure~\ref{fig:llvmadspck}) across the 4 GPUs of Spock. The figure specifically shows the difference in performance between a static assignment of the application's computation to GPUs and a dynamic assignment - or scheduling - of the application's computation across multiple GPUs of the node, as discussed in~\cite{9669317}, and the impact of the LLVM OpenMP implementation version. The round-robin scheduler under LLVM 13 OpenMP (rocm4.5) improves performance over the round-robin scheduler in LLVM 12 OpenMP (rocm4.2) by 10.73\%. Under LLVM 13’s OpenMP (rocm4.5), using a dynamic assignment (labeled \textit{random} in Figure~\ref{fig:mgpuSpock} and where OpenMP chunks of a loop are assigned to randomly chosen GPU) as opposed to a static assignment (labeled \textit{round-robin} in Figure~\ref{fig:mgpuSpock} and where OpenMP chunks are assigned to a GPU based on chunk number) cuts the execution time by 45.63\%. By using the newer LLVM 13 over LLVM 12 and by using the \textit{random} multi-GPU scheduling strategy instead of the \textit{round-robin} scheduling strategy, AutoDock-GPU is sped up by approximately 2.05x. Using the dynamic multi-GPU scheduling strategy over the static one improves performance 4.5 times more than using the new LLVM OpenMP implementation version over the older one, but the newer LLVM OpenMP implementation version still helps improve performance substantially and by about 10\%. 

@@ -1,0 +1,35 @@
+\subsubsection{\stid{2.11} OpenMP Heterogeneous Loop Scheduling Runtime Library}
+
+\paragraph{Overview}
+
+
+Applications running on ECP Systems DoE's Exascale supercomputers suffer from load imbalance, either due to irregularities in applications or performance perturbances of the platform. To handle this load imbalance across the heterogeneous processors of a node, a reactive load balancing in the form of loop scheduling is needed. 
+  The SOLLVE's OpenMP loop scheduling runtime (\url{https://github.com/sollve/openmprts}) facilitates for scheduling of application's computation onto heterogeneous processing elements of a node. These processing elements can be cores of a multi-core processor, a GPU (accelerator) of multi-GPU (multi-accelerator), or a partition of a GPU (accelerator). Note that the xPU could also be partition of a GPU, i.e., a sub-device. 
+
+\paragraph{Key Challenges}
+
+Scheduling overheads due to queueing and data locality need to be handled when scheduling across accelerators of a node. Also, conventionally, MPI parallelizes applications across accelerators of a node. OpenMP can be used to parallelize the work across accelerator with a small non-negligible (~8\%) overhead for a stencil computation on Summit. Using OpenMP across the entire node is advantageous to reduce programming complexity and having to think about multiple programming models to program the node. Additionally, the cost of load balancing is lower when using OpenMP instead of MPI.
+
+\paragraph{Solution Strategy}
+
+We develop a prototype runtime library, to be part of the LLVM OpenMP runtime system, that provides several multi-xPU scheduling strategies. The core strategies that we expect to provide are a static, dynamic, and guided scheduling. We also allowed for user-defined scheduling strategies in our library. 
+
+\paragraph{Recent Progress} 
+
+We have experimented with our strategy in an OpenMP offload version of AutoDock-GPU, a molecular biology code which is being used for simulations for COVID-19 therapeutics and for other molecular biology and AI/ML applications, using LLVM 12 and LLVM 13 using one node of the Spock system. Results obtained on one GPU of a node of Spock (Figure~\ref{fig:llvmadspck}) show that LLVM 13’s(rocm4.5) OpenMP improves performance over LLVM 12 (rocm4.2) OpenMP of the AutoDock-GPU by 14.28\% for the largest problem size, the 3er5 ligand. LLVM OpenMP implementation has a significant impact on large problem size. Figure~\ref{fig:mgpuSpock} shows results for strategies for an OpenMP parallelization of AutoDock-GPU (using a collection containing the three ligands in Figure~\ref{fig:llvmspck}) across the 4 GPUs of Spock, specifically showing the impact of dynamic load balancing strategy across multiple GPUs of the node. The round-robin scheduler under LLVM13’s OpenMP (rocm4.5) improves performance over the round-robin scheduler in LLVM12’s OpenMP (rocm4.2) by 39\%. This is much more significant than the performance gain of 14.28\% seen in Figure~\ref{fig:llvmadspck}.  Under LLVM 13’s OpenMP (rocm4.5), using a random schedule (OpenMP chunks of a loop are assigned to randomly chosen GPU) as opposed to a round-robin scheduler (OpenMP chunks are assigned to a GPU based on chunk number) improves performance 30\%. Through using the newer LLVM 13 over LLVM 12 and using appropriate load balancing across GPUs, the performance for AutoDock-GPU code improves by a total of 57.24\%.  
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.2]{projects/2.3.2-Tools/2.3.2.11-SOLLVE/AutoDockGPU-problemszLLVMOMP.pdf}
+    \caption{Running AutoDock-GPU on Spock with LLVM's OpenMP.}
+    \label{fig:llvmadspck}
+\end{figure}\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.2]{projects/2.3.2-Tools/2.3.2.11-SOLLVE/Impact-lb-LLVMOpenMP-Spock.pdf}
+    \caption{Impact of OpenMP multi-xPU scheduling strategies on Spock with LLVM's OpenMP.}
+    \label{fig:mgpuSpock}
+\end{figure}
+
+\paragraph{Next Steps}
+
