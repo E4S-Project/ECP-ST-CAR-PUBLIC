@@ -122,6 +122,14 @@ The optimal viewpoint team also made significant strides, parallelizing the algo
 	\end{center}
 \end{figure*}
 
+%% Refresh 2022-02
+The ALPINE/ZFP team has been active in porting and testing its infrastructure, algorithms, and compression capabilities to Spock and Crusher.  ALPINE’s visualization applications, ParaView and VisIt, have been deployed on Spock CPUs using OSMesa for rendering.  Client/server and batch mode were successfully tested.  Additionally, ParaView has a preliminary build with VTK-m’s Kokkos/HIP backend running on the Spock GPU.  
+
+ALPINE’s algorithm teams have been testing stand-alone versions of the contour tree algorithm and the statistical feature detection algorithm.  On both Spock and Crusher, the contour tree algorithm team leveraged VTK-m’s Kokkos/HIP backend to build and run on the CPU for a single node, serial mode test.  
+
+On Spock CPUs, the statistical feature detection algorithm team successfully ran using VTK-m’s OpenMP backend.  We measured a 25X performance improvement from one to 64 threads using OpenMP acceleration.
+%% Refresh 2022-02
+
 \paragraph{Next Steps}
 
 Plans for FY22-23 will continue the focus on integration and delivery to ECP applications.  This will include deploying key infrastructure and integration pipelines on Frontier. The team will also continue outreach with ECP application codes to support ECP applications codes as they shift their focus from  KPP-1 or KPP-2 runs to science runs and visualization needs.  
