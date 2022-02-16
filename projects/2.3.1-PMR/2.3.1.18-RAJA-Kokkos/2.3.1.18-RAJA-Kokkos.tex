@@ -262,6 +262,13 @@ Implementations of those proposals are now available on GitHub.
 The new atomic operations implementation is hosted at \url{https://github.com/desul/desul} which serves as the common utility repository for both Kokkos and RAJA.
 RAJA integrated the Kokkos Tools callback interface, which allows it to leverage investment into tools made by the Kokkos effort.
 
+\paragraph{Preliminary Experiences on Early Access systems}
+Both Kokkos and RAJA have done extensive work on early access systems for Frontier, Aurora and El Capitan. On MI100s (e.g. Spock) both Kokkos and RAJA pass all their tests and numerous applications are fully functional. Testing on MI100 is now part of the regular CI. On MI250s (e.g. Crusher) Kokkos passes all its tests, with RAJA passing more than 99\%.
+
+Kokkos is also fully working on early access systems for Aurora, with Intel OneAPI DPC++/SYCL builds part of its regular CI process (Note that due to limited hardware availability these tests target NVIDIA GPUs, tests on Intel based systems are run ad-hoc). RAJA is in the process of making SYCL fully work as a backend, but there are a number of outstanding issues which the team is currently working on.
+
+ Performance evaluations are ongoing in collaboration with application teams and the vendors.  Numerous issues have already been identified and are actively worked on.  Some of these issues can be worked around inside the Kokkos and RAJA layers (e.g. work around non-optimal heuristics in the compiler), others will require compiler fixes.
+
 \paragraph{Next Steps}
 
 The highest priority for both RAJA and Kokkos is now the further maturing of the backends for Aurora and Frontier, as well as optimization work guided by application teams.
