@@ -112,54 +112,52 @@ Our next efforts are:
 \end{enumerate}
 
 
-% TODO
-\paragraph{Preliminary Experiences on Early Access systems}
+\paragraph{Preliminary Experiences on Early Access systems:}
 
-\subparagraph{LLVM}
+Across our tasks, we have some preliminary experiences on the ECP Early Access Systems (EAS) as detailed below.
 
-LLVM has been build and used successfully on Spock and Crusher.
-An automatic build of a recent LLVM version for Spock, e.g., weekly, is
-planned. We also intend to do that for Crusher. LLVM (including our 
-extensions) work as expected. Existing AMD GPU bugs, especially but not exclusively 
-when using OpenMP offload, prevented full applications from running.
-Proxy applications successfully compiled and run.
+\begin{enumerate}
+    
+    \item \textbf{LLVM}.
+    LLVM has been build and used successfully on Spock and Crusher.
+    An automatic build of a recent LLVM version for Spock, e.g., weekly, is
+    planned. We also intend to do that for Crusher. LLVM (including our 
+    extensions) work as expected. Existing AMD GPU bugs, especially but not exclusively 
+    when using OpenMP offload, prevented full applications from running.
+    Proxy applications successfully compiled and run.
+    
+    \item \textbf{Clacc}.
+    The Clacc project is not using the EASs. 
+    
+    \item \textbf{LLVM-DOE}.
+    The LLVM-DOE fork does not use the EASs for continuous integration testing or development.
+    
+    \item \textbf{Flacc}.
+    The Flacc project is not using the EASs. 
+    
+    \item \textbf{Autotuning}.
+    The ytopt autotuning framework has not yet been tested on the EAS Systems.
+    
+    \item \textbf{Bricks}.
+    The Brick Library has been used to generate performance data on spock, and has been tested on crusher.
+    
+    \item \textbf{TAU}.
+    TAU has been ported to the most recent EAS systems.  On the OLCF system Crusher,
+    TAU has been tested with the most recent software and firmware updates, up to
+    and including ROCm 4.5.2.  TAU is being used to help tune the XGC application
+    from the ECP WDMApp project on Crusher.  On the ALCF system Arcticus, TAU has 
+    been tested up to and including the most recent versions of OneAPI.  On the 
+    NERSC system Perlmutter, TAU has been ported and tested with the NVIDIA A100 
+    devices and most recent versions of CUDA.
+    
+    \item \textbf{Papyrus}.
+    The Papyrus project is not using the EASs. 
+    
+    \item \textbf{SYCL}.
+    The SYCL project is not using the EASs. 
+    
+\end{enumerate}
 
-\subparagraph{Clacc}
 
-The Clacc project is not using the EASs. 
-
-\subparagraph{LLVM-DOE}
-
-The LLVM-DOE fork does not use the EASs for continuous integration testing or development.
-
-\subparagraph{Flacc}
-
-The Flacc project is not using the EASs. 
-
-\subparagraph{Autotuning}
-
-The ytopt autotuning framework has not yet been tested on the EAS Systems.
-
-\subparagraph{Bricks}
-
-The Brick Library has been used to generate performance data on spock, and has been tested on crusher.
-
-\subparagraph{TAU}
-
-TAU has been ported to the most recent EAS systems.  On the OLCF system Crusher,
-TAU has been tested with the most recent software and firmware updates, up to
-and including ROCm 4.5.2.  TAU is being used to help tune the XGC application
-from the ECP WDMApp project on Crusher.  On the ALCF system Arcticus, TAU has 
-been tested up to and including the most recent versions of OneAPI.  On the 
-NERSC system Perlmutter, TAU has been ported and tested with the NVIDIA A100 
-devices and most recent versions of CUDA.
-
-\subparagraph{Papyrus}
-
-The Papyrus project is not using the EASs. 
-
-\subparagraph{SYCL}
-
-The SYCL project is not using the EASs. 
 
 %EOF
