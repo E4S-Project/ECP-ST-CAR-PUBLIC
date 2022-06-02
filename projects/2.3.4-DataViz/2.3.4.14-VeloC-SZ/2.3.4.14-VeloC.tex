@@ -103,7 +103,7 @@ automatically serialized into checkpoint files.
 \paragraph{\emph{Modular design:}} applications link with a client
 library that is responsible to manage local checkpoints, while a
 separate engine is responsible to employ the rest of the resilience
-strategies as plugable modules. This simplifies the implementation
+strategies as pluggable modules. This simplifies the implementation
 of the asynchronous mode, it enables users the flexibility to choose any
 combination of resilience strategies, as well as, to customize their
 checkpointing pipeline (e.g., add new post-processing operations such
@@ -151,7 +151,7 @@ the blocking phase and the asynchronous operations.
 
 Third, we continued working on the checkpoint aggregation, which allows
 N local files produced during the blocking phase of VELOC to be aggregated
-asynchornously into M files on the external storage. Since state of
+asynchronously into M files on the external storage. Since state of
 art aggregation approaches (e.g. MPI-IO) are designed for collective
 blocking I/O, we developed our own algorithms to enable asynchronous
 aggregation. In particular, we proposed a decoupled peer-to-peer

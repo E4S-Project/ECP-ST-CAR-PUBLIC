@@ -79,7 +79,7 @@ In addition to the PolyBench benchmark suite, we applied the search over a tree-
 Compiler directives such as pragmas can help programmers to separate an algorithm's semantics from its optimization. Pragma directives for code transformations are useful for assisting program optimization and are already widely used in OpenMP. A prototype of user-directed loop transformations using Clang and Polly was implemented for the ECP SOLLVE project.
 Polly is LLVM's polyhedral loop optimizer which makes it easy to apply specific transformations as directed by pragmas.
 While the SOLLVE team is working on integrating the changes into the official LLVM repository, only few of the changes have been upstreamed yet.
-The additional loop transformation directives supported are loop reversal (inverting the iteration order of a loop), loop interchange (permuating the order of nested loops), tiling, unroll(-and-jam), array packing (temporarily copying the data of a loop's working set into a new buffer) and thread parallelization. 
+The additional loop transformation directives supported are loop reversal (inverting the iteration order of a loop), loop interchange (permutating the order of nested loops), tiling, unroll(-and-jam), array packing (temporarily copying the data of a loop's working set into a new buffer) and thread parallelization. 
 More importantly, it supports composing multiple loop nest transformation in arbitrary order. Vectorization is also supported by LLVM's dedicated loop vectorizer.
 These pragmas are intended to make applying common loop optimization technique much easier and allow better separation of a code's semantics and its optimization.
 
