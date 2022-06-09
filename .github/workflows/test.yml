@@ -1,0 +1,13 @@
+# documentation: https://help.github.com/en/articles/workflow-syntax-for-github-actions
+name: build document
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: xu-cheng/texlive-action/full@v1
+        with:
+          run: |
+            apk add make
+            make
