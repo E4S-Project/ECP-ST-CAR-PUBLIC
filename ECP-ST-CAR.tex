@@ -6,7 +6,12 @@
 \usepackage{xcolor,colortbl}
 \usepackage{array}
 \usepackage{float} %added to wrangle tables and figures
-\usepackage[disable]{todonotes}%added todonotes for hardcopy notes and to span repos -STC
+\usepackage{todonotes}%added todonotes for hardcopy notes and to span repos -STC
+\usepackage{tabularx}
+\usepackage{titlesec}
+\titleformat*{\subparagraph}{\itshape}
+\titlespacing{\subparagraph}{0pt}{*2.0}{*2.0}
+
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \definecolor{Gray}{gray}{0.85}
 \definecolor{LightCyan}{rgb}{0.88,1,1}
@@ -29,8 +34,8 @@
 \newcommand{\dataviz}{Data \& Visualization}
 \newcommand{\ecosystem}{Software Ecosystem \& Delivery} %changed SW to ``software'' per Julia.
 \newcommand{\nnsa}{NNSA ST}
-\newcommand{\stid}[1]{{\texttt{WBS 2.3.{#1}}}}
-\newcommand{\zfp}{\textsc{zfp}}
+\newcommand{\stid}[1]{{WBS 2.3.{#1}}}
+\newcommand{\zfp}{ZFP}
 \usepackage[framemethod=TikZ,backgroundcolor=gray!40,shadow=true,roundcorner=8pt]{mdframed}
 \usetikzlibrary{shadows}
 \usetikzlibrary{calc}
@@ -150,6 +155,7 @@
 %\input{projects/2.3.5-Ecosystem/2.3.5-Ecosystem}
 %\input{projects/2.3.6-NNSA/2.3.6-NNSA}
 
+\clearpage
 \newpage
 \section{ECP ST Deliverables}\label{sect:deliverables}
 \input{Deliverables-Overview}
@@ -162,7 +168,7 @@
 %%---------------------------------------------------------------------------%%
 %\vspace{3in}
 \clearpage
-%\newpage
+\newpage
 \section{ECP ST Technical Areas}\label{sect:project-summaries}
 %\section{ECP ST Project Summaries}\label{sect:project-summaries}
 
@@ -170,47 +176,46 @@ ECP ST is composed of six L3 technical areas (Figure~\ref{fig:l3-overview}).  Th
 \
 \begin{figure}[H]
 	\centering
-	\fbox{\includegraphics[width=0.9\linewidth]{L3-Overview}}
-	\caption{ECP ST is composed of six L3 technical areas.  The first four areas are organized around functionality development themes.  The fifth is focused on technology for packaging and delivering capabilities.  The sixth is organized around per-lab open-source development at the three DOE NNSA laboratories: LANL, LLNL, and SNL.  }
+	\includegraphics[width=1.0\linewidth]{L3-Overview}
+	\caption{ECP ST is composed of six L3 technical areas.  The first four areas are organized around functionality development themes.  The fifth is focused on technology for packaging and delivering capabilities.  The sixth is organized around per-lab open-source development at the three DOE NNSA laboratories: LANL, LLNL, and Sandia.  }
 	\label{fig:l3-overview}
-	\todo[inline]{Please add a higher resolution version of this figure without the spell check underlines.}
 \end{figure}
 
-\newpage
+%\newpage
 %\subsection{\pmr}
 %This section presents projects in \pmr.
 \input{projects/2.3.1-PMR/2.3.1-PMR}
-\newpage
+%\newpage
 \input{projects/2.3.1-PMR/2.3.1.01-PMR-SDKs/2.3.1.01-PMR-SDKs}
-\newpage
+%\newpage
 \input{projects/2.3.1-PMR/2.3.1.07-Exascale-MPI/2.3.1.07-Exascale-MPI}
-\newpage
+%\newpage
 \input{projects/2.3.1-PMR/2.3.1.08-Legion/2.3.1.08-Legion}
-\newpage
+%\newpage
 \input{projects/2.3.1-PMR/2.3.1.09-ParSEC/2.3.1.09-ParSEC}
-\newpage
+%\newpage
 \input{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/2.3.1.14-GASNet-EX}
 \input{projects/2.3.1-PMR/2.3.1.14-UPCxx-GASNet/2.3.1.14-UPCxx}
-\newpage
+%\newpage
 \input{projects/2.3.1-PMR/2.3.1.16-SICM/2.3.1.16-SICM}
-\newpage
+%\newpage
 \input{projects/2.3.1-PMR/2.3.1.17-OMPI-X/2.3.1.17-OMPI-X}
-\newpage
+%\newpage
 \input{projects/2.3.1-PMR/2.3.1.18-RAJA-Kokkos/2.3.1.18-RAJA-Kokkos}
-\newpage
+%\newpage
 \input{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/2.3.1.19-Argo-PowerSteering}
-\newpage
+%\newpage
 
 %\subsection{\tools}
 %This section presents projects in \tools.
 \input{projects/2.3.2-Tools/2.3.2-Tools}
-\newpage
+%\newpage
 \input{projects/2.3.2-Tools/2.3.2.01-Tools-SDKs/2.3.2.01-Tools-SDKs}
-\newpage
+%\newpage
 \input{projects/2.3.2-Tools/2.3.2.06-EXA-PAPI/2.3.2.06-EXA-PAPI}
-\newpage
+%\newpage
 \input{projects/2.3.2-Tools/2.3.2.08-HPCToolkit/2.3.2.08-HPCToolkit}
-\newpage
+%\newpage
 \input{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-PROTEAS}
 \input{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-LLVM}
 \input{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-CLACC}
@@ -221,7 +226,7 @@ ECP ST is composed of six L3 technical areas (Figure~\ref{fig:l3-overview}).  Th
 \input{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-TAU}
 \input{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-PAPYRUS}
 \input{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/2.3.2.10-SYCL}
-\newpage
+%\newpage
 \input{projects/2.3.2-Tools/2.3.2.11-SOLLVE/2.3.2.11-SOLLVE}
 \input{projects/2.3.2-Tools/2.3.2.11-SOLLVE/2.3.2.11-SOLLVE-ARGOBOTS}
 \input{projects/2.3.2-Tools/2.3.2.11-SOLLVE/2.3.2.11-SOLLVE-BOLT}
@@ -229,84 +234,85 @@ ECP ST is composed of six L3 technical areas (Figure~\ref{fig:l3-overview}).  Th
 \input{projects/2.3.2-Tools/2.3.2.11-SOLLVE/2.3.2.11-SOLLVE-LLVM_enhancement}
 \input{projects/2.3.2-Tools/2.3.2.11-SOLLVE/2.3.2.11-SOLLVE-VV}
 \input{projects/2.3.2-Tools/2.3.2.11-SOLLVE/2.3.2.11-SOLLVE-training}
-\newpage
+%\newpage
 \input{projects/2.3.2-Tools/2.3.2.12-Flang/2.3.2.12-Flang}
-\newpage
+%\newpage
 
 
 %\subsection{\mathlibs}
 %This section presents projects in \mathlibs.
 \input{projects/2.3.3-MathLibs/2.3.3-MathLibs}
-\newpage
+%\newpage
 \input{projects/2.3.3-MathLibs/2.3.3.01-xSDK/2.3.3.01-xSDK}
 \input{projects/2.3.3-MathLibs/2.3.3.01-xSDK/2.3.3.01-xsdk-multiprecision}
 \input{projects/2.3.3-MathLibs/2.3.3.01-xSDK/2.3.3.01-xsdk-batchsprsla}
-\newpage
+%\newpage
 \input{projects/2.3.3-MathLibs/2.3.3.06-PETSc-TAO/2.3.3.06-PETSc-TAO}
-\newpage
+%\newpage
 \input{projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/2.3.3.07-STRUMPACK-SuperLU}
-\newpage
+%\newpage
 \input{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/2.3.3.12-SUNDIALS}
 \input{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/2.3.3.12-hypre}
-\newpage
+%\newpage
 \input{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/2.3.3.13-CLOVER}
 \input{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/2.3.3.13-FFT-ECP}
 \input{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/2.3.3.13-SLATE}
 \input{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/2.3.3.13-GINKGO}
-\newpage
+%\newpage
 \input{projects/2.3.3-MathLibs/2.3.3.14-ALExa-ForTrilinos/2.3.3.14-ALExa}
-\newpage
+%\newpage
 \input{projects/2.3.3-MathLibs/2.3.3.15-Sake/2.3.3.15-Sake}
 \input{projects/2.3.3-MathLibs/2.3.3.15-Sake/2.3.3.15-KokkosKernels}
 \input{projects/2.3.3-MathLibs/2.3.3.15-Sake/2.3.3.15-Trilinos}
-\newpage
+%\newpage
 
 
 
 %\subsection{\dataviz}
 %This section presents projects in \dataviz.
 \input{projects/2.3.4-DataViz/2.3.4-DataViz}
-\newpage
+%\newpage
 \input{projects/2.3.4-DataViz/2.3.4.01-DataViz-SDK/2.3.4.01-DataViz-SDK}
-\newpage
+%\newpage
 \input{projects/2.3.4-DataViz/2.3.4.09-ADIOS/2.3.4.09-ADIOS}
-\newpage
+%\newpage
 \input{projects/2.3.4-DataViz/2.3.4.10-DataLib/2.3.4.10-DataLib}
-\newpage
+%\newpage
 \input{projects/2.3.4-DataViz/2.3.4.13-ECP-VTK-m/2.3.4.13-ECP-VTK-m}
-\newpage
+%\newpage
 \input{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/2.3.4.14-VeloC}
 \input{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/2.3.4.14-EZ}
-\newpage
+%\newpage
 \input{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyCR/2.3.4.15-ExaHDF5}
 \input{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyCR/2.3.4.15-UNIFYCR}
-\newpage
+%\newpage
 \input{projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/2.3.4.16-ALPINE}
 \input{projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/2.3.4.16-ZFP}
-\newpage
+%\newpage
 
 
 %\subsection{\ecosystem}
 %This section presents projects in \ecosystem.
 \input{projects/2.3.5-Ecosystem/2.3.5-Ecosystem}
-\newpage
+%\newpage
 \input{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/2.3.5.01-Ecosystem-SDK}
-\newpage
+%\newpage
 \input{projects/2.3.5-Ecosystem/2.3.5.09-SW-Packaging/2.3.5.09-SW-Packaging}
-\newpage
+%\newpage
 \input{projects/2.3.5-Ecosystem/2.3.5.10-ExaWorks/2.3.5.10-ExaWorks}
-\newpage
+%\newpage
 
 
 %\subsection{\nnsa}
 %This section presents projects in \nnsa.
 \input{projects/2.3.6-NNSA/2.3.6-NNSA}
-\newpage
+%\newpage
 \input{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/2.3.6.01-LANL-ATDM-ST}
-\newpage
+%\newpage
 \input{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/2.3.6.02-LLNL-ATDM-ST}
-\newpage
+%\newpage
 \input{projects/2.3.6-NNSA/2.3.6.03-SNL-ATDM/2.3.6.03-SNL-ATDM-ST}
+
 \newpage
 
 \section{Conclusion}
@@ -316,13 +322,7 @@ ECP ST is providing a collection of essential software capabilities necessary fo
 \newpage
 \section*{Acknowledgments}
 
-This research was supported by the Exascale Computing Project (ECP), Project
-Number: 17-SC-20-SC, a collaborative effort of two DOE organizations---the
-Office of Science and the National Nuclear Security
-Administration---responsible for the planning and preparation of a capable
-Exascale ecosystem---including software, applications, hardware, advanced
-system engineering, and early testbed platforms---to support the nation's
-Exascale computing imperative.
+This research was supported by the Exascale Computing Project (17-SC-20-SC), a joint project of the U.S. Department of Energy’s Office of Science and National Nuclear Security Administration, responsible for delivering a capable exascale ecosystem, including software, applications, and hardware technology, to support the nation’s exascale computing imperative.
 
 %%---------------------------------------------------------------------------%%
 %% References

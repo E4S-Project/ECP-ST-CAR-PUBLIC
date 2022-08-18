@@ -4,7 +4,7 @@
 OpenCL is an open standard maintained by the Khronos group. It offers programming portability across a wide range of software and hardware for graphics processing units (GPUs), multi-core processors (CPUs), and other accelerators. As opposed to the OpenCL programming model in which host and device codes are written in two languages, the SYCL standard specifies a cross-platform abstraction layer that enables programming of heterogeneous computing system using standard C++. It can combine host and device codes for an application in a type-safe way to improve development productivity. SYCL is a promising programming model for exascale computing. The relevant topics are migration from CUDA only to SYCL, performance and expressiveness of SYCL programs, maturity of SYCL compilers, and accesses to SYCL programs.
 
 
-The PROTEAS-TUNE objectives for SYCL are:
+The PROTEAS-TUNE objectives for SYCL are as follows:
 \begin{enumerate}
 \item Develop a SYCL suite comprised of kernels from open-source benchmarks, scientific, and machine learning applications
 \item Evaluate the performance of these kernels with contemporary SYCL implementations on heterogeneous computing platforms
@@ -20,7 +20,8 @@ Acknowledging CUDA's established presence in high-performance computing, SYCL ha
 
 
 \paragraph{Solution Strategy}
-\begin{enumerate}
+To mitigate these challenges, the team proposes the following actions for each effort.
+\begin{itemize}
 \item Develop a diverse set of SYCL programs with compute- and memory-bound kernels for performance analysis  
 \item Have a good understanding of the characteristics of these programs 
 \item Evaluate the performance of SYCL programs with the latest SYCL compilers on computing platforms
@@ -28,26 +29,27 @@ Acknowledging CUDA's established presence in high-performance computing, SYCL ha
 \item Identify and summarize these performance differences
 \item Engage with SYCL compiler developers to fix bugs and improve kernel performance
 \item Collaborate with PROTEAS teams and SYCL developers on performance optimization and tuning
-\end{enumerate}
+\end{itemize}
 
 
 \paragraph{Recent Progress}
-\begin{enumerate}
-\item Investigated the use of vendor and academic conversion tools by evaluating CUDA portability with HIPCL and DPCT \cite{dpct}.
-\item Investigated the performance of integer sum reduction in SYCL and CUDA on GPUs \cite{reduction}.
-\item Developing 200+ SYCL programs in the open-source GitHub repository (\url{https://github.com/zjin-lcf/HeCBench.git}).
-\end{enumerate}
+Recent progress in this area includes several key developments listed below.
+\begin{itemize}
+\item Investigated the use of vendor and academic conversion tools by evaluating CUDA portability with HIPCL and DPCT \cite{dpct}
+\item Investigated the performance of integer sum reduction in SYCL and CUDA on GPUs \cite{reduction}
+\item Developing 200+ SYCL programs in the open-source GitHub repository (\url{https://github.com/zjin-lcf/HeCBench.git})
+\end{itemize}
 
 
 \paragraph{Next Steps}
-
-\begin{enumerate}
-\item Continue developing SYCL programs with codes of interest to ECP.
-\item Evaluate kernel performance with SYCL compilers on target platforms.
-\item Analyze the performance of SYCL kernels through performance profilers.
-\item Sum up the optimization techniques for SYCL kernels on target platforms.
-\item Engage with SYCL developers to fix bugs and improve performance and portability. 
-\item Support compiler installation, feature requests, and bug reporting for ECP users.
-\end{enumerate}
+The following efforts have been identified for the next phase of the project.
+\begin{itemize}
+\item Continue developing SYCL programs with codes of interest to ECP
+\item Evaluate kernel performance with SYCL compilers on target platforms
+\item Analyze the performance of SYCL kernels through performance profilers
+\item Sum up the optimization techniques for SYCL kernels on target platforms
+\item Engage with SYCL developers to fix bugs and improve performance and portability
+\item Support compiler installation, feature requests, and bug reporting for ECP users
+\end{itemize}
 
 %eof

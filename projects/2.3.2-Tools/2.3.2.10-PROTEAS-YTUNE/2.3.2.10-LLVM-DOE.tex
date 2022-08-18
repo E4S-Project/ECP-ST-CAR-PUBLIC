@@ -21,7 +21,7 @@ a risk of not being used if developers cannot easily access their contributions.
 This fork of LLVM will provide an opportunity for these projects to work
 collectively on establishing synergies, interoperability, address the unique
 needs of ECP, and mechanisms for making contributions back into the mainstream
-LLVM code base. The tasks to setup the DOE Fork of LLVM are:
+LLVM code base. The tasks to setup the DOE Fork of LLVM are as follows:
 
 \begin{enumerate}
 
@@ -38,36 +38,34 @@ LLVM code base. The tasks to setup the DOE Fork of LLVM are:
 
 \paragraph{Solution Strategy}
 
-\begin{enumerate}
+%\begin{enumerate}
 
-\item The DOE LLVM repository is setup on GitHub as a fork of the llvm-project
+The DOE LLVM repository is set up on GitHub as a fork of the llvm-project
       main repository also hosted on GitHub. This makes it easier to have a
       seamless synchronization with the main repository and keep all the
       GitHub main-fork integrated features.
-
-\item The GitHub repository is automatically mirrored in the GitLab premium
+%
+The GitHub repository is automatically mirrored in the GitLab premium
       instance hosted at ORNL.
-
-\item The continuous integration takes advantage of the GitLab CI infrastructure.
-      This infrastructure is available on several machines form the ExCL lab as
+%
+Furthermore, the continuous integration takes advantage of the GitLab CI infrastructure.
+      This infrastructure is available on several machines from the ExCL lab as
       well as on Summit and Theta.
 
-\end{enumerate}
+%\end{enumerate}
 
 
 \paragraph{Recent Progress}
 
-\begin{enumerate}
-\item Fork is setup with an automatic mirroring with the upstream repository.
-      The mirroring is using GitHub Actions.
-
-\item Fork is integrated with E4S releases.
-\end{enumerate}
+%\begin{enumerate}
+The fork has been set up with an automatic mirroring with the upstream repository.
+The mirroring is using GitHub Actions, and the fork is integrated with E4S releases.
+%\end{enumerate}
 
 
 \paragraph{Next Steps}
 
-\begin{enumerate}
-\item Add continuous integration on more hardware (Most recent versions of Frontier and Aurora test nodes)
-\item Improve test-suite to the CI (e.g. OpenACC tests).
-\end{enumerate}
+%\begin{enumerate}
+The team will add continuous integration on more hardware (i.e., most recent versions of Frontier and Aurora test nodes) and
+improve the test suite for the CI (e.g., OpenACC tests).
+%\end{enumerate}

@@ -1,9 +1,9 @@
 \subsection{\stid{5} \ecosystem}\label{subsect:ecosystem}
 
-\textbf{End State:} A production-ready software stack delivered to our facilities, vendor partners, and the open source HPC community.
+\textbf{End State:} A production-ready software stack delivered to our facilities, vendor partners, and the open-source HPC community.
 
 \subsubsection{Scope and Requirements}
-The focus of this effort is on the ``last mile'' delivery of software that is intended to be supported by DOE Facilities and/or vendor offerings. The scope of this effort breaks down into the following key areas:
+The focus of this effort is on the last mile delivery of software that is intended to be supported by DOE Facilities and/or vendor offerings. The scope of this effort breaks down into the following key areas:
 \begin{itemize}
 	\item Hardening and broad ST and facility adoption of Spack for easy build of software on all target platforms.
         \item Delivery of formal software releases (E4S) in multiple packaging formats technologies -- from-source builds, modules, and containers.
@@ -14,7 +14,7 @@ The focus of this effort is on the ``last mile'' delivery of software that is in
 	\item Informal partnerships with the Linux Foundation's OpenHPC project for potential broader deployment of ST technologies in the OpenHPC ecosystem.
 \end{itemize}
 
-A major goal of ST is to ensure that applications can trust that ST products will be available on DOE Exascale systems in a production-quality state, which implies robust testing, documentation, and a clear line of support for each product. This will largely be an integration effort building on both the SDKs project elements defined in each ST L3 area, and tight collaboration and coordination with the HI L3 area for Deployment of Software at Facilities (WBS 2.4.4). We will work to develop, prototype, and deliver foundational infrastructure for technologies such as continuous integration and containers in tight collaboration with our DOE facility partners. The ultimate goal is ensuring that the ECP software stack is robustly supported, as well as finding a reach into the broader HPC open-source community -- both of which provide the basis for long-term sustainability required by applications, software, Facilities, and vendors who rely upon these products.
+A major goal of ST is to ensure that applications can trust that ST products will be available on DOE Exascale systems in a production-quality state, which implies robust testing, documentation, and a clear line of support for each product. This will largely be an integration effort building on both the SDKs project elements defined in each ST L3 area, and tight collaboration and coordination with the HI L3 area for Deployment of Software at Facilities (WBS 2.4.4). We will work to develop, prototype, and deliver foundational infrastructure for technologies such as continuous integration and containers in tight collaboration with our DOE facility partners. The ultimate goal is ensuring that the ECP software stack is robustly supported, as well as finding a reach into the broader HPC open-source community---both of which provide the basis for long-term sustainability required by applications, software, Facilities, and vendors who rely upon these products.
 
 Spack has broad adoption in the open-source community as an elegant solution toward solving many of the challenges presented by building software with many dependencies. Spack is one of the most visible outward-facing products in this L3 area, and is the basis for the SDK and E4S efforts.
 
@@ -36,14 +36,15 @@ Spack continues to gain penetration across the ECP, and will be the de facto del
 As scientific workflows continue to become more complex, the ExaWorks project is addressing this complexity by co-designing an open Software Development Kit consisting of workflow management systems (WMSs) that can be composed and interoperate through common interfaces.  The project is working to bootstrap the SDK with an initial set of tools, design common interfaces, make tools easier to apply to complex science challenges, and apply the SDK to ECP applications.  Importantly, the project will not create a new workflow system nor does it aim not to replace the many workflow solutions already deployed and used by scientists, but rather it will provide a well-engineered and scalable SDK which can be leveraged by new and existing workflows.  The SDK will be available via E4S and applied to ECP application to address broad workflow needs.
 
 \subsubsection{Risks and Mitigation Strategies}
+Risks are as follows:
 \begin{itemize}
-	\item Deploying E4S on unknown architectures -- use Spack for deployment to decrease installation complexity.
-        \item Keeping updated versions of ST and dependent software in sync after initially achieving SDK interoperability.
-	\item Delays in deploying a common CI infrastructure lead to subsequent delays in an integrated software release.
-	\item Multiple container technologies in flight will make it hard to come to agreement on a ``common'' looking solution; may not be possible to generate containers that are both portable and performant.
-	\item ECP Application Reliance on workflow management systems that may not be scalable and performant at exascale -- mitigate by adopting robust, well-tested, and scalable components.
-	\item OpenHPC partnership is ill-defined, and unfunded.
-	\item Sustainability of ECP ST capabilities after ECP has ended.
+	\item Deploying E4S on unknown architectures; use Spack for deployment to decrease installation complexity
+    \item Keep updated versions of ST and dependent software in sync after initially achieving SDK interoperability
+	\item Delays in deploying a common CI infrastructure lead to subsequent delays in an integrated software release
+	\item Multiple container technologies in flight will make it difficult to reach consensus on a common solution; may not be possible to generate containers that are both portable and perform well
+	\item ECP Application Reliance on workflow management systems that may not be scalable or perform well at exascale; mitigate by adopting robust, well-tested, and scalable components
+	\item OpenHPC partnership is ill-defined and unfunded
+	\item Sustainability of ECP ST capabilities after ECP has ended
 \end{itemize}
 
 \subsubsection{Future Trends}

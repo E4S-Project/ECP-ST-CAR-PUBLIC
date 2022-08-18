@@ -30,19 +30,19 @@ This fills the critical feature gap of performing efficient visualization and an
 The ECP/VTK-m project leverages VTK-m \cite{Moreland2016:VTKm} to overcome these key challenges.
 VTK-m has a software framework that provides the following critical features.
 
-\begin{enumerate}
-\item \textbf{Visualization building blocks:}
+
+\subparagraph{Visualization Building Blocks}
   VTK-m contains the common data structures and operations required for scientific visualization.
   This base framework simplifies the development of visualization algorithms \cite{VTKmUsersGuide}.
-\item \textbf{Device portability:}
+\subparagraph{Device Portability}
   VTK-m uses the notion of an abstract device adapter, which allows algorithms written once in VTK-m to run well on many computing architectures.
   The device adapter is constructed from a small but versatile set of data parallel primitives, which can be optimized for each platform \cite{Blelloch1990}.
   It has been shown that this approach not only simplifies parallel implementations, but also allows them to work well across many platforms \cite{Lo2012,Larsen2015,Moreland2015} and while still providing performance comparable to less portable solutions \cite{Moreland2021}.
   Within the device adapter we are leveraging Kokkos \cite{Edwards2011} to rapidly port to ECP hardware.
-\item \textbf{Flexible integration:}
+\subparagraph{Flexible Integration}
   VTK-m is designed to integrate well with other software.
   This is achieved with flexible data models to capture the structure of applications' data \cite{Meredith2012} and array wrappers that can adapt to target memory layouts \cite{Moreland2012:PDAC}.
-\end{enumerate}
+
 
 
 \begin{figure}[t]
@@ -61,29 +61,28 @@ VTK-m has a software framework that provides the following critical features.
 
 \paragraph{Recent Progress}
 The VTK-m project is organized into many implementation activities.
-The following features have been completed in the FY20 fiscal year.
+The following features have been completed in the FY21 fiscal year.
 
-\begin{itemize}
-\item \textbf{VTK-m Releases:}
+\subparagraph{VTK-m Releases}
   VTK-m 1.6 was released in May 2021.
-\item \textbf{Kokkos:}
+\subparagraph{Kokkos}
   Device adapters in VTK-m can now leverage the Kokkos programming model to more rapidly port to ECP hardware.
-\item \textbf{WDMApp:}
+\subparagraph{WDMApp}
   Using specialized data adapters, VTK-m is able to link into the code coupling framework used by WDMApp to provide real-time in situ visualization as demonstrated in Figure \ref{fig:VTKmRecent}.
-\item \textbf{Lagrangian Basis Flows:}
+\subparagraph{Lagrangian Basis Flows}
   By integrating VTK-m's particle advection code, the VTK-m and ALPINE teams demonstrated high performance with significant data reduction by computing lagrangian basis flows for subsequent flow visualization \cite{Sane2021:EGPGV,Sane2021:ICCS}.
-\item \textbf{Particle Density Estimation:}
+\subparagraph{Particle Density Estimation}
   Finding structures like bubbles in mesh-free data requires estimating the density of free-floating particles. VTK-m can now quickly estimate the density distribution of particles over a volume as demonstrated in Figure \ref{fig:VTKmRecent}.
-\item \textbf{Laser Wakefield Flow:}
+\subparagraph{Laser Wakefield Flow}
   Particles in a laser wakefield move with physics particular to the electromagnetic fields. VTK-m's flow visualization is customized to properly compute particle paths in laser wakefield simulations from WarpX as shown in Figure \ref{fig:VTKmRecent}.
-\item \textbf{WarpX:}
+\subparagraph{WarpX}
   As the underlying implementation of geometry processing and rendering in Ascent, VTK-m provides in situ visualization to WarpX simulations as shown in Figure \ref{fig:VTKmRecent}.
-\end{itemize}
+
 
 \paragraph{Preliminary Experiences on Early Access systems}
 The ECP/VTK-m team has made significant progress toward supporting visualization on the Spock early access system for Frontier during FY21.
 At the beginning of FY21, the team could compile a VTK-m smoke test with HIP and run it on an AMD GPU.
-This demonstrated running a VTK-m ``worklet'' (the encapsulation of a GPU kernel) on the GPU.
+This demonstrated running a VTK-m worklet (the encapsulation of a GPU kernel) on the GPU.
 This required resolving lots of special templating within the VTK-m software and was an achievement in its own right.
 
 However, at the beginning of FY21, most of the features of VTK-m had to be disabled.
@@ -100,7 +99,7 @@ It also provided some more efficient ways to manage the allocation and transfer 
 
 In addition to these internal changes, the VTK-m team worked closely with the Kokkos team and had regular meetings with AMD engineers.
 Progress required changes to VTK-m, Kokkos, HIP, and compilers.
-Here is a selection of links to software updates that were required.
+Below is a selection of links to software updates that were required.
 
 \begin{itemize}
   \setlength{\itemsep}{0pt}
@@ -135,18 +134,17 @@ The VTK-m and Kokkos teams worked together to identify a register spilling probl
 The kernel launch parameters for this case, and a 12-fold improvement for this algorithm was observed on Spock.
 
 \paragraph{Next Steps}
-The VTK-m team is focused on ensuring success with our KPP-3 metric.
-To ensure this, our next efforts include:
+The VTK-m team is focused on ensuring the success of our KPP-3 metric and will take the following next steps.
 
-\begin{itemize}
-\item \textbf{Satisfy Needs of ECP Applications:}
+
+\subparagraph{Satisfy Needs of ECP Applications}
   The VTK-m team's KPP-3 milestones hinge on applications using VTK-m code in a useful way.
   To ensure that VTK-m is satisfying the needs of ECP applications, the team will making modifications as needed.
   The initial focus will be with the WarpX, WDMApp, MFiX-Exa, and Nyx applications.
-\item \textbf{Porting to Exascale Architecture:}
+\subparagraph{Porting to Exascale Architecture}
   As Frontier becomes available, the VTK-m team will ensure that the software compiles, runs, and performs well on the platform.
-\item \textbf{Ease of Adoption:}
+\subparagraph{Ease of Adoption}
   The VTK-m team will address complications with integrating the VTK-m software with other software projects.
   Part of this work includes isolating external code from device code.
   Another part includes improving compile times.
-\end{itemize}
+

@@ -105,7 +105,7 @@ suite on EAS systems as a way of regularly updating build and install options
 and improving library performance.
 
 In fall of 2020, the SUNDIALS team completed initial assessments of performance
-on AMD GPU systems \cite{balosEnablingGPUAccelerated2021} showing 5x speedups
+on AMD GPU systems \cite{balosEnablingGPUAccelerated2021} showing 5$\times$ speedups
 using MPI+HIP over MPI+serial on advection-reaction problems using some of the
 SUNDIALS advanced integrators.  In spring of 2021, the SUNDIALS team completed a
 comprehensive study of the relative performance of several time integrators
@@ -123,7 +123,7 @@ parameter settings that led to a 44\% reduction in runtime.
 \end{figure}
 
 \paragraph{Early Access System Experiences}
-The SUNDIALS team has been testing performance on both the Spock Early Access System and on the new Crusher system.  Figure \ref{fig:sun-spock-12-21} shows execution times for a 2D diffusion benchmark problem using the SUNDIALS CVODE integrator with a preconditioned conjugate gradient linear solver and run on one node of Spock using the new SUNDIALS profiling capabilities.  The maximum speedups (cpu time / gpu time) achieved are 3.8x, 3.9x, 2.1x, and 7.8x for the overall, linear solve, dot product, and right-hand-side times, respectively.  Furthermore, application partners with the PeleC, PeleLMeX, PelePhysics, Nyx, and MEUMAPPS-SS codes have all been able to run SUNDIALS within their codes on Spock. 
+The SUNDIALS team has been testing performance on both the Spock Early Access System and on the new Crusher system.  Figure \ref{fig:sun-spock-12-21} shows execution times for a 2D diffusion benchmark problem using the SUNDIALS CVODE integrator with a preconditioned conjugate gradient linear solver and run on one node of Spock using the new SUNDIALS profiling capabilities.  The maximum speedups (cpu time / gpu time) achieved are 3.8$\times$, 3.9$\times$, 2.1$\times$, and 7.8$\times$ for the overall, linear solve, dot product, and right-hand-side times, respectively.  Furthermore, application partners with the PeleC, PeleLMeX, PelePhysics, Nyx, and MEUMAPPS-SS codes have all been able to run SUNDIALS within their codes on Spock. 
 
 \begin{figure}[htb]
 	\centering
@@ -134,23 +134,19 @@ The SUNDIALS team has been testing performance on both the Spock Early Access Sy
 
 In addition, the SUNDIALS team recently ported to Crusher and executed the same 2D diffusion benchmark problem there using both the CVODE and ARKODE integrator packages.  
 These results are in Figure \ref{fig:sun-crusher-spock-2-22}.
-Running with problem sizes of $10^6$ and $10^7$, speedups of $\approx 1.53x$ for ARKODE and of $\approx 1.45x$ for CVODE were observed with Crusher over Spock ($T_{Spock} / T_{Crusher}).$  In addition, a speedup of $\approx 1.55x$ was observed for just the dot product operation.  These experiments used 1 MPI task with 1 MI100 GPU on Spock and 1 GCD of a MI250x GPU on Crusher.  Lastly, we note that the MEUMAPPS-SS (ExaAM project), PeleLMeX, and Nyx codes have successfully run using SUNDIALS on Crusher.
+Running with problem sizes of $10^6$ and $10^7$, speedups of $\approx$1.53$\times$ for ARKODE and of $\approx$1.45$\times$ for CVODE were observed with Crusher over Spock ($T_{Spock} / T_{Crusher}).$  In addition, a speedup of $\approx$1.55$\times$ was observed for just the dot product operation.  These experiments used 1 MPI task with 1 MI100 GPU on Spock and 1 GCD of a MI250X GPU on Crusher.  Lastly, we note that the MEUMAPPS-SS (ExaAM project), PeleLMeX, and Nyx codes have successfully run using SUNDIALS on Crusher.
 
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.6\linewidth]{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/crusher-spock-1e7-Feb2022.png}
 %	\includegraphics[width=0.6\linewidth]{projects/2.3.3-MathLibs/2.3.3.12-SUNDIALS-hypre/crusher-spock-1e7-Feb2022.png}
-	\caption{\label{fig:sun-crusher-spock-2-22} Speedup of 2D diffusion with $10^7$ unknowns on 1 MPI task with 1 MI100 GPU on Spock and 1 GCD of a MI250x GPU on Crusher.}
+	\caption{\label{fig:sun-crusher-spock-2-22} Speedup of 2D diffusion with $10^7$ unknowns on 1 MPI task with 1 MI100 GPU on Spock and 1 GCD of a MI250X GPU on Crusher.}
 \end{figure}
 
 \paragraph{Next Steps}
 
-During the remainder of FY22, this project team will:
-\begin{enumerate}
-  \item Perform regular assessments of SUNDIALS performance both with the new
-        high performance test suite and within key applications on Early Access
-        Systems.
-  \item Implement new features in support of more efficient linear solves.
-  \item Expand SUNDIALS support for Intel GPUs.
-  \item Continue to support ECP applications in their use of SUNDIALS.
-\end{enumerate}
+During the remainder of FY22, this project team will perform regular assessments of SUNDIALS performance 
+with the new high-performance test suite and within key applications on Early Access Systems, implement 
+new features to support more efficient linear solves, expand SUNDIALS support for Intel GPUs, and continue 
+to support ECP applications in their use of SUNDIALS.
+

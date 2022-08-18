@@ -1,4 +1,4 @@
-\subsubsection{\stid{4.15} UnifyFS -- A file system for burst buffers}
+\subsubsection{\stid{4.15} UnifyFS -- A File System for Burst Buffers}
 
 \paragraph{Overview}
 
@@ -21,7 +21,7 @@ applications to gain the performance advantages from distributed burst buffers
 while providing ease of use similar to that of a parallel file system.
 To use UnifyFS from within an MPI application, one only needs to change
 the paths for files that the application uses from the parallel file system
-to the mount point for UnifyFS, \texttt{/unifyfs}. Then the application
+to the mount point for UnifyFS (Figure~\ref{fig:usingUnifyFS}). Then the application
 performs I/O as it normally would, using POSIX I/O or a high level I/O library, e.g.,
 HDF5 or MPI-IO. The UnifyFS library intercepts all I/O operations and
 manages the file data locally on the compute nodes with high performance.
@@ -29,14 +29,14 @@ manages the file data locally on the compute nodes with high performance.
 \begin{figure}[htb]
         \centering
         \includegraphics[width=3.5in]{projects/2.3.4-DataViz/2.3.4.15-HDF5-UnifyCR/usingUnifyFS}
-        \caption{\label{fig:usingUnifyFS} \textbf{Using UnifyFS}
+        \caption{\label{fig:usingUnifyFS} 
 Using UnifyFS from an MPI application is as easy as using the parallel file system.
-Simply change the file path to point to the UnifyFS mount point \texttt{/unifyfs}, and
+Simply change the file path to point to the UnifyFS mount point \texttt{/unifyfs} and
 then perform I/O as normal.}
 \end{figure}
 
 
-\paragraph{Key  Challenges}
+\paragraph{Key Challenges}
 
 The hierarchical storage of current and future HPC systems includes compute-node
 local SSDs as burst buffers. This distributed burst buffer design promises
@@ -101,7 +101,7 @@ In the past year, the UnifyFS team has focused on improving the usability
 and performance of UnifyFS for applications and I/O middleware.
 We evaluated UnifyFS for use by producer-consumer applications, which include
 applications such as climate models that exchange data files between independent
-components such as ``ocean'' and ``atmosphere'', and applications that couple
+components such as ocean and atmosphere, and applications that couple
 traditional HPC simulation with ML analysis. We updated UnifyFS to better support
 these types of applications, including documentation additions and fixes to the
 UnifyFS code base. This year, we also introduced our UnifyFS API which is intended

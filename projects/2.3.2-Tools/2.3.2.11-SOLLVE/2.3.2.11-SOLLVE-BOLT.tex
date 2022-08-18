@@ -1,7 +1,7 @@
 \subsubsection{\stid{2.11} BOLT: Lightning Fast OpenMP}\label{subsubsect:bolt}
 
 
-(This work is now dormant as the lead developers in Argonne National Lab have either left Argonne or been moved to other projects)
+\textbf{This work is now dormant as the lead developers in Argonne National Laboratory have either left Argonne or been moved to other projects. The last status update is provided below for informational purposes.}
 
 \paragraph{Overview}
 
@@ -77,7 +77,7 @@ iwasaki2020}. Interoperability improvements have also been
 demonstrated by having BOLT interoperate with an MPI libraries through
 the Argobots threading layer rather than OS-level threads.  Results
 showed that this approach allows better communication progress and
-outperforms the traditional Pthreads-level interaction~\cite{seo2018}.
+outperforms the traditional Pthreads-level interaction~\cite{seo2018}. See Figure~\ref{fig:sollve-bolt}.
 
 \paragraph{Recent Progress}
 
@@ -125,7 +125,7 @@ thanks to Argobots. The following list includes our next plans:
 
 \begin{enumerate}
 
-\item Explores opportunities for utilizing lightweight threads for
+\item Explore opportunities for utilizing lightweight threads for
 other optimizations in the context of OpenMP.  The main focus of BOLT
 has been the performance of fine-grained OpenMP threads, so we have
 not fully explored how BOLT could elevate the performance of other
@@ -133,7 +133,7 @@ parallel units (e.g., data-dependent tasking and GPU offloading). We
 are planning to investigate room for optimizations and implement them
 with evaluation.
 
-\item Investigates the performance with large-scale applications.
+\item Investigate performance with large-scale applications.
 In order to find potential room for optimizations and evaluate the
 performance of BOLT in real large-scale workloads, we further
 investigate other SOLLVE components and ECP applications that can benefit from BOLT.  Since most distributed systems rely on MPI for internode

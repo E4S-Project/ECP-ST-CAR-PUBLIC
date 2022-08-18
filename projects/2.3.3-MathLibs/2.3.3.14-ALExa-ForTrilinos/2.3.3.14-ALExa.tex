@@ -3,7 +3,7 @@
 
 \paragraph{Overview}
 
-The ALExa project ({\sl Accelerated Libraries for Exascale}) focuses on
+The ALExa project (Accelerated Libraries for Exascale) focuses on
 preparing the ArborX, DataTransferKit (DTK), Tasmanian, and ForTrilinos libraries for exascale
 platforms and integrating these libraries into ECP applications.
 These libraries deliver capabilities identified as needs of ECP applications:
@@ -20,7 +20,7 @@ from different computational grids to perform their required simulations
 (3) the ability to construct fast and memory efficient surrogates to
 large-scale engineering models with multiple inputs and many outputs,
 enabling uncertainty quantification (both forward and inverse) as well as
-optimization and efficient multi-physics simulations in projects such as
+optimization and efficient multiphysics simulations in projects such as
 ExaStar (Tasmanian); and
 %
 (4) the ability to automatically interface Fortran-based codes to existing
@@ -37,54 +37,50 @@ libraries deployed to facilities and also made broadly available as part of
 the xSDK4ECP project.
 
 
-{\bf ArborX}
-
-{\it Purpose:} ArborX is an open-source library designed to provide
+\subparagraph{ArborX}
+Purpose: ArborX is an open-source library designed to provide
 performance portable algorithms for geometric search.
 
-{\it Significance:} General geometric search capabilities are needed in a wide
+Significance: General geometric search capabilities are needed in a wide
 variety of applications, including the generation of neighbor lists in
 particle-based applications (e.g., molecular dynamics or general N-body
 dynamics simulations), density-based clustering analysis (e.g., halo finding
 or DBSCAN in cosmology) and mesh-mesh interactions such as contact in
 computational mechanics and solution transfer in multiphysics simulations.
 
-{\it Performance portable search capabilities:} Shared memory and GPU
+Capabilities: Performance-portable search capabilities include shared-memory and GPU
 implementations of spatial tree construction; shared memory and GPU
 implementations of various spatial tree queries; MPI front-end for
 coordinating distributed spatial searches between sets of geometric objects
 with different decompositions; communication plan generation based on spatial
 search results; density-based clustering algorithms (DBSCAN).
+\footnote{\url{https://github.com/arborx/ArborX}}
 
-{\it URL:} https://github.com/arborx/ArborX
+\subparagraph{DTK}
 
-{\bf DTK} (Data Transfer Kit)
-
-{\it Purpose:} Transfers computed solutions between grids with differing
+Purpose: Transfers computed solutions between grids with differing
 layouts on parallel accelerated architectures.
 
-{\it Significance:} Coupled applications frequently have different grids with
+Significance: Coupled applications frequently have different grids with
 different parallel distributions; DTK is able to transfer solution values
 between these grids efficiently and accurately.
 
-{\it Mesh and mesh-free interpolation capabilities:} multivariate data
+Capabilities: Mesh and mesh-free interpolation capabilities include multivariate data
 interpolation between point clouds and grids; compactly supported radial basis
 functions; nearest-neighbor and moving least square implementations; support
 for standard finite-element shape functions and user-defined interpolants;
 common applications include conjugate heat transfer, fluid structure
-interaction, and mesh deformation.
-
-{\it URL:} https://github.com/ORNL-CEES/DataTransferKit
+interaction, and mesh deformation.\footnote{\url{https://github.com/ORNL-CEES/DataTransferKit}}
 
 
-{\bf Tasmanian} (Toolkit for Adaptive Stochastic Modeling and Non-Intrusive
-Approximation)
+\subparagraph{Tasmanian (Toolkit for Adaptive Stochastic Modeling and Non-Intrusive
+Approximation)}
 
-{\it Purpose:} Constructs efficient surrogate models for high-dimensional
+Purpose: Constructs efficient surrogate models for high-dimensional
 problems and performs parameter calibration and optimization geared towards
 applications in uncertainty quantification (UQ).
 
-{\it Significance:} UQ pertains to the statistical properties of the output
+Significance: UQ pertains to the statistical properties of the output
 from a complex model with respect to variability in multiple model inputs;
 large number of simulations are required to compute reliable statistics which
 is prohibitive when dealing with computationally expensive engineering
@@ -92,21 +88,19 @@ models. A surrogate model is constructed from a moderate set of simulations
 using carefully chosen input values; analysis can then be performed on the
 efficient surrogate.
 
-{\it Sparse grids capabilities:} surrogate modeling and design of experiments
+Capabilities: Sparse grids capabilities include surrogate modeling and design of experiments
 (adaptive multi-dimensional interpolation); reduced (lossy) representation of
 tabulated scientific data; high dimensional numerical quadrature; data mining
 and manifold learning.
 
-{\it DiffeRential Evolution Adaptive Metropolis (DREAM) capabilities:}
+DiffeRential Evolution Adaptive Metropolis (DREAM) capabilities include
 Bayesian inference; parameter estimation/calibration; model validation.
-global optimization and optimization under uncertainty.
-
-{\it URL:} http://tasmanian.ornl.gov
+global optimization and optimization under uncertainty.\footnote{\url{http://tasmanian.ornl.gov}}
 
 
-{\bf ForTrilinos} (Fortran Trilinos)
+\subparagraph{ForTrilinos (Fortran Trilinos)}
 
-{\it Purpose:}
+Purpose:
 ForTrilinos provides a seamless pathway for large and complex Fortran-based
 codes to access Trilinos without C/C++ interface code. This access includes
 Fortran versions of Kokkos abstractions for code execution and data management.
@@ -115,7 +109,7 @@ extension to the SWIG (Simplified Wrapper and Interface Generator) tool.
 Applied to Trilinos, it generates object-oriented Fortran 2003 interface code
 that closely mirrors the Trilinos C++ API.
 
-{\it Significance:}
+Significance:
 The ECP requires the successful transformation and
 porting of many Fortran application codes in preparation for ECP platforms. A
 significant number of these codes rely upon the scalable solution of linear and
@@ -130,7 +124,7 @@ capable of exposing any number of C++ libraries to Fortran exascale app
 developers.
 
 
-{\it SWIG capabilities:}
+SWIG capabilities:
 ForTrilinos provides an inversion of control functionality that enables custom
 extensions of the Trilinos solvers implemented in downstream Fortran apps.
 Although this capability is not yet comprehensive, the goal of this project is
@@ -139,29 +133,26 @@ computing systems. Several examples of ForTrilinos are being demonstrated within
 Fortran-based ECP codes to help them meet simulation goals and illustrate the
 technology to other Fortran-based ECP codes. Additionally, the SWIG technology
 underpinning ForTrilinos is being applied to other C++-based ECP ST subprojects
-to expose their capabilities to Fortran apps.
-
-{\it URL:} https://github.com/trilinos/ForTrilinos
+to expose their capabilities to Fortran apps.\footnote{\url{https://github.com/trilinos/ForTrilinos}}
 
 \paragraph{Key Challenges}
+Each element described above faces key challenges to successful implementation and deployment.
 
-\indent
-
-{\bf ArborX:} Search procedures to locate neighboring points, mesh cells, or
+\subparagraph{ArborX} Search procedures to locate neighboring points, mesh cells, or
 other geometric objects require tree search methods difficult to optimize on
 modern accelerated architectures due to vector lane or thread divergence. A
 flexible interface for calling user kernels on a positive match as well as
 modifying traversal algorithms in a task-specific manner are crucial to
 achieving the best performance.
 
-{\bf DTK:} General data transfer between grids of unrelated applications
+\subparagraph{DTK} General data transfer between grids of unrelated applications
 requires many-to-many communication which is increasingly challenging as
 communication to computation ratios are decreasing on successive HPC systems.
 Maintaining high accuracy for the transfer requires careful attention to the
 mathematical properties of the interpolation methods and is highly
 application-specific.
 
-{\bf Tasmanian:} Extracting statistical information from a Tasmanian surrogate
+\subparagraph{Tasmanian} Extracting statistical information from a Tasmanian surrogate
 (or using the surrogate in a multi-physics simulation) requires the collection
 of a large number of samples, which is not feasible without GPU acceleration.
 The GPU accelerated surrogate evaluations require both custom kernels
@@ -170,7 +161,7 @@ sparse and dense linear algebra methods (BLAS level 2 and 3).
 Porting the capabilities and optimizing the performance across different
 divergent architectures is challenging.
 
-{\bf ForTrilinos:}
+\subparagraph{ForTrilinos}
 Developing the interfaces to the C++ libraries that provide access to
 cutting-edge research, such as Trilinos,  is of significant benefit to Fortran
 community. However, such interfaces must be well documented, sustainable and
@@ -190,13 +181,9 @@ solver capabilities in Trilinos.
 
 
 \paragraph{Solution Strategy}
+To mitigate these challenges, the team proposes the following actions for each effort.
 
-\nobreak
-
-
-\indent
-
-{\bf ArborX:} ArborX builds on a MPI+Kokkos programming model to deploy to all
+\subparagraph{ArborX} ArborX builds on a MPI+Kokkos programming model to deploy to all
 DOE HPC architectures. Extensive performance engineering has yielded
 implementations that are both as performant in serial as state-of-the-art
 libraries while also expanding on the capability provided by other libraries by
@@ -204,23 +191,23 @@ demonstrating thread scalability on both GPU and multi-core CPU architectures.
 Working with both synthetic as well as real data from applications (e.g., HACC)
 ensures wide performance testing coverage.
 
-{\bf DTK:} State-of-the-art, mathematically rigorous methods are used in DTK
+\subparagraph{DTK} State-of-the-art, mathematically rigorous methods are used in DTK
 to preserve accuracy of interpolated solutions.  Algorithms are implemented in
 a C++ code base with extensive unit testing on multiple platforms.  Trilinos
 packages are used to support interpolation methods.  Kokkos is used to achieve
 performance portability across accelerated platforms.
 
-{\bf Tasmanian:} The C++ CUDA/HIPO kernels within Tasmanian are templated exposing
+\subparagraph{Tasmanian} The C++ CUDA/HIPO kernels within Tasmanian are templated exposing
 numerous performance tweaks and tuning parameters that can be adjusted to
 perform well on a corresponding Nvidia/AMD system.
 The kernels are also ported to DPC++/SYCL to allow for the utilization
 of Intel GPUs. Tasmanian also links to general GPU-BLAS interfaces that can
 utilize any of the accelerated backends, e.g., cuBlas, rocBlas, MKL and MAGMA.
 
-{\bf ForTrilinos:}
+\subparagraph{ForTrilinos}
 ForTrilinos defines several SWIG-Fortran modules that generate Fortran-2003
 interfaces to C++ Trilinos solver classes. ForTrilinos provides a
-``high-level'' interface for applications to access nonlinear and eigenvalue
+high-level interface for applications to access nonlinear and eigenvalue
 solvers in addition to low-level Trilinos classes. The SWIG-Fortran methodology
 is applicable to other ECP projects and has been used strategically to provide
 low-maintenance Fortran wrappers for several other ST codes.
@@ -228,10 +215,9 @@ low-maintenance Fortran wrappers for several other ST codes.
 %----------------------------------------
 
 \paragraph{Recent Progress}
+Recent progress includes developments in ArborX, Tasmanian, and ForTrilinos.
 
-\indent
-
-{\bf ArborX:} The team developed several new features in ArborX to support
+\subparagraph{ArborX} The team developed several new features in ArborX to support
 applications. For the analysis of the cosmological data in the ExaSky
 project, we developed a fast performance-portable algorithm to compute DBSCAN
 (Density-based spatial clustering of applications with noise) clustering. It
@@ -240,7 +226,7 @@ cosmological analysis pipeline) by more than $15\times$. For the stretched
 inclined geometries of the wind turbine simulations in the ExaWind project,
 ArborX now provides a new k-DOP bounding volume.
 
-{\bf Tasmanian:} Work with partner application ExaStar (2.2.3.01) performed
+\subparagraph{Tasmanian} Work with partner application ExaStar (2.2.3.01) performed
 multiphysics simulations on OLCF Summit using the Nvidia Volta GPUs.
 The Fortran interface of Tasmanian was extended (using Swig-Fortran)
 to expose the necessary C++ methods. Utilizing the GPUs yields a near 10x
@@ -248,7 +234,7 @@ performance boost, which is consistent with the Tasmanian stand-alone test
 indicating that the Thornado-Tasmanian interface does not incur appreciable
 overhead.
 
-{\bf ForTrilinos:} This year has focused on wrapping up development of
+\subparagraph{ForTrilinos} This year has focused on wrapping up development of
 ForTrilinos and applying SWIG-Fortran to other ECP projects. We released Flibcpp
 1.0.0, a set of Fortran interfaces to the C++ standard library to supplement
 ForTrilinos. We released ForTrilinos 2.0.0 based on ForTrilinos 13. New
@@ -260,23 +246,22 @@ Fortran wrappers for METIS/ParMETIS, STRUMPACK, and Tasmanian.
 %----------------------------------------
 
 \paragraph{Next Steps}
+The following efforts have been identified for the next phase of the project.
 
-\indent
-
-{\bf ArborX:} Continue improving performance of both the core and
+\subparagraph{ArborX} Continue improving performance of both the core and
 application-specific kernels and algorithms on all available accelerators.
 Expand search algorithms to accommodate multi-dimensional data.
 
-{\bf DTK:} Continue performance engineering campaign and deploy in a variety of
+\subparagraph{DTK} Continue performance engineering campaign and deploy in a variety of
 applications.
 
-{\bf Tasmanian:} Tune the existing GPU kernels on the next generation
+\subparagraph{Tasmanian} Tune the existing GPU kernels on the next generation
 GPU architectures from Nvidia, AMD and Intel.
 Extend the Tasmanian-libEnsemble integration to allow for advanced workflow
 management of libEnsemble (2.3.3.06) to be coupled with the asynchronous sampling
 methods within Tasmanian.
 
-{\bf ForTrilinos:} Complete documentation for ForTrilinos native Fortran
+\subparagraph{ForTrilinos} Complete documentation for ForTrilinos native Fortran
 interface. Continue maintenance and support for ForTrilinos, SWIG-Fortran, and
 related Fortran interfaces for other ECP projects.
 
@@ -284,13 +269,11 @@ related Fortran interfaces for other ECP projects.
 
 \paragraph{Preliminary Experiences on Early Access systems}
 
-\indent
+\subparagraph{ArborX} ArborX is building, and all the tests are passing on various EAS systems including Perlmutter, Spock, Crusher, and Iris. We are currently focusing on improving the performance on Crusher.
 
-{\bf ArborX:} ArborX is building and all the tests are passing on various EAS systems including Perlmutter, Spock, Crusher, and Iris. We are currently focusing on improving the performance on Crusher.
+\subparagraph{DTK} DTK is building, and all the tests are passing on Spock and Crusher.
 
-{\bf DataTransferKit:} DataTransferKit is building and all the tests are passing on Spock and Crusher.
-
-{\bf Tasmanian:} is building and testing on all EAS systems, tests are included in the \emph{spack} package. Currently, performance testing and improvements is done on Spock and Crusher.
+\subparagraph{Tasmanian} is building and testing on all EAS systems, and tests are included in the Spack package. Currently, performance testing and improvements is done on Spock and Crusher.
 
 
 %----------------------------------------

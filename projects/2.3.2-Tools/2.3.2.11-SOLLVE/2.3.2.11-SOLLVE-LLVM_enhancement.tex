@@ -1,16 +1,16 @@
 \subsubsection{\stid{2.11} Building tools to detect and debug bugs and performance issues with OMP offloading}
 
 \paragraph{Overview}
-Starting from the 4.0 version, OpenMP has introduced a new feature, \textit{target offloading}, which enables programmers to leverage additional computing ``devices'' connected to the host (e.g., GPU, application-specific accelerator).
-With a group of hardware-agnostic constructs (\textit{device directives}), target offloading makes it possible to write accelerated OpenMP applications in a performance-portable manner. However, concurrency bugs and performance issues may still arise due to  incorrect usage of device directives. 
+Starting from the 4.0 version, OpenMP has introduced a new feature, target offloading, which enables programmers to leverage additional computing devices connected to the host (e.g., GPU, application-specific accelerator).
+With a group of hardware-agnostic constructs (device directives), target offloading makes it possible to write accelerated OpenMP applications in a performance-portable manner. However, concurrency bugs and performance issues may still arise due to  incorrect usage of device directives. 
 Our group at Georgia Tech has conducted a comprehensive study of such issues~\cite{yu2020study}. We found that most of these issues are related to the data mappings between the host and target device.
 For example, incorrect data mappings can lead to uninitialized memory accesses or even buffer overflow on the target device. In addition, programmers may also declare data mappings that incur unnecessary time and memory overhead due to redundant copies.
 
-To help programmers detect and debug these concurrency bugs and performance issues, we have developed a toolset for OpenMP applications including:
+To help programmers detect and debug these concurrency bugs and performance issues, we have developed a toolset for OpenMP applications:
 \begin{itemize}
-    \item OMPSan~\cite{barua2019ompsan}, a static analyzer that can report all suspicious data mappings that may lead to concurrency bugs and memory issues;
-    \item ARBALEST~\cite{yu2021arbalest}, a dynamic analyzer that can pinpoint incorrect data mappings that result in concurrency bugs or memory issues at runtime;
-    \item OmpMemOpt~\cite{barua2020ompmemopt}, a static optimizer identifies redundant data mappings and replaces them by more optimized data mappings.
+    \item OMPSan~\cite{barua2019ompsan} is a static analyzer that can report all suspicious data mappings that may lead to concurrency bugs and memory issues;
+    \item ARBALEST~\cite{yu2021arbalest} is a dynamic analyzer that can pinpoint incorrect data mappings that result in concurrency bugs or memory issues at runtime;
+    \item OmpMemOpt~\cite{barua2020ompmemopt} is a static optimizer identifies redundant data mappings and replaces them by more optimized data mappings.
 \end{itemize}
 
 \paragraph{Key Challenges}

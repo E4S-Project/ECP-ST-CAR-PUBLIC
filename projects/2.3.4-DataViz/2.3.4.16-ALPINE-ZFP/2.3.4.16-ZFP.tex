@@ -4,7 +4,7 @@
 
 \paragraph{Overview} 
 
-One of the primary challenges for Exascale computing is overcoming the performance cost of data movement.  
+One of the primary challenges for exascale computing is overcoming the performance cost of data movement.  
 Far more data is being generated than can reasonably be stored to disk and later analyzed without some form of data reduction.  
 Moreover, with deepening memory hierarchies and dwindling per-core memory bandwidth due to increasing parallelism, even on-node data motion between RAM and registers makes for a significant performance bottleneck and primary source of power consumption.
 
@@ -23,7 +23,7 @@ numerical computations to represent evolving state, {\zfp} arrays provide a
 fine-grained knob on precision while achieving accuracy comparable to IEEE
 floating point at half the storage, reducing both memory usage and bandwidth.
 
-This project is extending {\zfp} to make it more readily usable in an Exascale
+This project is extending {\zfp} to make it more readily usable in an exascale
 computing setting by parallelizing it on both the CPU and GPU, targeting
 several back-ends (OpenMP, CUDA, HIP, SYCL); by providing bindings for several
 programming languages (C, C++, Fortran, Python); by adding new functionality,
@@ -38,38 +38,37 @@ and visualization and data analysis tools.
 There are several challenges to overcome on this project with respect
 to implementing compressed floating-point arrays:
 %
-\begin{itemize}
-\item \textbf{Data dependencies}.  Compression by its very nature removes
+\subparagraph{Data Dependencies}  Compression by its very nature removes
 redundancies, often by deriving information from what has already been
 (de)compressed and learned about the data.  Such data dependencies can
 usually be resolved only by traversing the data in sequence, thus
 complicating random access and parallelism.
 
-\item \textbf{Random access}.  For inline compression, on-demand random
+\subparagraph{Random Access}  For inline compression, on-demand random
 access to localized pieces of data is essential.  However, compression
 usually represents large fixed-length records using variable-length
 storage, which complicates random access and indexing.
 
-\item \textbf{Parallelism}.  Manycore architectures allow for massively
+\subparagraph{Parallelism}  Manycore architectures allow for massively
 concurrent execution over millions or billions of array elements.
 Yet compression is usually a process of reducing such multidimensional
 arrays to a single-dimensional sequence of bits, which requires considerable coordination among parallel
 threads of execution.
 
-\item \textbf{Unstructured data}.  Unstructured data, such as independent
+\subparagraph{Unstructured Data}  Unstructured data, such as independent
 particles and arbitrarily connected nodes in a mesh, has no natural
 ordering, repeated structure, or regular geometry that can be exploited
 for compression.
 
-\item \textbf{Performance}.  For inline compression to be useful, both
+\subparagraph{Performance}  For inline compression to be useful, both
 compression and decompression have to be extremely fast (simple), yet
 effective enough to warrant compression.  Moreover, the complexities of
 compression must be hidden from the user to promote adoption, while allowing
 sufficient flexibility to support essentially arbitrary data access patterns.
-\end{itemize}
+
 %
 These challenges often suggest conflicting solutions and are further
-complicated by the extreme demands of Exascale computing applications.
+complicated by the extreme demands of exascale computing applications.
 
 \paragraph{Solution Strategy}
 
@@ -78,33 +77,33 @@ multidimensional data, and was designed from the outset to address
 some of the above challenges.  The following strategies are employed on
 this project to overcome the remaining challenges:
 %
-\begin{itemize}
-\item \textbf{Partitioning}.  $d$-dimensional arrays are partitioned
+
+\subparagraph{Partitioning}  The $d$-dimensional arrays are partitioned
 into small, independent blocks of $4^d$ scalars each.  This enables both
 fine-grained random access and a large degree of data parallelism.
 
-\item \textbf{Fixed-size storage}.  Instead of storing fixed-precision
+\subparagraph{Fixed-Size Storage}  Instead of storing fixed-precision
 values using variable-size storage, {\zfp} uses fixed-size storage to
 represent values at the greatest precision afforded by a limited
 bit budget.
 
-\item \textbf{Adaptive storage}.  For applications that demand error
+\subparagraph{Adaptive Storage}  For applications that demand error
 tolerances, this project is developing adaptive representations that
 allocate bits to where they are most needed, which involves efficient
 management of variable-length records that might expand and shrink in
 size over time.
 
-\item \textbf{Parallelism}.  OpenMP, CUDA, and HIP implementations of {\zfp}
+\subparagraph{Parallelism}  OpenMP, CUDA, and HIP implementations of {\zfp}
 have been developed that exploit fine-grained data parallelism.
 Opportunities for task parallelism have also been identified.
 
-\item \textbf{Preconditioning}.  The irregularity and unpredictability
+\subparagraph{Preconditioning}  The irregularity and unpredictability
 of unstructured data is improved using \emph{preconditioners} that
-``massage'' the data to make it more amenable to compression by {\zfp}.
+massage the data to make it more amenable to compression by {\zfp}.
 Strategies include sorting, binning, structure inference, transposition,
 pre-transforms like wavelets, etc.
 
-\item \textbf{Abstraction}.  Concrete details about compression, caching,
+\subparagraph{Abstraction}  Concrete details about compression, caching,
 parallelism, thread safety, etc., are abstracted away from the user by
 providing high-level primitives that make {\zfp} arrays appear like
 uncompressed arrays, in part via C++ operator overloading.  We are
@@ -114,7 +113,6 @@ like their uncompressed counterparts; views into and slices of arrays;
 and iterators compatible with STL algorithms.  Such primitives make it
 easier to write generic code for which {\zfp} arrays may easily be
 substituted for uncompressed arrays.
-\end{itemize}
 
 \paragraph{Recent Progress}
 
@@ -125,9 +123,9 @@ With help from NVIDIA, we developed a CUDA implementation of parallel variable-r
 We further ported our CUDA implementation to HIP and are working with external collaborators on a SYCL port.
 We also expanded {\zfp} testing to more diverse platforms and compilers, including NVIDIA and AMD GPUs, through the adoption of GitLab CI.
 Finally, through ongoing collaborations with the University of Utah, we published a new point set compression technique~\cite{zfp-ldav2021}.
-In addition to ST integrations with \textsc{adios}, \textsc{hdf5}, \textsc{strumpack}, and \textsc{vtk-m}, we are integrating {\zfp} with \textsc{ceed}, \textsc{eqsim} (Figure~\ref{fig:zfp-sw4-hdf5}), \textsc{qmcpack}/\textsc{rmg}, and \textsc{warpx}.
+In addition to ST integrations with \uppercase{adios}, \uppercase{hdf5}, \uppercase{strumpack}, and \uppercase{vtk-m}, we are integrating {\zfp} with \uppercase{ceed}, \uppercase{eqsim} (Figure~\ref{fig:zfp-sw4-hdf5}), \uppercase{qmcpack}/\uppercase{rmg}, and \uppercase{warpx}.
 
-The results of our R\&D efforts have been documented through publications~\cite{zfp-isc2017,zfp-jsm2017,zfp-sisc2019,zfp-drbsd2019,zfp-pdp2020,zfp-vis2020,zfp-ldav2021}, and significant efforts have been made to reach out to customers and the HPC community at large through one-on-one interactions and tutorials, both at ECP meetings and conferences~\cite{zfp-isc2017-tut,zfp-sc2017-tut,zfp-ep2018-tut,zfp-sc2018-tut,zfp-isc2019-tut,zfp-sc2019-tut,zfp-sc2020-tut,zfp-sc2020-pan}.  Together with the \textsc{sz} team, we will be giving a tutorial at SC21~\cite{zfp-sc2021-tut}.
+The results of our R\&D efforts have been documented through publications~\cite{zfp-isc2017,zfp-jsm2017,zfp-sisc2019,zfp-drbsd2019,zfp-pdp2020,zfp-vis2020,zfp-ldav2021}, and significant efforts have been made to reach out to customers and the HPC community at large through one-on-one interactions and tutorials, both at ECP meetings and conferences~\cite{zfp-isc2017-tut,zfp-sc2017-tut,zfp-ep2018-tut,zfp-sc2018-tut,zfp-isc2019-tut,zfp-sc2019-tut,zfp-sc2020-tut,zfp-sc2020-pan}.  Together with the \uppercase{sz} team, we will be giving a tutorial at SC21~\cite{zfp-sc2021-tut}.
 
 %% Refresh 2022-02
 ZFP has been ported to HIP and is successfully running on Spock GPUs.  The ZFP team is focusing on performance optimization, in collaboration with the ALPINE and VTK-m teams.  
@@ -151,7 +149,7 @@ ZFP has been ported to HIP and is successfully running on Spock GPUs.  The ZFP t
 \includegraphics[width=\textwidth]{projects/2.3.4-DataViz/2.3.4.16-ALPINE-ZFP/zfp-sw4-hdf5}%
 \vspace{-1ex}%
 \captionsetup{width=\linewidth}%
-\captionof{figure}{250:1 {\zfp} compression of \textsc{eqsim} seismic wave velocity data (figure courtesy of McCallen et al.~\cite{zfp-sw4}).}%
+\captionof{figure}{250:1 {\zfp} compression of \uppercase{eqsim} seismic wave velocity data (figure courtesy of McCallen et al.~\cite{zfp-sw4}).}%
 \label{fig:zfp-sw4-hdf5}%
 \end{minipage}
 \end{minipage}

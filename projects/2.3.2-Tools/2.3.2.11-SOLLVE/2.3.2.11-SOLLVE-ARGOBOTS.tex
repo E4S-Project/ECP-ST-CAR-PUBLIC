@@ -1,6 +1,6 @@
 \subsubsection{\stid{2.11} Argobots: Flexible, High-Performance Lightweight Threading }
 
-(This work is now dormant as the lead developers in Argonne National Lab have either left Argonne or been moved to other projects)
+\textbf{Note: This work is now dormant as the lead developers in Argonne National Laboratory have either left Argonne or been moved to other projects. The last status update is provided below for informational purposes.}
 
 \paragraph{Overview}
 Efficiently supporting massive on-node parallelism demands highly
@@ -43,39 +43,39 @@ allow specialization by end users or high-level programming models
 providing a rich set of capabilities is achieved by heavily optimizing
 critical paths as well as by exposing configuration knobs and a rich
 API, which allow users to trim unnecessary costs. Furthermore,
-Argobots honors high degrees of expressibility through the following
-three key aspects:
+Argobots honors high degrees of expressibility in 
+three key ways.
 
-\begin{enumerate}
+%\begin{enumerate}
 
-\item Capturing the requirements of different \emph{work units}, which
+First, Argobots captures the requirements of different work units, which
 are the most basic manageable entities. Work units that require
 private stacks and context-saving capabilities, referred to as
-\textit{user-level threads} (ULTs, also called \textit{coroutines} or
-\textit{fibers}), are fully fledged threads usable in any context.
-\emph{Tasklets} do not require private stacks. They are more
+user-level threads (ULTs, also called coroutines or
+fibers), are fully fledged threads usable in any context.
+Tasklets do not require private stacks. They are more
 lightweight than ULTs because they do not incur context saving and
 stack management overheads.  Tasklets, however, are restrictive; they
 can be executed only as atomic work units that run to completion
 without context switching.
 
-\item Exposing hardware computational units through \emph{execution
-streams} (ESs) as OS-level threads to execute work units. Unlike
+Second, Argobots also exposes hardware computational units through execution
+streams (ESes) as OS-level threads to execute work units. Unlike
 existing generic runtimes, ESs are exposed to and manageable by users.
 
-\item Allowing full control over \emph{work unit management}.  Users
-can freely manage \emph{scheduling} and mapping of work units to ESs
-through \emph{thread pool} management, and thus achieving the desired
+Finally, Argobots allows full control over work unit management.  Users
+can freely manage scheduling and mapping of work units to ESs
+through thread pool management, and thus achieving the desired
 behavior. Figure~\ref{fig:sollve-argobots} illustrates the various
 building blocks in the Argobots framework and the interactions between
 them to build a hypothetical system.
 
-\end{enumerate}
+%\end{enumerate}
 
 \begin{figure}[htb]
   \centering
   \includegraphics[height=3in]{projects/2.3.2-Tools/2.3.2.11-SOLLVE/SOLLVE-ARGOBOTS.pdf}
-  \caption{\label{fig:sollve-argobots}Argobots execution model}
+  \caption{\label{fig:sollve-argobots}Argobots execution model.}
 \end{figure}
 
 \paragraph{Recent Progress}

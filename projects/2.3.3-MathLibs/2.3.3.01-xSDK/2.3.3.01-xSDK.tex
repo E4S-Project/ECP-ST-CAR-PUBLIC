@@ -12,8 +12,8 @@ The xSDK represents a different approach to coordinating library development and
 
 The xSDK effort has two primary thrusts:
 \begin{enumerate}
-	\item \textbf{Increased interoperability:} xSDK packages can be built with a single Spack package target.  Furthermore, services from one package are accessible to another package.
-	\item \textbf{Increased use of common best practices:}  The xSDK has a collection of community policies that set expectations for a package, from best design practices to common look-and-feel.
+	\item Increased interoperability: xSDK packages can be built with a single Spack package target.  Furthermore, services from one package are accessible to another package.
+	\item Increased use of common best practices: The xSDK has a collection of community policies that set expectations for a package, from best design practices to common look-and-feel.
 \end{enumerate}
 
 xSDK interoperability efforts began first with eliminating incompatibilities that prohibited correct compilation and integration of the independently developed libraries.  These issues include being able to use a common version of a library by another library.  The second, and ongoing phase is increased use of one package's capabilities from another. xSDK community package policies~\cite{xsdk-policies:homepage,xsdk-policies:github} are a set of minimum requirements (including topics of configuring, installing, testing, MPI usage, portability, contact and version information, open source licensing, namespacing, and repository access) that a software package must satisfy in order to be considered xSDK compatible. The designation of xSDK compatibility informs potential users that a package can be easily used with others and makes configuration and installation of xSDK software and other HPC packages as efficient as possible on common platforms, including standard Linux distributions and Mac OS X, as well as on target machines currently available at DOE computing facilities (ALCF, NERSC, and OLCF) and eventually on new Exascale platforms.
@@ -26,31 +26,31 @@ Another effort in the project is the development of a software quality toolkit t
 \paragraph{Recent Progress}
 
 The xSDK team released xSDK 0.6.0 with two new xSDK libraries heFFTe and SLATE and is preparing xSDK 0.7.0 with planned addition of ArborX.
-Figure~\ref{fig:xsdk-schematic} illustrates the dependency graph of Spack-enabled interoperabilities of xSDK libraries in version 0.6.0 and the growth of the xSDK over the years .
+Figure~\ref{fig:xsdk-schematic} illustrates the dependency graph of Spack-enabled interoperabilities of xSDK libraries in version 0.6.0 and the growth of the xSDK over the years.
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=4.2in]{projects/2.3.3-MathLibs/2.3.3.01-xSDK/xsdk-0.6.0.png}
 	%\includegraphics[width=4.2in]{xsdk-0.6.0.png}
-      \caption{\label{fig:xsdk-schematic} Dependency graph of xSDK packages with Spack-enabled  interoperabilities represented in xSDK 0.6.0. A$\rightarrow$B indicates A uses B}
+      \caption{\label{fig:xsdk-schematic} Dependency graph of xSDK packages with Spack-enabled  interoperabilities represented in xSDK 0.6.0. A$\rightarrow$B indicates A uses B.}
 \end{figure}
 The team also looked for ways to increase interoperability within the xSDK. To achieve this goal, package developers were surveyed for opportunities to increase interoperabilites and a report was provided summarizing survey results and new and planned interoperability capabilities between xSDK members. Version 0.2.0 of the xsdk-examples code suite was released with updated and expanded examples to demonstrate xSDK library interoperabilities, including some CUDA-enabled examples.
 
 Version 2.0 of the GPTune auto-tuning software for parameter optimization of HPC codes \cite{gptune:homepage} was released. In this new release, the team finished the workflow design, with history database, shared repository and web interface for crowd-tuning. and developed the multi-fidelity GPTuneBand, combining LCM multitask learning and multi-armed bandit. The  GPTuneBand tuning algorithm was applied to the electromagnetic equations solvers in the finite element xSDK library MFEM, and achieved almost 2x speedup compared to the default parameter settings.     
 
-The first version, v. 1.0.0, of a code quality toolkit, which contains open-source static and dynamic code analysis tools for C and C++, was released and applied to the xSDK libraries PETSc, Slepc, SUPERLU and hypre. Example codes are provided in the xsdk-code-quality repository \cite{xsdk-code-quality}.
+The first version, v1.0.0, of a code quality toolkit, which contains open-source static and dynamic code analysis tools for C and C++, was released and applied to the xSDK libraries PETSc, Slepc, SUPERLU and hypre. Example codes are provided in the xsdk-code-quality repository \cite{xsdk-code-quality}.
 
 \paragraph{Early Access System Experiences}
 
-The team has built subsets of the xSDK on Spock both with and without `rocm', however the build requires special care described in the installation section of the xSDK website~\cite{xsdk:homepage}. Efforts to extend the number of libraries and to create special instructions for Crusher are underway.
+The team has built subsets of the xSDK on Spock both with and without rocm, however the build requires special care described in the installation section of the xSDK website~\cite{xsdk:homepage}. Efforts to extend the number of libraries and to create special instructions for Crusher are underway.
 
 \paragraph{Next Steps}
 
 Our next efforts include 
-\begin{itemize}
-    \item development of a plan to improve xSDK testing with view towards sustainability,
-    \item updating and enhancing the xsdk-examples test suite,
-    \item implementation of the xSDK testing plan,
-   \item a new xSDK release with additional libraries and build options for GPUs, including software, documentation and user engagement materials.
-\end{itemize}
+%
+    developing a plan to improve xSDK testing with an aim of sustainability;
+    updating and enhancing the xsdk-examples test suite;
+    implementing the xSDK testing plan; and
+    releasing a new xSDK with additional libraries and build options for GPUs, including software, documentation and user engagement materials.
+
 
 

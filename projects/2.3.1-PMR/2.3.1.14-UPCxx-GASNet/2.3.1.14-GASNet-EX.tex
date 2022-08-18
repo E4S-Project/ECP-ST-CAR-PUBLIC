@@ -55,7 +55,7 @@ features being developed by the vendor community.
 
 The PGAS model is a powerful means of addressing these
 challenges and is critical in building other ECP programming systems,
-libraries, and applications.  We use the term {\em PGAS} for models that support
+libraries, and applications.  We use the term PGAS for models that support
 one-sided communication, 
 including contiguous and non-contiguous remote memory access (RMA) operations such as put/get
 and atomic updates. Some of these models also include support for remote function invocation.
@@ -125,10 +125,10 @@ benefits of one-sided communication, a major feature of PGAS models.
 
 \paragraph{Recent Progress}
 
-The most notable work on GASNet-EX in the past year has been in two areas:
+The most notable work on GASNet-EX in the past year has been in device memory support and tuning.
 
-\textbf{Device (GPU) Memory Support}.
-``Memory kinds'' is the GASNet-EX term for support of communication involving
+\subparagraph{Device (GPU) Memory Support}
+Memory kinds is the GASNet-EX term for support of communication involving
 memory other than host memory.  In the context of ECP, the primary focus is
 accelerator devices such GPUs.  However, the design is extensible to other
 accelerators, such as FPGAs, and to storage.
@@ -149,7 +149,7 @@ The most recent work on memory kinds has extended the implementation in two dire
 adding support for the UCX network API and for GPUs using the AMD HIP API.
 The net result is support for four combinations of network API and GPU vendor.
 
-\textbf{Tuning}.
+\subparagraph{Tuning}
 We have devoted effort in the past year to improving the performance and memory
 use of the GASNet-EX runtime.  Examples of this work include significant
 improvements to InfiniBand support which (1) reduce memory consumption at large
@@ -165,7 +165,7 @@ and Slingshot-11) and for efficient RMA transfers to and from AMD GPUs.
 
 Experiences on OLCF's Spock system helped to enable the recent addition of
 memory kinds support for the UCX network API and for GPUs using the AMD HIP API.
-In particular, use of the ``ROCmRDMA'' technology allows network hardware to
+In particular, use of the ROCmRDMA technology allows network hardware to
 perform RMA operations to and from memory on AMD GPUs without staging through
 buffers in host memory.
 %
@@ -189,19 +189,19 @@ has reported for their MPI on comparable transfers.
 
 \paragraph{Next Steps}
 
-Our next efforts include:
+Next steps for each effort have already been identified.
 
-\textbf{Device (GPU) Memory Support}.
+\subparagraph{Device (GPU) Memory Support}
 We will continue work in the area of GASNet-EX memory kinds, including the
 hardening and tuning of the current implementation.
 As access to relevant systems is secured, we plan to extend support to
 additional accelerators and networks, with Intel GPUs and the HPE Slingshot
 network being the most important examples for ECP.
 
-\textbf{Client-Driven Tuning}.
+\subparagraph{Client-Driven Tuning}
 In collaboration with authors of client runtimes using GASNet-EX (most notably
 UPC++ and Legion) and their users (such as ExaBiome), we will continue to
 identify and address any significant scalability issues or performance
 anomalies which are discovered.
 
-\clearpage
+%\clearpage

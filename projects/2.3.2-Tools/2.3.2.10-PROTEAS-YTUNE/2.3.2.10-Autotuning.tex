@@ -34,12 +34,12 @@ application teams, such as SuperLU and QMCPACK, to impact performance of their
 codes and libraries.
 
 The autotuning compiler strategy revolves CHiLL, which has the following distinguishing features:
-(1) \textit{Composable transformation and code generation}, such
+(1) Composable transformation and code generation, such
 that the same tool can be applied
 to multiple different application domains;
-(2) \textit{Extensible to new domain-specific transformations} that can be represented as transformations on loop nest iteration spaces are also
+(2) Extensible to new domain-specific transformations that can be represented as transformations on loop nest iteration spaces are also
 composable with existing transformations;
-(3) \textit{Optimization strategies and parameters exposed to autotuning:}
+(3) Optimization strategies and parameters exposed to autotuning:
 By exposing high-level expression
 of the autotuning search space as transformation recipes, the compiler writer, an expert programmer or embedded DSL designer can directly \
 express how to compose
@@ -48,7 +48,7 @@ A part of our efforts in ECP are to migrate these capabilities of CHiLL
 into the Clang/LLVM open-source compiler, as well as provide lightweight
 interfaces through Python, C++, and REST APIs/web services.
 
-For example, we have developed a \textit{brick data layout library and code generator} for
+For example, we have developed a brick data layout library and code generator for
 stencil computations.
 Recent trends in computer architecture that favor computation over data movement incentivize high-order methods.  Paradoxically, high-order codes can be challenging for compilers/optimization to attain high performance.  Bricks enable high performance and make fine-grained data reuse and memory access information known at compile time.  The SIMD code generation achieves performance portability
 for high-order stencils for both CPUs with wide SIMD units (Intel Knights
@@ -63,18 +63,17 @@ ytopt/SurF is a machine-learning-based search software package for autotuning th
 \paragraph{Recent Progress}
 
 
-We have pursued the following main activities this year:
+We have pursued the following activities this year.
 
-\textit{Autotuning capability in LLVM:}
+\subparagraph{Autotuning Capability in LLVM}
+
 The key idea is to support the use of pragmas in the C++ source to guide transformations to be applied. These can include the types of transformation recipes used in CHiLL, but also parallelization directives for OpenMP and OpenACC that would interact with SOLLVE and PROTEAS. Our initial focus is the implementation of user/tool-directed optimizations in Polly, which is a polyhedral framework in LLVM with some similar features to CHiLL. Several existing open-source LLVM projects allowing for just-in-time (JIT) compilation of C++ code have been identified and are being evaluated for use with autotuning. 
 
-We have successfully used loop transformations directives implemented in Clang (ref. Section \ref{sec:PROTEAS_TUNE_LLVM}) to drive a machine learning process with YtOpt. The correctness of these transformations are checked in the Clang compiler by Polly such that it is not possible to result in wrong results. The search strategies used include a Globally Greedy~\cite{kruse2020search}, random search, beam search and our latest algorithm a customized Monte-Carlo Tree Search~\cite{wu2021autotuning}.
+We have successfully used loop transformations directives implemented in Clang (ref. Section \ref{sec:PROTEAS_TUNE_LLVM}) to drive a machine learning process with ytopt. The correctness of these transformations are checked in the Clang compiler by Polly such that it is not possible to result in wrong results. The search strategies used include a Globally Greedy~\cite{kruse2020search}, random search, beam search and our latest algorithm a customized Monte-Carlo Tree Search~\cite{wu2021autotuning}.
 In addition to the PolyBench benchmark suite, we applied the search over a tree-shaped configuration space to three ECP Proxy apps, namely SW4Lite, CoMD and minrAMR with promising results.
 
 
-\vspace*{.1in}
-\noindent
-\textit{ytopt/SuRF Supporting Autotuning Search}
+\subparagraph{ytopt/SuRF Supporting Autotuning Search}
 
 Compiler directives such as pragmas can help programmers to separate an algorithm's semantics from its optimization. Pragma directives for code transformations are useful for assisting program optimization and are already widely used in OpenMP. A prototype of user-directed loop transformations using Clang and Polly was implemented for the ECP SOLLVE project.
 Polly is LLVM's polyhedral loop optimizer which makes it easy to apply specific transformations as directed by pragmas.
@@ -91,9 +90,8 @@ CCS is a autotuning interface that we developed recently for ECP Kokkos library.
 
 
 
-\vspace*{.1in}
-\noindent
-\textit{Brick Library:}
+\subparagraph{Brick Library}
+
 We developed a code generator for the Brick Data Layout library for stencils
 that is performance-portable across CPU and GPU architectures, and addresses the
 needs of modern multi-stencil and high-order stencil computations. The key

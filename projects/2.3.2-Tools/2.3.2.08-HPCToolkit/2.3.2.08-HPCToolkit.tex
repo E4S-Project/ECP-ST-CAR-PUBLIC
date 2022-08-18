@@ -79,7 +79,7 @@ work other ECP teams to ensure that they benefit from HPCToolkit's
 capabilities to measure, analyze, attribute, and diagnose performance
 issues on ECP testbeds and forthcoming exascale systems.
 
-\newpage
+%\newpage
 \paragraph{Recent Progress}
 
 \begin{itemize}
@@ -121,20 +121,20 @@ The project team improved the reliability of HPCToolkit's hpcrun for monitoring 
 \\(b)
 \end{minipage}
 \caption{(a) 
-HPCToolkit's {\tt hpcviewer} showing a detailed attribution of GPU performance metrics in a 
+HPCToolkit's \texttt{hpcviewer} showing a detailed attribution of GPU performance metrics in a 
 profile of PeleC.
-(b) HPCToolkit's {\tt hpctraceviewer} showing CPU and GPU trace lines for LAMMPS.}
+(b) HPCToolkit's \texttt{hpctraceviewer} showing CPU and GPU trace lines for LAMMPS.}
 \label{fig:hpctoolkit}
 \end{figure}
 
 \paragraph{Preliminary Experiences on Early Access systems}
-\begin{description}
-\item[HPCToolkit]
-The project team is working to deliver tracing and profiling of GPU activity atop AMD's {\tt rocTracer} API and to assess GPU kernel activity using hardware counters using AMD's {\tt rocProfiler} API. 
+
+\subparagraph{HPCToolkit}
+The project team is working to deliver tracing and profiling of GPU activity atop AMD's \texttt{rocTracer} API and to assess GPU kernel activity using hardware counters using AMD's \texttt{rocProfiler} API. 
 HPCToolkit builds and runs on the Spock and Crusher early access systems. 
 At present, the project team is working closely with AMD to 
 resolve issues measuring GPU-accelerated
-applications with the {\tt rocTracer} and {\tt rocProfiler} APIs
+applications with the \texttt{rocTracer} and \texttt{rocProfiler} APIs
 by providing test cases that highlight issues of concern.
 
 In addition, the project team has been collaborating with AMD to develop
@@ -142,34 +142,27 @@ support for monitoring the performance of OpenMP offload in the
 runtime for AMD's AOMP compiler. The code is integrated into AMD's development
 branch and has been submitted upstream
 for integration into LLVM OpenMP.  A development branch of HPCToolkit
-uses this support to attribute GPU activity to OpenMP {\tt target}
+uses this support to attribute GPU activity to OpenMP \texttt{target}
 regions. The HPCToolkit project team is working to integrate this 
 emerging capability into a forthcoming release.
-\item[Dyninst]
+\subparagraph{Dyninst}
 Dyninst builds and runs on the Spock and Crusher early access systems. 
 HPCToolkit uses Dyninst to analyze AMD CPU binaries to attribute 
 performance measurements to source code contexts, 
 including functions, loops, and lines.   
-\end{description}
+
 
 \paragraph{Next Steps}
-\begin{itemize}
+Next steps for each effort have already been identified.
+%
+The team will integrate GPU measurement and analysis capabilities using hardware counters.
+%
+Solutions for fine-grained computation measurement on Intel GPUs will be improved, and the team will explore new solutions for fine-grained measurement on AMD GPUs.
+%
+Efforts will continue to refine the reliability and performance of monitoring operations on dynamic libraries.
+%
+The team will work with the open-source community to upstream the team's GPU measurement support into the community version of the \texttt{libomptarget} offloading library.
+%
+Finally, we will continue to work with DOE and platform vendors to evaluate and refine software interfaces for measuring GPU performance.
 
-\item 
-Integrate GPU measurement and analysis capabilities using hardware counters.
 
-\item 
-Continue to improve solutions for fine-grained measurement of computations on Intel GPUs and explore new solutions for fine-grained measurement on AMD GPUs.
-
-\item 
-Continue to refine the reliability and performance of monitoring operations on dynamic libraries.
-
-\item 
-Work with the open source community to upstream GPU measurement support
-developed by the project team into the community version of the {\tt
-libomptarget} offloading library.
-
-\item 
-Work with DOE and platform vendors to evaluate and refine software interfaces for measuring GPU performance.
-
-\end{itemize}

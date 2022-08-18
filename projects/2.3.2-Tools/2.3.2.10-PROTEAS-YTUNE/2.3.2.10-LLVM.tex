@@ -3,7 +3,7 @@
 
 \paragraph{Overview}
 
-LLVM, winner of the 2012 ACM Software System Award, has become an integral part of the software-development ecosystem for optimizing compilers, dynamic-language execution engines, source-code analysis and transformation tools, debuggers and linkers, and a whole host of programming-language and toolchain-related components. Now heavily used in both academia and industry, where it allows for rapid development of production-quality tools, LLVM is increasingly used in work targeted at HPC. LLVM components are integral parts of the programming environments on our upcoming Exascale systems, and smaller-scale systems as well, being not only popular open-source dependencies, but are critical parts of the commercial toolchains provided by essentially all relevant vendors.
+LLVM, winner of the 2012 ACM Software System Award, has become an integral part of the software-development ecosystem for optimizing compilers, dynamic-language execution engines, source-code analysis and transformation tools, debuggers and linkers, and a whole host of programming-language and tool chain-related components. Now heavily used in both academia and industry, where it allows for rapid development of production-quality tools, LLVM is increasingly used in work targeted at HPC. LLVM components are integral parts of the programming environments on our upcoming Exascale systems, and smaller-scale systems as well, being not only popular open-source dependencies, but are critical parts of the commercial tool chains provided by essentially all relevant vendors.
 
 \paragraph{Key Challenges}
 
@@ -19,10 +19,10 @@ There are two remaining challenges that we are addressing: The first is that dep
 
 \paragraph{Solution Strategy}
 We are developing two significant enhancements to LLVM's core infrastructure, and many other LLVM components. These enhancements are grouped into two categories:
-\begin{itemize}
+\begin{enumerate}
 \item Enhancements to LLVM's inter-procedural analysis, and an improved representation of parallelism constructs, to allow LLVM to propagate information across boundaries otherwise imposed by parallelism constructs, and to allow LLVM to transform the parallelism constructs themselves.
 \item Enhancements to LLVM's loop-optimization infrastructure to allow the direction of a sequence of loop transformations to loop nests, exposing these features to users through Clang pragmas (in addition to being available at an API level to tools such as autotuners), enabling those transformations to execute as specified, and otherwise enhancing the loop-optimization infrastructure.
-\end{itemize}
+\end{enumerate}
 
 As part of this project, we're investigating both fundamental 
 IR level enhancements (as part of the Kitsune development), as
@@ -38,9 +38,9 @@ To address autotuning and the need for code specialization, we are developing a 
 For parallelism, we have implemented several new features in upstream LLVM
 including an OpenMP-aware optimization pass that performs various optimizations
 specific to OpenMP code on the host and device (=GPU)~\cite{OpenMPOpt2020}. It
-is run by default with medium and high optimizations enabled (``-O2'' and
-``-O3''). In addition to transformations it will provide user feedback in form
-of optimization remarks (``-Rpass=openmp-opt'')
+is run by default with medium and high optimizations enabled (\texttt{-O2} and
+\texttt{-O3}). In addition to transformations it will provide user feedback in form
+of optimization remarks (\texttt{-Rpass=openmp-opt})
 
 Extension to the Attributor inter-procedural optimization framework that
 transparently applies transformations across the  boundary between sequential
@@ -53,7 +53,7 @@ view. Our approach was already discussed with the community and needs to be
 further refined and tested.
 
 For loop optimizations, we have implemented several new features in LLVM and
-Clang, including the OpenMP 5.1 ``tile'' directive and the ``unroll'' directive~\cite{kruse2021openmpbooth}.
+Clang, including the OpenMP 5.1 \texttt{tile} directive and the \texttt{unroll} directive~\cite{kruse2021openmpbooth}.
 We also continued development of the OpenMPIRBuilder which refactors Clang's OpenMP lowering such that is can also be used from MLIR, specifically Flang.
 The OpenMPIRBuilder now also supports OpenMP 5.1 loop transformations and Clang can make use of either of the two lowering paths~\cite{kruse2021clangast}.
 
@@ -63,7 +63,7 @@ Additional supported loop transformations include array packing, unroll, unroll-
 
 We have developed a prototype C++ compiler, based on Clang, supporting an
 extension that enables programmers to embed (domain specific) languages inside
-their ``C-like'' programs~\cite{finkel2020dsl}. That is, we allow a new type of
+their C-like programs~\cite{finkel2020dsl}. That is, we allow a new type of
 Clang plugin to bridge the gap between classical code, e.g., C or C++, and code
 written in a different language, e.g., a quantum or tensor domain specific
 language (DSL). The latter two examples have been successfully prototyped as
@@ -94,7 +94,7 @@ enhancements upstream and more capabilities for the OpenMP-aware aware
 optimization pass. Generalization of the latter to other parallel models is
 planned as well.
 
-Building on existing and in-progress MLIR efforts, e.g.
+Building on existing and in-progress MLIR efforts, e.g.,
 FLACC~\ref{s:flacc} and Kitsune, we will develop Tapir backends for
 multiple parallel MLIR dialects, including the OpenACC MLIR dialect.
 This should show the advantages of multiple levels of parallelism

@@ -5,10 +5,10 @@ UPC++~\cite{upcxx-site} is a C++ library
 supporting Partitioned Global Address Space (PGAS) programming~\cite{upcxx-ipdps19,upcxx-guide,upcxx-spec}.
 The current UPC++ v1.0 (distinct from an earlier prototype designated V0.1
 \cite{zheng:ipdps14}) is distinguished by three guiding principles.
-First, all communication is \emph{asynchronous}, allowing overlap of computation and
+First, all communication is asynchronous, allowing overlap of computation and
 communication, and encouraging programmers to avoid global synchronization. Second, all communication
-is \emph{syntactically explicit}, encouraging programmers to consider the costs of communication. Third,
-UPC++ encourages the use of \emph{scalable data-structures},
+is syntactically explicit, encouraging programmers to consider the costs of communication. Third,
+UPC++ encourages the use of scalable data-structures,
 avoiding non-scalable library features.
 These principles provide a programming model that can
 scale efficiently to potentially millions of processors.
@@ -53,11 +53,11 @@ UPC++ supports asynchronous communication via one-sided RMA and RPC.
 
 \paragraph{Solution Strategy}
 
-The UPC++ project has two primary thrusts:
+The UPC++ project has two primary thrusts.
 
 % Non-use of a enumerated environment is intentional, due to excessive whitespce
 
-\textbf{1. Increased performance through reduced communication costs:} 
+\subparagraph{Increased Performance through Reduced Communication Costs} 
 %The UPC++ programmer can expect communication to run at close to hardware speeds.
 UPC++ leverages the underlying GASNet-EX communication library to deliver efficient, low-overhead RMA and RPC on HPC systems.
 This includes accelerated transfers to and from GPU memory.
@@ -65,7 +65,7 @@ UPC++ features encourage aggressively asynchronous execution,
 enabling applications to overlap the latency of communication with
 available computation or additional communication.
 
-\textbf{2. Improved productivity:} UPC++'s treatment of asynchronous
+\subparagraph{Improved Productivity} UPC++'s treatment of asynchronous
 execution utilizes futures and promises, which simplify the management of
 asynchrony.
 The \texttt{upcxx::copy} API provides concise expression of RMA involving any
@@ -94,7 +94,7 @@ convert the inter-node communication from MPI message passing to UPC++
 RMA~\cite{pawatm21-upcxx-kokkos}.  The primary goal of this study was to
 demonstrate that comparable programming effort with UPC++ and MPI could yield
 comparable performance. However the finding was that with both versions written
-na\"{\i}vely, the UPC++ RMA version gave measurably superior performance.
+naively, the UPC++ RMA version gave measurably superior performance.
 Figure~\ref{fig:paw21_interop_strong_scaling} shows a strong scaling study on
 OLCF's Summit, comparing performance using 
 CUDA-aware IBM Spectrum MPI versus UPC++ with the CUDA memory kind.
@@ -115,8 +115,8 @@ CUDA-aware IBM Spectrum MPI versus UPC++ with the CUDA memory kind.
 
 The most notable work in the past year has been in three areas:
 
-\textbf{1. Memory Kinds.}
-UPC++ ``memory kinds'' provide a unified abstraction for communication between
+\subparagraph{Memory Kinds}
+UPC++ memory kinds provide a unified abstraction for communication between
 combinations of device (e.g. GPU) and host memory, possibly remote.  By
 unifying the expression of data transfer among the various memories in a
 heterogeneous system, these abstractions enable ECP
@@ -130,11 +130,11 @@ Support for such offload on the OLCF's
 Summit was initially demonstrated in October 2020, and subsequent releases
 have hardened and tuned the implementation.
 
-\textbf{2. Training and Outreach.}
+\subparagraph{Training and Outreach}
 The UPC++ team continues outreach efforts, including a half-day UPC++
 tutorial at SC21~\cite{sc21-upcxx-tutorial} (for the second consecutive year).
 
-\textbf{3. Productivity and Performance.}
+\subparagraph{Productivity and Performance}
 Having completed the core specification and implementation of UPC++, we have
 shifted focus toward addressing improvements to productivity and performance,
 especially in response to stakeholder feedback.  The most significant
@@ -145,7 +145,7 @@ and instruction-level tuning along common critical paths.
 
 We are using OLCF's Spock (HPE Cray EX) system to implement support in UPC++ for efficient RMA
 operations targeting the memory in GPUs using the AMD HIP API.  This work
-leverages recently completed work in GASNet-EX which uses the ``ROCmRDMA''
+leverages recently completed work in GASNet-EX which uses the ROCmRDMA
 technology to allow network hardware to perform RMA operations to and from
 memory on AMD GPUs without staging through buffers in host memory.  This work is
 anticipated to appear in the Spring 2022 release of UPC++.
@@ -163,22 +163,22 @@ anticipated to appear in the Spring 2022 release of UPC++.
 Figure~\ref{fig:upcxx-spock} shows preliminary results of this work.  Solid
 lines show the flood bandwidth of put operations from local host memory to
 remote GPU memory, collected using the work-in-progress to support AMD GPUs in
-UPC++.  The `X' symbols mark data with ROCmRDMA support enabled in GASNet-EX,
-while `O' symbols mark data with that support disabled.  In the latter case,
+UPC++.  The $X$ symbols mark data with ROCmRDMA support enabled in GASNet-EX,
+while $O$ symbols mark data with that support disabled.  In the latter case,
 UPC++ uses the HIP API to stage GPU data through host memory at the remote
 host.  The dashed line shows the ratio on
 a linear scale, highlighting the magnitude of the improvement which is not
 immediately evident on the logarithmic bandwidth scale.  For transfer
-sizes up to 16KiB the improvement is over 10x.  For smaller transfers the
+sizes up to 16~KiB the improvement is over 10$\times$.  For smaller transfers the
 improvement can be nearly 60x, and for larger transfers the improvement is consistently over
-1.5x.  Benchmark results for a get operation which fetches from remote GPU
+1.5$\times$.  Benchmark results for a get operation which fetches from remote GPU
 memory are qualitatively similar.
 
 \paragraph{Next Steps}
 
-The planned work for the near-term future includes the following:
+Next steps for each effort have already been identified.
 
-\textbf{1. Memory Kinds.}
+\subparagraph{Memory Kinds}
 We will continue development of memory kinds.  The
 past releases of UPC++ targeted the hardware in Summit, while the Spring 2022
 release is anticipated to extend support to the hardware in OLCF's Spock
@@ -187,12 +187,12 @@ include other accelerators scheduled to appear in DOE's exascale systems.
 For all accelerators, transfers will be offloaded to available hardware capabilities
 by leveraging the parallel efforts in GASNet-EX.
 
-\textbf{2. Productivity and Performance.}
+\subparagraph{Productivity and Performance}
 With the help of our stakeholders, we will continue to identify and address
 portions of UPC++ where performance tuning is most needed
 and/or beneficial.  Similarly, we will continue to work with stakeholders to
 identify and implement features which improve productivity.
 
-\textbf{3. Outreach.}
+\subparagraph{Outreach}
 We will continue to engage with our users, such as by circulation of working
 group drafts of new features to solicit feedback.

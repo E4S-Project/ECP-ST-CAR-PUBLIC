@@ -171,7 +171,7 @@ Its development is largely funded as part of the ECP, with a mix of NNSA ATDM an
 \paragraph{Key Challenges}
 
 One of the biggest challenges for the Exascale supercomputing era is the proliferation of different computer architectures, and their associated mechanisms to program them.
-Vendors have an incentive to develop their own models in order to have maximum freedom of exposing special hardware capabilities, and potentially achieve ``vendor-lock-in.''
+Vendors have an incentive to develop their own models in order to have maximum freedom of exposing special hardware capabilities, and potentially achieve vendor-lock-in.
 This poses the problem for applications that they may need to write different variants of their code for different machines - an effort which can be simply not feasible for many of the larger application and library projects.
 
 The Kokkos project aims at solving this issue by providing a programming solution which provides a common interface build upon the vendor specific software stacks.
@@ -217,15 +217,12 @@ Among those proposals the team leads are abstractions for multi dimensional arra
 The team also has a central role in the primary proposal introducing heterogeneous computing into the C++ standard via the executors concept.
 
 Furthermore, certain areas of common needs between RAJA and Kokkos have emerged. 
-To avoid duplicated efforts, and leverage possible synergies the two teams are developing certain capabilities together.
-These include for example:
-\begin{itemize}
- \item advanced atomic support with memory order and memory scope exposure.
- \item common metaprogramming facilities.
- \item optional integration of Umpire memory pools into Kokkos.
- \item integration of Kokkos Tools callback mechanisms into RAJA.
- \item an extension of the RAJA performance test suite to include Kokkos variants.
-\end{itemize}
+To avoid duplicated efforts and to leverage possible synergies, the two teams are working together to develop 
+advanced atomic support with memory order and memory scope exposure
+common metaprogramming facilities,
+optional integration of Umpire memory pools into Kokkos,
+integration of Kokkos Tools callback mechanisms into RAJA, and
+an extension of the RAJA performance test suite to include Kokkos variants.
 
 \paragraph{Recent Progress}
 
@@ -239,7 +236,7 @@ Work on supporting the upcoming Exascale platforms is almost complete, with new 
 Initial application tests were successfully conducted with projects such as EXAALT/LAMMPS, ArborX, Trilinos and Cabana.
 Performance optimization work with applications is now ongoing, with a particular focus on the ORNL Frontier super computer.
 
-A training course was developed called ``The Kokkos Lectures,'' which consists of about 15 hours of recorded lessons and over 20 hands-on exercises.
+A training course was developed called \textit{The Kokkos Lectures}, which consists of about 15 hours of recorded lessons and over 20 hands-on exercises.
 It is available at \url{https://kokkos.link/the-lectures}.
 The \url{https://kokkosteam.slack.com} channel has grown dramatically in use, with about 500 users at the end of 2020, of which more than 150 are active in any given week.
 The team finished developing a full API documentation as well as adding use case descriptions for common patterns found in applications.

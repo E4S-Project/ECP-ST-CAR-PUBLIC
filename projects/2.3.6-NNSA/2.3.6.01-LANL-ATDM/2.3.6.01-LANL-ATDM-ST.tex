@@ -1,11 +1,11 @@
 \subsubsection{\stid{6.01} LANL ATDM Software Technologies}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Overview} \leavevmode \\
+\paragraph{Overview} %\leavevmode \\
 
 The LANL ATDM PMR effort is focusing on the development and use of
 advanced programming models for (ATDM) use-cases. Our current focus is on research and development
-of new programming model capabilities in the \textbf{Legion} data-centric
+of new programming model capabilities in the Legion data-centric
 programming system. Legion provides unique capabilities that align
 well with our focus on the development of tools and technologies that
 enables a separation of concerns of computational physicists and
@@ -14,12 +14,12 @@ development of significant new capabilities within the Legion runtime
 that are specifically required to support LANL's ATDM
 applications. Another key component of our work is the co-design and
 integration of advanced programming model research and development
-within \textbf{FleCSI}, a Flexible Computational Science Infrastructure. A
+within FleCSI, a Flexible Computational Science Infrastructure. A
 major benefit to the broader ECP community is the development of new 
 features in the Legion programming system which are available as free
-open-source software \url{https://gitlab.com/StanfordLegion/legion}.  
+open-source software.\footnote{\url{https://gitlab.com/StanfordLegion/legion}}
 
-The \textbf{Kitsune} Project, provides a compiler-focused infrastructure
+The Kitsune project, provides a compiler-focused infrastructure
 for improving various aspects of the exascale programming environment.
 At present, efforts are primarily focused on advanced LLVM compiler and
 tool infrastructure to support the use of a \emph{parallel-aware} IR.
@@ -29,10 +29,10 @@ infrastructure. All these efforts include interactions across ECP as well as
 with the broader LLVM community and industry.  
 
 
-The LANL ATDM \textbf{Cinema} project develops scalable solutions for data analysis as part of the Data and Visualization software stack.
+The LANL ATDM Cinema project develops scalable solutions for data analysis as part of the Data and Visualization software stack.
 Cinema is a novel database approach to saving data extracts in situ which are then available for post hoc interactive exploration.  These data extracts can include metadata, parameters, data visualizations, small meshes, output plots, etc.  Cinema workflows enable flexible data analysis using a fraction of the file storage.  Cinema ECP workflows that integrate applications, in situ and post-processing analysis are captured and curated through the Pantheon project, which is focused on reproducible ECP workflows.  By integrating E4S Spack build caches~\cite{e4s:builds} of both applications and dependent capabilities (Ascent, etc.), Pantheon workflows can be downloaded, built and run quickly enough to be useful in a variety of applications such as CI, prototyping functionality or testing analyses.  
 
-The \textbf{BEE/Charliecloud} subproject is creating software tools to increase portability
+The BEE/Charliecloud subproject is creating software tools to increase portability
 and reproducibility of scientific applications on high performance and cloud
 computing platforms.  Charliecloud \cite{priedhorskyrrandlestc2016} is an unprivileged Linux container
 runtime.  It allows developers to use the industry-standard Docker
@@ -49,16 +49,17 @@ container runtimes such as Charliecloud and Docker.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Key  Challenges} \leavevmode \\
+\paragraph{Key Challenges} %\leavevmode \\
+Each of the applications and programming models described above faces key challenges to their successful implementation and deployment.
 
-\subparagraph{Legion:}
+\subparagraph{Legion}
 
 Applications will face significant challenges in realizing sustained performance on next-generation systems. Increasing system complexity coupled with increasing scale will require significant changes to our current programming model approaches. This is of particular importance for large-scale multi-physics applications where the application itself is often highly dynamic and can exhibit high variability in resource utilization and system bottlenecks depending on what physics are currently in use (or emphasized). Our goal in the LANL ATDM PMR project is to support these highly dynamic applications on Exascale systems, providing improvements in productivity, long-term maintainability, and performance portability of our next-generation applications. 
 
-\subparagraph{FleCSI Legion integration:}
+\subparagraph{FleCSI Legion Integration}
 FleCSI is a Flexible Computational Science Infrastructure whose goal is to provide a common framework for application development for LANL's next-generation codes. FleCSI is required to support a variety of different distributed data structures and computation on these data structures including structured and unstructured mesh as well as mesh-free methods. Our work in the LANL ATDM PMR project is focused on co-designing the FleCSI data and execution model with the Legion programming model to ensure the latest advancements in the programming model and runtimes research community are represented in our computational infrastructure. A significant challenge in our work is the additional constraint that FleCSI must also support other runtime systems such as MPI. Given this constraint, we have chosen an approach that ensures functional correctness across both runtimes but that also leverages and benefits from capabilities in Legion that are not directly supported in MPI (such as task-based parallelism as a first-class construct). 
 
-\subparagraph{Kitsune:}
+\subparagraph{Kitsune}
 A key challenge to our efforts is reaching agreement within the
 broader community that a parallel IR is
 beneficial and needed within LLVM.  This not only requires showing the
@@ -98,31 +99,31 @@ that BEE and Charliecloud must take into consideration to provide a
 comprehensive solution.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Solution Strategy} \leavevmode \\
+\paragraph{Solution Strategy} %\leavevmode \\
+To mitigate these challenges, the team proposes the following actions for each effort.
 
-\subparagraph{Legion:}
+\subparagraph{Legion}
+In funded collaboration with NVIDIA, LANL and NVIDIA are developing new features in Legion to support our applications. Necessary features are identified through direct engagement with application developers and through rapid development, evaluation, and refactoring within the team. Major features include Dynamic Control Replication for improved scalability and productivity and Dynamic Tracing to reduce runtime overheads for  applications with semi-regular data dependencies such as applications with stencil-based communication patterns (Figure~\ref{fig:control-replication-performance}). 
 
-In funded collaboration with NVIDIA, LANL and NVIDIA are developing new features in Legion to support our applications. Necessary features are identified through direct engagement with application developers and through rapid development, evaluation, and refactoring within the team. Major features include Dynamic Control Replication for improved scalability and productivity and Dynamic Tracing to reduce runtime overheads for  applications with semi-regular data dependencies such as applications with stencil-based communication patterns. 
 
-
-\subparagraph{FleCSI Legion integration:}
+\subparagraph{FleCSI Legion Integration}
 LANL staff work on co-design and integration of the Legion programming system into the FleCSI framework. We have regular milestones that align well with application needs and the development of new features within Legion. 
 
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=4in]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/control-replication-performance}
-        \caption{\label{fig:control-replication-performance}\textbf{Productivity features such as Dynamic Control Replication scales well across multi-GPU systems in unstructured mesh computations.}}
+        \caption{\label{fig:control-replication-performance}Productivity features such as dynamic control replication scales well across multiGPU systems in unstructured mesh computations.}
 \end{figure}
 
 \begin{figure}[htb]
         \centering
         \includegraphics[width=4in]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/tracing-performance}
-        \caption{\label{fig:tracing-performance}\textbf{New Legion features such as Tracing will improve strong scaling in unstructured mesh computations.}}
+        \caption{\label{fig:tracing-performance}New Legion features such as tracing will improve strong scaling in unstructured mesh computations.}
 \end{figure}
 
 
-\subparagraph{Kitsune:}
+\subparagraph{Kitsune}
 Given the project challenges, our approach takes aspects of
 today's node-level programming systems (e.g. Kokkos) and
 programming languages (e.g. C++) into consideration and aims to improve
@@ -136,25 +137,25 @@ introduce new technologies via the toolchain.
 Unlike current designs, our approach introduces the notion of explicit
 parallel constructs into the LLVM IR, building
 off of work done at MIT on Tapir~\cite{2.3.6.01:kitsune:Schardl:2017}
-and the OpenCILK effort (url{https://cilk.mit.edu}). We are working with
+and the OpenCILK effort (\url{https://cilk.mit.edu}). We are working with
 MIT to extend this work as well as making some changes to fundamental data
 structures within the LLVM infrastructure to assist with and improve analysis
 and optimization passes. 
 
-\subparagraph{Cinema:}
+\subparagraph{Cinema}
 Cinema~\cite{cinema:Ahrens:SC14} is being developed in coordination with
 LANL's ECP application NGC to ensure that data collected during the simulation
-execution is of appropriate frequency, resolution, and viewport for later
+execution is of appropriate frequency, resolution, and view port for later
 analysis and visualization by scientists.  
 Cinema is essential for ECP because it embodies approaches to maximize insight from extreme-scale simulation results while minimizing data footprint.
 %Cinema is an innovative way of capturing, storing and exploring extreme scale scientific data. 
 %The LANL Cinema project is focused on delivering new visualization capabilities for creating, analyzing, and managing data forExascale scientific applications and Exascale data centers.
-Cinema capabilities provide scientists more options in analyzing and exploring the results of large simulations by providing a workflow that 1) detects features in situ, 2) captures data artifacts in Cinema databases, 3) promotes post-hoc analysis of the data, and 4) provides data viewers that allow interactive, structured exploration of the resulting artifacts. 
+Cinema capabilities provide scientists more options in analyzing and exploring the results of large simulations by providing a workflow that (1) detects features in situ, (2) captures data artifacts in Cinema databases, (3) promotes post-hoc analysis of the data, and (4) provides data viewers that allow interactive, structured exploration of the resulting artifacts. 
 Cinema database export is part of the extract generator workflow in ParaView/Catalyst and Cinema export is also available via ALPINE's Ascent infrastructure and through VisIt.   
 
 
 
-\subparagraph{Bee/CharlieCloud:}
+\subparagraph{Bee/CharlieCloud}
 The BEE/Charliecloud project is focusing first on providing support for
 containerized production LANL scientific applications across all of the
 existing LANL production HPC systems.  The BEE/Charliecloud components required
@@ -166,27 +167,28 @@ alternative container runtimes, such as Docker, Shifter, and Singularity is
 planned.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Recent Progress} \leavevmode \\
+\paragraph{Recent Progress} %\leavevmode \\
+Recent progress includes developments in Legion, FleCSI Legion integration, Kitsune, Cinema, and Bee/CharlieCloud.
 
-\subparagraph{Legion:} 
+\subparagraph{Legion} 
 One of the strengths of Legion is that it executes asynchronous tasks as if they were executed in the sequence they occur in the program. This provides the programmer with a mental model of the computation that is easy to reason about. However, the top-level task in this tree-of-tasks model can often become a sequential bottleneck, as it is responsible for the initial distribution of many subtasks across large machines. In earlier work NVIDIA developed the initial implementation of control replication, which allows the programmer to write tasks with sequential semantics that can be  transparently replicated many times, as directed by the Legion mapper interface, and run in a scalable manner across many nodes.
 Dynamic control replication is an important capability for LANL's ATDM effort, allowing our application teams to write applications with apparently sequential semantics while enabling scalability to Exascale architectures. This approach will improve understandability of application code, productivity, and composability of software and ease the burden of optimization and porting to new architectures. 
-New dynamic tracing ability has been added to Legion to allow debugging and insight in to performance optimization activities.
+New dynamic tracing ability has been added to Legion to allow debugging and insight in to performance optimization activities (Figure~\ref{fig:tracing-performance}).
 
-\subparagraph{FleCSI Legion Integration:} 
+\subparagraph{FleCSI Legion Integration} 
 A key component of LANL's Advanced Technology  Development and Mitigation effort is the development of a flexible computational science infrastructure (FleCSI) to support a breadth of application use cases for our Next Generation Code. FleCSI has been co-designed with the Legion programming system in order to enable our Next Generation Code to be performance portable and scalable to future Exascale systems. Legion provides the underlying distributed and node-level runtime environment required for FleCSI to leverage task and data parallelism, data dependent execution, and runtime analysis of task dependencies to expose parallelism. We completed testing of Legion on Sierra with a Visco-Plastic Self-Consistent, VSCP, application to investigate initial performance on GPU systesm.
 
-\subparagraph{Kitsune:}
+\subparagraph{Kitsune}
 Our primary focus is the delivery of capabilities for LANL's ATDM
 Ristra application (AD 2.2.5.01).  In support of the requirements for
-Ristra, we are targeting the lowering of \textit{``forall''} constructs,
+Ristra, we are targeting the lowering of \texttt{forall} constructs,
 including Kokkos \texttt{parallel\_for} construct, directly into the
 parallel representation.  At present, this works for many C++ constructs
 (e.g., for and for-range statements).  We can target this code to different
 runtimes and architectures via the compiler and thus avoid reimplementation
 of Kokkos or fundamental C++ constructs. In addition we are working to replace
 LLVM's dominator tree, a key data structure for optimizations including
-parallelization and memory usage analysis, with a \emph{dominator directed-acyclic-graph}
+parallelization and memory usage analysis, with a dominator directed-acyclic-graph
 (DAG).  This capability is still in its early evaluation state and we continue to
 explore correctness and compatibility within the overall LLVM infrastructure. We are
 actively watching recent events within the LLVM community around
@@ -198,8 +200,7 @@ At present we are successfully compiling our full applications using the new
 toolchain.  We continue to test, debug, and work towards improved optimizations
 and performance. 
 
-\subparagraph{Cinema:}
-
+\subparagraph{Cinema}
 Recent Cinema progress this past year has focused on expanding python-based Cinema functionality and the development of the Composable Image Set (CIS) specification. This new CIS specification can be used to save layers of float-value png images that can be combined to generate composited visualizations post hoc in a more flexible and interactive approach.  An example of the new CIS format is shown in Figure~\ref{fig:cinema-cis} using a groundwater data set~\cite{cis:garcia:limestone}.  The two materials in the simulation--stone and water streamlines--are separately saved.  Post hoc, a visualization can be generated by colormapping and shading each layer.  Different layers can be combined to form a composited visualization.
 
 %% Refresh 2022-02
@@ -213,7 +214,7 @@ The Cinema Python module, cinemasci, has been successfully deployed and passes u
 	\includegraphics[width=0.15\textwidth]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/cinema-cis-streamlines.png}
 	\includegraphics[width=0.15\textwidth]{projects/2.3.6-NNSA/2.3.6.01-LANL-ATDM/cinema-cis-stone-water.png}
 	\caption{
-		In this example of the new Cinema CIS format, a groundwater simulation can be split into water streamlines and stone layers.  From left to right: the stone layer has a cool-warm colomap applied post hoc; the same stone layer in grayscale;  the water streamlines are colormapped in inferno;  the stone layer and the water streamline layers are separately colormapped and then composited to form the final visualization image.  
+		In this example of the new Cinema CIS format, a groundwater simulation can be split into water streamlines and stone layers.  From left to right: the stone layer has a cool-warm colormap applied post hoc; the same stone layer in grayscale;  the water streamlines are colormapped in inferno;  the stone layer and the water streamline layers are separately colormapped and then composited to form the final visualization image.  
 		\label{fig:cinema-cis}
 	}
 \end{figure}
@@ -245,9 +246,9 @@ The Cinema team has also been collaborating with the E4S team to leverage the E4
 Recent Charliecloud progress has focused on understanding and documenting best
 practices for running large scale MPI jobs using containerized runtimes.
 Charliecloud is enhancing support for multiple MPI implementations.
-Charliecloud is available at https://github.com/hpc/charliecloud and is
+Charliecloud is available at \url{https://github.com/hpc/charliecloud} and is
 distributed inside of Debian and Gentoo Linux distributions as well as being
-part of OpenHPC.  Charliecloud won an 2018 R\&D-100 award.
+part of OpenHPC.  Charliecloud won an 2018 R\&D~100 award.
 
 BEE fully supports launching Charliecloud containers on all LANL HPC systems.
 It can also launch containers on AWS and OpenStack clouds such as NSF
@@ -255,15 +256,16 @@ Chameleon.  BEE also supports interactive launching of jobs with the SLURM
 resource manager. BEE was shown at the end of FY19 to support a complex multiphysics application with setup, in situ visualization and checkpoint-restart on a production system at LANL.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Next Steps} \leavevmode \\
+\paragraph{Next Steps} %\leavevmode \\
+The next steps for each effort have already been identified.
 
-\subparagraph{Legion:} 
+\subparagraph{Legion} 
 Focus on hardening and scalability of Legion's Dynamic Control Replication and development of Dynamic Tracing for application use-cases. 
 
-\subparagraph{FleCSI Legion Integration:} 
+\subparagraph{FleCSI Legion Integration} 
 Support the Ristra Application milestone to run on Sierra and Trinity.
 
-\subparagraph{Kitsune:}
+\subparagraph{Kitsune}
 The key next steps for our efforts are to expand our test cases by
 increasing the complexity of the codes we're compiling, supporting
 additional forms of Kokkos constructs, and support other parallel
@@ -283,7 +285,7 @@ With the addition to Fortran to LLVM via the Flang front end we will
 also look to add support for lowering to the parallel IR in those
 use cases.
 
-\subparagraph{Cinema:}
+\subparagraph{Cinema}
 In FY22, Cinema will be working with our ST partners to deploy additional Cinema functionality, exploring ECP use cases for the new CIS format and delivering reproducible Pantheon workflows that encapsulate integrations with Cinema partners.  
 
 

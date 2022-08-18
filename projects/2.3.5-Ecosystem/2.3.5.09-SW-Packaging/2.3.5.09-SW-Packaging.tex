@@ -4,8 +4,8 @@
 \paragraph{Overview}
 
 ECP is tasked with building the first capable exascale ecosystem, and the
-foundation of this ecosystem, per ECP's mission statement, is {\it an
-integrated software stack}.  Building and integrating software for
+foundation of this ecosystem, per ECP's mission statement, is an
+integrated software stack.  Building and integrating software for
 supercomputers is notoriously difficult, and an integration effort for
 HPC software at this scale is unprecedented.  Moreover, the software
 deployment landscape is changing as containers and supercomputing-capable
@@ -21,7 +21,7 @@ technologies can meet the demands of the ECP ecosystem.  The project
 provides Spack packaging assistance for ST users and ECP facilities, and
 it develops new capabilities for Spack that enable automated deployments
 of software at ECP facilities, in containerized environments, and as part
-of continuous integration.  Concurrently, the ``Supercontainers''
+of continuous integration.  Concurrently, the Supercontainers
 sub-project is investigating and developing technologies and best
 practices that enable containers to be used effectively at ECP
 facilities. Supercontainers will ensure that HPC container runtimes will
@@ -35,18 +35,18 @@ Historically, building software to run as fast as possible on HPC
 machines has been a manual process.  Users download source code for
 packages they wish to install, and they build and tune it manually for
 high performance machines. Spack has automated much of this process, but
-it still requires that users {\it build} software.  Spack needs
+it still requires that users build software.  Spack needs
 modifications to enable it to understand complex microarchitecture
 details, ABI constraints, and runtime details of exascale machines.  This
 project will enable binary packaging, and it will develop new
 technologies that enable the same binary packages to be used within
-containers {\it or} in bare metal deployments on exascale hardware.
+containers or in bare metal deployments on exascale hardware.
 
 The Supercontainer effort faces similar challenges to deploying
 containers on HPC machines. Container technology most notably enables
 users to define their own software environments, using all the facilities
-of the containerized host OS.  Users can essentially bring {\it their
-own} software stack to HPC systems, and they can snapshot an entire
+of the containerized host OS.  Users can essentially bring their
+own software stack to HPC systems, and they can snapshot an entire
 application deployment, including dependencies, within a container.
 Containers also offer the potential for portability between users and
 machines. The goal of moving an HPC application container from a laptop
@@ -54,7 +54,7 @@ to a supercomputer with little or no modification is in reach, but there
 are a number of challenges to overcome before this is possible on
 Exascale machines.  Solutions from industry, such as Docker, assume that
 containers can be built and run with elevated privileges, that containers
-are isolated from the host network, filesystem, and GPU hardware, and
+are isolated from the host network, file system, and GPU hardware, and
 that binaries within a container are unoptimized and can run on any chip
 generation from a particular architecture. These go against the
 multi-user, multi-tenant user environment of most HPC centers, and
@@ -65,19 +65,19 @@ optimized containers may not be portable across systems.
 The Spack project supports ST teams by developing portable build recipes
 and additional metadata for the ECP package ecosystem.  The end goal is
 to provide a packaging solution that can deploy on bare metal, in a
-container, or be {\it rebuilt} for a new machine on demand. Spack bridges
+container, or be rebuilt for a new machine on demand. Spack bridges
 the portability divide with portable package recipes; specialized
 packages can be built per-site if needed, or lowest-common denominator
 packages can be built for those cases that do not need highly optimized
 performance.  Packages are relocatable and can be used outside their
-original build environment.  Moreover, Spack provides {\it environments}
+original build environment.  Moreover, Spack provides environments
 that enable a number of software packages to be deployed together either
 on an HPC system or in a container.
 
 The Supercontainer project seeks to document current practice and to
 leverage existing container runtimes, but also to develop new enabling
 technologies where necessary to allow containers to run on HPC machines.
-Several HPC container runtimes (Shifter, Charliecloud, and Singularity)
+Several HPC container runtimes (e.g., Shifter, Charliecloud, Singularity)
 already exist, and this diversity enables wide exploration of the HPC
 container design space, and the Supercontainers project will work with
 their developers to address HPC-specific needs, including container and
@@ -99,44 +99,34 @@ interested in containerizing their applications. We will work to enable
 these teams to deploy reproducible, minimally-sized container images that
 support multiple AD software ecosystems.
 
-\paragraph{Recent Progress}
+\paragraph{Recent Progress} Recent progress in this area includes several key developments.
+%
+Spack's concretizer was completely reworked, and new code was developed to handle bootstrapping it from binary packages.
+%
+Pull request testing was implemented across the entire Spack project. Packages
+are built on each pull request by using cloud infrastructure and ECP EA architecture runners.
+%
+This effort also worked with the E4S and ST teams to ensure E4S packages can build on EA systems.
+%
+A GitHub bot (spackbot) was developed to automatically notify maintainers of changes to their packages and to interact with CI pipelines.
+%
+Multiple container runtimes were tested on pre-exascale systems.
+%
+Finally, unprivileged container builds were investigated, and the results were accepted as an SC21 paper, ``Minimizing privilege for building HPC containers.''
 
-\begin{enumerate}
-\item Completely reworked Spack's concretizer, developed new code to
-      handle bootstrapping it from binary packages.
 
-\item Implemented pull request testing across entire Spack project. Packages
-      are built on each pull request using cloud infrastructure and
-      ECP EA architecture runners.
-
-\item Worked with E4S team and ST teams to get E4S packages building on
-      EA systems.
-
-\item Developed an GitHub bot (``spackbot'') to automatically notify
-      maintainers of changes to their packages and to interact with CI pipelines.
-
-\item Continued to test multiple container runtimes on pre-exascale systems.
-
-\item Investigated unprivileged container builds and wrote result in accepted
-      SC21 paper: ``Minimizing privilege for building HPC containers''.
-
-\end{enumerate}
-
-\paragraph{Next Steps}
-
-\begin{enumerate}
-\item Further integrate testing with CI and rework test dependency model to
-      support more easily building tests after installation.
-
-\item Work with E4S team to provide support for packaging issues on deployed
-      exascale systems.
-
-\item Improve Spack environments and increase build reproducibility.
-
-\item Work with Cray/HPE to improve Spack support for Cray programming environment.
-
-\item Container deep dives with application teams to demonstrate successful
-      and scalable deployment on EA and exascale machines.
-
-\item Continue container training sessions, outreach efforts, and tutorials.
-\end{enumerate}
+\paragraph{Next Steps} A series of efforts have been identified for the next phase of the project.
+%
+The team will further integrate testing with CI and rework the test dependency model to
+support more easily building tests after installation.
+%
+The team will continue to work with the E4S team to provide support for packaging issues on deployed exascale systems.
+%
+Spack environments will be improved to increase build reproducibility.
+%
+The team will work with Cray/HPE to improve Spack support for the Cray programming environment.
+%
+Container deep dives with application teams will be conducted to demonstrate successful
+and scalable deployment on EA and exascale machines.
+%
+Finally, container training sessions, outreach efforts, and tutorials will continue.

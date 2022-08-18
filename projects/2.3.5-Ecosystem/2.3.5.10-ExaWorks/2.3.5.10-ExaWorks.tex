@@ -5,6 +5,15 @@
 % ECP ST Project Overviews: A significant portion of this report includes 2-page synopses of each
 % ECP ST project (Section 4), including a project overview, key challenges, solution strategy, recent progress and next steps
 
+\begin{wrapfigure}[16]{r}{0.4\textwidth}
+\vspace{-0.25in}
+\begin{center}
+    \includegraphics[width=0.37\textwidth]{projects/2.3.5-Ecosystem/2.3.5.10-ExaWorks/exaworks-circle.png}
+  \end{center}
+  \vspace{-0.2in}
+    \caption{ExaWorks tool kit.\label{fig:arch}}
+\end{wrapfigure} 
+
 \paragraph{Overview} 
 Exascale computers will offer transformative capabilities to combine
 data-driven and learning-based approaches with traditional simulation
@@ -38,35 +47,29 @@ tasks in dynamic workflows. On the non-technical side, the myriad WMSs
 that exist, absence of reusable WMS components, and lack of user
 guidance when selecting a WMS has led to a disjoint workflows community
 that tends toward building ad hoc or bespoke solutions rather than adopting
-and extending existing solutions. Important challenges include: 
-\begin{enumerate}
-    \item Workflows community: the workflows, applications, and facility communities are disjoint. 
+and extending existing solutions. Important challenges are outlined below. 
+
+    \subparagraph{Workflows Community} The workflows, applications, and facility communities are disjoint. 
     Efforts are needed to bring these groups together to define, develop, and integrate common workflow components. % and interfaces. 
     %and to work together to develop, integrate, and support these components.
-    \item Scheduling: exascale workflows must manage the efficient execution of diverse
+    \subparagraph{Scheduling} Exascale workflows must manage the efficient execution of diverse
     tasks (e.g., in runtime, resource requirements, single/multi-node) with complex interdependencies on heterogeneous resources. 
-    \item Scale and performance: emerging workflows feature huge ensembles of short-running jobs, 
+    \subparagraph{Scale and Performance} Emerging workflows feature huge ensembles of short-running jobs, 
     which can create millions or even billions of tasks that need to be rapidly scheduled and executed.
-    \item Coordination and communication: workflows depend on coordination between the workflow and 
+    \subparagraph{Coordination and Communication} Workflows depend on coordination between the workflow and 
     the tasks within it, a need that requires efficient exchange of data following various communication patterns.
     %\item Fault tolerance: the enormous number of computing elements and workflow tasks increases 
     %the likelihood of encountering faults within a workflow at the system level and from the millions of concurrent tasks. 
-    \item Portability: WMSs are tested on a handful of systems and the frequency by which
+    \subparagraph{Portability} WMSs are tested on a handful of systems and the frequency by which
     system hardware and software change makes it impossible to guarantee that a workflow will work on a system in the future.
-\end{enumerate}
 
-\begin{wrapfigure}{r}{0.4\textwidth}
-\begin{center}
-    \includegraphics[width=0.37\textwidth]{projects/2.3.5-Ecosystem/2.3.5.10-ExaWorks/exaworks-circle.png}
-  \end{center}
-  \vspace{-0.25in}
-  \caption{ExaWorks Toolkit\label{fig:arch}}
-\end{wrapfigure} 
+
+
 
 \paragraph{Solution Strategy}
 The ExaWorks project lays the foundation for an inherently
-\textit{new approach} to workflows: establishing an SDK (see
-Figure~\ref{fig:arch}) by assembling components from existing WMSs
+new approach to workflows: establishing an SDK (Figure~\ref{fig:arch}) 
+by assembling components from existing WMSs
 and defining new component interfaces. 
 The ExaWorks SDK provides a robust, well-tested, well-documented,
 and scalable set of tools and components that can be combined to enable diverse teams to
@@ -109,7 +112,7 @@ to collectively address workflows challenges.
 
 
 
-In this period of the project we have focused on addressing our goals outlined above. 
+In this period of the project, we focused on addressing our goals outlined above. 
 %instantiating the SDK, defining and developing
 %the first component interface, working with ECP applicaiton teams, and engaging
 %the workflows community. 
@@ -149,7 +152,7 @@ The ExaAM workflow is composed of several application codes, each capturing a
 different scale or physics of the problem.  Each stage feeds
 information to the next stage, and iteration can occur across stages.  Some
 stages leverage CPU's and others GPU's. Several stages are themselves small
-workflows typically leveraging the \textit{ensemble} motif. Thus, the ExaAM
+workflows typically leveraging the ensemble motif. Thus, the ExaAM
 workflow requires integration of multiple physics applications and when
 executed at full scale will require complex orchestration of many
 sub-workflows.  

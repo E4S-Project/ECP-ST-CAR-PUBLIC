@@ -32,7 +32,7 @@ addressing.
 
 AML provides explicit, application-aware memory management for deep memory
 systems.  It offers a collection of building blocks that
-are \emph{generic}, \emph{customizable}, and \emph{composable}.
+are generic, customizable, and composable.
 Applications can specialize the implementation of each offered abstraction
 and can mix and match the components as needed.  AML building blocks can be
 used to create, for example, mechanisms to replicate data across memory
@@ -50,12 +50,14 @@ dynamically and asynchronously move or transform data to optimize for a particul
 device or to best take advantage of the memory hierarchy.
 
 \begin{wrapfigure}[6]{r}{.18\textwidth}
-%\vspace{-12pt}%
+\vspace{-12pt}
 \includegraphics[width=.18\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/aml-components}
+\caption{AML components.}
+\label{fig:aml-components}
 \end{wrapfigure}
 AML components are built on top of hardware drivers and system
 libraries (libnuma, hwloc, accelerator libraries, other ECP products).
-The figure on the right depicts the major components of AML, including:
+Figure~\ref{fig:aml-components} depicts the major components of AML, including:
 \begin{itemize}
 \item Placement: mechanisms to decide where data lives,
 \item Layout: descriptions of the shape of applications data,
@@ -89,18 +91,18 @@ requests need to be performed at once, lowering the overhead of these types
 of movement.
 
 Furthermore, we developed for our ExaSMR collaborators a new feature
-inspired by OpenMP 5 \emph{custom mappers}. An OpenMP mapper makes it
+inspired by OpenMP 5 custom mappers. An OpenMP mapper makes it
 possible to describe which parts of a structure should be mapped onto
 accelerator devices. As it is a recent addition to the standard, it is
 currently poorly supported by compilers and lacks many features. For
 example, its current design is limited in its ability to filter or
 reorganize memory during the mapping process. We are using our
-\emph{tiling} abstraction to build a more flexible interface for such a
+tiling abstraction to build a more flexible interface for such a
 feature.    Finally, we recently introduced in the library a new facility
 to create custom allocators, on top of our placement building block
 (areas). These custom allocators offer a similar interface to the standard
 malloc/free C APIs, but allow for customization of the algorithm used to
-manage chunks of free memory. For example, we offer allocators that don't
+manage chunks of free memory. For example, we offer allocators that do not
 release memory to the devices on \texttt{free}, instead keeping it for
 future allocation requests, or allocators that always use the same chunk
 size for all requests. This new allocator facility should improve the
@@ -119,7 +121,7 @@ successfully.
 
 In a past collaboration with the author of the XSBench application, we
 demonstrated a consistent speedup across a variety of shared memory systems
-using the AML replicaset abstraction. As depicted in the figure below, we were
+using the AML replicaset abstraction. As depicted in Figure~\ref{fig:aml-performance}, we were
 able to outperform or match existing solutions involving OpenMP or MPI by
 using this abstraction. Since the previous iteration of this report, we
 also implemented the mapper abstraction described above. We are planning to
@@ -132,6 +134,7 @@ application while minimizing changes in the original code.
 \includegraphics[width=.8\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/aml-xsbench}
 \caption{Performance of AML replicaset on different hardware
 architectures}
+    \label{fig:aml-performance}
 \end{figure}
 
 We will continue to improve on our mapper facility based on the feedback

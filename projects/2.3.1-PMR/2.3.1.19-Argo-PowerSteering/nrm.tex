@@ -40,6 +40,13 @@ in the sense that it performs an active accounting of two types of interfaces
 for those workloads: sensors and actuators. These abstracted components are
 available through an upstream API which enables their discovery and management.
 
+\begin{wrapfigure}[15]{r}{.58\textwidth}
+%\vspace{-3.0em}
+  \includegraphics[width=.58\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/sensors}
+  \caption{NRM sensor output.}
+  \label{fig:argo-sensors}
+\end{wrapfigure}
+
 The NRM daemon supports power actuators, as well as sensors based on CPU counters
 and power information. We also provide a simple API that application processes
 can use to periodically update the NRM on their progress. This gives NRM
@@ -47,20 +54,19 @@ reliable feedback on the efficacy of its power policies, and it can also
 be used for a more robust identification of the critical path, rather than
 relying on heuristics based on performance counters.
 
-\begin{wrapfigure}[12]{r}{.58\textwidth}
-  \includegraphics[width=.58\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/sensors}
-\end{wrapfigure}
 In addition to those capabilities, NRM's configuration format allows for
 the configuration of actuators and active polling sensors based on arbitrary
-executables. The figure on the right shows a reading of NRM's sensor
+executables. Figure~\ref{fig:argo-sensors} shows a reading of NRM's sensor
 outputs for two RAPL sensors along with CPU counter instrumentation. In order
 to provide these capabilities, the NRM daemon manages the launching, management,
 and stopping of parallel workloads through a unified interface. Resources
 can be dynamically reconfigured at run time; these interfaces are provided
 for use from applications and from global services.
 
-\begin{wrapfigure}[10]{l}{.38\textwidth}
+\begin{wrapfigure}[12]{l}{.38\textwidth}
 \includegraphics[width=.38\textwidth]{projects/2.3.1-PMR/2.3.1.19-Argo-PowerSteering/cpd}
+\caption{Control Problem Description (CPD).}
+\label{fig:argo-nrm-cpd}
 \end{wrapfigure}
 Other than sensor and actuator accounting capabilities, NRM provides
 optional support for autonomic node management. This support is provided through
@@ -69,8 +75,8 @@ expressed in terms of available nodes and sensors. These goals and
 constraints can be inspected by the users, global services (GRM), and
 applications through NRM's unified interface. Inspection is achieved through
 the emission of a Control Problem Description (CPD), which outlines active
-sensors, actuators, goals, and constraints. This scheme is outlined in the
-figure on the left.
+sensors, actuators, goals, and constraints. This scheme is outlined in 
+Figure~\ref{fig:argo-nrm-cpd}.
 
 \paragraph{Recent Progress}
 
@@ -87,11 +93,11 @@ improvement of the python interface offered by NRM.
 We continue to improve our support for various sensors expected to be of
 value on exascale systems, with the inclusion of an OMPT interface to
 monitor OpenMP activity in controlled applications similar to our existing
-PMPI support. 
+PMPI support.
 
 Our support for actuators is also growing, with the support for launching
 an arbitrary command as an actuator, including the ability of the command
-to receive information (pid) about an application as arguments. 
+to receive information (pid) about an application as arguments.
 
 We continue supporting the \texttt{libnrm} C library that can be linked to
 applications in order to provide reports on application progress to NRM. We
@@ -118,7 +124,7 @@ which contains only public information.
 We are working on significantly improving the handling of sensor readings
 (events) within the NRM. This includes gathering more metadata about the
 physical location (on the topology) and scope (logic section of
-code/thread/rank) that sensors report information about.  We are also
+code/thread/rank) that sensors report information about. We are also
 looking into a more flexible mechanism to handle smoothing/integration of
 sensor data across time: indeed, a critical component of any control loop
 is its ability to understand how the system behaved since the last control

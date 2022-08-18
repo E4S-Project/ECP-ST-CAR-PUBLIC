@@ -19,7 +19,7 @@ announced in the next few years. We highlight the four primary challenges here:
 \item 
 The next three supercomputers that will be deployed will have
 three different accelerators from AMD, Intel and NVIDIA. While we have been expecting diversity of architectures, three
-different architectures in such a short timeframe adds pressure on the portability
+different architectures in such a short time frame adds pressure on the portability
 solutions such as Kokkos Kernels to optimize and support the kernels on all the platforms.
 \item
 The design of several ECP applications and a software stack that rely on a component-based
@@ -38,34 +38,32 @@ portable kernels from scratch, and to deploy them in a robust software ecosystem
 Kernels project will pursue all of these choices in an effort to address these challenges.
 
 \paragraph{Solution Strategy}
+To mitigate these challenges, the team proposes the following actions.
 
-Our primary solution strategy to address these challenges are:
-\begin{enumerate}
-    \item \textbf{Codesign portable kernels with vendors and applications:}
+
+    \subparagraph{Codesign Portable Kernels with Vendors and Applications}
     We rely on codesign of Kokkos Kernels implementations for
     specializations that are key to the performance of ECP applications. This
     requires tuning kernels even up to the problem sizes that are of interest
     to our users. Once we have developed a version, we provide these
     to all the vendors so their teams can optimize these kernels even
     further in vendor-provided math libraries.
-   \item \textbf{Emphasis on software support and usability:}
+   \subparagraph{Emphasis on Software Support and Usability}
 	The Kokkos Kernels project devotes a considerable amount of time working with
 	ECP applications, integrating the kernels into application codes, tuning
 	for application needs, and providing tutorials and user support. We invest
 	in delivering a robust software ecosystem that serves the
 	needs of diverse ECP applications on all platforms of interest.
-   \item \textbf{Invest in algorithmic research to reduce latency costs and new accelerator focused approaches:} 
-   To resolve latency cost issues, the Kokkos Kernels team is considering several solutions from computer science
-   perspectives and also from algorithmic applied mathematics perspectives. 
+   \subparagraph{Invest in Algorithmic Research to Reduce Latency Costs and New Accelerator-Focused Approaches} To resolve latency cost issues, the Kokkos Kernels team is considering several solutions from computer science perspectives and also from algorithmic applied mathematics perspectives. 
    For example, from a computer science perspective, we are focusing on the
    use of streams or other latency reducing techniques such as cuda graphs. From
    the applied mathematics perspective we are developing new algorithms such
    as cluster-based approaches for preconditioners, such as Gauss-Seidel preconditioners,
    to reduce the number of kernel launches. 
-\end{enumerate}
+
 
 \paragraph{Recent Progress}
-\begin{enumerate}
+\begin{itemize}
 \item New batched linear solver algorithms are being developed in support of ECP applications (Pele, XGC).
 Specifically, a preconditioned batched GMRES is now available and provides good performance on multiple GPU
 architectures of interest to ECP.
@@ -77,7 +75,7 @@ portability for the libraries and applications we support (Trilinos, PETSc, ExaW
 \item Kokkos Kernels team is currently updating documentation and wiki pages to keep up with release 3.6.0
 new features. Adjustments to tutorial are being made when necessary to ensure the new capabilities are
 advertised appropriately.
-\end{enumerate}
+\end{itemize}
 
 \paragraph{Preliminary Experiences on Early Access systems}
 Kokkos Kernels engages all ECP facilities to ensure the library development is taking into account
@@ -91,18 +89,18 @@ resulted in significant improvements for our SYCL backend support.
 
 \paragraph{Next Steps}
 
-Kokkos Kernels team is focused on:
-\begin{enumerate}
-	\item \textbf{A major software release}: Kokkos ecosystem 4.0 release 
+The Kokkos Kernels team has identified the following efforts for the next phase of the project.
+
+	\subparagraph{A Major Software Release} Kokkos ecosystem 4.0 release 
 	will be available to the ECP applications in FY 2022. This includes several new 
 	kernels that are requested by ECP applications, performance improvements of
 	kernels that are already being used by ECP applications and further support for
         new SYCL and OpenMP Target to enable applications to be tested on Intel architectures.
-	\item \textbf{Developing new sparse batched and block sparse kernels}: The team continues
+	\subparagraph{Develop New Sparse Batched and Block-Sparse Kernels} The team continues
         to work on sparse batched linear algebra kernels and associated dense batched kernels.
         Additionally, more support for BsrMatrix is forthcoming with Matrix-Matrix multiplication,
         Jacobi and Gauss-Seidel algorithms.
-	\item \textbf{Collaboration with vendors and facilities}: Kokkos Kernels' team is
+	\subparagraph{Collaborate with Vendors and Facilities} The Kokkos Kernels' team is
         continually working with vendors and facilities to improve the software environment
         on available supercomputers and early access systems.
-\end{enumerate}
+

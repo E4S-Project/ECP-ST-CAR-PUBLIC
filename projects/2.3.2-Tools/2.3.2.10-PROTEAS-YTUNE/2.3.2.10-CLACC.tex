@@ -28,13 +28,13 @@ community to be challenging to extend and, especially within the DOE,
 is losing favor to Clang and LLVM for new compiler research and
 development efforts.
 
-\textit{Clacc}~\cite{clacc:2018:denny} is a major component of
+Clacc~\cite{clacc:2018:denny} is a major component of
 PROTEAS-TUNE.  Overall, the goal is to build on Clang and LLVM to
 develop an open-source, production-quality OpenACC compiler ecosystem
 that is easily extensible and that utilizes the latest research in
 compiler technology.  Such an ecosystem is critical to the successful
 acceleration of ECP applications using modern HPC hardware.  The
-PROTEAS-TUNE objectives for Clacc are:
+PROTEAS-TUNE objectives for Clacc are as follows:
 
 \begin{enumerate}
 
@@ -61,16 +61,14 @@ parallel programming communities.
 
 \paragraph{Key Challenges}
 
-\begin{enumerate}
-
-\item \textbf{OpenACC Support:} Developing production-quality,
+\subparagraph{OpenACC Support} Developing production-quality,
 standards-conforming OpenACC compiler and runtime support is a large
 undertaking.  Complicating that undertaking further is the need for
 optimization strategies that are competitive with existing commercial
 compilers, such as NVIDIA's, which have been developed over many years
 since before the conception of the OpenACC standard.
 
-\item \textbf{Source-to-Source:} Lowering OpenACC to OpenMP
+\subparagraph{Source-to-Source} Lowering OpenACC to OpenMP
 significantly reduces the effort to implement OpenACC and offers
 additional capabilities, such OpenACC support for proprietary OpenMP
 compilers.  However, not all OpenACC features are actually
@@ -83,14 +81,14 @@ optimizations are critical for lowering OpenACC's descriptive language
 to the more prescriptive language of OpenMP, but these are best
 implemented at the level of LLVM IR not the Clang AST.
 
-\item \textbf{Production-Quality:} Clang and LLVM are sophisticated tools
+\subparagraph{Production-Quality} Clang and LLVM are sophisticated tools
 with a complex codebase and a large team of developers who diligently screen
 contributions to maintain a clean design and correct operation.  As for any
 production-quality compiler, developing and contributing improvements to
 Clang and LLVM can be significantly more challenging and time-consuming than
 for research-quality compilers.
 
-\item \textbf{OpenMP Alternative:} We believe that OpenACC's current
+\subparagraph{OpenMP Alternative} We believe that OpenACC's current
 momentum as the go-to directive-based language for accelerators will
 continue into the foreseeable future.  Nevertheless, some potential OpenACC
 adopters hesitate over concerns that OpenACC will one day be replaced by
@@ -98,19 +96,19 @@ OpenMP features.  A tool to migrate OpenACC applications to OpenMP could
 alleviate such concerns, encourage adoption of OpenACC, and thus advance
 utilization of acceleration hardware in ECP applications.
 
-\end{enumerate}
+
 
 \paragraph{Solution Strategy}
 
-~
-\vspace{-1em}
+%~
+%\vspace{-1em}
 
-\begin{tabular}{@{\hspace{-1.5em}}p{.6\textwidth}p{.4\textwidth}@{}}
+%\begin{tabular}{@{\hspace{-1.5em}}p{.6\textwidth}p{.4\textwidth}@{}}
 
 \begin{enumerate}
 
 \item A key Clacc design feature is lowering OpenACC to OpenMP.
-Benefits include:
+Benefits are as follow:
 
 \begin{enumerate}
 
@@ -132,11 +130,18 @@ OpenACC.
 
 \end{enumerate}
 
-&
+%&
 
-\raisebox{-\totalheight}{\includegraphics[scale=.3]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/clacc.png}}
+%\raisebox{-\totalheight}{
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{projects/2.3.2-Tools/2.3.2.10-PROTEAS-YTUNE/clacc.png}
+\caption{Clacc workflow.}
+\label{fig:clacc-workflow}
+\end{figure}
+%}
 
-\end{tabular}
+%\end{tabular}
 
 \vspace{-1em}
 
@@ -145,7 +150,7 @@ OpenACC.
 \setcounter{enumi}{2}
 
 \item To handle Clang's immutable AST, Clacc's design includes a
-TransformACCToOMP component, which reuses Clang's TreeTransform
+TransformACCToOMP component (Figure~\ref{fig:clacc-workflow}), which reuses Clang's TreeTransform
 feature, which was originally designed for C++ template
 specialization.
 

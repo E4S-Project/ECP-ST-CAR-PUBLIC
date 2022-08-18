@@ -44,7 +44,7 @@ can often be used as a reliable standalone solver, or as a preconditioner
 for Krylov methods, or as a coarse grid solver in multigrid
 methods. %, just to name a few.
 
-\vspace{-10pt}
+%\vspace{-10pt}
 \paragraph{Key Challenges}
 %\textit{Describe what is hard to do, why it is challenging.}
 At Exascale we need to address several major challenges:
@@ -71,7 +71,7 @@ operations, especially for problems from three-dimensional geometry.
 It is imperative to develop new factorization methods that require
 much less memory and data movement.
 
-\vspace{-10pt}
+%\vspace{-10pt}
 \paragraph{Solution Strategy}
 %\textit{Describe your basic strategy for addressing the challenges.}
 We will address these challenges in several thrust areas.
@@ -87,7 +87,7 @@ the communication-avoiding 3D factorization and triangular solve
 algorithms and codes that have provably lower communication complexity;
 (2) develop a synchronization-avoiding triangular solve code to enable more
 overlap of communications of different processes at different substitution steps;
-(3) develop new multi-GPU codes for both symbolic preprocessing step and
+(3) develop new multiGPU codes for both symbolic preprocessing step and
 numerical factorization and solve steps.
 
 In addition to exploiting structural sparsity as SuperLU does, STRUMPACK
@@ -113,7 +113,7 @@ The developments for STRUMPACK will focus on several areas:
     characteristics and develop the best clustering/ordering methods to 
     reveal low-rank structures.
 }
-
+%
 (1) development of an advanced preconditioner based on approximate
 multifrontal LU factorization, combining small dense fronts, medium
 sized Block Low-Rank (BLR) fronts (reducing the complexity pre-factor)
@@ -122,7 +122,7 @@ Butterfly (HODBF) representation (leading to nearly linear scaling for
 large high-frequency problems); (2) port the BLR algorithms --
 including several variants like left and right-looking, low-rank
 update and accumulate -- to GPUs (targeting CUDA, HIP/ROCm and
-SYCL/DPC++), and include in the preconditioner;
+SYCL/DPC++), and include in the preconditioner; and
 %targeting Perlmutter, Frontier and Aurora.  (3) reduce
 %MPI communication
 (3) develop sparse direct solvers (preconditioners) that are fully
@@ -131,7 +131,7 @@ resident on the GPU, including reordering and symbolic analysis.
 %work with ECP application teams to examine their specific problem
 %characteristics
 
-\vspace{-10pt}
+%\vspace{-10pt}
 \paragraph{Recent Progress}
 %\textit{Describe what you have done recently.  It would be good to have some kind of figure or diagram in this section.}
 \ignore{ %%%% replace the following by the new activities
@@ -150,7 +150,7 @@ problems governed by high frequency indefinite Maxwell equations
 \url{https://github.com/LLNL/hiop/tree/sandbox/matrices/data/acopf_matrices}
 }  %%%% ignored
 
-We mainly focus on the multi-GPU developments. For SuperLU, the new developments are
+We mainly focus on the multiGPU developments. For SuperLU, the new developments are
 on triangular solve with one-sided communication using Nvidia's NVSHMEM and AMD's
 ROCSHMEM (in design stage).
 %All the experiments are performed on Summit.
@@ -172,38 +172,37 @@ to succeed and recover the solution accuracy by iterative refinement.
 
 The other algorithmic changes and the results are detailed below.
 
-\vspace{-5pt}
-\paragraph\
-\underline{STRUMPACK}  % {\bf (Pieter -- update the following)}
-\begin{itemize}
-\item We improved the block low-rank preconditioner to drastically
+%\vspace{-5pt}
+\subparagraph{STRUMPACK}  % {\bf (Pieter -- update the following)}
+
+We improved the block low-rank preconditioner to drastically
   reduce the peak memory usage. This is achieved by building the BLR
   representation one single column at a time. This has allowed us to
   solve numerically challenging 3D problems up to $350^3$, using
   double precision complex arithmetic, on 64 nodes of Cori.
-\item We implemented different BLR variants, including left-looking
+We implemented different BLR variants, including left-looking
   (reducing communication), and low-rank update and accumulate
   operations (reducing algorithm complexity).
-\item In addition to NVIDIA and AMD GPU support~\cite{ghyselsSTRUMPACKGPU}, STRUMPACK now has
+In addition to NVIDIA and AMD GPU support~\cite{ghyselsSTRUMPACKGPU}, STRUMPACK now has
   experimental support for Intel GPUs through SYCL/DPC++ and the oneAPI
   standard's variable sized batched BLAS and LAPACK routines.
-\end{itemize}
-\vspace{-.13in}
+
+%\vspace{-.13in}
 \begin{figure}[htb]
   \centering
   \includegraphics[scale=0.7]{projects/2.3.3-MathLibs/2.3.3.07-STRUMPACK-SuperLU/P3_V100.pdf}
-  \vspace{-.13in}
+ % \vspace{-.13in}
   \caption{STRUMPACK numerical factorization performance on Summit.}
   \label{fig:strumpack-parmetis-scaling}
 \end{figure}
 
-\underline{SuperLU}
-\begin{itemize}
-\item For the multi-GPU sparse triangular solve (SpTRSV), we leverage the advantage of
+\subparagraph{SuperLU}
+
+For the multiGPU sparse triangular solve (SpTRSV), we leverage the advantage of
   GPU-initiated data transfers of NVSHMEM.
   %  We create a novel producer-consumer paradigm to manage the computation
   % and communication in SpTRSV and implement it using two CUDA streams.
-  The new  multi-GPU SpTRSV implementation using two CUDA streams
+  The new  multiGPU SpTRSV implementation using two CUDA streams
   achieves a $3.7\times$ speedup when using twelve GPUs (two nodes of the Summit
   supercomputer at ORNL) relative to our implementation on a single GPU, and
   up to $6.1\times$ compared to NVIDIA's cuSOLVER (cuSPARSE csrsv2) over the range of
@@ -211,14 +210,13 @@ The other algorithmic changes and the results are detailed below.
 %\item Implemented the single precision LU factorization with double precision iterative refinement.
 % Initial tests show up to 50-60\% speedup on 1 node Summit using 6 CPU cores and 6 GPUs.
 %  The speedup mainly comes from reduced data transfer / communication.  
-\item In the new v7.0.0 release of SuperLU\_DIST, we released the 3D factorization algorithm,
+In the new v7.0.0 release of SuperLU\_DIST, we released the 3D factorization algorithm,
   where MPI ranks are arranged as 3D process grid: Px X Py X Pz.  Pz direction is used
   internally for storing sub-parts of Schur-complement updates. The input \{A, B\} matrices and
   output X matrix need to reside on Px X Py. We implemented a new interface that enables
   redistribution of the users matrices between all MPI ranks and the layer Px X Py.
   The interface is flexible, allows uneven block partition of the user input, and allows separate
   calls to factorization and triangular solves.
-\end{itemize}
 
 \ignore{
 \vspace{-.13in}
@@ -246,9 +244,9 @@ The other algorithmic changes and the results are detailed below.
 \paragraph{Preliminary Experiences on Early Access Systems}
 In the past year, we have ported both STRUMPACK and SuperLU to Spock using
 HIP/ROCm backend. For STRUMPACK, we observed that Spock single MI100 (ROCm 4.2) GPU
-is usually slower than Summit single V100 GPU; it can be 1.9x slower. For SuperLU,
+is usually slower than Summit single V100 GPU; it can be 1.9$\times$ slower. For SuperLU,
 the single GPU performance is comparable on Spock MI100 and Summit V100.
-Using 16 Spock GPUs, we observed 2x speedup over CPU-only SuperLU code.
+Using 16 Spock GPUs, we observed 2$\times$ speedup over CPU-only SuperLU code.
 
 More recently, we started working on Crusher. The following are preliminary
 results. For both STRUMPACK and SuperLU, the Crusher single MI250X is consistently
@@ -264,7 +262,7 @@ found that the parallel scaling is close to that on Spock.
 %\item
 %%  {\bf (Pieter updates)}
  For STRUMPACK, we will work to improve the performance of the block
- low-rank preconditioner on multi-GPU systems.
+ low-rank preconditioner on multiGPU systems.
 % \item
  For SuperLU, we will develop a new GPU-friendly meta-data structure for the sparse U matrix,
  replacing the skyline data structure. That trades increased memory usage for
@@ -326,11 +324,11 @@ This approach addresses the challenges given above. The ``whole-algorithm'' appr
 \paragraph{Recent Progress}
 
 We have a complete end-to-end FFTX implementation of the PSATD algorithm for solving Maxwell's equations on CPUs, a key component of the ECP WarpX application. This includes: a FFTX API representation of the PSATD algorithm; SPIRAL code generation of c code; and linking to a version of the WarpX ECP application that uses PSATD, including coupling of FFTX and AMReX data representations. We have performed side-by-side comparisons of the results obtained by the standard FFTW-based WarpX implementation, and that obtained from FFTX, and they agree to within roundoff error.
-We have also developed strategies for obtaining high-performance on multi-gpu and multi-node subsets of summit.
+We have also developed strategies for obtaining high-performance on multigpu and multinode subsets of summit.
 
 \paragraph{Next Steps} Our future efforts will focus on the following areas:
 \begin{itemize}
-\item Deliver high performance on Summit for ECP AD use cases, including plane-wave, PSATD, and periodic convolutions, both on single-GPU and multi-GPU configurations.
+\item Deliver high performance on Summit for ECP AD use cases, including plane-wave, PSATD, and periodic convolutions, both on single-GPU and multiGPU configurations.
 \item Code generation for Tulip / Frontier platform, based on the HIP programming tools.
 \item Complete release version, documentation for release.
 \end{itemize}

@@ -18,7 +18,7 @@ I/O middleware packages through Mochi and ROMIO; and will provide high
 performance implementations of major I/O APIs in use by ECP codes.
 
 We strongly support ECP management’s shift of focus towards
-\textbf{Hierarchical Data Format (HDF)}. In response to ECP guidance
+Hierarchical Data Format (HDF). In response to ECP guidance
 to prioritize the HDF5 API, we propose to emphasize enhanced HDF5
 capabilities for ECP codes on current and future DOE leadership
 platforms, strengthening HDF as a core technology for the future. We
@@ -30,27 +30,27 @@ the best storage services possible for ECP applications. We will also
 continue to work closely with the facilities to ensure the availability
 and quality of our tools on critical platforms.
 
-The \textbf{Darshan} I/O characterization toolset is an instrumentation tool
+The Darshan I/O characterization toolset is an instrumentation tool
 deployed at facilities to capture information on I/O behavior of
 applications running at scale on production systems. It has become
-popular at many DOE facilities and is usually “on by default”. Darshan
+popular at many DOE facilities and is usually on by default. Darshan
 data dramatically accelerates root cause analysis of performance
 problems for applications and can also (in some cases) assist in
 correctness debugging. Our work in this project focuses on extending
 Darshan to new interfaces and ensuring readiness on upcoming
 platforms.
 
-The \textbf{ROMIO} and \textbf{Parallel netCDF} (PnetCDF) activities
+The ROMIO and Parallel netCDF (PnetCDF) activities
 focus on existing standards-based interfaces in broad use, assisting
 in performance debugging on new platforms and augmenting existing
-implementations to support new storage models (e.g., “burst
-buffers”). In addition to being used directly by applications, ROMIO
+implementations to support new storage models (e.g., burst
+buffers). In addition to being used directly by applications, ROMIO
 and PnetCDF are also indirectly used in HDF5 and netCDF-4. Our work is
 ensuring that these libraries are ready for upcoming platforms and
 effective for their users (and ready as alternatives if other
 libraries fall short).
 
-The \textbf{Mochi} and \textbf{Mercury} software tools are building blocks for
+The Mochi and Mercury software tools are building blocks for
 user-level distributed HPC services. They address issues of
 performance, programmability, and portability in this key facet of
 data service development. Mercury is being used by Intel in the
@@ -73,7 +73,7 @@ applications. New algorithms and methods of storing data are required.
 %
 For Darshan, the challenge is to operate in a transparent manner in
 the face of continuing change in build environments, to grow in
-functionality to cover new interfaces while remaining ``lean'' from a
+functionality to cover new interfaces while remaining lean from a
 resource utilization perspective, and to interoperate with other tools
 that use similar methods to hook into applications.
 %
@@ -81,16 +81,16 @@ Mochi and Mercury are new tools, so the challenge in the context of
 these tools is to find users, adapt and improve to better support
 those users, and gain a foothold in the science community.
 
-\paragraph{Solution Strategy}
+\paragraph{Solution Strategy} We have a solution strategy for HDF enhancement, supporting ECP applications and facilities, supporting data services, and integration and software QA.
 
-\emph{HDF enhancement.} HDF is the most popular high-level API for
+\subparagraph{HDF Enhancement} HDF is the most popular high-level API for
 interacting with storage in the DOE complex, but users express concerns
 with the current The HDF Group (THG) implementation. We propose to perform
 an independent assessment and systematic software development activity
 targeting the highest possible performance for users of the HDF5 API on
 ECP platforms of interest.
 
-\emph{Directly supporting ECP applications and facilities.} We currently
+\subparagraph{Directly Supporting ECP Applications and Facilities} We currently
 have ongoing interactions with E3SM (PnetCDF), CANDLE (FlameStore/Mochi),
 and ATDM/Ristra (Quantaii/Mochi), and we routinely work with the
 facilities as relates to Darshan deployments. Our work with these
@@ -100,7 +100,7 @@ netCDF-4/PIO/PnetCDF preferred code path. We will continue to work with
 these teams to address concerns, to maintain portability and performance,
 and may develop new capabilities if needs arise. 
 
-\emph{Supporting data services.} Mochi framework components are in use in
+\subparagraph{Supporting Data Services} Mochi framework components are in use in
 multiple ECP related activities, including in the UnifyCR and Proactive
 Data Containers (PDC) in ExaHDF5 (WBS 2.4.x) and in the Distributed
 Asynchronous Object Storage and other services in the Intel storage
@@ -110,7 +110,7 @@ of our tools. Mochi components enhance the performance, portability,
 and robustness of these packages, and our common reliance on Mochi
 components means that as Mochi improves, so do all these users.
 
-\emph{Integration and Software QA.} DataLib has actively pursued
+\subparagraph{Integration and Software QA} DataLib has actively pursued
 integration with the ECP ST software stack through the development
 and upstreaming of Spack packages and the development and deployment
 of automated testing for DataLib technologies, so we are already well
@@ -119,20 +119,20 @@ continue throughout the FY20-23 timeframe, with the addition of pull
 requests submitted to THG to upstream HDF5 enhancements and effort applied
 to address identified issues in our technologies as appropriate.
 
-\paragraph{Recent Progress}
+\paragraph{Recent Progress} We have made progress toward the HDF5 VOL plug-in and I/O improvements in E3Sm, xRAGE, and CODAR along with reducing Darshan overhead and improving UCX support for Mercury.
 
-\emph{HDF5 VOL Plug-in.} Deliver design of HDF5 VOL plug-in and improve I/O
+\subparagraph{HDF5 VOL Plug-in} Deliver design of HDF5 VOL plug-in and improve I/O
 capabilities for ECP application. HDF5 VOL design is complete, and we have an
 initial prototype with which we are performing early performance testing. The
 design document and developer notes will be attached to the end of this report
 for convenience.
 
-As a reminder, our HDF VOL implementation layers on top of the “native” VOL
+As a reminder, our HDF VOL implementation layers on top of the native VOL
 implementation provided by HDF. We capture write operations as a log of
 changes, and currently we persist both the description of the writes (in our
-documentation simply the “metadata”, stored in the “metadata table”) and the
-contents of the writes (in our documentation the “log data”, stored in the “log
-dataset”) as HDF datasets. Additionally, another table (the “offset table”)
+documentation simply the metadata, stored in the metadata table) and the
+contents of the writes (in our documentation the log data, stored in the log
+dataset) as HDF datasets. Additionally, another table (the offset table)
 stores the offsets of specific datasets in the metadata table, allowing one to
 skip over unrelated datasets when looking for specific log entries. We’re
 investigating the storage of metadata in memory, for performance reasons.
@@ -141,8 +141,7 @@ New optimizations have been made in the HDF VOL implementation, notably compress
 of dataset metadata, that allow this implementation to perform faster than our
 own PnetCDF implementation (and much faster than default HDF5 or netCDF-4).
 
-\emph{I/O Improvement in E3SM.}
-%
+\subparagraph{I/O Improvement in E3SM}
 We have previously extracted an I/O kernel from the E3SM code, and
 we are now working on a branch of this code that can write directly
 into HDF5. As background, the netCDF4 API is missing a key capability
@@ -158,14 +157,13 @@ allows us to isolate HDF performance/API challenges from the
 higher-level netCDF4 ones, and allows us to better explore our HDF
 VOL implementation.
 
-Recently we have evaluated ``blob'' style storage for E3SM, which
+Recently we have evaluated blob style storage for E3SM, which
 is a method of storing data without transforming into the global
 ordering desired for analysis. We have found that this method is
 competitive with ADIOS results seen elsewhere, reducing the need
 for the E3SM team to continue development of new ADIOS options.
 
-\emph{I/O Improvement in xRAGE.}
-*
+\subparagraph{I/O Improvement in xRAGE}
 Many applications use HDF5 to write extremely large
 single files used for checkpoint restart and/or data analysis. Even on
 pre-exascale systems such as Sierra it can be difficult to achieve high
@@ -180,8 +178,7 @@ stacks. LANL has begun using Darshan on Sierra for a variety of applications
 including the xRAGE application and have worked with the DataLib team to
 identify potential bottlenecks in this and other applications.
 
-\emph{I/O Improvement in CODAR.}
-%
+\subparagraph{I/O Improvement in CODAR}
 Early in the year, we initiated discussions with the CODAR team building
 Chimbuko, an effort to create a provenance and performance analysis service for
 HPC. Through discussion on their use case, we determined that a new Mochi
@@ -190,7 +187,7 @@ convenient storage and processing of their JSON record data. We continue to work
 the CODAR team to address scalability concerns and enable their Chimbuko service
 to hit production goals.
 
-\emph{Reducing Darshan Overheads.} Enhance HDF VOL implementation and evaluate
+\subparagraph{Reducing Darshan Overheads} Enhance HDF VOL implementation and evaluate
 Darshan and Mochi
 performance. We will revisit Darshan overheads on flagship platforms to ensure
 correctness and low-overhead operation, and we will incorporate new
@@ -203,7 +200,7 @@ on platforms such as Theta. Workarounds were developed to keep
 Darshan overheads in the noise for all but the most degenerate I/O
 use cases (e.g., single-byte writes via stdio).
 
-\emph{UCX Support for Mercury.} We delivered UCX plug-in for Mercury
+\subparagraph{UCX Support for Mercury} We delivered UCX plug-in for Mercury
 in support of ECP applications and services: a tested UCX plug-in
 for Mercury, tuned for performance on ECP relevant platforms (e.g.,
 Summit test systems), with appropriate nightly tests. Our colleagues
@@ -212,7 +209,7 @@ promising early results.
 
 \paragraph{Next Steps}
 
-Our near-term plan includes:
+Our near-term plan includes the following actions.
 % \emph{STDM12-32:} Evaluate HDF prototype and build new Darshan capabilities. We
 % will build a DAOS module and continue evaluation of HDF VOL prototype,
 % adjusting design in response.
@@ -228,19 +225,19 @@ Our near-term plan includes:
 % also perform a performance evaluation of key Mochi use cases on available test
 % hardware.
 
-\emph{STDM12-36:} The ROMIO team will implement a new plug-in for
+\subparagraph{STDM12-36} The ROMIO team will implement a new plug-in for
 UnifyFS, revisit the ROMIO implementation overall to reduce
 synchronization costs, and work with the HDF5 and UnifyFS teams to
 benchmark and document the performance of these optimizations and
 possible next steps.
 
-\emph{STDM12-37:} We will evaluate and improve HDF VOL performance
+\subparagraph{STDM12-37} We will evaluate and improve HDF VOL performance
 on latest available platforms, re-architect Darshan analysis tools
 using Python to be both more user friendly and more amenable to
 learning methods, and enhance Mochi benchmarks and improve performance
 for latest platforms based on STDM12-34 analysis.
 
-\emph{STDM12-38:}
+\subparagraph{STDM12-38}
 We will prepare materials and engage in outreach for DataLib software
 at ECP Annual or similar event, refine and enhance Darshan
 DAOS and HDF modules on latest available platforms, deep dive

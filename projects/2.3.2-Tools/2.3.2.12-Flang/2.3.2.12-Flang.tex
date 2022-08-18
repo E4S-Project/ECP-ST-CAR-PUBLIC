@@ -1,4 +1,4 @@
-[\subsubsection{\stid{2.12} Flang}\label{subsubsect:flang}
+\subsubsection{\stid{2.12} Flang}\label{subsubsect:flang}
 
 \paragraph{Overview}
 
@@ -63,22 +63,21 @@ and the broader community.
 \paragraph{Recent Progress}
 
 After several years of effort and support from NNSA, Flang was 
-successfully \emph{``adopted''} by the LLVM community and has transitioned 
+successfully adopted by the LLVM community and has transitioned 
 from a stand-alone git repository to one hosted by the main LLVM project.  This 
 represents a significant result and the community reviewed and accepted code is
 available via GitHub:
-
-\begin{center}
-\url{https://github.com/llvm/llvm-project/}
-\end{center}
+%
+%
+\url{https://github.com/llvm/llvm-project/}.
 
 The current capabilities of Flang include the parsing and semantic
-analysis of the full Fortran 2018 standard and OpenMP 5.X. As part of the
+analysis of the full Fortran 2018 standard and OpenMP 5.x. As part of the
 development of the parsing and semantic analysis portions of the
 front-end, over five million lines of Fortran code have been
 successfully processed. Beyond parsing and semantics, we have been
 focusing our efforts on creating a Fortran-centric intermediate
-representation (Fortran IR -- ``FIR'') that leverages recent activities
+representation (Fortran IR [FIR]) that leverages recent activities
 within Google on 
 \href{Multi-Level Intermediate Representations} 
 {https://www.blog.google/technology/ai/mlir-accelerating-ai-open-source-infrastructure/}
@@ -93,7 +92,7 @@ Our short-term priorities are focused on up-streaming of the
 sequential compiler with Fortran 95 support, completing implementation of the remaining Fortran standards,
 the creation of a significant testing infrastructure, and helping to play a key role in
 the interactions and overall discussions within the LLVM community.  Longer term efforts
-will shift to support OpenMP 5.X features critical to ECP applications
+will shift to support OpenMP 5.x features critical to ECP applications
 on the target Exascale platforms.  We are actively exploring finding a
 common leverage point between Clang's current OpenMP code base and
 Flang.  This would enable the reuse of existing code versus writing

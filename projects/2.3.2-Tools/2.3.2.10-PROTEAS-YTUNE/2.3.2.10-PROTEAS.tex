@@ -1,10 +1,10 @@
 \subsubsection{\stid{2.10} PROTEAS-TUNE: Programming Toolchain for Emerging Architectures and Systems} 
 
-\paragraph{Key  Challenges:}
+\paragraph{Key  Challenges}
 Programmer productivity and performance portability are two of the most important challenges facing users of future exascale computing platforms. Application developers targeting ECP architectures will find it increasingly difficult to meet these two challenges without integrated capabilities that allow for flexibility, composability, and interoperability across a mixture of programming, runtime, and architectural components. 
 
 
-\paragraph{Solution Strategy:}
+\paragraph{Solution Strategy}
 The PROTEAS-TUNE project was formed as a strategic response to this challenge. (The PROTEAS-TUNE project is the result of merger in FY20 of two previous ECP projects: PROTEAS [PROgramming Toolchain for Emerging Architectures and Systems] and Y-Tune: Autotuning for Cross-Architecture Optimization and Code Generation.) 
 This project has three high-level goals. First, PROTEAS-TUNE will provide a programming pathway to anticipated exascale architectures by addressing programmability and portability concerns of emerging technology trends seen in emerging architectures. In particular, the project focuses on improvements to LLVM and OpenACC. Additionally, the team has significant experience with CUDA, OpenCL, and other programming models that will enable ECP applications teams to explore programming options to find the most effective and productive approaches without constraining programming models or software solutions. Second, PROTEAS-TUNE will prototype an integrated programming framework strategy will deliver solutions on these emerging architectures that will be further refined for these architectural capabilities, and make sure that they transition to vendors, standards activities, applications, and facilities. Thirdly, PROTEAS-TUNE includes autotuning which makes it possible to separate a high-level C/C++/FORTRAN implementation from architecture-specific implementation (OpenMP, OpenACC, CUDA, etc.), optimization, and tuning. It also provides a flexible programming framework and integrated toolchain that will provide ECP applications the opportunity to work with programming abstractions and to evaluate solutions that address the exascale programming challenges they face. 
 
@@ -13,28 +13,28 @@ Specifically, the PROTEAS-TUNE focuses on several thrusts to improve capabilitie
 
 \begin{itemize}
 \item 
-    Improve the core-LLVM compiler ecosystem; 
+    Improve the core-LLVM compiler ecosystem 
 \item 
-	Design and implement the OpenACC heterogeneous programming model for C/C++ in Clang/LLVM (Clacc);
+	Design and implement the OpenACC heterogeneous programming model for C/C++ in Clang/LLVM (Clacc)
 \item 
-    Design and implement the OpenACC heterogeneous programming model for Fortran in Flang/LLVM (Flacc);  
+    Design and implement the OpenACC heterogeneous programming model for Fortran in Flang/LLVM (Flacc)  
     
 \item 
-	Use performance modeling and optimization to enable code transformation and performance portability;
+	Use performance modeling and optimization to enable code transformation and performance portability
 \item 
-	Refine autotuning for OpenMP and OpenACC programming models in order to directly target challenges with heterogeneous architectures;
+	Refine autotuning for OpenMP and OpenACC programming models to directly target challenges with heterogeneous architectures
 \item 
-    Improve performance measurement and analysis tools (TAU) for the target exascale architectures and apply it to applications to improve performance;
+    Improve performance measurement and analysis tools (TAU) for the target exascale architectures and apply it to applications to improve performance
 \item 
-    Develop and implement portable software abstractions (Papyrus) for managing persistent memory;
+    Develop and implement portable software abstractions (Papyrus) for managing persistent memory
 \item 
-    Contribute to the SYCL programming model by developing a representative benchmark suite and evaluating SYCL implementation readiness across relevant architectures;
+    Contribute to the SYCL programming model by developing a representative benchmark suite and evaluating SYCL implementation readiness across relevant architectures
 \item 
-    Aggressively engage applications, SDK, vendor, and software teams to demonstrate and deploy;
+    Aggressively engage applications, SDK, vendor, and software teams for demonstration and deployment
 \item
-    in collaboration with SOLLVE and Flang, develop a DOE ECP fork of LLVM that will be the clearinghouse for ECP modifications of LLVM  (see \url{https://github.com/llvm-doe-org}); and,
+    In collaboration with SOLLVE and Flang, develop a DOE ECP fork of LLVM that will be the clearinghouse for ECP modifications of LLVM  (see \url{https://github.com/llvm-doe-org})
 \item
-    benchmarking and development of SYCL implementations across ECP platforms.
+    Conduct benchmarking and development of SYCL implementations across ECP platforms
     
 \end{itemize}
 
@@ -69,56 +69,54 @@ Also, the team champions its successful solutions in ECP procurements, community
 %
 %While PROTEAS will be oriented towards foreseeable architectural trends, it will not lock in to specific choices that will constrain what new hardware features it can address. Rather, it is important for the programming framework to embody interoperability, open interfaces, and flexibility in the toolchain, allowing it to pursue high-value solutions as opportunities arise and thereby achieve Exascale performance potential. 
 
-\paragraph{Recent Progress:}
+\paragraph{Recent Progress}
 
-Our recent work has focused on six topics:
+Our recent work has focused on OpenACC and Clacc, OpenACC and Flacc, TAU, LLVM, SYCL, and outreach and collaboration.
 
-\begin{enumerate}
+\subparagraph{OpenACC and Clacc~\cite{clacc:2018:denny}}
+Develop production-quality, standard-conforming OpenACC compiler and runtime support as an extension of Clang/LLVM. See Section~\ref{s:clacc}.
     
-    \item OpenACC and Clacc~\cite{clacc:2018:denny}. Develop production-quality, standard-conforming OpenACC compiler and runtime support as an extension of Clang/LLVM. See \S\ref{s:clacc}.
+\subparagraph{OpenACC and Flacc}
+Develop production-quality, standard-conforming OpenACC compiler and runtime support as an extension of Flang/LLVM. 
+
+\subparagraph{TAU}
+Expand performance analysis with TAU by adding additional functionality for new architectures. 
+Improve a widely-used performance analysis framework by adding functionality for new architectures and software systems.
+See Section~\ref{subsubsect:tau}.
+
+\subparagraph{LLVM}
+In collaboration with numerous other ECP projects, PROTEAS is contributing improvements to the LLVM compiler infrastructure. These improvements include simple bugfixes to the existing infrastructure, monitoring Flang progress, developing Clacc (see Section~\ref{s:clacc}), developing Flacc (see Section~\ref{s:flacc}), and developing a DOE ECP fork of LLVM for our work.
     
-    \item OpenACC and Flacc. Develop production-quality, standard-conforming OpenACC compiler and runtime support as an extension of Flang/LLVM. 
+\subparagraph{SYCL} 
+Our SYCL evaluation identified significant differences in the performance of various SYCL implementations, and we continue to improve our SYCL benchmark suite. See Section~\ref{s:sycl}.
 
-    \item Performance analysis with Tau by adding additional functionality for new architectures. 
-    Improve a widely-used performance analysis framework by adding functionality for new architectures and software systems.
-    See \S\ref{subsubsect:tau}.
-
-    \item Improving LLVM. In collaboration with numerous other ECP projects, PROTEAS is contributing improvements to the LLVM compiler infrastructure. These improvements include simple bugfixes to the existing infrastructure, monitoring Flang progress, developing Clacc (see \S\ref{s:clacc}), developing Flacc (See \S\ref{s:flacc}), and developing a DOE ECP fork of LLVM for our work.
+\subparagraph{Outreach and Collaboration with ECP Applications Teams} 
+We have interacted with over a dozen applications teams to help prepare their applications for ECP. See Sections~\ref{s:clacc}, \ref{s:papyrus}, and \ref{subsubsect:tau}.
     
-    \item SYCL evaluation. 
-    Our SYCL evaluation identified significant differences in the performance of various SYCL implementations, and we continue to improve our SYCL benchmark suite. See \S\ref{s:sycl}.
 
-    \item Outreach and collaboration with ECP applications teams. 
-    We have interacted with over a dozen applications teams to help prepare their applications for ECP. See \S\ref{s:clacc}, \S\ref{s:papyrus}, and \S\ref{subsubsect:tau}.
+\paragraph{Next Steps}
+
+Our next efforts for Clacc, Flacc, TAU, LLVM, and SYCL are as follows:
+
+	\subparagraph{Clacc} Continue developing OpenACC support by lowering OpenACC directives to use the existing LLVM OpenMP infrastructure.
     
-\end{enumerate}
-
-\paragraph{Next Steps:}
-
-Our next efforts are:
-
-\begin{enumerate}
-	\item Clacc. Continue developing OpenACC support by lowering OpenACC directives to use the existing LLVM OpenMP infrastructure.
+    \subparagraph{Flacc} Continue developing OpenACC support by finishing the development of the  OpenACC dialect for MLIR and beginning to develop the runtime system on the existing LLVM OpenMP infrastructure.
     
-    \item Flacc. Continue developing OpenACC support by finishing the development of the  OpenACC dialect for MLIR and beginning to develop the runtime system on the existing LLVM OpenMP infrastructure.
+    \subparagraph{TAU} Improve performance instrumentation for deep memory hierarchies in TAU, focusing primarily on various GPUs and emerging NVM.
     
-    \item Tau. Improve performance instrumentation for deep memory hierarchies in Tau, focusing primarily on various GPUs and emerging NVM.
-    
-    \item ECP LLVM fork. Improve support for continuous integration of the ECP LLVM fork.
+    \subparagraph{ECP LLVM Fork} Improve support for continuous integration of the ECP LLVM fork.
 
-    \item SYCL evaluation. 
-    Continue to improve our SYCL benchmark suite and work with researchers and vendors to enhance SYCL options for ECP users. See \S\ref{s:sycl}.
-
-\end{enumerate}
+    \subparagraph{SYCL Evaluation} 
+    Continue to improve our SYCL benchmark suite and work with researchers and vendors to enhance SYCL options for ECP users. See Section~\ref{s:sycl}.
 
 
-\paragraph{Preliminary Experiences on Early Access systems:}
+
+\paragraph{Preliminary Experiences on Early Access systems}
 
 Across our tasks, we have some preliminary experiences on the ECP Early Access Systems (EAS) as detailed below.
 
-\begin{enumerate}
-    
-    \item \textbf{LLVM}.
+
+    \subparagraph{LLVM}
     LLVM has been build and used successfully on Spock and Crusher.
     An automatic build of a recent LLVM version for Spock, e.g., weekly, is
     planned. We also intend to do that for Crusher. LLVM (including our 
@@ -126,22 +124,22 @@ Across our tasks, we have some preliminary experiences on the ECP Early Access S
     when using OpenMP offload, prevented full applications from running.
     Proxy applications successfully compiled and run.
     
-    \item \textbf{Clacc}.
+    \subparagraph{Clacc}
     The Clacc project is not using the EASs. 
     
-    \item \textbf{LLVM-DOE}.
+    \subparagraph{LLVM-DOE}
     The LLVM-DOE fork does not use the EASs for continuous integration testing or development.
     
-    \item \textbf{Flacc}.
+    \subparagraph{Flacc}
     The Flacc project is not using the EASs. 
     
-    \item \textbf{Autotuning}.
+    \subparagraph{Autotuning}
     The ytopt autotuning framework has not yet been tested on the EAS Systems.
     
-    \item \textbf{Bricks}.
+    \subparagraph{Bricks}
     The Brick Library has been used to generate performance data on spock, and has been tested on crusher.
     
-    \item \textbf{TAU}.
+    \subparagraph{TAU}
     TAU has been ported to the most recent EAS systems.  On the OLCF system Crusher,
     TAU has been tested with the most recent software and firmware updates, up to
     and including ROCm 4.5.2.  TAU is being used to help tune the XGC application
@@ -150,13 +148,13 @@ Across our tasks, we have some preliminary experiences on the ECP Early Access S
     NERSC system Perlmutter, TAU has been ported and tested with the NVIDIA A100 
     devices and most recent versions of CUDA.
     
-    \item \textbf{Papyrus}.
+    \subparagraph{Papyrus}
     The Papyrus project is not using the EASs. 
     
-    \item \textbf{SYCL}.
+    \subparagraph{SYCL}
     The SYCL project is not using the EASs. 
     
-\end{enumerate}
+
 
 
 

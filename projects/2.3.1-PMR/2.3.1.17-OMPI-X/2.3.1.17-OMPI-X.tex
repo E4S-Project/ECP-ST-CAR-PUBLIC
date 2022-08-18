@@ -57,13 +57,13 @@ OMPI-X project address key issues of performance and capability for exascale app
 
 \paragraph{Key  Challenges}
 %% \textit{Describe what is hard to do, why it is challenging.}
-A number of aspects of ``exascale'' levels
-of computing pose serious challenges to the ``tried and true'' message
+A number of aspects of exascale levels
+of computing pose serious challenges to the tried and true message
 passing model presented by MPI and its implementations, including Open~MPI.
 %
 Keeping pace with changes in HPC architecture is a major challenge.
 Examples include massive node-level concurrency, driving the
-growth of ``MPI+X'' programming approaches,
+growth of MPI+X programming approaches,
 and the complex memory architectures, which make the placement of data
 within memory more important. In the near-term, with GPUs dominating the exascale
 environment, how code running on the GPUs interacts with MPI and inter-process
@@ -75,7 +75,7 @@ challenging as node counts increase
 and memory per MPI rank trends downward.
 %
 Finally, as we identify solutions to these challenges that must be
-``implemented'' within the MPI \emph{standard} rather than particular MPI libraries,
+implemented within the MPI \emph{standard} rather than particular MPI libraries,
 we must work within the much larger and broader MPI
 community that may not always be attuned to the needs of computing at the largest scales.
 
@@ -84,9 +84,9 @@ community that may not always be attuned to the needs of computing at the larges
 The OMPI-X project is working across a number of fronts to address
 these challenges.
 
-\emph{Runtime Interoperability for MPI+X and Beyond} MPI is
+\subparagraph{Runtime Interoperability for MPI+X and Beyond} MPI is
 increasingly being used concurrently with other runtime environments.
-This includes both ``MPI+X'' approaches, where X
+This includes both MPI+X approaches, where X
 is most often a threading model, such as OpenMP, as
 well as the use of multiple inter-process runtimes within a single
 application.  Concerns include awareness of other runtimes,
@@ -95,17 +95,17 @@ concurrently active runtimes make progress.  We are developing APIs and
 demonstrating capabilities for interoperability in both MPI+X and
 multiple inter-process runtime situations.
 
-\emph{Extending the MPI Standard to Better Support Exascale
+\subparagraph{Extending the MPI Standard to Better Support Exascale
 Architectures} The MPI community is standardizing a
 number of ideas that
 are particularly important to supporting
 the architectural and system size characteristics anticipated for
-exascale.  ``Partitioned communications'' (previously called ``Finepoints'')
+exascale.  Partitioned communications (previously called \textit{Finepoints})
 deal with the growing use of threading for node-level concurrency, in
-combination with MPI.  ``Sessions'' increases the flexibility of MPI
+combination with MPI.  Sessions increases the flexibility of MPI
 semantics in a number of areas, which in turn can open opportunities
 for enhanced scalability, as well as easier support for
-multi-component applications such as coupled multi-physics
+multicomponent applications such as coupled multiphysics
 simulations. Error management and recovery capabilities are key to
 ensuring that applications can detect and respond effectively when errors,
 inevitably, occur during execution.  We are helping to drive incorporation
@@ -113,19 +113,19 @@ of these and other ideas into the MPI standard by developing prototypes and
 working with ECP teams and the broader community to demonstrate their
 feasibility and value.
 
-\emph{Open~MPI Scalability and Performance} As we push the scale of
+\subparagraph{Open~MPI Scalability and Performance} As we push the scale of
 both hardware and applications, we stress MPI implementations and
 expose areas that need to be improved.
 OMPI-X is targeting key components within Open~MPI, such as threading capabilities,
 memory usage, remote memory access (RMA), tag matching, and other areas,
 for improvements in both scalability and performance.
 
-\emph{Supporting More Dynamic Execution Environments} We are
+\subparagraph{Supporting More Dynamic Execution Environments} We are
 developing and implementing strategies to help MPI applications
 better deal with topological process layout preferences
 and contention in the network.
 
-\emph{Resilience in MPI and Open~MPI} Concerns about system and
+\subparagraph{Resilience in MPI and Open~MPI} Concerns about system and
 application resilience increase as either scales in size.  Our goal in
 this area is to ensure that MPI, Open~MPI, and PMIx provide not only
 support for simplified
@@ -134,7 +134,7 @@ blocks to support more general error management and recovery by applications (th
 Fault Mitigation concept). We work within the MPI Forum, implement,
 and train users on resilience strategies.
 
-\emph{MPI Tools Interfaces}  Several interfaces within the
+\subparagraph{MPI Tools Interfaces}  Several interfaces within the
 MPI standard are primarily used to support performance and
 correctness tools.
 The MPI Forum is in the process
@@ -146,7 +146,7 @@ We will work with the
 ECP community, including tool developers, to make additional data
 available through the MPI\_T interface.
 
-\emph{Quality Assurance for Open~MPI}  We are enhancing the
+\subparagraph{Quality Assurance for Open~MPI}  We are enhancing the
 Open~MPI testing infrastructure, adding tests to reflect ECP
 requirements, and instantiating routine testing on systems of
 importance to ECP, both for correctness and performance.
@@ -164,7 +164,7 @@ importance to ECP, both for correctness and performance.
 The MPI Forum finalized and released version 4.0 of the standard in June 2021.  The OMPI-X team helped drive
 the incorporation a number of new features and capabilities considered important for exascale applications.
 These include sessions and a number of error management and recovery features
-based on the long-standing User-Level Fault Mitigation (ULFM) concept.  Partitioned communications (Fig.~\ref{fig:partitioned-communications})
+based on the long-standing User-Level Fault Mitigation (ULFM) concept.  Partitioned communications (Figure~\ref{fig:partitioned-communications})
 is another major addition to the standard which is designed to benefit massively-threaded environments, such as GPU accelerators, by supporting
 incremental completion of the communication as portions of the buffer become ready.
 These capabilities have at least prototype-level implementations available in the Open~MPI library, allowing interested project teams to start
@@ -203,10 +203,10 @@ and improvements to collective and atomic operations.
     \label{fig:ult-performance}
 \end{wrapfigure}
 
-To support highly-threaded ``MPI+X'' use cases primarily on the CPU side, the OMPI-X project has teamed with the MPICH and Argobots ECP teams (WBS 2.3.1.07 and 2.3.2.11)
+To support highly-threaded MPI+X use cases primarily on the CPU side, the OMPI-X project has teamed with the MPICH and Argobots ECP teams (WBS 2.3.1.07 and 2.3.2.11)
 to define interfaces in both MPICH and Open~MPI to support the use of lightweight user-level threading (ULT) libraries such as Qthreads or BOLT
 as an alternative to Pthreads.  The new ULT support, now integrated into both libraries, offer significantly improved performance compared to 
-the traditional Pthreads implementation (Fig.~\ref{fig:ult-performance}).
+the traditional Pthreads implementation (Figure~\ref{fig:ult-performance}).
 
 Another key product that the OMPI-X project supports is the Process Management Interface for Exascale (PMIx).  PMIx includes both a community standard
 and a reference implementation, OpenMPIx.  Open~MPI relies on the PMIx standard and the PRRTE reference runtime for process startup, wireup, and runtime coordination.
@@ -236,7 +236,7 @@ system Crusher was the first system available with the new Slingshot-11 network.
 OMPI-X team obtained access to Crusher in December, and have been working to port Open MPI to
 the SS-11 interconnect.  The basic approaches available leverage either Open Fabric providers or
 the UCX communication infrastructure, or some combination.
-So far, we've confirmed basic point-to-point functionality using the HPE-provided
+So far, we have confirmed basic point-to-point functionality using the HPE-provided
 CXI Open Fabric provider, and partial intra-node shared memory functionality through the 
 UCX communications framework.
 We plan to continue exploring all three paths until we arrive at a solution that provides full functionality

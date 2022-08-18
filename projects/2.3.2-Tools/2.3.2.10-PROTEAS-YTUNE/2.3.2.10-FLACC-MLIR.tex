@@ -2,7 +2,7 @@
 
 \paragraph{Overview}
 Heterogeneous and manycore processors (e.g., multicore CPUs, GPUs,
-Xeon Phi, etc.) are becoming the de facto architectures for current
+Xeon Phi) are becoming the de facto architectures for current
 HPC platforms and future Exascale platforms.  These architectures are
 drastically diverse in functionality, performance, programmability,
 and scalability, significantly increasing the complexity that ECP app
@@ -37,37 +37,31 @@ SOLLVE projects.
 
 \paragraph{Key Challenges}
 
-\begin{enumerate}
-
-\item \textbf{OpenACC Support:} Developing production-quality,
+\subparagraph{OpenACC Support} Developing production-quality,
       standards-conforming OpenACC compiler and runtime support is a large
       undertaking. Complicating that undertaking further is the need for
       optimization strategies that are competitive with existing commercial
       compilers, such as PGI's, which have been developed over many years
       since before the conception of the OpenACC standard.
 
-\item \textbf{MLIR:} Flang and the OpenACC support for it rely on the MLIR
+\subparagraph{MLIR} Flang and the OpenACC support for it rely on the MLIR
       project for the IR. MLIR has been upstreamed to
       the core LLVM project in early 2020 and it is still actively under
       development. Flang will be the first core frontend relying on MLIR.
 
-\item \textbf{Runtime:} LLVM does not include an OpenACC runtime but only one
+\subparagraph{Runtime} LLVM does not include an OpenACC runtime but only one
       for OpenMP at the moment. This runtime can be generalized to support
       missing OpenACC features. This generalization needs to be accepted by the
       current OpenMP community.
 
-\item \textbf{OpenMP Stability:} As we plan to generalize the OpenMP runtime to
+\subparagraph{OpenMP Stability} As we plan to generalize the OpenMP runtime to
       support OpenACC, we will also rely on various part of the runtime that
       are already here. There has been some concern on the stability of the
       current OpenMP runtime implementation and especially the
       textit{libomptarget} responsible for the target offload part.
 
-\end{enumerate}
 
 \paragraph{Solution Strategy}
-
-~
-\vspace{-1em}
 
 \begin{enumerate}
 

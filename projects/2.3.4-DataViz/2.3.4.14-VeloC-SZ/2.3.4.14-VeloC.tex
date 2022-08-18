@@ -1,6 +1,7 @@
 \subsubsection{\stid{4.14} VeloC: Very Low Overhead Checkpointing System}
 
-\paragraph{Overview.}
+
+\paragraph{Overview}
 The VeloC-SZ project aims to provide VeloC, a high-performance,
 scalable checkpoint/restart framework that leverages multi-level
 checkpointing (the combination of several resilience strategies and
@@ -20,33 +21,35 @@ VeloC has been released and shows significant lower checkpointing
 overhead for several ECP applications, such as HACC, LatticeQCD,
 EXAALT.
 
-\paragraph{Key Challenges.}
-VeloC addresses several key challenges:
-\vspace{-1em}
+\paragraph{Key Challenges}
+VeloC addresses several key challenges in I/O bottlenecks, deep heterogeneous storage, restart-in-place, and efficient serialization.
 
-\paragraph{\emph{I/O bottlenecks:}} applications typically employ
+\subparagraph{I/O Bottlenecks} Applications typically employ
 simple checkpoint-restart mechanisms to survive failures that directly
 use a parallel file system. With diminishing I/O bandwidth available
 per core, this leads to high checkpointing overhead and is not
 sustainable.
-\vspace{-1em}
 
-\paragraph{\emph{Deep heterogeneous storage:}} To compensate for
+\subparagraph{Deep Heterogeneous Storage} To compensate for
 diminishing parallel file system I/O bandwidth per core, the storage
 stack is becoming increasingly deeper and heterogeneous: node-local
 NVRAM, burst buffers, key-value stores, etc. However, the variety of
 vendor APIs and performance characteristics make it difficult for
 application developers to take advantage of it.
-\vspace{-1em}
 
-\paragraph{\emph{Restart-in-place:}} a majority of failures affect
+\subparagraph{Restart-in-Place} A majority of failures affect
 only a small part of the nodes where the job is running. Therefore,
 reusing the surviving nodes to restart from the latest checkpoint
 immediately after a failure is more efficient than submitting a new job,
 which may wait for a long time in the batch queue.
-\vspace{-1em}
 
-\paragraph{\emph{Efficient serialization:}} The critical data structures
+\begin{wrapfigure}[18]{l}{0.47\textwidth}
+  \includegraphics[width=0.4\textwidth]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/veloc-arch}
+  \caption{VeloC architecture.}%
+  \label{fig:veloc:arch}%
+\end{wrapfigure}
+
+\subparagraph{Efficient Serialization} The critical data structures
 of HPC applications that need to be checkpointed are constantly
 growing in size and complexity. Manual serialization of such data
 structures as contiguous sequences of bytes to be written into
@@ -56,51 +59,49 @@ optimized serialization support is needed.
 
 \paragraph{Solution Strategy}
 
-To address these challenges, VeloC adopts the following principles:
-\vspace{-1em}
+To address these challenges, VeloC adopts the following principles.
 
-\paragraph{\emph{Multi-level checkpointing:}} is based on the idea
+\subparagraph{Multilevel Checkpointing} This method is based on the idea
 that a majority of failures can be mitigated without involving the
 parallel file system: node-local checkpoints can be used to recover
 from software bugs, replication/erasure coding can be used to recover
 from most combinations of node failures. This reduces the frequency of
 checkpointing to the parallel file system and therefore the I/O
 bottlenecks.
-\vspace{-1em}
 
-\paragraph{\emph{Asynchronous mode:}} once a node-local checkpoint has
+\subparagraph{Asynchronous Mode} Once a node-local checkpoint has
 been written, applications do not need to wait for replication,
 erasure coding or writes to the parallel file system: these can be
 applied in the background, while the application continues
 running. However, in this case, it is important to minimize
 interference with the application execution.
-\vspace{-1em}
 
-\paragraph{\emph{Transparent use of heterogeneous storage:}} we
+
+\subparagraph{Transparent Use of Heterogeneous Storage} We
 developed several techniques that can leverage a variety of local
 storage (in-memory file systems, flash storage) and external storage
 (burst buffers, key-value stores, parallel file systems)
 options. These techniques select the best available storage options,
 tune them with the optimal parameters and leverage any vendor-specific
 API if needed to transfer data.
-\vspace{-1em}
 
-\paragraph{\emph{Job scheduler integration:}} to implement
+
+\subparagraph{Job Scheduler Integration} To implement
 restart-in-place, we have developed a series of scripts that interact
 with a variety of job schedulers to run jobs with spare nodes,
 continue execution on failures, restart on the surviving nodes and
 spares using the fastest possible recovery strategy (which ideally
 avoids reading checkpoints from the parallel file system). This is
 transparent to the users.
-\vspace{-1em}
 
-\paragraph{\emph{Declarative API and automated serialization:}} we
+
+\subparagraph{Declarative API and Automated Serialization} We
 offer a simple API that enables users to either manually capture
 checkpoints into files or to define memory regions that are
 automatically serialized into checkpoint files.
-\vspace{-1em}
 
-\paragraph{\emph{Modular design:}} applications link with a client
+
+\subparagraph{Modular design} Applications link with a client
 library that is responsible to manage local checkpoints, while a
 separate engine is responsible to employ the rest of the resilience
 strategies as pluggable modules. This simplifies the implementation
@@ -109,7 +110,7 @@ combination of resilience strategies, as well as, to customize their
 checkpointing pipeline (e.g., add new post-processing operations such
 as analytics or compression).
 
-\paragraph{Recent Progress.}
+\paragraph{Recent Progress}
 
 We met and closely collaborated with several ECP application teams in
 an effort to address their checkpointing needs. Most of our current
@@ -120,12 +121,6 @@ protocols that reduce dependencies on external libraries (such as
 Boost) if desired.  We added preliminary support for
 checkpoint aggregation, which reduces the number of checkpoint files
 from one per rank to a desired smaller number.
-
-\begin{wrapfigure}{l}{0.47\textwidth}
-  \includegraphics[width=0.4\textwidth]{projects/2.3.4-DataViz/2.3.4.14-VeloC-SZ/veloc-arch}
-  \caption{VeloC: Architecture}%
-  \label{fig:veloc:arch}%
-\end{wrapfigure}
 
 In terms of capabilities, we refactored the VELOC code to abstract all
 interactions with external storage in the code, which allows flexible
@@ -159,7 +154,7 @@ leader election algorithm that allows independent groups of (potentially
 remote) ranks to consolidate their data on a single rank, which is then
 responsible to write a single file to the PFS.
 
-\paragraph{Testing, Continuous Integration, and Experience on Early Access Systems.}
+\paragraph{Testing, Continuous Integration, and Experience on Early Access Systems}
 We continued working towards new features that facilitate better
 integration with the ECP ecosystem. We extended the test suite of
 VELOC (runnable both independently and with continuous integration) to
@@ -180,11 +175,11 @@ deployment. We were successful in running the refactored version of
 VELOC to checkpoint small data sizes, but encountered issues with DAOS
 (reported to Intel) when using larger checkpoint sizes.
 
-\paragraph{Next Steps.}
-We are working towards several goals: (1) refine incremental
+\paragraph{Next Steps}
+We are working toward several goals to (1) refine incremental
 checkpointing techniques; (2) refine asynchronous checkpoint
 aggregation techniques; (3) continue hardening the integration with
-existing ECP applications; (4) test VELOC on more ECP testbeds, in
+existing ECP applications; and (4) test VELOC on more ECP testbeds, in
 particular CRUSHER. In parallel, we will continue the collaboration
 with the ECP application teams to address new requirements as they
 arise.

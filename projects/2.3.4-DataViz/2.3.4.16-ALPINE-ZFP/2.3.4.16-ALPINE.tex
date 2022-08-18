@@ -6,7 +6,7 @@
 
 ECP ALPINE/{\zfp} will deliver in situ visualization and analysis infrastructure and algorithms along with lossy compression for floating point arrays to ECP Applications.  
 
-\textbf{ALPINE} infrastructure developers come from the ParaView~\cite{alpine:Paraview1,alpine:Paraview2} and VisIt~\cite{alpine:VisIt} teams and ALPINE solutions will deliver in situ DAV functionality in those tools, as well as through Ascent~\cite{alpine:Ascent}, a new in situ infrastructure framework that focuses on flyweight processing. 
+ALPINE infrastructure developers come from the ParaView~\cite{alpine:Paraview1,alpine:Paraview2} and VisIt~\cite{alpine:VisIt} teams and ALPINE solutions will deliver in situ DAV functionality in those tools, as well as through Ascent~\cite{alpine:Ascent}, a new in situ infrastructure framework that focuses on flyweight processing. 
 %
 ALPINE  focuses on four major activities: 
 \begin{enumerate}
@@ -25,7 +25,7 @@ ALPINE  focuses on four major activities:
 Many high performance simulation codes are using post hoc processing.  
 Given Exascale I/O and storage constraints, in situ processing will be necessary. 
 In situ data analysis and visualization selects, analyzes, reduces, and generates extracts from scientific simulation results during the simulation runs to overcome bandwidth and storage bottlenecks associated with writing out full simulation results to disk. 
-The ALPINE team is addressing two problems related to Exascale processing --- (1) delivering infrastructure and (2) delivering performant in situ algorithms.
+The ALPINE team is addressing two problems related to Exascale processing: (1) delivering infrastructure and (2) delivering high-performance, in-situ algorithms.
 The challenge for existing infrastructure tools is that need to become Exascale-ready in order to achieve performance within simulation codes’ time budgets, support many-core architectures, scale to massive concurrency, and leverage deep memory hierarchies. The challenge for in situ algorithms is to apply in situ processing effectively without a human being in the loop.
 This means that we must have adaptive approaches to automate saving the correct visualizations and data extracts.
 
@@ -39,7 +39,7 @@ Both software projects represent long-term DOE investments, and they are the two
 %Our development strategy consists of placing all new algorithms developed in a single code repository, and deploying this code in both
 %ParaView and VisIt.
 %
-Our team is also developing an additional  in situ framework, Ascent.  Ascent is a ``flyweight'' solution, meaning that it is focused on a streamlined API, minimal memory footprint, and small binary size.
+Our team is also developing an additional  in situ framework, Ascent.  Ascent is a flyweight solution, meaning that it is focused on a streamlined API, minimal memory footprint, and small binary size.
 Our solution strategy is two-fold, in response to our two major challenges: infrastructure and algorithms.
 
 For infrastructure, we have developed a layer on top of the VTK-m library for ALPINE algorithms.
@@ -53,19 +53,17 @@ Thus all development effort by ALPINE will be available in all of our tools and 
 %	\caption{\label{fig:alpine_infrastructure}ALPINE's strategy for delivering and developing software.  We are making use of existing software (ParaView, VisIt), but making sure all new development is shared in all of our tools.  The dotted lines represent ongoing work, specifically that the Ascent API will work with ParaView and VisIt.}
 %\end{figure}
 
-ALPINE is developing a suite of in situ  algorithms designed to address I/O and data output constraints and enable scientific discovery.   These algorithms include:
-\begin{description}  
-	\setlength{\itemsep}{1pt}
-    \setlength{\parskip}{0pt}
-    \setlength{\parsep}{0pt}
-	\item [Topological analysis] can be used to detect features in the data and adaptively steer visualizations with no human in the loop.  For example, contour trees can identify the most significant isosurfaces in complex simulations and then the resulting visualizations can use these isosurfaces~\cite{alpine:Carr:TVCG19}.
-	\item [Adaptive sampling]  can be used to guide visualizations and extracts to the most important parts of the simulation, significantly reducing I/O~\cite{alpine:Biswas:ISAV18,alpine:Dutta:Entropy19,alpine:Liu:SC19poster}.  %Figure~\ref{fig:alpine-sampling-example} shows an adaptive sampling technique based on importance to preserve  features in the data  
-	\item [Statistical feature detection] models data using distribution-based approaches and statistical similarity measures to identify and isolate features of interest~\cite{alpine:Dutta:PVIS17,alpine:Dutta:VIS15}. Significant data reduction is possible by only saving the statistical representations of the data.  Figure~\ref{fig:alpine-statistical-feature} illustrates the use of the statistical feature detection approach to identifying bubbles in situ in an MFiX-Exa simulation.  
-	\item [Task-based feature extraction] uses segmented merge trees to encode a wide range of threshold based features.  An embedded domain specific language (EDSL) can describe algorithms using a  task graph abstraction~\cite{alpine:Landge:SC14,alpine:Petruzza:IPDPS18} and execute it using different runtimes (e.g., MPI, Charm++, Legion).
-	\item [Optimal Viewpoint] Optimal Viewpoint metrics can be used to automate visualization decisions while running in situ. The initial algorithm implementation will choose the best camera placement for a scene, minimizing visualizations written to disk~\cite{alpine:Bonaventura:Entropy18,alpine:Marsaglia:UOtech20}.  
-	\item [Lagrangian analysis] of vector flow allows more efficient and complete tracking of flow.  It can save vector field data with higher accuracy and less storage than the traditional approaches~\cite{alpine:Sane:EGPGV18,alpine:Sane:EGPGV19,alpine:Binyahib:LDAV19}.
+Furthermore, ALPINE is developing a suite of in-situ algorithms designed to address I/O and data output constraints and enable scientific discovery:
+ 
+
+	\subparagraph{Topological Analysis} Used to detect features in the data and adaptively steer visualizations with no human in the loop.  For example, contour trees can identify the most significant isosurfaces in complex simulations and then the resulting visualizations can use these isosurfaces~\cite{alpine:Carr:TVCG19}.
+	\subparagraph{Adaptive Sampling} This can be used to guide visualizations and extracts to the most important parts of the simulation, significantly reducing I/O~\cite{alpine:Biswas:ISAV18,alpine:Dutta:Entropy19,alpine:Liu:SC19poster}.  %Figure~\ref{fig:alpine-sampling-example} shows an adaptive sampling technique based on importance to preserve  features in the data  
+	\subparagraph{Statistical Feature Detection} These models use distribution-based approaches and statistical similarity measures to identify and isolate features of interest~\cite{alpine:Dutta:PVIS17,alpine:Dutta:VIS15}. Significant data reduction is possible by only saving the statistical representations of the data.  Figure~\ref{fig:alpine-statistical-feature} illustrates the use of the statistical feature detection approach to identifying bubbles in situ in an MFiX-Exa simulation.  
+	\subparagraph{Task-based Feature Extraction} This method uses segmented merge trees to encode a wide range of threshold based features.  An embedded domain specific language (EDSL) can describe algorithms using a  task graph abstraction~\cite{alpine:Landge:SC14,alpine:Petruzza:IPDPS18} and execute it using different runtimes (e.g., MPI, Charm++, Legion).
+	\subparagraph{Optimal Viewpoint} Optimal Viewpoint metrics can be used to automate visualization decisions while running in situ. The initial algorithm implementation will choose the best camera placement for a scene, minimizing visualizations written to disk~\cite{alpine:Bonaventura:Entropy18,alpine:Marsaglia:UOtech20}.  
+	\subparagraph{Lagrangian Analysis} Using this method to analyze vector flow allows more efficient and complete tracking of flow.  It can save vector field data with higher accuracy and less storage than the traditional approaches~\cite{alpine:Sane:EGPGV18,alpine:Sane:EGPGV19,alpine:Binyahib:LDAV19}.
 %	\item [Moments-based pattern detection] can be used to find rotation-invariant patterns~\cite{alpine:Bujack:WSCG17,alpine:Yang:PR17,alpine:Wang:TopoVis17}. 
-\end{description}
+
 
 %\begin{figure*}[htb]
 %	\begin{center}
@@ -127,10 +125,10 @@ The ALPINE/ZFP team has been active in porting and testing its infrastructure, a
 
 ALPINE’s algorithm teams have been testing stand-alone versions of the contour tree algorithm and the statistical feature detection algorithm.  On both Spock and Crusher, the contour tree algorithm team leveraged VTK-m’s Kokkos/HIP backend to build and run on the CPU for a single node, serial mode test.  
 
-On Spock CPUs, the statistical feature detection algorithm team successfully ran using VTK-m’s OpenMP backend.  We measured a 25X performance improvement from one to 64 threads using OpenMP acceleration.
+On Spock CPUs, the statistical feature detection algorithm team successfully ran using VTK-m’s OpenMP backend.  We measured a 25$\times$ performance improvement from one to 64 threads using OpenMP acceleration.
 %% Refresh 2022-02
 
 \paragraph{Next Steps}
 
-Plans for FY22-23 will continue the focus on integration and delivery to ECP applications.  This will include deploying key infrastructure and integration pipelines on Frontier. The team will also continue outreach with ECP application codes to support ECP applications codes as they shift their focus from  KPP-1 or KPP-2 runs to science runs and visualization needs.  
+Plans for FY 22--23 will continue the focus on integration and delivery to ECP applications.  This will include deploying key infrastructure and integration pipelines on Frontier. The team will also continue outreach with ECP application codes to support ECP applications codes as they shift their focus from  KPP-1 or KPP-2 runs to science runs and visualization needs.  
 

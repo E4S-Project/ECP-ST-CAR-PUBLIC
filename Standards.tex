@@ -1,8 +1,11 @@
-\newpage
+%\newpage
 \subsection{Standards Committees}
-Participating in standards efforts is an important activity for ECP ST staff.  In many instances, the software will not be sustainable if it is not tightly connected to a standard. Additionally, any standard must account for the emerging requirements that exascale platforms need to meet to achieve performance and portability. Figure~\ref{fig:standards} summarizes ECP ST staff involvement in the major standards efforts that impact the ECP.
+Participating in standards efforts is an important activity for ECP ST staff.  In many instances, the software will not be sustainable if it is not tightly connected to a standard. Additionally, any standard must account for the emerging requirements that exascale platforms need to meet to achieve performance and portability. Table~\ref{table:standards} summarizes ECP ST staff involvement in the major standards efforts that impact the ECP.
 
-ECP ST staff are heavily involved in the MPI and OpenMP standards efforts and hold several key leadership positions within the standardizing bodies. ECP ST staff also play a critical role in C++ standards efforts. Although DOE staff have only recently engaged in C++ standards, ECP ST staff efforts are essential for ensuring that HPC requirements are considered, especially by contributing working code that demonstrates requirements and design. The ECP ST sponsors the newest open-source Fortran compiler, Flang~\ref{subsubsect:flang} as a front end for LLVM.  This compiler is rapidly emerging as an essential part of the HPC ecosystem.  In particular, although ARM processors are not explicitly part of the pre-exascale ecosystem, they are emerging as a strong contender in the future.  Flang is \textit{the} Fortran compiler for ARM-based systems.  ECP ST involvement in other committees provides valuable leverage and improved uniformity for HPC software.  Lastly, the Visualization Toolkit (VTK) Architecture Review Board (ARB) [...]\todo{Please complete this sentence.}.  Although this is only one instance, the team intends to explore the ARB model as part of its SDK efforts.
+ECP ST staff are heavily involved in the MPI and OpenMP standards efforts and hold several key leadership positions within the standardizing bodies. ECP ST staff also play a critical role in C++ standards efforts. Although DOE staff have only recently engaged in C++ standards, ECP ST staff efforts are essential for ensuring that HPC requirements are considered, especially by contributing working code that demonstrates requirements and design. The ECP ST sponsors the newest open-source Fortran compiler, Flang~\ref{subsubsect:flang} as a front end for LLVM.  This compiler is rapidly emerging as an essential part of the HPC ecosystem.  In particular, although ARM processors are not explicitly part of the pre-exascale ecosystem, they are emerging as a strong contender in the future.  Flang is \textit{the} Fortran compiler for ARM-based systems.  ECP ST involvement in other committees provides valuable leverage and improved uniformity for HPC software.  
+%Lastly, the Visualization Toolkit (VTK) Architecture Review Board (ARB) [...]\todo{Please complete this sentence.}.  Although this is only one instance, the team intends to explore the ARB model as part of its SDK efforts.
+
+\iffalse % Converted to editable table below. –STC
 \begin{figure}[htb]
 	\begin{center}
 		\includegraphics[width=0.5\textwidth]{StandardsInvolvement}
@@ -11,3 +14,23 @@ ECP ST staff are heavily involved in the MPI and OpenMP standards efforts and ho
 	\end{center}
 	\todo[inline]{Please convert this figure into a table.}
 \end{figure}
+\fi
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\rowcolor{LightCyan}
+\textbf{Standards effort} & \textbf{ECP ST participants} \\ \hline
+MPI Forum & 15 \\ \hline
+OpenMP & 15 \\ \hline
+BLAS & 6 \\ \hline
+C++ & 4 \\ \hline
+Fortran & 4 \\ \hline
+OpenACC & 3 \\ \hline
+LLVM & 2 \\ \hline
+PowerAPI & 1 \\ \hline
+VTK ARB & 1 \\ \hline
+\end{tabular}
+	\caption{\label{table:standards} ECP ST staff are involved in a variety of official and de facto standards committees.  Involvement in standards efforts is essential for ensuring the sustainability of ECT ST products and ensuring that emerging exascale requirements are addressed by these standards.}
+\end{table}

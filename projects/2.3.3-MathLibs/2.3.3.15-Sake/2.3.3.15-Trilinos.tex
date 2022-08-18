@@ -6,7 +6,7 @@ This project is focused on making Trilinos ready for exascale. One part is to po
 the PEEKS sub-project).
 
 
-\paragraph{Key  Challenges}
+\paragraph{Key Challenges}
 The Trilinos software library needs to be adapted to the new architectures. This is a large undertaking as there are many packages. Therefore, we focus on a core subset of Trilinos related to linear algebra and solvers. We are sensitive that Trilinos has a large user base and therefore need to minimize any user interface changes. Performance portability across a wide range of platforms is a key challenge.
 
 Developing scalable iterative (Krylov) solvers for the US leadership supercomputers 
@@ -35,34 +35,34 @@ utilization.
 
 \paragraph{Solution Strategy}
 
-The primary thrusts of the Trilinos/PEEKS project are:
-\begin{enumerate}
-  \item Performance portability:
+The primary thrusts of the Trilinos/PEEKS project designed to meet these challenges are detailed below.
+
+\subparagraph{Performance Portability}
         We plan to rely heavily on the Kokkos and Kokkos Kernels libraries as that provide kernels that are performance portable across a variety of platforms, including CPU and GPU (NVIDIA, AMD, Intel). There is still much porting work, as some packages rely on UVM (Unified Virtual Memory), which is not widely supported.
         We will ensure the readiness of the following four solver packages on ECP platforms:
         distributed linear algebra (Tpetra), Krylov solvers (Belos), algebraic preconditioners and smoothers (Ifpack2), 
         and direct solver interfaces (Amesos2).
-  \item Low-synchronization Krylov methods:
+\subparagraph{Low-Synchronization Krylov Methods}
     	We will develop and deploy pipelined and 
 	communication-avoiding Krylov methods in production-quality code, and 
 	we are actively collaborating with the ECP ExaWind project to integrate 
         our new features into their application. Another bottleneck we will address is the orthogonalization needed in GMRES (such as CGS and MGS).
-\end{enumerate}
+
 
 \paragraph{Recent Progress}
-\begin{enumerate}
-\item Removal of dependency on UVM:
-we have removed the dependence of the four solver packages on UVM.
+Recent progress includes developments in UVM dependencies, HIP backend support, and low-synch orthogonalization.
+
+\subparagraph{Removal of Dependency on UVM}
+We removed the dependence of the four solver packages on UVM.
 On NVIDIA GPUs, UVM simplifies coding by providing automatic data migration between the CPU and GPU memory. However, there are concerns about how well this will be supported, especially in term of performance, on future GPU systems such as Frontier and Aurora. Hence, removing UVM usage was a prerequisite for preparation to run on Frontier and Aurora platforms. 
 More generally, the dependence on UVM posed a risk in term of the solver performance, while explicitly managing the data movement will likely improve solver performance. 
 
-\item HIP backend support:
-we have ensured the Trilinos solver stacks run on the Frontier early access system (Spock) using HIP backend (without UVM) and resolved initial performance problems. Several performance optimizations remain open which we plan to address this year.
+\subparagraph{HIP Backend Support}
+We ensured the Trilinos solver stacks run on the Frontier early access system (Spock) using HIP backend (without UVM) and resolved initial performance problems. Several performance optimizations remain open which we plan to address this year.
 
 %\item Polynomial preconditioning: We implemented and deployed a GMRES-based polynomial preconditioner in Trilinos/Belos. This can be used as a preconditioner by itself, as a smoother in multigrid (MueLu), or be combined (nested) with any existing preconditioner. Our code is portable to both CPU and GPU. We showed the method is robust and it does not need any user knowledge of eigenvalues of the matrix/operator, unlike the Chebyshev method. In collaboration with the Exagraph ECP project, it has been integrated into the Sphynx spectral partitioner (Trilinos/Zoltan2).
 
-\item Low-synch orthogonalization: In collaboration with CU Denver and NREL, we developed and implemented a novel low-synch version of Classical Gram-Schmidt (CGS), called DCGS2. By delaying orthogonalization and norms, we reduce the synchronization requirement to once per iteration (even with two passes of CGS). The method is more numerically stable than previous attempts at low-synch orthogonalization. Preliminary results on Summit show that the new DCGS2 outperforms the current CGS2 and MGS methods, and achieves up to 66 Gflop/s on 192 GPUs. A version of this method is currently being integrated into Trilinos/Belos.
-\end{enumerate}
+\subparagraph{Low-Synch Orthogonalization} In collaboration with CU Denver and NREL, we developed and implemented a novel low-synch version of Classical Gram-Schmidt (CGS), called DCGS2. By delaying orthogonalization and norms, we reduce the synchronization requirement to once per iteration (even with two passes of CGS). The method is more numerically stable than previous attempts at low-synch orthogonalization. Preliminary results on Summit show that the new DCGS2 outperforms the current CGS2 and MGS methods, and achieves up to 66 Gflop/s on 192 GPUs. A version of this method is currently being integrated into Trilinos/Belos.
 
 \paragraph{Preliminary Experiences on Early Access systems}
 
@@ -77,7 +77,7 @@ further optimize the solver performance (e.g., using rocBLAS/rocSparse).
 
 
 \paragraph{Next Steps}
-Our next efforts are:
+The following efforts have been identified for the next phase of the project.
 \begin{enumerate}
 \item Support OpenMP and SYCL backends and
       perform baseline performance assessments to determine which kernels or algorithms need performance optimization

@@ -51,17 +51,17 @@ software layers.
 
 The Exa-PAPI team is preparing PAPI support to stand up to 
 the challenges posed by exascale systems by 
-%\begin{itemize}
-widening its applicability and providing robust support for exascale 
+\begin{enumerate}
+\item widening its applicability and providing robust support for exascale 
 hardware resources;
-supporting finer-grain measurement and control of power, thus offering 
+\item supporting finer-grain measurement and control of power, thus offering 
 software developers a basic building block for dynamic application optimization 
 under power constraints; 
-extending PAPI to support software-defined events; and 
-applying semantic analysis to hardware counters so that the application 
+\item extending PAPI to support software-defined events; and 
+\item applying semantic analysis to hardware counters so that the application 
 developer can better make sense of the ever-growing list of raw hardware 
 performance events that can be measured during execution. 
-%\end{itemize}
+\end{enumerate}
 
 %The Exa-PAPI effort delivers new PAPI components to handle the wide range of
 %new hardware and software events for the extreme scale platforms that will form
@@ -75,7 +75,7 @@ performance events that can be measured during execution.
 %development of components for monitoring network interconnect events, as well as
 %components targeted at the deep and heterogeneous memory hierarchies that we
 %are already seeing in new architectures.
-%
+
 In summary, the team is channeling the monitoring capabilities of hardware 
 counters, power usage, software-defined events into a robust PAPI software 
 package. 
@@ -114,31 +114,30 @@ more efficient code by profiling the utilization of the latest GPU resources and
 diagnosing performance bottlenecks.
 The objective of this development was to  
 %a mechanism to collect Intel
-%GPU performance metrics via PAPIï¿½s well known interface and without any additional
+%GPU performance metrics via PAPIÕs well known interface and without any additional
 %efforts from the users.
 %In our approach, through the PAPI component framework, we 
 enable transparent access
 to the Gen9 performance and memory metrics via Intel's OneAPI Level-Zero Interface.
 A unique feature of this development enables users to apply two different collection modes 
-via the PAPI interface:
-
-\subparagraph{The Time-based Collection Mode}
-%\begin{itemize}
-Counter values are aggregated and stored in a buffer.
-Counter values can be read at any given time during the execution, which means
+via the PAPI interface:\\
+The Time-based Collection Mode:
+\begin{itemize}
+\item Counter values are aggregated and stored in a buffer.
+\item Counter values can be read at any given time during the execution, which means
 performance counter monitoring is completely autonomous from the kernels
 running in the GPUs.
-%\end{itemize}
-
-\subparagraph{The Kernel-Based Collection Mode}
-%\begin{itemize}
-Counter monitoring is per kernel, and
-performance counter data is not available during kernel execution but only after
-the kernel finishes execution.
-In this mode, the Level-Zero API uses internal barriers, which implies that if two
-kernels overlap, then the execution of the second kernel is pushed out until the first
+\end{itemize}
+%
+The Kernel-based Collection Mode:
+\begin{itemize}
+\item Counter monitoring is per kernel.
+\item Performance counter data is not available during kernel execution but only after
+the kernel finishes.
+\item In this mode, the Level-Zero API uses internal barriers, which implies, if two
+kernels overlap, the execution of the second kernel is pushed out until the first
 kernel finishes.
-%\end{itemize}
+\end{itemize}
 
 
 \vspace{10pt}
@@ -160,27 +159,28 @@ definition of 36 new PAPI presets for FUGAKU users.
  
 
 \paragraph{Next Steps}
-Next steps for each effort have already been identified.
 
-\subparagraph{Modernize Atomics and Reduce Overhead in PAPI} 
+Our next efforts will focus on:
+\begin{enumerate}
+\item \textbf{Modernize atomics and reduce overhead in PAPI:} 
 	When PAPI calls are made from within different thread contexts, PAPI uses internal 
 	mechanisms for guaranteeing thread safety. 
 	Atomic operations have a central role in these mechanisms, since they introduce less 
 	overhead than mutexes. 
 	However, the support for atomic operations in the current PAPI framework is limited, 
-	and many opportunities are missed. Projects such as the atomic\_ops library offer a 
+	and many opportunities are missed. Projects such as ``the atomic\_ops library'' offer a 
 	much wider support for atomic operations, which the team plans to leverage in PAPI.
 
 %
-\subparagraph{Improved Multithreading and OpenMP Support in PAPI} 
+\item \textbf{Improved multi-threading and OpenMP support in PAPI}: 
 	Beyond the atomic operations for guaranteeing correctness, PAPI will modernize 
 	support for threads. PAPI was originally designed in a time when threads were exotic, 
 	and OpenMP was nonexistent. The Exa-PAPI team will improve the interoperability with 
 	thread systems and OpenMP in particular.
 
 %
-\subparagraph{Development of PAPI Support for New ECP Hardware}
+\item \textbf{Development of PAPI support for new ECP hardware}:
 	Development of new PAPI components, as well as new features in current PAPI 
 	components due to underlying vendor interface updates. Development of new PAPI 
 	presets (predefined events) for newly released hardware.
-
+\end{enumerate}

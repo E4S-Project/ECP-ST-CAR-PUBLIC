@@ -16,23 +16,24 @@ into simulation libraries like deal.II, MFEM, and HyTeG.
 \paragraph{Key Challenges}
 % There is a list of challenges to meet with the development of sparse linear
 % algebra functionality for the US flagship supercomputers deployed in ECP:
-\begin{enumerate}
-  \item The extreme levels of hardware concurrency available in the
-		GPU-accelerated nodes need to be reflected in fine-grain parallelism in
-		the numerical building blocks.
-  \item An increasing variety of hardware designs and hardware-native
-		programming languages requires a library design that enables platform
-		portability without sacrificing performance.
-  \item The arithmetic performance of processors growing much faster than the
-		memory bandwidth and interconnect speed requires exploring innovative
-		strategies for reducing the pressure on all cache/memory levels.
-  \item Applications that build upon the fast solution of many independent
-		moderate-sized sparse linear systems require batched sparse linear
-		algebra functionality.
-  \item Applications building upon matrix-free methods requires the flexibility
-		to compose linear solvers out of library-native and customized external
-		functionality.
-\end{enumerate}
+%\begin{enumerate}
+The extreme levels of hardware concurrency available in the
+GPU-accelerated nodes must be reflected in fine-grain parallelism in
+the numerical building blocks.
+To that end, an increasing variety of hardware designs and hardware-native
+programming languages requires a library design that enables platform
+portability without sacrificing performance.
+
+Applications that build upon the fast solution of many independent
+moderate-sized sparse linear systems require batched sparse linear
+algebra functionality, and
+applications that build upon matrix-free methods require the flexibility
+to compose linear solvers out of library-native and customized external
+functionality.
+Moreover, the arithmetic performance of processors is growing much faster than the
+memory bandwidth and interconnect speed, and this requires exploring innovative
+strategies to reduce the pressure on all cache/memory levels.
+%\end{enumerate}
 
 \begin{figure}[!h]
 \centering
@@ -48,18 +49,17 @@ into simulation libraries like deal.II, MFEM, and HyTeG.
 The Ginkgo team is addressing these challenges by striving for platform
 portability, modularity, extensibility, and hardware-aware algorithm design.
 
-\begin{enumerate}
-  \item \textbf{Architecture-portable software design:}
+  \subparagraph{Architecture-Portable Software Design}
 		Ginkgo~\cite{anzt2020ginkgo} employs a design that decouples the
 		algorithm implementations from the hardware-specific kernel
 		implementations, thereby acknowledging the importance of platform
 		portability and allowing for architecture-specific kernel optimization
 		in the vendor language, see Figure~\ref{fig:ginkgoportability}.
-  \item \textbf{Modularity, flexibility, and extensibility:} Ginkgo employs a
-		``linear operator'' abstraction for all functionality, which allows for
+  \subparagraph{Modularity, Flexibility, and Extensibility} Ginkgo employs a
+		linear operator abstraction for all functionality, which allows for
 		flexibility in combining functionality and interfacing external
 		operators.
-  \item \textbf{Sustainability efforts:} Ginkgo adheres the Better Scientific
+  \subparagraph{Sustainability Efforts} Ginkgo adheres the Better Scientific
 		Software (BSSw) design principles~\cite{betterscientificsoftware} that
 		ensure production-quality code by featuring unit testing, automated
 		configuration and installation, Doxygen code documentation, as well as a
@@ -67,13 +67,13 @@ portability, modularity, extensibility, and hardware-aware algorithm design.
 		framework~\cite{pasc_anzt}. Ginkgo is an open source effort licensed
 		under the BSD 3-clause and included in the xSDK and E4S software
 		packages.
-  \item \textbf{Fine-grain parallelism:} Ginkgo features linear algebra
+  \subparagraph{Fine-Grain Parallelism} Ginkgo features linear algebra
 		building blocks and advanced algorithms for preconditioning and solving
 		linear systems that can efficiently leverage the concurrency of modern
 		GPUs, including (incomplete) parallel factorizations, parallel sparse
 		triangular solves, parallel matrix operations, and parallel iterative
 		methods.
-  \item \textbf{Mixed precision methods:} Ginkgo features a memory accessor
+  \subparagraph{Mixed-Precision Methods} Ginkgo features a memory accessor
 		that encapsulates on-the-fly compression for decoupling the memory
 		precision from the arithmetic precision. This allows accelerating
 		memory-bound algorithms that can compensate or tolerate some information
@@ -81,51 +81,49 @@ portability, modularity, extensibility, and hardware-aware algorithm design.
 		increase the result accuracy of memory-bound kernels that benefit from
 		using a more complex precision format in the arithmetic operations
 		without performance loss.
-  \item \textbf{Batched preconditioned iterative solvers:} Ginkgo contains high
+  \subparagraph{Batched Preconditioned Iterative Solvers} Ginkgo contains high
 		performance batched iterative solvers that handle the concurrent
 		solution of a set of independent sparse linear systems of moderate size.
 		The batched iterative solvers allow for some flexibility in terms of the
 		preconditioner and monitor the system-individual convergence without
 		performance degradation.
-\end{enumerate}
 
 \paragraph{Recent Progress}
-\begin{enumerate}
-  \item The Ginkgo library realized native support for Intel GPUs (via
+%
+First, the Ginkgo library realized native support for Intel GPUs (via
 		DPC++)~\cite{tsai2021porting}.
-  \item MFEM treating Ginkgo as numerical backend allows accelerating MFEM
+Also, MFEM treating Ginkgo as a numerical backend allows accelerating MFEM
 		simulations with AMD GPUs, Intel GPUs, and NVIDIA GPUs.
-  \item The Ginkgo library has been expanded with new advanced preconditioners
+The Ginkgo library has also been expanded with new advanced preconditioners
 		such as ISAI and Multigrid, also supporting mixed-precision capabilities~\cite{10.1007/978-3-030-85665-6_34}.
-  \item Based on the memory accessor, the Ginkgo team deployed a Compressed
+Based on the memory accessor, the Ginkgo team deployed a Compressed
 		Basis GMRES (CB-GMRES) solver that outperforms the standard GMRES solver
 		by storing the Krylov basis vectors in lower precision, therewith
 		accelerating the memory access~\cite{DBLP:journals/corr/abs-2009-12101}.
-  \item The Ginkgo team successfully employed the batched iterative solvers for
+Finally, the Ginkgo team successfully employed the batched iterative solvers for
 		the hydrodynamic problems arising in the PeleLM
 		simulations and the gyrokinetic problems arising in the
 		XGC simulations~\cite{batched-scala2021}.
-\end{enumerate}
 
 
 \paragraph{Next Steps}
-Our next efforts are:
-\begin{enumerate}
-  \item \textbf{Deployment of multi-node functionality:} Ginkgo already has
+The following efforts have been identified for the next phase of the project.
+
+  \subparagraph{Deployment of Multinode Functionality} Ginkgo already has
 		experimental support for multi-node execution via an executor-agnostic
 		MPI layer. We will extend the support and make it production-ready.
-  \item \textbf{Deployment of GPU-resident spare direct solvers:} In response to
+  \subparagraph{Deployment of GPU-resident Sparse Direct Solvers} In response to
 		an urgent need of national power grid simulations, we will develop
 		GPU-resident sparse direct solvers.
-  \item \textbf{Block-versions of the parallel Incomplete factorization
-		preconditioner:} To better reflect the properties of the ECP application
+  \subparagraph{Block-Versions of the Parallel Incomplete Factorization
+		Preconditioner} To better reflect the properties of the ECP application
 		projects, we will deploy blocked versions of the ParILU and ParILUT
 		parallel ILU and parallel threshold ILU preconditioners in the Ginkgo
 		software library.
-  \item \textbf{Problem-specific preconditioners for MFEM:} In collaboration
+  \subparagraph{Problem-Specific Preconditioners for MFEM} In collaboration
 		with the ECP CEED cluster, we will design problem-specific mixed
 		precision preconditioners for matrix-free finite element simulations.
-\end{enumerate}
+
 
 
 \paragraph{Early Access Systems (EAS) Experiences}
@@ -166,7 +164,7 @@ more affected by the sparsity pattern of the matrix.
     \includegraphics[width=.34\columnwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/ginkgo_eas/bw_csr_spmv.pdf}
     \includegraphics[width=.34\columnwidth]{projects/2.3.3-MathLibs/2.3.3.13-CLOVER/ginkgo_eas/bw_ell_spmv.pdf}
   \end{tabular}
-  \caption{Achieved Bandwidth (GB/s) of the Ginkgo CSR (left), and ELL (right) SpMV operations on one GCD
+  \caption{Achieved bandwidth (GB/s) of the Ginkgo CSR (left), and ELL (right) SpMV operations on one GCD
     of the Crusher MI250X GPUs.}
   \label{fig:gko-crusher-spmv}
 \end{figure}

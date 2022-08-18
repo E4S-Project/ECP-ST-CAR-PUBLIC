@@ -58,9 +58,9 @@ support variable size tiles and block low-rank compressed tiles.
     SLATE in the ECP software stack.}
 \end{figure}
 
-\paragraph{Key  Challenges}
+\paragraph{Key Challenges}
+Each element described above faces key challenges to successful implementation and deployment.
 
-\begin{enumerate}
 
 % \item
 % \textbf{Designing from the ground up:}
@@ -69,8 +69,8 @@ support variable size tiles and block low-rank compressed tiles.
 % a viable path forward for efficient support of GPUs
 % in a distributed-memory environment.
 
-\item
-\textbf{Facing harsh hardware realities:}
+
+\subparagraph{Facing Harsh Hardware Realities}
 SLATE targets a difficult hardware environment, where virtually
 all the processing power is on the GPU side.
 Achieving efficiency requires aggressive offload to GPU accelerators
@@ -79,8 +79,8 @@ and optimization of communication bottlenecks.
 % interconnect technology lagging behind the computing
 % capabilities of the GPUs.
 
-\item
-\textbf{Facing harsh software realities:}
+
+\subparagraph{Facing Harsh Software Realities}
 SLATE uses cutting-edge software technologies,
 including modern C++ features and recent extensions
 to the OpenMP standard, which may not be fully supported by compilers
@@ -89,15 +89,14 @@ Standardized solutions for GPU acceleration are still in flux.
 % Also, while complete parallel programming frameworks exist, at this stage
 % they have to be considered research prototypes.
 
-\end{enumerate}
+
 
 %-------------------------------------------------------------------------------
 \paragraph{Solution Strategy}
+To mitigate these challenges, the team proposes the following actions.
 
-\begin{enumerate}
 
-\item
-\textbf{Evolving design:}
+\subparagraph{Evolving Design}
 Due to the inherent challenges of designing a software package
 from the ground up, the SLATE project started
 with a careful analysis of the existing and emerging
@@ -106,8 +105,7 @@ followed by an initial design~\cite{kurzak2017designing}
 that has solidified~\cite{gates2019slate-design},
 but we continue to reevaluate and refactor as needed.
 
-\item
-\textbf{Focus on GPUs:}
+\subparagraph{Focus on GPUs}
 Efficient GPU acceleration is the primary focus of performance
 engineering efforts in SLATE.
 Where applicable, highly optimized vendor implementations of GPU operations
@@ -116,22 +114,19 @@ Where necessary, custom GPU kernels are developed, as for computing
 matrix norms.
 Care is taken to hide communication by overlapping it with GPU computations.
 
-\item
-\textbf{Community engagement:}
+\subparagraph{Community Engagement}
 The SLATE team interacts on a regular basis with the OpenMP community,
 represented in ECP by the SOLLVE project, and with the MPI community,
 represented in ECP by the OMPI-X project and the Exascale MPI project.
 The SLATE team also engages the vendor community through our contacts
 at HPE Cray, IBM, Intel, NVIDIA, AMD, and ARM.
 
-\end{enumerate}
-
 %-------------------------------------------------------------------------------
 \paragraph{Recent Progress}
+Recent progress in this area includes several key developments.
 
-\begin{enumerate}
 
-\item \textbf{Port to AMD and Intel platforms:}
+\subparagraph{Port to AMD and Intel Platforms}
 Originally, SLATE was developed using NVIDIA CUDA. We ported BLAS++ to
 the AMD ROCm and Intel oneAPI platforms, and use it as a portability
 layer for SLATE. Our CUDA kernels were ported to HIP using
@@ -139,7 +134,7 @@ AMD's \texttt{hipify} tool. We are also porting kernels to OpenMP
 Offload, which provides an option for all platforms (NVIDIA, AMD, and
 Intel GPUs).
 
-\item \textbf{Performance improvements:}
+\subparagraph{Performance Improvements}
 We improved performance of several major routines, including
 Cholesky, QR, eigenvalue, and singular value decompositions. More components
 of Cholesky and QR are now on the GPU. For the eigenvalue
@@ -160,17 +155,15 @@ Figure~\ref{fig:slate-he2hb}.
     \label{fig:slate-he2hb}
 \end{figure}
 
-\item \textbf{Added eigenvector computation:}
+\subparagraph{Added Eigenvector Computation}
 We added computation of eigenvectors to the eigenvalue solver, and are
 working on the divide-and-conquer algorithm, which exhibits
 better performance than the QR iteration algorithm for computing
 eigenvectors.
 
-\end{enumerate}
-
 \noindent
-Developments are documented in SLATE Working Notes\footnote{
-\url{http://www.icl.utk.edu/publications/series/swans}}.
+Developments are documented in SLATE Working Notes.\footnote{
+\url{http://www.icl.utk.edu/publications/series/swans}}
 
 %-------------------------------------------------------------------------------
 \paragraph{Preliminary Experiences on Early Access systems}
@@ -183,9 +176,9 @@ Laboratory. We have used these engagements to benchmark early versions
 of the system software stack, and reported various performance and
 correctness issues to AMD, Intel, and Cray. Early results on Spock in
 Figure~\ref{fig:slate-spock-gemm} show the SLATE matrix multiply
-(\verb+dgemm+) achieves good performance using multiple nodes and
+(\texttt{dgemm}) achieves good performance using multiple nodes and
 multiple GPUs. We have also demonstrated the Cholesky, LU, and QR
-factorizations (\verb+dpotrf+, \verb+dgeqrf+, \verb+dgetrf+) in
+factorizations (\texttt{dpotrf}, \texttt{dgeqrf}, \texttt{dgetrf}) in
 Figure~\ref{fig:slate-spock-trf}, and are continuing work to tune the
 performance, particularly of communication since AMD has made direct
 GPU-to-GPU MPI communication efficient.
@@ -206,10 +199,10 @@ GPU-to-GPU MPI communication efficient.
 
 %-------------------------------------------------------------------------------
 \paragraph{Next Steps}
+The following efforts have been identified for the next phase of the project.
 
-\begin{enumerate}
 
-\item \textbf{CA-QR and CA-LU:}
+\subparagraph{CA-QR and CA-LU}
 Communication avoiding (CA) routines reorganize the traditional computation
 to minimize the number and volume of communications.
 Since communication is a major
@@ -220,7 +213,7 @@ matrices, such as solving 10,000,000 $\times$ 1000
 least squares problems. There are several avenues to explore including
 CA-QR and Cholesky-QR algorithms.
 
-\item \textbf{Optimize Level 2 BLAS:}
+\subparagraph{Optimize Level 2 BLAS}
 For parallel BLAS, the initial implementations focused on the case where
 the output matrix $C$ was large. However, the output matrix is often a
 single vector, corresponding to Level 2 BLAS, or a few vectors.
@@ -233,4 +226,4 @@ in our mixed-precision iterative refinement algorithms. We will optimize
 our existing matrix-multiplication routines to handle these cases,
 automatically switching algorithms as needed.
 
-\end{enumerate}
+

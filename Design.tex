@@ -1,22 +1,23 @@
 \subsection{Contributions to External Software Products}\label{subsection:external-contributions}
-Although many ECP ST efforts focus on the product that it will develop and support, some of the important work---and certainly some of the most sustainable and highly leveraged work---is done by providing requirements, analysis, design, and prototype capabilities to vendor and other third-party software.  Many software studies have shown that 70--80\% of the cost of a successful software product goes into post-delivery maintenance. The effort summarized in Table~\ref{table:externalproducts} expressly eliminates this large cost for DOE because the product is developed and supported outside DOE.
+Although many ECP ST efforts focus on the product that it will develop and support, some of the important work---and certainly some of the most sustainable and highly leveraged work---is done by providing requirements, analysis, design, and prototype capabilities to vendor and other third-party software.  Many software studies have shown that 70\%--80\% of the cost of a successful software product goes into post-delivery maintenance. The effort summarized in Table~\ref{table:externalproducts} expressly eliminates this large cost for DOE because the product is developed and supported outside DOE.
 
 
 \begin{table}
-	\begin{tabular}{|L{1.5in}|L{4in}|}\hline
+	%\begin{tabular}{|L{1.5in}|L{4in}|}\hline
+	\begin{tabularx}{\textwidth}{|l|X|}\hline
 			\rowcolor{LightCyan}
-			Product & Contribution\\\hline
+			\textbf{Product} & \textbf{Contribution}\\\hline
 			Kokkos and RAJA & ECP efforts to provide portable on-node parallel programming and execution environments have led to new features in C++ standards. \\\hline
 			MPI Forum & ECP ST staff maintain several chapters of the MPI Forum, an effort that requires constant involvement with the other authors, as well as participation in the online discussions related to the chapter and regular attendance of the MPI Forum's face-to-face activities.\\\hline
 			Flang & ECP funds the development of the new open-source Fortran compiler front end called Flang. Flang provides Fortran language support for LLVM back ends in a way similar to how Clang provides support for C and C++.\\\hline 
 			All \tools\ work & Starting in FY20, the \tools\ efforts are organized around delivering capabilities into the LLVM ecosystem.  \\\hline
-			SWIG (www.swig.org) & The ECP ST ForTrilinos efforts contribute the capability to generate automatic Fortran bindings from C++ code.\\\hline
+			SWIG & The ECP ST ForTrilinos efforts contribute the capability to generate automatic Fortran bindings from C++ code.\\\hline
 			TotalView debugger & ECP ST staff, along with RogueWave engineers, are engaged in the co-design of OMPD, the new debugging interface for OpenMP programs. This effort helps RogueWave improve its main debugging product, TotalView, by making it aware and compatible with recent advances in OpenMP debugging.\\\hline
 			LLVM &  An ECP ST staff member is co-leading design discussions around the parallel intermediate representation (IR) and loop-optimization infrastructure.\\\hline
 			SLATE & ECP ST Mathematical Library efforts inform the design, implementation, and optimization of dense numerical linear algebra routines on most vendor platforms.\\\hline
 			Cray MPICH MPI-IO & As part of the ExaHDF5 ECP project, the ALCF worked with Cray MPI-IO developers to merge the upstream ROMIO code into the downstream proprietary Cray MPICH MPI-IO, leveraging Cray’s extensive suite of I/O performance tests and further tuning the algorithm.  Cray is currently targeting its deployment in an experimental release.\\\hline
 			OpenHPC & An ECP ST staff member serves on the OpenHPC Technical Steering Committee as a component development representative.\\\hline
-		\end{tabular}
+		\end{tabularx}
 		\centering
 		\caption{\label{table:externalproducts} External products to which ECP ST activities contribute.  Participation in requirements, analysis, design, and prototyping activities for third-party products is some of the most effective software work that can be done.}
 	\end{table}

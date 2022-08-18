@@ -1,9 +1,9 @@
 \subsubsection{\stid{6.02} LLNL ATDM Software Technologies}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Overview} \leavevmode \\
+\paragraph{Overview} %\leavevmode \\
 
-\textbf{Spack} is a package manager for
+Spack is a package manager for
 HPC~\cite{stewart+:sc19-spack-bof,gamblin+:sc19-spack-tutorial,gamblin+:lanl-spack-tutorial-2019,gamblin+:doe-nsf-spack-tutorial,baber+:pearc19-spack-tutorial,gamblin+:isc19-spack-tutorial,gamblin+:ecp19-spack-roundtable,gamblin+:ecp19-spack-tutorial,gamblin+:sc18-spack-bof,gamblin+:sc18-spack-tutorial,gamblin+:ecp18-spack-sotu,gamblin+:ecp18-spack-tutorial,gamblin+:sc17-spack-tutorial,gamblin:hpckp17,gamblin+:llnl-spack-tutorial-17,gamblin+:sc16-spack-tutorial}.
 It automates the process of downloading, building, and installing
 different versions of HPC applications, libraries, and their
@@ -12,7 +12,7 @@ developers and users can manage their own stacks separately.  Spack
 enables complex applications to be assembled from components, lowers
 barriers to reuse, and allows builds to be reproduced easily.
 
-The \textbf{MFEM} library
+The MFEM library
 \cite{MFEM,mfem_paper_2020} is focused on providing high-performance mathematical algorithms
 and finite element discretizations to next-gen high-order ECP/ATDM
 applications. A main component of these efforts is the development of
@@ -36,13 +36,13 @@ multiple complex architectures (e.g. GPUs). This part of the project is
 synergistic with and leverages efforts from the ECP CEED co-design center.
 
 MFEM is an open-source finite element library with ~10000 downloads/year from 100+
-countries. It is freely available at \url{mfem.org}, on GitHub
-at \url{github.com/mfem}, where the MFEM community includes more than 450
-members), as well as via Spack and OpenHPC. The application outreach and the
+countries. It is freely available at \url{https://mfem.org} and on GitHub
+\url{https://github.com/mfem}, where the MFEM community includes more than 450
+members, as well as via Spack and OpenHPC. The application outreach and the
 integration in the ECP ecosystem is further facilitated by MFEM's participation
 in ECP's xSDK and E4S projects.
 
-\textbf{RAJA}, \textbf{CHAI}, and \textbf{Umpire} are providing software libraries that enable
+RAJA, CHAI, and Umpire are providing software libraries that enable
 application and library developers to meet advanced architecture
 portability challenges. The project goals are to enable writing
 performance portable computational kernels and coordinate complex
@@ -51,19 +51,19 @@ application. These libraries enhance developer productivity by insulating
 them from much of the complexity associated with parallel programming
 model usage and system-specific memory concerns.
 
-The software products provided by this project are three complementary
+This project provides three complementary
 and interoperable libraries:
 
 \begin{enumerate}
 
-\item {\bf RAJA}: Software abstractions that enable C++ developers to write
+\item RAJA: Software abstractions that enable C++ developers to write
     performance portable (i.e., single-source) numerical kernels (loops).
 
-\item {\bf CHAI}: C++ ``managed array'' abstractions that enable transparent
+\item CHAI: C++ managed array abstractions that enable transparent
     and automatic copying of application data to memory spaces at run
     time as needed based on RAJA execution contexts.
 
-\item {\bf Umpire}: A portable memory resource management library that provides
+\item Umpire: A portable memory resource management library that provides
     a unified high-level API in C++, C and FORTRAN for resource
     discovery, memory provisioning, allocation, transformation, and
     introspection.
@@ -88,7 +88,7 @@ by several ECP application and library projects, including: LLNL ATDM
 application, GEOS (Subsurface), SW4 (EQSIM), MFEM (CEED co-design),
 DevilRay (Alpine), and SUNDIALS.
 
-\textbf{Flux}~\cite{flux,flux-fgcs:2020} is a next-generation workload management
+Flux~\cite{flux,flux-fgcs:2020} is a next-generation workload management
 framework for HPC. Flux maximizes scientific throughput
 by scheduling the scientific work requested by HPC users--–also
 known as jobs or workloads.  Using its highly scalable
@@ -109,7 +109,7 @@ numerous interdependent tasks can be spread across many jobs,
 as well as within each job, and is often referred to as a scientific
 workflow (as distinct from a single job or workload). Scheduling
 resources to such modern workflows requires highly scalable
-scheduling as well as performant communication and coordination
+scheduling as well as high-performance communication and coordination
 across hundreds of thousands of jobs, which could not be
 accomplished with traditional HPC schedulers. Flux solves this
 critical problem and has provided innovative solutions
@@ -117,10 +117,10 @@ for modern workflows for many scientific and engineering
 disciplines.
 
 
-\textbf{AID} (Advanced Infrastructure for Debugging) provides an advanced
-debugging, code-correctness and testing toolset to facilitate
+AID (Advanced Infrastructure for Debugging) provides an advanced
+debugging, code-correctness and testing tool set to facilitate
 reproducing, diagnosing and fixing bugs within HPC applications. The
-current capabilities include:
+current capabilities include the following:
 
 \begin{itemize}
 \item STAT (highly scalable lightweight debugging tool);
@@ -130,12 +130,12 @@ current capabilities include:
 \end{itemize}
 
 Major efforts include developing and deploying additional capabilities
-within the team’s toolset for exascale systems and integrating them to
+within the team’s tool set for exascale systems and integrating them to
 ASC and ECP/ATDM codes. The team strives to do this through co-design
 efforts with both large HPC code teams and exascale computing hardware
 vendors themselves.
 
-\textbf{Caliper} is a program instrumentation and performance measurement
+Caliper is a program instrumentation and performance measurement
 framework. It is designed as a performance analysis toolbox in a library,
 allowing one to bake performance analysis capabilities directly into
 applications and activate them at runtime. Caliper can be used for
@@ -146,9 +146,10 @@ Unix/Linux.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Key  Challenges} \leavevmode \\
+\paragraph{Key  Challenges} %\leavevmode \\
+Each of the applications and tools described above faces key challenges to their successful implementation and deployment.
 
-\subparagraph{Spack:}
+\subparagraph{Spack}
 Spack makes HPC software complexity manageable. Obtaining optimal
 performance on supercomputers is a difficult task; the space of possible
 ways to build software is combinatorial in size, and software reuse is
@@ -156,13 +157,14 @@ hindered by the complexity of integrating a large number of packages and
 by issues such as binary compatibility.  Spack makes it easy to build
 optimized, reproducible, and reusable HPC software.
 
-\subparagraph{MFEM:}
-The key challenges addressed by the LLNL ATDM Mathematical Libraries project are:
+\subparagraph{MFEM}
+The key challenges addressed by the LLNL ATDM Mathematical Libraries project are as follows:
 
+\vspace {0.5 em}
 \noindent
-{\bf \em Robust high-order finite element methods for ALE compressible flow.}
-While high-order methods offer significant advantages in terms of HPC performance,
-their application to complicated ALE problems requires careful considerations to
+\textit{Robust high-order finite element methods for ALE compressible flow.}
+Although high-order methods offer significant advantages in terms of HPC performance,
+their application to complicated ALE problems requires careful consideration to
 control oscillations and ensure accuracy.
 
 \begin{figure}[htb]
@@ -172,24 +174,27 @@ control oscillations and ensure accuracy.
 from non-conforming adaptivity, without significant changes in their codes.}
 \end{figure}
 
+\vspace {0.5 em}
 \noindent
-{\bf \em Scalable algorithms for unstructured adaptive mesh refinement.}
+\textit{Scalable algorithms for unstructured adaptive mesh refinement.}
 Adaptive mesh refinement is a common way to increasing application efficiency
 in problems with localized features. While block-structured AMR has been
 well-studied, applying AMR in unstructured settings is challenging, especially
 in terms of derefinement, anisotropic refinement, parallel rebalance and
 scalability.
 
+
+\vspace {0.5 em}
 \noindent
-{\bf \em GPU porting of finite element codes.}
-Due to the relatively high complexity of the finite element machinery, MFEM,
+\textit{GPU porting of finite element codes.}
+Owing to the relatively high complexity of the finite element machinery, MFEM,
 BLAST and related codes use object-oriented C++ design that allows generality
 and flexibility, but poses challenges in terms of porting to GPU architectures.
 Finding the right balance between generality and performance in the GPU context
 is an important challenge for many finite element-based codes that remains
 outstanding in the current software and programming model environment.
 
-\subparagraph{RAJA/Umpire/CHAI:}
+\subparagraph{RAJA, Umpire, and CHAI}
 Exascale machines are expected to be very diverse, with different GPU,
 threading, memory models, and node architectures.  A parallelization
 strategy that works well for one machine may not work well for another,
@@ -213,7 +218,7 @@ Legacy applications need not adopt all three at once; they can gradually
 integrate each framework, at their own pace, with a minimal set of code
 modifications.
 
-\subparagraph{Flux:}
+\subparagraph{Flux}
 The workload manager is responsible for efficiently
 delivering compute cycles of HPC systems to multiple users while considering their
 diverse resource types---e.g., compute racks and nodes, central and graphics
@@ -239,7 +244,7 @@ resources and their relationships for scheduling in order to realize a
 system's full potential.
 
 
-\subparagraph{AID:}
+\subparagraph{AID}
 Debugging parallel applications running on supercomputers is extremely
 challenging.  Supercomputers may contain very high
 numbers of compute cores and multiple GPUs, and applications running on
@@ -254,7 +259,7 @@ of debugging may perturb the execution enough to mask the bug.  To find
 and fix these errors, programmers currently must devote a large amount of
 effort and machine time.
 
-\subparagraph{Caliper:}
+\subparagraph{Caliper}
 Caliper addresses the challenges of providing {\it meaningful}
 measurements for large applications.  Often, measurements of FLOPs,
 timings, data movement, and other quantities are not associated with key
@@ -271,9 +276,10 @@ Caliper associates meaning with HPC performance measurements.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Solution Strategy} \leavevmode \\
+\paragraph{Solution Strategy} %\leavevmode \\
+To mitigate these challenges, the team proposes the following actions for each effort.
 
-\subparagraph{Spack:}
+\subparagraph{Spack}
 Spack provides a domain-specific language for templated build recipes.
 It provides a unique infrastructure called the {\it concretizer}, which
 solves the complex constraint problems that arise in HPC dependency
@@ -283,7 +289,7 @@ also includes online services to host recipes, code, and binaries for
 broad reuse.  These repositories are maintained by Spack's very active
 community of contributors.
 
-\subparagraph{MFEM:}
+\subparagraph{MFEM}
 The MFEM team has performed and documented a lot of research in
 high-performance mathematical algorithms and finite element discretizations
 of interest to ATDM applications
@@ -318,7 +324,7 @@ detailed documentation and many example codes.  Code quality is ensured
 by smoke tests with GitHub actions on Linux, Mac, Windows and nightly
 regression testing at LLNL.
 
-\subparagraph{RAJA/Umpire/CHAI:}
+\subparagraph{RAJA, Umpire, and CHAI}
 RAJA, Umpire, and CHAI leverage the abstraction mechanisms available in
 modern C++ (C++11 and higher) compilers, such as Lambdas, policy
 templates, and constructor/destructor (RAII) patterns for resource
@@ -326,16 +332,16 @@ management.  They aim to provide performance portability at the {\it
 library} level, and they do not require special support from compilers.
 Targeting this level of the software stack gives DOE developers the
 flexibility to leverage standard parallel programming models like CUDA
-and OpenMP, without strictly {\it depending} on robust compiler support
+and OpenMP, without strictly depending on robust compiler support
 for these APIs.  If necessary features are unavailable in compilers,
 library authors are not dependent on vendors for support, and they do not
 need to wait for these programming models to be fully implemented.  These
-libraries allow applications to work correctly and performantly even if
+libraries allow applications to work correctly and and perform well even if
 some functionality from OpenMP, CUDA, threading, etc. is missing.
 
-\subparagraph{Flux:}
-Flux combines {\em fully hierarchical resource management}
-with {\em graph-based scheduling} to improve
+\subparagraph{Flux}
+Flux combines fully hierarchical resource management
+with graph-based scheduling to improve
 the performance, portability, flexibility,
 and manageability of the scheduling
 and execution of both standard and
@@ -361,7 +367,7 @@ to a job---as granted by the HPC workload manager---differs between
 conventional and emerging scientific workflows. The notional X-axes
 depict the compute node IDs allocated to the job and Y-axes depict
 the IDs of computing resources in each of these nodes. (a) The conventional paradigm
-requires only a single parallel simulation application to run; (b) The emerging paradigm often requires many different types of tasks such as an ensemble of molecular dynamic (MD) parallel simulation applications and another ensemble of docking simulation applications along with {\em in situ} data analysis for the MD ensemble while these tasks are driven by an AI.}
+requires only a single parallel simulation application to run; (b) The emerging paradigm often requires many different types of tasks such as an ensemble of molecular dynamic (MD) parallel simulation applications and another ensemble of docking simulation applications along with in situ data analysis for the MD ensemble while these tasks are driven by an AI.}
  \label{fig:layout}
  \end{figure}
 Figure~\ref{fig:layout} visually contrasts
@@ -376,14 +382,14 @@ Yet, these solutions have significant difficulties with
 the emerging paradigm exemplified
 by Figure~\ref{fig:new},
 as well as with connecting and coordinating jobs.
-These problems have led users to develop their own {\em ad hoc}
+These problems have led users to develop their own ad hoc
 custom scheduling and resource management software or use tools
 that perform only workflow management or only scheduling.
-However, accomplishing sufficient job coordination {\em without}
+However, accomplishing sufficient job coordination without
 first-class support from a workload manager
 like Flux has already proven to be difficult
 for either approach.
-Perhaps more importantly, developing and maintaining {\em ad hoc} management
+Perhaps more importantly, developing and maintaining ad hoc management
 software---especially in this era of ever-evolving HPC hardware
 architectures---has quickly become prohibitively expensive for
 supercomputing application teams.
@@ -392,7 +398,7 @@ tasks submitted on a heterogeneous HPC system
 remains simple, requiring only a few more lines within
 the script.
 
-\subparagraph{AID:}
+\subparagraph{AID}
 
 Debugging a parallel code can be extremely difficult, and the most
 exhaustive approaches for finding errors can require a large amount of
@@ -410,13 +416,13 @@ a suite of tools, we can enable developers to find the most common bugs
 quickly, while still being able to detect deep, hard-to-find issues given
 sufficient runtime and resources.
 
-\subparagraph{Caliper:}
+\subparagraph{Caliper}
 Caliper is implemented as a C++ library and is linked with applications.
 Application teams integrate it with their code by adding Caliper
 annotations at the application level.  Contrast this with binary analysis
 and DWARF line mappings used by most performance tools, which are
 obtained automatically but increase tool complexity and are typically
-{\it not} linked with the application for regular runs.
+not linked with the application for regular runs.
 
 Applications, their libraries, physics modules, and even runtime systems
 can be instrumented with Caliper and measured at the same time.  All of
@@ -427,125 +433,119 @@ between different parts of the code.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Recent Progress} \leavevmode \\
+\paragraph{Recent Progress} %\leavevmode \\
+Recent progress includes developments in Spack; MFEM; RAJA, Umpire, and CHAI; Flux; AID; and Caliper.
 
 
-\subparagraph{Spack:}
 \begin{figure}[tb]
 \centering
 \includegraphics[width=.75\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/spack-pipelines.pdf}
 \caption{Spack build pipelines at facilities will provide HPC-native binary builds for users.}
+\label{figure:spack-build-pipeline}
 \end{figure}
 
 
-\begin{itemize}
-\item Released Spack 0.16.0 and replaced Spack's greedy concretizer algorithm with a
-      much more aggressive solver based on Answer Set Programming.
-\item Major overhaul to smooth developer workflows and allow working directly on
-      checked out code in Spack.
-\item Greatly improved scalability of CI and binary cache creation in Spack.
-\item Hardened GPU support in Spack; updated CUDA and ROCm package superclasses.
-\end{itemize}
+\subparagraph{Spack}
+Spack 0.16.0 was released and replaced Spack's greedy concretizer algorithm with a much more aggressive solver based on Answer Set Programming.
+There was also a major overhaul to smooth developer workflows and allow working directly on checked-out code in Spack.
+Scalability of CI and binary cache creation in Spack was improved significantly (Figure~\ref{figure:spack-build-pipeline}).
+GPU support was hardened in Spack, and CUDA and ROCm package superclasses were updated.
 
-\subparagraph{MFEM:}
 
 \begin{figure}[tb]
 \centering
 \includegraphics[width=.4\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/mfem-hp-refinement}
 \caption{The MFEM team added support for variable order FEM spaces with general hp-refinement so higher order apps can better adapt to solutions.}
+\label{figure:mfem-variable-order-fem}
 \end{figure}
 
-Selected recent highlights:
-\begin{itemize}
-\item Added capabilities to MFEM for variable-order FEMs paces with general hp-refinement so HO apps can increase efficiency and better adapt to solutions.
-\item Implemented ALE discretization improvements for compressible flow in BLAST, including significant improvements in mesh optimization methods, dynamic Adaptive Mesh Refinement (AMR), and improved transfer between high-order and low-order-refined simulations.
+\subparagraph{MFEM}
+Capabilities were added to MFEM for variable-order FEMs paces with general hp-refinement so HO apps can increase efficiency and better adapt to solutions (Figure~\ref{figure:mfem-variable-order-fem}).
+ALE discretization improvements were implemented for compressible flow in BLAST, including significant improvements in mesh optimization methods, dynamic adaptive mesh refinement (AMR), and improved transfer between high-order and low-order-refined simulations.
 
-\end{itemize}
-
-\subparagraph{RAJA/Umpire/CHAI:}
+\iffalse % Converted to table below. -STC.
 \begin{figure}[htb]
 \centering
-\includegraphics[width=\textwidth]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/raja-umpire-chai-support}
-\caption{
-Status of RAJA, Umpire, and CHAI support for exascale platforms.
-}
+\includegraphics[width=\textwidth,trim={0 15cm 0 0},clip]{projects/2.3.6-NNSA/2.3.6.02-LLNL-ATDM/raja-umpire-chai-support}
+\caption{Status of RAJA, Umpire, and CHAI support for exascale platforms.}
+\label{figure:status-raja-umpire-chai}
+\todo[inline]{Convert to table.}
 \end{figure}
+\fi
 
-\begin{itemize}
-\item Updated support for AMD's HIP programming model, hardened support for El Capitan COE machines.
-\item Released new versions of RAJA, Umpire, and CHAI with support for El Capitan COE machines.
-\item Added HIP support to continuous integration using GitLab at LLNL.
-\item Continued to support integration of Umpire into multiple ASC application codes.
-\end{itemize}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|>{\hspace{0pt}}m{0.12\linewidth}|>{\hspace{0pt}}m{0.25\linewidth}|>{\hspace{0pt}}m{0.25\linewidth}|>{\hspace{0pt}}m{0.25\linewidth}|}
+\rowcolor{LightCyan}
+\hline
+\textbf{Machine} & \textbf{RAJA} & \textbf{CHAI} & \textbf{Umpire} \\ 
+\hline
+\textbf{Perlmutter} & \multicolumn{3}{>{\hspace{0pt}}m{0.80\linewidth}|}{CUDA support production ready, actively used on Sierra. Continuing to investigate and improve performance.} \\ 
+\hline
+\textbf{Frontier} & Available in RAJA v0.11.0. Developed by AMD. & Available in CHAI v1.2.0. Developed by AMD. & Available in Umpire v1.0.0. Developed by AMD. \\ 
+\hline
+\textbf{Aurora} & \multicolumn{2}{>{\hspace{0pt}}m{0.525\linewidth}|}{Under development, also supported by ECP 2.3.1.18 RAJA/Kokkos. OpenMP 4.5 in RAJA already developed for Sierra.} & Available in Umpire v4.0.0. Developed at Argonne. \\
+\hline
+\end{tabular}
+\caption{Status of RAJA, Umpire, and CHAI support for exascale platforms.}
+\label{table:status-raja-umpire-chai}
+\end{table}
 
-\subparagraph{Flux:}
+\subparagraph{RAJA, Umpire, and CHAI}
 
-\begin{itemize}
-\item Flux was the basis for a workflow of ECP ExaAM (ExaConstit) in improving its throughput by 4x.
-\item Flux-based ML drug design workflow was part of a SC20 COVID-19 Gordon Bell finalist submission.
-\item Optimization of Flux enabled the MuMMI workflow to run across the full scale of Summit at ORNL.
-\item Added support for exascale multi-tier storage in Flux' data stagging plugin and the Fluxion scheduler.
-
-\end{itemize}
-
-\subparagraph{AID:}
-\begin{itemize}
-
-\item Demonstrated that our new correctness tools (FLiT and FPChecker) can analyze large LLNL code, discovering previously unknown issues in LLNL code; and facilitated tools co-design via the El Capitan tools working group.
+Table~\ref{table:status-raja-umpire-chai} shows the status of RAJA, Umpire, and CHAI support for exascale platforms.
+The team updated support for AMD's HIP programming model and hardened support for El Capitan COE machines.
+New versions of RAJA, Umpire, and CHAI with support for El Capitan COE machines were released.
+HIP support was added to continuous integration using GitLab at LLNL.
+Support for integration of Umpire into multiple ASC application codes continued.
 
 
-\end{itemize}
+\subparagraph{Flux}
+%
+Flux was the basis for a workflow of ECP ExaAM (ExaConstit) in improving its throughput by 4$\times$.
+The Flux-based ML drug design workflow was part of an SC20 COVID-19 Gordon Bell finalist submission.
+Optimization of Flux enabled the MuMMI workflow to run across the full scale of Summit at ORNL.
+Support was added for exascale multitier storage in the Flux data-staging plugin and the Fluxion scheduler.
 
-\subparagraph{Caliper:}
-\begin{itemize}
-\item Integrated the Caliper performance analysis tools into key LLNL applications. Supported existing integration with MARBL via improvements to performance visualizations and analysis capabilities.
-\end{itemize}
+\subparagraph{AID}
+%
+We demonstrated that our new correctness tools (FLiT and FPChecker) can analyze large LLNL code, thereby discovering previously unknown issues in LLNL code. We also facilitated tools co-design via the El Capitan tools working group.
+
+\subparagraph{Caliper}
+We integrated the Caliper performance analysis tools into key LLNL applications. We also supported existing integration with MARBL via improvements to performance visualizations and analysis capabilities.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Next Steps} \leavevmode \\
+\paragraph{Next Steps} %\leavevmode \\
+Next steps for each effort have already been identified and are described below.
 
-\subparagraph{Spack:}
-In FY22, the team will focus on:
+\subparagraph{Spack}
+ In FY22, the team will work to further improve Spack developer workflows and reproducibility and expand on the new concretizer to handle compiler and runtime complexity in the exascale stack.
 
-\begin{itemize}
-    \item Work to further improve Spack developer workflows and reproducibility.
-    \item Expand on the new concretizer to handle compiler and runtime complexity in the exascale stack.
-\end{itemize}
-
-\subparagraph{MFEM:}
-\begin{itemize}
-\item Support MFEM-based applications in their transition to exascale hardware.
-\item Continue engagement with ATDM application work, develop mini-apps, and provide support.
-\end{itemize}
-
-\subparagraph{RAJA/Umpire/CHAI:}
+\subparagraph{MFEM}
+%
+MFEM-based applications will be supported in their transition to exascale hardware.
+The team will continue to engage with ATDM application work, develop mini-apps, and provide support.
 
 
-\begin{itemize}
-\item Expand GPU device capabilities in Umpire.
-\item Investigate use of Umpire as GPU offload allocator for RAJA.
-\item Continue to develop and deliver Umpire capabilities to applications in support of ASC milestone and user requirements, including interprocess shared memory to support shared on-node data and expanding functionality available inside GPU kernels.
-\item Continue interactions with El Capitan Center of Excellence (COE) partners to resolve performance and correctness issues identified as application users begin testing on early access hardware.
+\subparagraph{RAJA, Umpire, and CHAI}
 
-\end{itemize}
 
-\subparagraph{Flux:}
+GPU device capabilities will be expanded in Umpire, and the team will
+investigate the use of Umpire as a GPU offload allocator for RAJA.
+The team will continue to develop and deliver Umpire capabilities to applications in support of ASC milestone and user requirements, including interprocess shared memory to support shared on-node data and expanded functionality available inside GPU kernels.
+The team will also continue interactions with El Capitan Center of Excellence (COE) partners to resolve performance and correctness issues identified as application users begin testing on early access hardware.
 
-\begin{itemize}
-\item End to end demonstration of HPE's Rabbit-based multi-tiered storage scheduling and management.
-\item Tune support for Common Tools Interface (CTI)-based tool launching to enable HPE's proprietary code-development tools such as Valgrind4HPC and ATP.
-\item Variorum-enabled power monitoring/capping subsystem including power swing analysis.
-\item Respond agilely to the emerging needs of existing and new advanced workflow customers.
-\end{itemize}
 
-\subparagraph{AID:}
-\begin{itemize}
-\item Implement, evaluate and harden a multilevel general-purpose graphics processing unit (GPGPU) debugging/code-correctness tool suite on early applications running on Collaboration of Oak Ridge, Argonne, and Livermore (CORAL)-2 early access systems.
-\end{itemize}
+\subparagraph{Flux}
+We will perform an end-to-end demonstration of HPE's Rabbit-based multitiered storage scheduling and management.
+Support for Common Tools Interface (CTI)-based tool launching will be tuned to leverage HPE's proprietary code-development tools---Valgrind4HPC and ATP.
+A Variorum-enabled power monitoring/capping subsystem, including power swing analysis, is also planned.
+Finally, the team will respond to the emerging needs of existing and new advanced workflow customers.
 
-\subparagraph{Caliper:}
-\begin{itemize}
-\item Continue SPOT and Caliper application integrations in LLNL applications. Expand tools with more GPU and MPI measurement capabilities.
-\item Continue support, porting, and deployment of Caliper.
-\end{itemize}
+
+\subparagraph{AID}
+This effort will implement, evaluate, and harden a multilevel general-purpose GPU (GPGPU) debugging/code-correctness tool suite for early applications that run on Collaboration of Oak Ridge, Argonne, and Livermore (CORAL)-2 early access systems.
+
+\subparagraph{Caliper}
+Integrations of SPOT and Caliper within LLNL applications will continue. Tools will be expanded with more GPU and MPI measurement capabilities, and support, porting, and deployment of Caliper will continue.

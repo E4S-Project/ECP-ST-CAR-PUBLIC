@@ -3,27 +3,28 @@
 
 \paragraph{Overview}
 
-The PaRSEC Environment provides a software ecosystem composed of a runtime
-component to dynamically execute task-based applications on heterogeneous
-distributed systems, and a productivity toolbox that comprises a development
-framework for the support of multiple Domain Specific Languages (DSLs) and
-extensions, with debugging, trace collection, and analysis tools.
-%
+\iffalse
 \begin{wrapfigure}[17]{l}{.45\linewidth}
 \includegraphics[scale=0.3]{projects/2.3.1-PMR/2.3.1.09-ParSEC/PaRSEC-diagram.png}
 \caption{PaRSEC\label{fig:parsec} modular framework allows each
 component to be dynamically activated.}
 \end{wrapfigure}
-%
+\fi
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{projects/2.3.1-PMR/2.3.1.09-ParSEC/PaRSEC-diagram.png}
+\caption{PaRSEC modular framework allows each component to be dynamically activated.}
+\label{fig:parsec}
+\end{figure}
+
+The PaRSEC Environment (Figure~\ref{fig:parsec}) provides a software ecosystem composed of a runtime
+component to dynamically execute task-based applications on heterogeneous
+distributed systems, and a productivity toolbox that comprises a development framework for the support of multiple domain-specific languages (DSLs) and extensions, with debugging, trace collection, and analysis tools.
+
 The PaRSEC project team is dedicated to solving two challenging and
-interdependent problems facing the ECP developer community: First, how to create
-an execution model that enables developers to express as much parallelism as
-possible in their applications, so that applications effectively utilize the
-massive collection of heterogeneous devices ECP machines will deploy. Second,
-how to ensure the execution model is flexible and portable enough to actually
-provide and sustain a performance benefit by increasing the scientific
-productivity of the application developers, not only for the ECP target
-environments but for the foreseeable future.
+interdependent problems facing the ECP developer community: First, how to create an execution model that enables developers to express as much parallelism as possible in their applications, so that applications effectively utilize the massive collection of heterogeneous devices ECP machines will deploy. Second, how to ensure the execution model is flexible and portable enough to actually provide and sustain a performance benefit by increasing the scientific productivity of the application developers, not only for the ECP target environments but for the foreseeable future.
+
 
 PaRSEC is an open source, community-based implementation of a generic task-based
 runtime that is freely available, and used by an increasing number of software
@@ -55,12 +56,7 @@ computational capabilities (accelerators) will continue to increase, while the
 currently available programming paradigms are still struggling with parallelism
 at the node level.
 
-\begin{wrapfigure}{l}{.45\linewidth}
-\centering\includegraphics[width=.9\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/irr-bs-gemm-combined.pdf}
-\caption{Time to solution and Performance as a function of the number
-  of V100 GPUs on Summit, for the molecule
-  $C_{65}H_{132}$\label{fig:irrbsgemm}}
-\end{wrapfigure}\paragraph{Solution Strategy}
+
 %\textit{Describe your basic strategy for addressing the challenges.}
 The approach followed in PaRSEC is to provide a low-level, flexible and dynamic
 runtime able not only to schedule tasks at the node level, but to handle data
@@ -101,11 +97,12 @@ dimensions, such that none of the input matrices could fit in the
 aggregated memory of all GPUs. The algorithm and a deeper analysis of
 the results are described in~\cite{parsec::rr::irrbs}.
 
-\begin{wrapfigure}[16]{l}{.45\linewidth}
-\vspace*{-1.5em}\centering\includegraphics[scale=0.50]{projects/2.3.1-PMR/2.3.1.09-ParSEC/slate_updated_nacl.pdf}
-  \caption{Comparison of DPLASMA and SLATE Cholesky factorization over PaRSEC with
-           SLATE and ScaLAPACK on 64 nodes 12 cores each\label{fig:slate-parsec}}
-\end{wrapfigure}
+\begin{wrapfigure}{l}{.45\linewidth}
+\centering\includegraphics[width=.9\linewidth]{projects/2.3.1-PMR/2.3.1.09-ParSEC/irr-bs-gemm-combined.pdf}
+\caption{Time to solution and Performance as a function of the number
+  of V100 GPUs on Summit, for the molecule
+  $C_{65}H_{132}$\label{fig:irrbsgemm}}
+\end{wrapfigure}\paragraph{Solution Strategy}
 
 Figure~\ref{fig:irrbsgemm} shows a strong scaling performance
 evaluation of this algorithm, when applied to the main tensor product
@@ -137,7 +134,11 @@ times slower.
 %
 % End
 %
-
+\begin{wrapfigure}[17]{l}{.45\linewidth}
+\vspace*{-1.5em}\centering\includegraphics[scale=0.50]{projects/2.3.1-PMR/2.3.1.09-ParSEC/slate_updated_nacl.pdf}
+  \caption{Comparison of DPLASMA and SLATE Cholesky factorization over PaRSEC with
+           SLATE and ScaLAPACK on 64 nodes 12 cores each\label{fig:slate-parsec}}
+\end{wrapfigure}
 
 An important aspect of the DTE project is to define and prototype scalable
 domain specific languages that enable a productive expression of parallelism for
@@ -148,6 +149,7 @@ the DTE team is in close contact with application teams to define parallel
 abstractions that are suitable for their domain usage. Notably, the PaRSEC team
 has ongoing collaboration with the SLATE linear algebra package and NWChemEx and
 GAMESS chemistry package teams.
+
 
 In this context it is interesting to highlight the first step toward
 the integration of the PaRSEC framework into the SLATE (2.3.3.09) in
@@ -236,11 +238,11 @@ used on the GPU tests.
 In all cases, the performance achieved by running ScaLAPACK over
 DPLASMA is more than 90\% the performance of native DPLASMA.  For the
 CPU-only experiments, the usage of the DPLASMA wrapper introduces a
-speedup of 1.73x for GEMM (minimum 1.64x, maximum 1.88x) and 1.49x for
-POTRF (minimum 1.27x, maximum 1.71x) .  When exploiting also the GPUs
-of the computation nodes, the performance is increased by 16.75x for
-GEMM (minimum 10.79x, maximum 25.68x) and by 4.27x for POTRF (minimum
-2.77x, maximum 6.70x).  The lower performance of the DPLASMA's POTRF
+speedup of 1.73$\times$ for GEMM (minimum 1.64$\times$, maximum 1.88$\times$) and 1.49$\times$ for
+POTRF (minimum 1.27$\times$, maximum 1.71$\times$) .  When exploiting also the GPUs
+of the computation nodes, the performance is increased by 16.75$\times$ for
+GEMM (minimum 10.79$\times$, maximum 25.68$\times$) and by 4.27$\times$ for POTRF (minimum
+2.77$\times$, maximum 6.70$\times$).  The lower performance of the DPLASMA's POTRF
 over GPUs is explained because in the current implementation of this
 algorithm not all the tasks are run on GPUs. However, further
 improvements of DPLASMA algorithms that will be integrated in the next
@@ -332,7 +334,7 @@ expected behavior for a machine with so many cores per node.
 \paragraph{Deployment on Early Access Systems\label{sec:parsec_early_access}}
 
 The PaRSEC runtime as well as its dependent applications can compile and 
-execute on the Spock early access system (EAS). Recent updates have identified
+execute on the Spock early access system (EAS) (Figure~\ref{fig:parsec:spock}). Recent updates have identified
 the root cause of prior difficulties with using atomic operations with the 
 default compiler (LLVM-clang-13), which can now be safely used. The GNU compilers had been validated to be correct since last march.
 %

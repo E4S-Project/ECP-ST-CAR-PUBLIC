@@ -1,3 +1,5 @@
+\clearpage
+\newpage
 \section{ECP ST Planning, Execution, Tracking and Assessment}\label{sect:PETA}
 During the last 2 years, the ECP ST has introduced the E4S and SDKs.  New approaches have been established for project planning, execution, tracking, and assessment by using a tailored earned value management system that enables iterative and incremental refinement to its planning process.  The team has also revised its key performance parameter (KPP) to be solely focused on measuring capability integration into client environments.  An assessment process was developed and used that has led to significant changes in the number and scope of L4 subprojects.
 
@@ -15,7 +17,7 @@ To accelerate this transition, a greater commitment on the part of software comp
 \subsubsection{The Extreme-Scale Scientific Software Stack}\label{subsubsect:e4s}
 In October 2020, the ECP ST released V1.2 of the E4S.\footnote{\url{http://e4s.io}} E4S contains a collection of the software products to which ECP ST contributes.  E4S is the primary conduit for providing easy access to ECP ST capabilities for the ECP and the broader community.  E4S is also the ECP ST vehicle for regression and integration testing across DOE pre-exascale and exascale systems.
 
-\begin{figure}
+\begin{figure}[H]
 		\centering
 		\fbox{\includegraphics[width=0.9\linewidth]{E4S-Build-Tree}}
 	\caption{Using Spack~\cite{gamblin+:ecp18-spack-tutorial}, E4S builds a comprehensive software stack.  As ECP ST efforts proceed, E4S will be used for continuous integration testing, providing developers with rapid feedback on regression errors and providing user facilities with a stable software base as the team prepares for exascale platforms.  This diagram shows how E4S builds ECP products via an SDK target, which are the math libraries' SDK, called xSDK in this example.  The SDK target then builds all products that are part of the SDK (see Figure~\ref{fig:sdk-definition1-0} for SDK groupings), first defining and building external software products. Green-labeled products are part of the SDK. The blue label indicates expected system tools, which, in this case, is a particular version of Python.  Black-labeled products are expected to be previously installed into the environment, which is a common and easily satisfied requirement.  Using this approach, users interested in only SUNDIALS, a particular math library, can be assured that the SUNDIALS build will be possible because it is a portion of what E4S builds and tests.}
@@ -27,37 +29,21 @@ E4S has the following key features.
 	\item \textbf{The E4S suite is a large and growing effort to build and test a comprehensive scientific software ecosystem.} In November 2018, E4S V0.1 contained 25 ECP products.  Two years later, E4S V1.2, the fifth E4S release, contained 67 ECP ST products and numerous additional products needed for a complete software environment.  Eventually, E4S will contain all the open-source products to which ECP contributes and all the related products needed for a holistic environment.
 	\item \textbf{E4S is not an ECP-specific software suite.}  The products in E4S represent a holistic collection of capabilities that contain the ever-growing SDK collections sponsored by the ECP and all additional underlying software required to use ECP ST capabilities.  Furthermore, the E4S effort is expected to live beyond the time span of the ECP, becoming a critical element of the scientific software ecosystem.
 	\item \textbf{E4S is partitionable.} E4S products are built and tested together by using a tree-based hierarchical build process.  Because the entire E4S tree is built and tested, users can build any subtree of interest without building the whole stack (Figure~\ref{fig:e4s-build-tree}).
-	\item \textbf{E4S uses Spack.} The Spack~\cite{gamblin+:ecp18-spack-tutorial} meta-build tool invokes the native build process of each product, enabling the quick integration of new products, including non-ECP products.
-	\item \textbf{E4S is available via containers and cloud environments.} In addition to a build-from-source capability using Spack, E4S maintains several container environments (e.g., Docker, Singularity, Shifter, CharlieCloud) that provide the lowest barrier to use.  Container distributions dramatically reduce installation costs and provide a ready-made environment for tutorials that leverage E4S capabilities.  For example, E4S containers now support custom images for ECP applications, such as WDMapp and Pantheon.  E4S is also available via AWS and Google Cloud platforms.
+	\item \textbf{E4S uses Spack.} The Spack~\cite{gamblin+:ecp18-spack-tutorial} meta-build tool invokes the native build process of each product, enabling the quick integration of new products, including non-ECP products.  E4S packages are available as pre-built Spack binaries in the E4S Build Cache (Figure~\ref{fig:e4s-build-cache}).  Binaries for the major operating systems and architectures are added to the build cache as updates become available in Spack. 
+	\item \textbf{E4S is available via containers and cloud environments.} In addition to a build-from-source capability using Spack, E4S maintains several container environments (e.g., Docker, Singularity, Shifter, CharlieCloud) that provide the lowest barrier to use.  Container distributions dramatically reduce installation costs and provide a ready-made environment for tutorials that leverage E4S capabilities.  For example, E4S containers now support custom images for ECP applications, such as WDMapp and Pantheon.  E4S is also available via AWS and Google Cloud platforms. (Figure~\ref{fig:e4s-gcp-image})
 	\item \textbf{E4S distribution.} E4S products are available at the E4S website.\footnote{\url{http://e4s.io}}
 	\item \textbf{E4S developer community resources.} Developers interested in participating in E4S can visit the E4S-Project GitHub community.\footnote{\url{https://github.com/E4S-Project}}	
 \end{itemize}
 
 The first set of E4S community policies~\cite{e4s:policies} was adopted in October 2020 (Figure~\ref{fig:E4S-Community-Policies-V1}). These policies are membership criteria for a product to become an E4S member package. The purpose of the community policies is to establish baseline software quality and practice expectations to help address sustainability and interoperability challenges for the ST software ecosystem. Although a package does not have to demonstrate compatibility with the policies as a condition of inclusion in E4S releases, compatibility is necessary for member package designation.
 
-\begin{figure}
-        \centering
-        \fbox{\includegraphics[width=0.9\linewidth]{E4S-Community-Policies-V1}}
-        \caption{Version 1 of the E4S community policies. These policies serve as membership criteria for E4S member packages. The E4S community policy effort heavily leveraged the existing xSDK community policies~\cite{xsdk-policies:homepage}.}
-          \protect\todo[inline]{Please replace image with higher resolution image so that the image is not blurry or integrate as an editable list.}
-        \label{fig:E4S-Community-Policies-V1}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\fbox{\includegraphics[width=0.9\linewidth]{E4S-Summary}}
-	\caption{E4S provides a complete Linux-based software stack that is suitable for many scientific workloads, tutorial, and development environments.  Additionally, it is an open-software architecture that can expand to include any additional and compatible Spack-enabled software capabilities. Because Spack packages are available for many products and easily created for others, E4S is practically expandable to include almost any robust Linux-based product.  Furthermore, E4S capabilities are available as subtrees of the full build. E4S is not monolithic.}
-    \protect\todo[inline]{Please make this a table, not a figure, so that it can be edited.}
-    \todo[inline]{Please add a ref to this figure (or as a table) in the narrative.}
-	\label{fig:e4s-is-isnot}
-\end{figure}
+The E4S effort is described in further detail in Sections~\ref{subsubsect:sdks} and~\ref{subsect:ecosystem}. Table~\ref{table:e4s-is-isnot} summarizes what E4S is, and is not. 
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{projects/2.3.5-Ecosystem/2.3.5.01-Ecosystem-SDK/E4S_buildcache_Jun22}
 	\caption{Using Spack build cache features, E4S builds can be accelerated via cached binaries for any build signature that Spack has already seen. Between September 2020 and June 2022, more than 42,000 binaries were added to the cache.}
 	\label{fig:e4s-build-cache}
-	\todo[inline]{Please add a ref to this figure in the narrative.}
 \end{figure}
 
 \begin{figure}
@@ -65,10 +51,99 @@ The first set of E4S community policies~\cite{e4s:policies} was adopted in Octob
 	\includegraphics[width=0.9\linewidth]{E4S-GCP}
 	\caption{E4S now supports Google Cloud Platform in addition to Amazon Web Services (AWS).}
 	\label{fig:e4s-gcp-image}
-	\todo[inline]{Please add a ref to this figure in the narrative.}
 \end{figure}
 
-The E4S effort is described in further detail in Sections~\ref{subsubsect:sdks} and~\ref{subsect:ecosystem}.
+\iffalse %Converted to editable text below. -STC
+\begin{figure}
+        \centering
+        \fbox{\includegraphics[width=0.9\linewidth]{E4S-Community-Policies-V1}}
+        \caption{Version 1 of the E4S community policies. These policies serve as membership criteria for E4S member packages. The E4S community policy effort heavily leveraged the existing xSDK community policies~\cite{xsdk-policies:homepage}.}
+          \protect\todo[inline]{Please replace image with higher resolution image so that the image is not blurry or integrate as an editable list.}
+        %\label{fig:E4S-Community-Policies-V1}
+\end{figure}
+\fi
+
+\begin{figure}[h!]
+\begin{mdframed}
+\vspace{12pt}
+
+\paragraph{P1: Spack-Based Build and Installation} Each E4S member package supports a scriptable Spack build and production-quality installation in a way that is compatible with other E4S member packages within the same environment. When E4S build, test, or installation issues arise, it is expected that the team will collaboratively resolve those issues.
+\vspace{12pt}
+
+\paragraph{P2: Minimal Validation Testing} Each E4S member package has at least one test that is executable through the E4S validation suite (\url{https://github.com/E4S-Project/testsuite}). This will be a post-installation test that validates the usability of the package. The E4S validation test suite provides basic confidence that a user can compile, install, and run every E4S member package. The E4S team can actively participate in the addition of new packages to the suite upon request.
+\vspace{12pt}
+
+\paragraph{P3: Sustainability} All E4S compatibility changes will be sustainable in that no changes go into the regular development and release versions of the package and should not be in a private release/branch that is provided only for E4S releases.
+\vspace{12pt}
+
+\paragraph{P4: Documentation} Each E4S member package should have sufficient documentation to support installation and use.
+\vspace{12pt}
+
+\paragraph{P5: Product Metadata} Each E4S member package team will provide key product information via metadata that is organized in the E4S DocPortal format. Depending on the file names for the metadata, this may require minimal setup.
+\vspace{12pt}
+
+\paragraph{P6: Public Repository} Each E4S member package will have a public repository (e.g., GitHub, Bitbucket) where the development version of the package is available and pull requests can be submitted.%
+\vspace{12pt}
+
+\paragraph{P7: Imported Software} If an E4S member package imports software that is externally developed and maintained, then it must allow installing, building, and linking against a functionally equivalent outside copy of that software. Acceptable ways to accomplish this include (1) forsaking the internal copied version and using an externally provided implementation or (2) changing the file names and name spaces of all global symbols to allow the internal copy and the external copy to coexist in the same downstream libraries and programs. This pertains primarily to third-party support libraries and does not apply to key components of the package that may be independent packages but are also integral components of the package itself.
+\vspace{12pt}
+
+\paragraph{P8: Error Handling} Each E4S member package will adopt and document a consistent system for signifying error conditions as appropriate for the language and application (e.g., returning an error condition or throwing an exception). In the case of a command line tool, it should return a sensible exit status on success and failure so the package can safely run from within a script.
+\vspace{12pt}
+
+\paragraph{P9: Test Suite} Each E4S member package will provide a test suite that does not require special system privileges or the purchase of commercial software. This test suite should grow in its comprehensiveness over time (i.e., new and modified features should be included in the suite).
+\vspace{12pt}
+\end{mdframed}
+        \caption{Version 1 of the E4S community policies. These policies serve as membership criteria for E4S member packages. The E4S community policy effort heavily leveraged the existing xSDK community policies~\cite{xsdk-policies:homepage}.}
+        \label{fig:E4S-Community-Policies-V1}
+\end{figure}
+
+\iffalse % Converted figure to a table so it can be edited.
+\begin{figure}
+	\centering
+	\fbox{\includegraphics[width=0.9\linewidth]{E4S-Summary}}
+	\caption{E4S provides a complete Linux-based software stack that is suitable for many scientific workloads, tutorial, and development environments.  Additionally, it is an open-software architecture that can expand to include any additional and compatible Spack-enabled software capabilities. Because Spack packages are available for many products and easily created for others, E4S is practically expandable to include almost any robust Linux-based product.  Furthermore, E4S capabilities are available as subtrees of the full build. E4S is not monolithic.}
+        %	\label{fig:e4s-is-isnot}
+\end{figure}
+\fi
+
+\newpage
+\begin{table}[h!]
+\begin{tabularx}{\textwidth}{|X|X|}\hline
+\rowcolor{LightCyan}
+\textbf{What E4S is not}
+& 
+\textbf{What E4S is} \\\hline
+A closed system taking contributions only from DOE software development teams 
+&
+An extensible, open architecture software ecosystem that accepts contributions from US and international teams \vspace{0.5em} \\%\hline
+
+& 
+A framework for collaborative open-source product integration \\\hline
+A monolithic, take-it-or-leave-it software behemoth
+& 
+A full collection of compatible software capabilities \vspace{0.5em} \\ %\hline
+
+& 
+A manifest of a la carte, selectable software capabilities \\\hline
+A commercial product
+&
+A vehicle for delivering high-quality, reusable software products in collaboration with others \\\hline
+A simple repackaging of existing software
+& 
+The conduit for future-leading edge HPC software that targets scalable, next-generation computing platforms \vspace{0.5em} \\ %\hline
+
+& 
+A hierarchical software framework to enhance (via SDKs) software interoperability and quality expectations  \\\hline
+
+\end{tabularx}
+\caption{E4S provides a complete Linux-based software stack that is suitable for many scientific workloads, tutorial, and development environments.  Additionally, it is an open-software architecture that can expand to include any additional and compatible Spack-enabled software capabilities. Because Spack packages are available for many products and easily created for others, E4S is practically expandable to include almost any robust Linux-based product.  Furthermore, E4S capabilities are available as subtrees of the full build. E4S is not monolithic.}
+\label{table:e4s-is-isnot}
+\end{table}
+\newpage
+
+
+
 
 \subsubsection{Software Development Kits}\label{subsubsect:sdks}
 One opportunity for a large software ecosystem project such as the ECP ST is to foster increased collaboration, integration, and interoperability among its funded efforts. Part of the ECP ST design is the creation of SDKs.  SDKs are collections of related software products, called \textit{packages}, in which coordination across package teams will improve usability and practices and foster community growth among teams that develop similar and complementary capabilities. SDKs have the following attributes.
@@ -99,7 +174,7 @@ Each of the five ECP ST L3 areas has an SDK project. These projects shepherd fiv
 \subsubsection{ECP ST Product Dictionary}\label{subsubsect:dictionary}
 In the last year, the ECP has initiated an effort to explicitly manage ECP ST products and their dependencies (Section~\ref{subsubsect:dep-management}).  To eliminate ambiguities, a product dictionary---an official list of publicly named products to which ECP ST teams contribute their capabilities and upon which ECP ST clients depend---is needed.  The ECP product dictionary is one managed table that presently contains 70 primary products and subproducts that are either components within a product or particular implementations of a standard application programming interface (API).  Two special primary products are the Facilities stack and Vendor stack.  Having these stacks on the list enables ST teams to indicate that the team's capabilities are being delivered to ecosystems outside of the ECP.
 
-Figure~\ref{fig:product-dictionary-overview} describes the policy for ECP ST teams to add and manage their contributions to the product dictionary.  Figure~\ref{fig:product-dictionary} shows a snapshot of the beginning and end of the current \textit{ECP ST Product Dictionary}, which is maintained on the ECP Confluence wiki. \todo{Is ``wiki" how it is listed in this document? If so, leave it. If not, please remove. Please make the same change in the caption of Figure 14.}
+Figure~\ref{fig:product-dictionary-overview} describes the policy for ECP ST teams to add and manage their contributions to the product dictionary.  Figure~\ref{fig:product-dictionary} shows a snapshot of the beginning and end of the current \textit{ECP ST Product Dictionary}, which is maintained on the ECP Confluence wiki.
 
 \begin{figure}
 	\centering
@@ -116,14 +191,13 @@ Figure~\ref{fig:product-dictionary-overview} describes the policy for ECP ST tea
 \end{figure}
 
 \subsubsection{ECP Product Dependency Management}\label{subsubsect:dep-management}
-Given the \textit{ECP ST Product Dictionary} and a similar dictionary for ECP AD and co-design products, the ECP has created a dependency database that enables the creation and characterization of product-to-product dependencies. The ECP manages these dependencies in a Jira database by using a custom Jira issue type: Dependency.  The dependency database provides an important tool for understanding and managing ECP activities.  The dependency information is valuable within and outside the project.  Figure X \todo{Add figure number in place of X} shows a screenshot of the Jira dependency database dashboard, and Figure X \todo{Add figure number in place of X} shows a screenshot of an example query result in the Jira dependency database.
+Given the \textit{ECP ST Product Dictionary} and a similar dictionary for ECP AD and co-design products, the ECP has created a dependency database that enables the creation and characterization of product-to-product dependencies. The ECP manages these dependencies in a Jira database by using a custom Jira issue type: Dependency.  The dependency database provides an important tool for understanding and managing ECP activities.  The dependency information is valuable within and outside the project.  Figure~\ref{fig:dependency-dashboard-edit} shows a screenshot of the Jira dependency database dashboard, and Figure~\ref{fig:petsc-tao-dependencies}  shows a screenshot of an example query result in the Jira dependency database.
 
 \begin{figure}
 	\centering
 	\fbox{\includegraphics[width=0.9\linewidth]{DependencyDashboard-EditPanel}}
 	\caption{Using Jira, the ECP manages its AD, ST, HI, vendor, and facilities dependencies.  This figure shows a screenshot of the Jira dependency database dashboard and an edit panel, which supports the creation and management of a consumer-on-producer dependency.}
 	\label{fig:dependency-dashboard-edit}
-	\todo[inline]{Please add a ref to this figure in the narrative.}
 \end{figure}
 
 \begin{figure}
@@ -131,13 +205,12 @@ Given the \textit{ECP ST Product Dictionary} and a similar dictionary for ECP AD
 	\includegraphics[width=0.9\linewidth]{PETSc-TAO-Dependencies}
 	\caption{This query result from the ECP Jira dependency database lists all consumers of capabilities from the PETSc/TAO product. Selecting the details of one of the dependency issues shows how critical the dependency is and any custom information peculiar to the particular dependency.}
 	\label{fig:petsc-tao-dependencies}
-	\todo[inline]{Please add a ref to this figure in the narrative.}
 \end{figure}
 
 \newpage
 \subsection{ECP ST Planning and Tracking}
 
-Although the ECP is an official 413.3B federal construction project using an earned value management system, the ECP is permitted to tailor the planning process to obtain the flexibility needed for a software project, the requirements of which are emerging as the project proceeds.  This section describes how the ECP ST plans activities using the Jira project management tool.  The following sections discuss P6 activities, which are similar to milestones, and KPP-3, which is associated with the ECP ST.
+Although the ECP is an official 413.3B federal project using an earned value management system, the ECP is permitted to tailor the planning process to obtain the flexibility needed for a software project, the requirements of which are emerging as the project proceeds.  This section describes how the ECP ST plans activities using the Jira project management tool.  The following sections discuss P6 activities, which are similar to milestones, and KPP-3, which is associated with the ECP ST.
 
 
 \subsubsection{ECP ST P6 Activity Issues}
@@ -150,25 +223,58 @@ Cost, scope, and schedule for the ECP ST are tracked and managed by monitoring t
 	\centering
 	\fbox{\includegraphics[width=0.9\linewidth]{Planning-Process}}
 	\caption{Example of a P6 Activity.} 
-	\protect\todo[inline]{The former caption was just repeating verbatim the previous paragraph. Please add a caption that describes what is shown in the image.}
 	\label{fig:planning-process}
 \end{figure}
 
 
 \subsubsection{KPP-3}
 
-The ECP has four KPPs.  Figure~\ref{fig:kpp-definitions} shows the KPP definitions. KPP-3 focuses on a productive and sustainable software ecosystem. The ECP ST is the primary owner of this KPP along with co-design projects in the ECP AD.  The focus of KPP-3 is to define and track capability integrations of ST products into the client environment, as described in this section. 
+The ECP has four KPPs (Table~\ref{table:kpp-definitions}). KPP-3 focuses on a productive and sustainable software ecosystem. The ECP ST is the primary owner of this KPP along with co-design projects in the ECP AD.  The focus of KPP-3 is to define and track capability integrations of ST products into the client environment, as described in this section. 
 
+\iffalse %Converted to table below, but I also updated this file. Choose your own adventure. -STC
 \begin{figure}
 	\centering
-	\fbox{\includegraphics[width=0.9\linewidth]{KPP-Definitions}}
+	\includegraphics[width=1.0\linewidth]{KPP-Definitions}
 	\caption{The ECP's four KPPs.}
 	\label{fig:kpp-definitions}
-	\todo[inline]{Please convert this to an editable table or provide a higher-resolution version without blurry text.}
 \end{figure}
+\fi
 
+\begin{table}[H]
+\footnotesize
+\centering
+\begin{tabular}{|L{0.5in}|L{1.20in}|L{1.10in}|L{1.10in}|L{1.70in}|}
+\hline
+\rowcolor{LightCyan}
+\textbf{KPP ID} & \textbf{Description of scope} & \textbf{Threshold KPP} & \textbf{Objective KPP} & \textbf{Verification action/evidence}\\ 
+\hline
+KPP-1 & Performance improvement for
+  mission-critical problems & 50\% of selected applications achieve
+  Figure of Merit improvement $\geq$50 & 100\% of selected applications achieve
+  their KPP-1 stretch goal & Independent assessment of measured
+  results and report that threshold goal is met \\ 
+\hline
+KPP-2 & Broaden the reach of exascale science
+  and mission capability & 50\% of selected applications can
+  execute their challenge problem & 100\% of selected applications can
+  execute their challenge problem stretch goal & Independent assessment of mission
+  application readiness \\ 
+\hline
+KPP-3 & \textbf{Productive and sustainable software ecosystem} & \textbf{50\% of the weighted impact goals are met} & \textbf{100\% of the weighted impact stretch goals are met} & \textbf{Independent assessment verifying threshold goal is met} \\ 
+\hline
+KPP-4 & Enrich the HPC hardware ecosystem & Vendors meet 80\% of all the PathForward
+  milestones & Vendors meet 100\% of all the PathForward
+  milestones & Independent
+  review of the PathForward
+  milestones to assure they meet the contract requirements; evidence is the
+  final milestone deliverable \\
+\hline
+\end{tabular}
+	\caption{The ECP's four KPPs.}
+	\label{table:kpp-definitions}
+\end{table}
 
-
+\noindent
 The following terms are defined for clarity.
 \begin{itemize}
 	\item \textbf{Capability:} Any significant product functionality, including existing features adapted to the pre-exascale and exascale environments, that can be integrated into a client environment.
@@ -177,7 +283,7 @@ The following terms are defined for clarity.
 	\item \textbf{Sustainable:} For KPP-3, \textit{sustainable} means that the capability is integrated in a way that reasonably ensures future use of the capability beyond the end of the ECP.  For libraries, \textit{sustainable} generally means that library usage is made from the source code in the main repository and use of the library is tested regularly as a part of the client code's regular regression testing.  For tools, \textit{sustainable} generally means that the tool is available as needed in the exascale environment.  For prototype capabilities that are incorporated into vendor and community software, the impact of the prototype is still visible to subject matter experts (SMEs).
 \end{itemize}
 
-\paragraph{Defining an Integration Goal:}
+\paragraph{Defining an Integration Goal}
 Integration goals are defined per product within each project.  The goal statement will include the following.
 \begin{itemize}
 	\item The name of the product to which the project contributes.  The product must be listed in the \textit{ECP ST Product Dictionary}.
@@ -188,7 +294,7 @@ Integration goals are defined per product within each project.  The goal stateme
 \begin{table}[h!]
 	\begin{tabular}{|L{1.5in}|L{2.0in}|L{2.5in}|}\hline
 		\rowcolor{LightCyan}
-		Integration score & Capability & Integration description\\\hline
+		\textbf{Integration score} & \textbf{Capability} & \textbf{Integration description}\\\hline
 		One point per capability sustainably integrated by a client per exascale platform used. &
 		Complete, sustainable integration of a significant product capability into a client environment in a pre-exascale environment (tentative score) and in an exascale environment (confirmed score). &
 		Clients acknowledge benefit from product capability use and considers it part of their workflow. Integration is sustainable with documentation and testing. Integration of product capability into main product repo and SDK/E4S environments is completed.\\\hline
@@ -203,7 +309,7 @@ All artifacts and evidence of progress will be captured in the Jira KPP-3 issue 
 \begin{table}[h!]
 	\begin{tabular}{|L{0.6in}|L{2.0in}|L{3.4in}|}\hline
 		\rowcolor{LightCyan}
-		Value & Definition & Description\\\hline
+		\textbf{Value} & \textbf{Definition} & \textbf{Description}\\\hline
 		Present & The current integration score. & This is always an indication of the progress that the team has made. The present value is assessed annually.\\\hline
 		Passing & The minimum integration score required for the product to be counted as part of ECP ST progress toward KPP-3. & The passing score is between 4 and 8 for each integration goal, in which 4 is for larger integration efforts, and 8 is for smaller ones. This is equivalent to accomplishing one to two capability integrations per year, per product.\\\hline
 		Stretch & The maximum reasonably achievable integration score for a product if capability integrations are successful with all potential ECP clients.   & The stretch value shows the overall integration potential.\\\hline
@@ -211,11 +317,11 @@ All artifacts and evidence of progress will be captured in the Jira KPP-3 issue 
 	\caption{\label{table:KPP-3-values} Key metric values. These values are determined by the L4 subproject team when defining its KPP-3 issue.}
 \end{table}
 
-\paragraph{Assessment Process:}
+\paragraph{Assessment Process}
 Although progress is recorded as it is achieved, progress assessment is done annually, including input from external SMEs.  ECP leadership and SMEs will review integration score evidence, confirming or adjusting integration scores.
 Assessments can result in a reduced integration score from a previous year if a client has stopped using a capability that was previously used.
 
-\paragraph{Transition from Tentative to Confirmed Integration Score:}
+\paragraph{Transition from Tentative to Confirmed Integration Score}
 Each integration score is tentative until the capability is available and demonstrated to be effective in the exascale environments.  Demonstration can be achieved in a variety of ways so that ECP leadership and SMEs are reasonably certain that the capability positively impacts the client in exascale environments.  At this point, the integration score becomes confirmed. 
 Typically, the transition from tentative to confirmed would be a low-cost, independent demonstration or accomplished within the client’s environment as the client is conducting its own assessments. 
 The planned exascale system, El Capitan, that can support National Security Applications will not be available until the end of FY23. Integrating ST products into National Security Applications will be considered for transition from tentative to confirmed when: (1) evidence of integration is provided during FY20--22 ASC L1 and L2 milestones related to ECP/ATDM National Security Application readiness for exascale platforms and/or (2) integration is demonstrated on the El Capitan early access systems and exercises capabilities similar to those anticipated to be important for effectively using El Capitan.  For KPP-3 capability integrations targeted at El Capitan, the ECP will use the best available confirmation process in FY23. Table~\ref{table:KPP-3-impact} explains the weight of the integration scores. 
@@ -224,7 +330,7 @@ The planned exascale system, El Capitan, that can support National Security Appl
 \begin{table}[h!]
 	\begin{tabular}{|L{1.0in}|L{0.5in}|L{4.5in}|}\hline
 		\rowcolor{LightCyan}
-		Impact level & Weight & Comments\\\hline
+		\textbf{Impact level} & \textbf{Weight} & \textbf{Comments}\\\hline
 		High & 2 & The score for integration goals associated with high-impact products will be added to the KPP-3 score with a weight of 2.\\\hline
 		Normal & 1 & Most KPP-3 Jira issues will have a weight of 1.\\\hline
 		Risk mitigating & 0.5 & Some KPP-3 Jira issues are associated with products that help plan for the potential risks if high-impact products do not deliver as expected.\\\hline
@@ -239,7 +345,17 @@ The KPP-3 score will initially be tentative.  The KPP-3 score is not officially 
 
 \subsubsection{ECP ST Software Delivery}
 One essential activity for---and the ultimate purpose of---ECP ST is the delivery of a software stack that enables productive and sustainable exascale computing capabilities for target ECP applications and platforms and the broader HPC community. The ECP ST Software Ecosystem and Delivery sub-element (WBS 2.3.5), and the SDKs in each sub-element, provide the means by which the ECP ST will deliver its capabilities.
-\paragraph{ECP ST Delivery and HI Deployment:}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1.0\linewidth]{E4S-Hierarchy}
+	\caption{The ECP ST software stack is delivered to the user community through several channels, including via source code, using SDKs, direct to facilities in collaboration with ECP HI, and via binary distributions from containers and HPC vendors.
+	Increasingly, E4S is the primary pathway for delivering ECP ST capabilities.  E4S provides testing, a documentation portal, and quality commitments via community policies.}
+	\label{fig:hierarchy}
+\end{figure}
+
+
+\paragraph{ECP ST Delivery and HI Deployment}
 Providing the ECP ST software stack to ECP applications requires coordination between the ECP ST and ECP HI. The focus areas have a complementary arrangement in which the ECP ST delivers its products, and the ECP HI deploys them. The process is described specifically as follows.
 \begin{itemize}
 	\item The ECP ST delivers software.  ECP ST products are delivered directly to application teams, vendors, and facilities.  The ECP ST designs and implements products to run on DOE computing facilities platforms and make products available as source code via GitHub, GitLab, or another accessible repository.
@@ -247,37 +363,27 @@ Providing the ECP ST software stack to ECP applications requires coordination be
 \end{itemize}
 Separating the concerns of delivery and deployment is essential because these activities require different skill sets. Furthermore, the ECP ST delivers its capabilities to an audience that is beyond the scope of specific facilities’ platforms. This broad scope is essential for the sustainability of ECP ST products, expanding the user and developer communities needed for vitality. Additionally, the ECP HI, computer system vendors, and other parties provide deployable software outside the scope of the ECP ST, thus having the critical skills needed to deploy the entire software stack.
 
-\paragraph{ECP ST Delivery Strategy:}
+\paragraph{ECP ST Delivery Strategy}
 The ECP ST delivers its software products as source code, primarily in repositories found on GitHub or GitLab installations or similar platforms. Clients such as the ECP HI, OpenHPC, and application developers with direct repository access then take the source and build, install, and test the ECP ST software. The delivery strategy is outlined in Figure~\ref{fig:hierarchy}, and  
 %
 users access ECP ST products using the following basic mechanisms.
-\begin{itemize}
-	\item \textbf{Build from source code:} Most ECP ST products reach at least some of their user base via direct source code download from the product repository.  In some cases, users download one compressed file that contains the product source, then expand the file to expose the collection of source and build files.  Increasingly, users will fork a new copy of an online repository.  After obtaining the source, users execute a configuration process that detects local compilers and libraries and then builds the product.  This kind of access can be a barrier for some users because users need to build the product and can encounter a variety of challenges in that process, such as an incompatible compiler or a missing third-party library that must first be installed.  However, building from the source can be a preferred approach for users who want control over compiler settings or want to adapt how the product is used (e.g., turning on or off optional features, creating adaptations that extend product capabilities). For example, large library frameworks, such as PETSc and Trilinos, have many tunable features that can benefit from users building from source code.  Furthermore, these frameworks support user-defined functional extensions that are easier to support when users builds the product from source. The ECP ST is leveraging and contributing to the development of Spack~\cite{gamblin+:sc15}.  Via metadata stored in a Spack package defined for each product, Spack leverages a product's native build environment, along with knowledge about its dependencies, to build the product and dependencies from source.  Spack plays a central role in ECP ST software development and delivery processes by supporting turnkey builds of the ECP ST software stack for the purposes of continuous integration testing, installation, and seamless multiproduct builds.
-	\item \textbf{DOE computing facilities:} Each DOE computing facility---Argonne Leadership Computing Facility (ALCF), Oak Ridge Leadership Computing Facility (OLCF), National Energy Research Scientific Computing Center (NERSC), LLNL, and the Atmosphere, Climate, and Ecosystem Science (ACES) collaboration (Los Alamos National Laboratory [LANL] and Sandia National Laboratories~[SNL]) provides pre-built versions of 17--20 ECP ST products, although the exact mix of products varies somewhat at each site. Many of these products are what users would consider to be part of the core system capabilities, including compilers---such as Flang (Section~\ref{subsubsect:flang}) and LLVM (Section~\ref{subsubsect:sollve})---and parallel programming environments, such as MPICH (Section~\ref{subsubsect:mpich}), OpenMPI (Section~\ref{subsubsect:openmpi}), and OpenMP (Section~\ref{subsubsect:bolt}).  Development tools, such as PAPI (Section~\ref{subsubsect:exapapi}) and TAU (Section~\ref{subsubsect:tau}), are often part of this suite if they are not already included in the vendor stack. Math and data libraries, such as PETSc (Section~\ref{subsubsect:petsc}), Trilinos (Section~\ref{subsubsect:peeks}), HDF5 (Section~\ref{subsubsect:exahdf5}), and others are also available in some facilities' software installations. The team anticipates and hopes for increased collaboration with facilities via the ECP HI focus area.  The team is also encouraged by multi-lab efforts, such as the Tri-Lab Operating System Stack (TOSS)~\cite{TOSS}, that are focused on improving the uniformity of software stacks across facilities.
-	\item \textbf{Vendor stacks:} Computer system vendors leverage DOE investments in compilers, tools, and libraries.  Of particular note is the wide use of MPICH~(Section~\ref{subsubsect:mpich}) as a software base for most HPC vendor MPI implementations and the requirements, analysis, design, and prototyping that ECP ST teams provide.  Section~\ref{subsection:external-contributions} describes some of these efforts.
-	\item \textbf{Binary distributions:} Approximately 10 ECP ST products are available via binary distributions, such as common Linux distributions, particularly via OpenHPC~\cite{OpenHPC}. The ECP ST intends to foster the growth of availability via binary distributions as an important way to increase the size of the user community and improve product sustainability via this broader user base.  
-	\item \textbf{Container and cloud environments:} E4S is available via an increasing number of container and cloud environments, such as Docker, Shifter, Singularity, CharlieCloud, AWS, and Google Cloud.
-\end{itemize}
 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.9\linewidth]{E4S-Hierarchy}
-	\caption{The ECP ST software stack is delivered to the user community through several channels, including via source code, using SDKs, direct to facilities in collaboration with ECP HI, and via binary distributions from containers and HPC vendors.
-	Increasingly, E4S is the primary pathway for delivering ECP ST capabilities.  E4S provides testing, a documentation portal, and quality commitments via community policies.}
-	\label{fig:hierarchy}
-    \protect\todo[inline]{Please replace image with higher resolution image that is not a screenshot so that the image is not blurry and no longer has the red spellcheck underline.}
-    \protect\todo[inline]{Capitalize: Spack, SDK, E4S, Spackified.}
-\end{figure}
+
+
+	\subparagraph{Build from Source Code} Most ECP ST products reach at least some of their user base via direct source code download from the product repository.  In some cases, users download one compressed file that contains the product source, then expand the file to expose the collection of source and build files.  Increasingly, users will fork a new copy of an online repository.  After obtaining the source, users execute a configuration process that detects local compilers and libraries and then builds the product.  This kind of access can be a barrier for some users because users need to build the product and can encounter a variety of challenges in that process, such as an incompatible compiler or a missing third-party library that must first be installed.  However, building from the source can be a preferred approach for users who want control over compiler settings or want to adapt how the product is used (e.g., turning on or off optional features, creating adaptations that extend product capabilities). For example, large library frameworks, such as PETSc and Trilinos, have many tunable features that can benefit from users building from source code.  Furthermore, these frameworks support user-defined functional extensions that are easier to support when users builds the product from source. The ECP ST is leveraging and contributing to the development of Spack~\cite{gamblin+:sc15}.  Via metadata stored in a Spack package defined for each product, Spack leverages a product's native build environment, along with knowledge about its dependencies, to build the product and dependencies from source.  Spack plays a central role in ECP ST software development and delivery processes by supporting turnkey builds of the ECP ST software stack for the purposes of continuous integration testing, installation, and seamless multiproduct builds.
+	\subparagraph{DOE Computing Facilities} Each DOE computing facility---Argonne Leadership Computing Facility (ALCF), Oak Ridge Leadership Computing Facility (OLCF), National Energy Research Scientific Computing Center (NERSC), LLNL, and the Atmosphere, Climate, and Ecosystem Science (ACES) collaboration (Los Alamos National Laboratory [LANL] and Sandia National Laboratories~[SNL]) provides pre-built versions of 17--20 ECP ST products, although the exact mix of products varies somewhat at each site. Many of these products are what users would consider to be part of the core system capabilities, including compilers---such as Flang (Section~\ref{subsubsect:flang}) and LLVM (Section~\ref{subsubsect:sollve})---and parallel programming environments, such as MPICH (Section~\ref{subsubsect:mpich}), OpenMPI (Section~\ref{subsubsect:openmpi}), and OpenMP (Section~\ref{subsubsect:bolt}).  Development tools, such as PAPI (Section~\ref{subsubsect:exapapi}) and TAU (Section~\ref{subsubsect:tau}), are often part of this suite if they are not already included in the vendor stack. Math and data libraries, such as PETSc (Section~\ref{subsubsect:petsc}), Trilinos (Section~\ref{subsubsect:peeks}), HDF5 (Section~\ref{subsubsect:exahdf5}), and others are also available in some facilities' software installations. The team anticipates and hopes for increased collaboration with facilities via the ECP HI focus area.  The team is also encouraged by multi-lab efforts, such as the Tri-Lab Operating System Stack (TOSS)~\cite{TOSS}, that are focused on improving the uniformity of software stacks across facilities.
+	\subparagraph{Vendor Stacks} Computer system vendors leverage DOE investments in compilers, tools, and libraries.  Of particular note is the wide use of MPICH~(Section~\ref{subsubsect:mpich}) as a software base for most HPC vendor MPI implementations and the requirements, analysis, design, and prototyping that ECP ST teams provide.  Section~\ref{subsection:external-contributions} describes some of these efforts.
+	\subparagraph{Binary Distributions} Approximately 10 ECP ST products are available via binary distributions, such as common Linux distributions, particularly via OpenHPC~\cite{OpenHPC}. The ECP ST intends to foster the growth of availability via binary distributions as an important way to increase the size of the user community and improve product sustainability via this broader user base.  
+	\subparagraph{Container and Cloud Environments} E4S is available via an increasing number of container and cloud environments, such as Docker, Shifter, Singularity, CharlieCloud, AWS, and Google Cloud.
+
 
 \subsubsection{ECP ST Software Life Cycle}
 This section discusses the ECP ST software life cycle, as shown in Figure~\ref{fig:lifecycle}.  From their inception as P6 Activity planning packages, which are refined annually and given detailed information from before starting the activity all the way to the successful integration of a capability into the client environment, ECP ST features are governed by this life cycle.  Each product team conducts its own integration planning that incorporates other funding sources and stakeholders, but the ECP ST life cycle intersects the product life cycle for capabilities that the ECP funds.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.9\linewidth]{E4S-Lifecycle}
+	\includegraphics[width=1.0\linewidth]{E4S-Lifecycle}
 	\caption{ECP ST product planning, execution, testing, and assessment are governed by the combination of P6 Activities for hierarchical planning (Figure~\ref{fig:planning-process}) and KPP-3 for measuring capability integrations (Table~\ref{table:KPP-3-scoring}).  This figure shows how the entire life cycle of ECP ST feature development is captured by these two elements.}
 	\label{fig:lifecycle}
-    \protect\todo[inline]{Please replace image with higher resolution image that is not a screenshot so that the image is not blurry and no longer has the red spellcheck underline. Also, if possible to edit image, please change "Lifecycle" to "Life Cycle" (it is two words per Merriam-Webster.)}
-    \protect\todo[inline]{Capitalize Spack. Spell out numbers zero through nine.}
 \end{figure}
 
